@@ -1,0 +1,16 @@
+{
+    "short_name": "SG uploads",
+    "name": "SG uploads",
+    "icons": [
+    {
+     "src": "./src/images/favicon.jpg",
+     "sizes": "64x64",
+     "type": "image\/jpg"
+    }
+   ],
+    "start_url": ".",
+    "display": "standalone",
+    "theme_color": "#ffffff",
+    "background_color": "#000000"
+  }
+  
