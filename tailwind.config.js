@@ -4,7 +4,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        subMain: "#F20000",
+        subMain: "#14759f",
         text: "#C0C0C0",
         main: "#080A1A",
         dryGray: "rgb(224 213 213)",

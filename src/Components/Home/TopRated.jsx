@@ -53,18 +53,36 @@ const TopRated = () => {
         >
           {movies.map((movie, idx) => (
             <SwiperSlide key={idx}>
-              <div className="p-4 h-rate border border-border bg-dry rounded-lg overflow-hidden">
-                <img src={movie.poster} alt={movie.title} className="w-full h-full object-cover rounded-lg" />
-              </div>
-              <div className="px-4 flex-colo gap-6 text-center absolute bg-black bg-opacity-70 top-0 left-0 right-0 bottom-0">
-                <button className="w-12 h-12 flex-colo transitions hover:bg-subMain rounded-full bg-white bg-opacity-30 text-white">
-                  <FaHeart />
-                </button>
-                <Link to={`/movie/${movie.title}`} className="font-semibold text-xl truncated line-clamp-2">{movie.title}</Link>
-                <div className="flex gap-2 text-star">
-                  <Rating value={movie.rating.star / 2} />
+              <div className="relative group p-4 h-rate border border-border bg-dry rounded-lg overflow-hidden">
+                {/* Movie Poster */}
+                <img
+                  src={movie.poster}
+                  alt={movie.title}
+                  className="w-full h-full object-cover rounded-lg"
+                />
+
+                {/* Overlay Content */}
+                <div className="px-4 flex-colo gap-6 text-center absolute bg-black bg-opacity-70 top-0 left-0 right-0 bottom-0 opacity-0 group-hover:opacity-100 transitions duration-300">
+                  {/* Like Button */}
+                  <button className="w-12 h-12 flex-colo transitions hover:bg-subMain rounded-full bg-white bg-opacity-30 text-white">
+                    <FaHeart />
+                  </button>
+
+                  {/* Movie Title */}
+                  <Link
+                    to={`/movie/${movie.title}`}
+                    className="font-semibold text-xl truncated line-clamp-2"
+                  >
+                    {movie.title}
+                  </Link>
+
+                  {/* Rating */}
+                  <div className="flex gap-2 text-star">
+                    <Rating value={movie.rating.star / 2} />
+                  </div>
                 </div>
               </div>
+
             </SwiperSlide>
           ))}
         </Swiper>

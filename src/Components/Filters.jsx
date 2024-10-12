@@ -1,10 +1,10 @@
 import React, { Fragment, useState } from 'react';
 import { SelectorIcon } from '@heroicons/react/solid';
-import { Listbox, Transition, ListboxButton, ListboxOption } from '@headlessui/react';
+import { Listbox, Transition, ListboxButton, ListboxOption, ListboxOptions } from '@headlessui/react';
 import { FaCheck } from 'react-icons/fa';
 
 const YearData = [
-    { title: 'Sort by year' },
+    { title: 'Sort by Year' },
     { title: '1700 - 1800' },
     { title: '1800 - 1900' },
     { title: '1900 - 2000' },
@@ -13,7 +13,7 @@ const YearData = [
 ];
 
 const TimesData = [
-    { title: 'Sort by hours' },
+    { title: 'Sort by Hours' },
     { title: '1 - 5 hours' },
     { title: '5 - 10 hours' },
     { title: '10 - 15 hours' },
@@ -36,7 +36,7 @@ const CategoriesData = [
 
 const Filters = () => {
     const [category, setCategory] = useState(CategoriesData[0]); // Set default selection
-    const [year, setYear] = useState(YearData[0]);
+    const [year, setYear] = useState(YearData[0 ]);
     const [times, setTimes] = useState(TimesData[0]);
     const [rates, setRates] = useState(RatesData[0]);
 
@@ -72,10 +72,10 @@ const Filters = () => {
                             <span className='block truncate'>{item.value.title}</span>
                             <span className="absolute inset-y-0 right-0 flex items-center pointer-events-none pr-2">
                                 <SelectorIcon className='h-4 w-4' aria-hidden='true' />
-                            </span>
+                            </span>     
                         </ListboxButton>
-                        <Transition as={Fragment} leave='transition ease-in duration-100' leaveTo='opacity-100' leaveFrom='opacity-0'>
-                            <div className='absolute z-10 mt-1 w-full bg-white border border-gray-800 text-dryGray rounded-md shadow-lg max-h-60 py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm'>
+                        <Transition as={Fragment} leave='transition ease-in duration-100' leaveFrom='opacity-100' leaveTo='opacity-0'>
+                            <ListboxOptions className='absolute z-10 mt-1 w-full bg-white border border-gray-800 text-dryGray rounded-md shadow-lg max-h-60 py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm'>
                                 {item.items.map((iterm, idx) => (
                                     <ListboxOption
                                         key={idx}
@@ -99,7 +99,7 @@ const Filters = () => {
                                         )}
                                     </ListboxOption>
                                 ))}
-                            </div>
+                            </ListboxOptions>
                         </Transition>
                     </div>
                 </Listbox>

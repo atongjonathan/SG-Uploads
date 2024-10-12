@@ -13,8 +13,9 @@ const Navbar = () => {
           <div className="col-span-1 lg:block hidden">
             <Link to="/">
               <img
-                src="https://netflixo.vercel.app/images/logo.png"
+                src="/src/images/4x3.jpg"
                 alt="logo"
+                style={{scale:'1.2'}}
                 className="w-full h-12 object-contain"
               />
             </Link>
@@ -49,7 +50,7 @@ const Navbar = () => {
             <NavLink className={Hover} to="/login">
               <CgUser className="w-8 h-8"></CgUser>
             </NavLink>
-            <NavLink className={`${Hover} relative`} to="/favourite">
+            <NavLink className={`${Hover} relative`} to="/favourites">
               <FaHeart className="w-6 h-6"></FaHeart>
               <div className="w-5 h-5 flex-colo rounded-full text-xs bg-subMain text-white absolute -top-5 -right-1">3</div>
             </NavLink>

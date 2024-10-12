@@ -3,7 +3,7 @@
     "name": "SG uploads",
     "icons": [
     {
-     "src": "./src/images/favicon.jpg",
+     "src": "./src/images/4x3.jpg",
      "sizes": "64x64",
      "type": "image\/jpg"
     }

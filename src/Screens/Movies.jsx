@@ -32,7 +32,8 @@ const MoviesPage = () => {
         </div>
         <div className="w-full flex-colo md:my-20 my-10">
           <button onClick={HandleLoadingMore} className='flex-rows gap-3 text-white py-3 px-8 rounded font-semibold border-2 border-subMain'>
-            Loading More <CgSpinner className="animate-spin"></CgSpinner>
+            Load More ? 
+            {/* <CgSpinner className="animate-spin"></CgSpinner> */}
           </button>
         </div>
       </div>

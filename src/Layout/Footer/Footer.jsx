@@ -1,11 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-
-
 const Footer = () => {
   const Links = [
     {
-      title:'Company',
+      title:'SG Uploads',
       links:[
         {
           name:'Home',
@@ -62,19 +60,7 @@ const Footer = () => {
 
             </div>
           ))}
-          <div className="pb-3.5 sm:pb-0 col-span-1 md:col-span-2 lg:col-span-2">
-            <Link to='/'>
-            <img src="https://netflixo.vercel.app/images/logo.png" alt="logo" className="w-2/4 object-contain h-12" /></Link>
-            <p className='leading-7 text-sm text-border mt-1'>
-              <span>Lorem 1960 <br /> New York</span>
-              <br />
-              <span>Tel: </span>
-              <br />
-              <span>Email: </span>
-              <br />
-              
-            </p>
-          </div>
+  
         </div>
       </div>
     </div>

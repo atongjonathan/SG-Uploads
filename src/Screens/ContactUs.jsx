@@ -1,28 +1,29 @@
 import React from 'react'
 import Layout from "../Layout/Layout";
 import Head from "../Components/Head";
-import { FaVoicemail } from 'react-icons/fa';
-import { FiPhoneCall } from 'react-icons/fi';
+import { FaTelegram, FaVoicemail, FaWhatsapp } from 'react-icons/fa';
+import { FiMap, FiPhoneCall } from 'react-icons/fi';
+import { FaLocationDot } from 'react-icons/fa6';
 const ContactUs = () => {
   const contactData = [
     {
-      title: 'Email us',
-      info: 'Interactively grow backend ideas for cross-platform models.',
-      icon: FaVoicemail,
-      contact: "atongjonathan@gmail.com"
+      title: 'Text us',
+      info: 'Any feedack is well recieved',
+      icon: FaWhatsapp,
+      contact: "mailto:atongjonathan2@gmail.com",
     }
     ,
     {
-      title: 'Call us',
-      info: 'Interactively grow backend ideas for cross-platform models.',
-      icon: FiPhoneCall,
-      contact: "154712345678"
+      title: 'Join us',
+      info: 'Join our evergrowing community',
+      icon: FaTelegram,
+      contact: "https://t.me/dont_be_soy"
     },
     {
-      title: 'Call us',
-      info: 'Interactively grow backend ideas for cross-platform models.',
-      icon: FiPhoneCall,
-      contact: "154712345678"
+      title: 'Location',
+      info: 'Nairobi, Kenya.',
+      icon: FaLocationDot,
+      contact: 'https://maps.app.goo.gl/GLUK7ouvs8WA1ViSA'
     }
   ]
   return (
@@ -38,7 +39,7 @@ const ContactUs = () => {
             </span>
             <h5 className="text-xl font-semibold mb-2">{contact.title}</h5>
             <p className="mb-0 text-sm text-text leading-7">
-              <a href={`mailto:${contact.contact}`} className='text-blue-600'>{contact.contact}</a>{contact.info}
+              <a href={`${contact.contact}`} className='text-blue-600'>SG Uploads   </a>{contact.info}
             </p>
           </div>
         ))}
