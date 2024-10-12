@@ -12,11 +12,11 @@ const TopRated = () => {
   const [nextEl, setNextEl] = useState(null);
   const [prevEl, setPrevEl] = useState(null);
 
-  const {movies}  = useContext(MovieContext)
+  const { movies } = useContext(MovieContext)
 
   const classNames = 'hover:bg-dry transitions text-sm rounded w-8 h-8 flex-colo bg-subMain text-white';
 
- 
+
 
   return (
     <div className="my-16">
@@ -30,6 +30,26 @@ const TopRated = () => {
           speed={1000}
           loop={true}
           modules={[Navigation, Autoplay]}
+          breakpoints={
+            {
+              0: {
+                slidesPerView: 1,
+                spaceBetween: 10
+              },
+              768: {
+                slidesPerView: 2,
+                spaceBetween: 20
+              },
+              1024: {
+                slidesPerView: 3,
+                spaceBetween: 30
+              },
+              1280: {
+                slidesPerView: 4,
+                spaceBetween: 40
+              },
+            }
+          }
         >
           {movies.map((movie, idx) => (
             <SwiperSlide key={idx}>
@@ -49,15 +69,15 @@ const TopRated = () => {
           ))}
         </Swiper>
         <div className="w-full px-1 flex justify-center gap-6 pt-12">
-          <button className={classNames} ref={(node)=> setPrevEl(node)}>
+          <button className={classNames} ref={(node) => setPrevEl(node)}>
             <BsCaretLeftFill />
           </button>
-          <button className={classNames} ref={(node)=> setNextEl(node)}>
+          <button className={classNames} ref={(node) => setNextEl(node)}>
             <BsCaretRightFill />
           </button>
         </div>
       </div>
-    </div>
+    </div >
   );
 };
 

@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@headlessui/react": "^2.1.8",
-    "@heroicons/react": "^2.1.5",
+    "@heroicons/react": "^1.0.6",
     "@tailwindcss/line-clamp": "^0.4.4",
     "aos": "^2.3.4",
     "axios": "^1.7.7",

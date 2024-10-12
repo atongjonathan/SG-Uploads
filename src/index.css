@@ -33,7 +33,7 @@ select:focus {
 }
 
 .flex-rows {
-    @apply flex flex-col justify-center items-center;
+    @apply flex flex-row justify-center items-center;
 }
 
 .flex-btn {

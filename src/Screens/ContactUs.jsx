@@ -4,63 +4,44 @@ import Head from "../Components/Head";
 import { FaVoicemail } from 'react-icons/fa';
 import { FiPhoneCall } from 'react-icons/fi';
 const ContactUs = () => {
-    const contactData = [
-        {
-            title:'Email us',
-            info: 'Interactively grow backend ideas for cross-platform models.',
-            icon:FaVoicemail,
-            contact:"atongjonathan@gmail.com"
-        }
-        ,
-        {
-            title:'Call us',
-            info: 'Interactively grow backend ideas for cross-platform models.',
-            icon:FiPhoneCall,
-            contact:"154712345678"
-        }
-    ]
+  const contactData = [
+    {
+      title: 'Email us',
+      info: 'Interactively grow backend ideas for cross-platform models.',
+      icon: FaVoicemail,
+      contact: "atongjonathan@gmail.com"
+    }
+    ,
+    {
+      title: 'Call us',
+      info: 'Interactively grow backend ideas for cross-platform models.',
+      icon: FiPhoneCall,
+      contact: "154712345678"
+    },
+    {
+      title: 'Call us',
+      info: 'Interactively grow backend ideas for cross-platform models.',
+      icon: FiPhoneCall,
+      contact: "154712345678"
+    }
+  ]
   return (
     <Layout>
       <div className="min-height-screen container mx-auto px-2 my-6">
         <Head title={"Contact Us"}></Head>
       </div>
-      <div className="xl:py-20 py-10 px-4">
-        <div className="grid grid-flow-row xl:grid-cols-2 gap-4 xl:gap-16 items-center">
-          <div>
-            <h3 className="text-xl lg:text-3xl mb-4 font-semibold">
-              Welcome to our Netflixo
-            </h3>
-            <p className="mt-3 text-sm leading-8 text-text">
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sint
-              sequi incidunt vitae minima mollitia eaque deleniti, dolorem esse
-              magnam excepturi, magni amet sed reprehenderit optio suscipit,
-              odio dolorum ducimus reiciendis! Lorem ipsum dolor sit, amet
-              consectetur adipisicing elit. Cumque nisi quibusdam voluptatibus
-              corporis dicta, aperiam eius aliquam, ullam deleniti esse
-              praesentium voluptas iusto molestiae? Voluptates dolore quasi qui
-              labore pariatur? Natus placeat repellendus qui officia laborum
-              obcaecati enim incidunt perferendis sapiente accusantium
+      <div className="grid mg:grid-cols-2 gap-6 lg:my-20 my-10 lg:grid-cols-3 xl:gap-8">
+        {contactData.map((contact, idx) => (
+          <div key={idx} className="border border-border flex-colo p-10 bg-dry rounded-lg text-center">
+            <span className='flex-colo w-20 h-20 mb-4 rounded-full bg-main text-subMain text-2xl'>
+              <contact.icon/>
+            </span>
+            <h5 className="text-xl font-semibold mb-2">{contact.title}</h5>
+            <p className="mb-0 text-sm text-text leading-7">
+              <a href={`mailto:${contact.contact}`} className='text-blue-600'>{contact.contact}</a>{contact.info}
             </p>
-            <div className="grid md:grid-cols-2 gap-6 mt-8">
-              <div className="p-8 bg-dry rounded-lg">
-                <span className="text-3xl block font-extrabold">10K</span>
-                <h4 className="text-lg font-semibold my-2">Listed Movies</h4>
-                <p className="mb-0 text-text leading-7 text-sm">
-                  Lorem Ipsum is simply dummy text of the printing and
-                </p>
-              </div>
-              <div className="p-8 bg-dry rounded-lg">
-                <span className="text-3xl block font-extrabold">8K</span>
-                <h4 className="text-lg font-semibold my-2">Lovely Users</h4>
-                <p className="mb-0 text-text leading-7 text-sm">
-                  Completely free, without registration! Lorem Ipsum is simply
-                </p>
-              </div>
-            </div>
           </div>
-          <img src="https://netflixo.vercel.app/images/about2.jpg" className="w-full xl:block h-header rounded-lg object-cover" alt="about us"/>
-
-        </div>
+        ))}
       </div>
     </Layout>
   )
