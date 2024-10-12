@@ -4,6 +4,7 @@ import { Link, useParams } from 'react-router-dom'
 import { BiArrowBack } from 'react-icons/bi'
 import MovieContext from '../Data/MovieContext'
 import { FaCloud, FaHeart, FaPlay } from 'react-icons/fa'
+import MyPlyrVideo from './MyPlyrVideo'
 
 const WatchPage = () => {
     let {id} = useParams()
@@ -28,11 +29,7 @@ const WatchPage = () => {
         </div>
         {
             play? (
-                <video  controls controlsList="nodownload" autoPlay={play} className='w-full h-full rounded' src='https://other-cecilia-atong-jonathan-04e43c80.koyeb.app/dl/670a0fcdb020015cf937cc7c'>
-                    <source src='https://other-cecilia-atong-jonathan-04e43c80.koyeb.app/dl/670a0fcdb020015cf937cc7c' type='video/mp4' title={movie.title}/>
-                    <track label="English" kind="subtitles" srcLang="en" src="/subs/LE SSERAFIM (르세라핌) 'Smart' OFFICIAL MV [KNexS61fjus].en.vtt" default></track>
-
-                </video>
+                <MyPlyrVideo play={play} title={movie.titlem}></MyPlyrVideo>
 
                 ):(
                 <div className="w-full h-screen rounded-lg overflow-hidden relative">

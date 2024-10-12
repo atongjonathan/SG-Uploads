@@ -3,6 +3,11 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+    --plyr-color-main: #14759f;
+    /* --plyr-captions-text-color:#14759f; */
+}
+
 body,
 html {
     font-family: 'Poppins', 'sans-serif';
@@ -16,10 +21,10 @@ select:focus {
     box-shadow: none !important;
 }
 
-.linear-bg
-{
+.linear-bg {
     background: linear-gradient(269.82deg, #07091c00 00 0.17%, #080a1ad6 99.87%);
 }
+
 .hoveres {
     @apply hidden;
 }
