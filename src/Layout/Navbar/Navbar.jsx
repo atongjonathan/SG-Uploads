@@ -2,6 +2,9 @@ import React from "react";
 import { Link, NavLink } from "react-router-dom";
 import { FaSearch, FaHeart} from "react-icons/fa";
 import { CgUser } from "react-icons/cg";
+import logo from "../../images/4x3.jpg"
+
+
 const Navbar = () => {
   const hover = 'hover:text-subMain transitions text-white'
   const Hover = ({isActive}) => (isActive? 'text-subMain' : hover) 
@@ -13,7 +16,7 @@ const Navbar = () => {
           <div className="col-span-1 lg:block hidden">
             <Link to="/">
               <img
-                src="/src/images/4x3.jpg"
+                src={logo}
                 alt="logo"
                 style={{scale:'1.2'}}
                 className="w-full h-12 object-contain"
