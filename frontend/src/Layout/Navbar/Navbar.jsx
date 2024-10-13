@@ -3,11 +3,15 @@ import { Link, NavLink } from "react-router-dom";
 import { FaSearch, FaHeart} from "react-icons/fa";
 import { CgUser } from "react-icons/cg";
 import logo from "../../images/4x3.jpg"
+import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
+import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated'
 
 
 const Navbar = () => {
   const hover = 'hover:text-subMain transitions text-white'
   const Hover = ({isActive}) => (isActive? 'text-subMain' : hover) 
+  const auth = useAuthUser()
+  const isAuthenticated = useIsAuthenticated()
   return (
     <>
       <div className="bg-main shadow-md sticky top-0 z-20">
@@ -52,6 +56,9 @@ const Navbar = () => {
             </NavLink>
             <NavLink className={Hover} to="/login">
               <CgUser className="w-8 h-8"></CgUser>
+              <div>
+       {isAuthenticated ? (auth ? auth.username : "No Data") : "No"}
+    </div>
             </NavLink>
             <NavLink className={`${Hover} relative`} to="/favourites">
               <FaHeart className="w-6 h-6"></FaHeart>
