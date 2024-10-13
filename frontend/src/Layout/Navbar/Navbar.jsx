@@ -55,9 +55,9 @@ const Navbar = () => {
               Contact Us
             </NavLink>
             <NavLink className={Hover} to="/login">
-              <CgUser className="w-8 h-8"></CgUser>
+              
               <div>
-       {isAuthenticated ? (auth ? auth.username : "No Data") : "No"}
+       {isAuthenticated ? (auth ? auth.username : "No Data") :<CgUser className="w-8 h-8"></CgUser>}
     </div>
             </NavLink>
             <NavLink className={`${Hover} relative`} to="/favourites">
