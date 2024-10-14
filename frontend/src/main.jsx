@@ -11,8 +11,6 @@ import createStore from 'react-auth-kit/createStore';
 import AuthProvider from 'react-auth-kit';
 import refreshApi from "./utils/Refresh.js";
 
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
-
 
 const store = createStore({
   authName: '_auth',

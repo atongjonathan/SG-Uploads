@@ -1,41 +1,36 @@
 import createRefresh from 'react-auth-kit/createRefresh';
+import axios from 'axios';
+import { jwtDecode } from 'jwt-decode';
+// import jwtDecode from 'jwt-decode';
 
-import axios from "axios";
-const refreshApi = createRefresh(
-    {
-  interval: 1, // Refreshs the token in every 1 minutes
-  refreshApiCallback: async ({
-    // can be get all these details
-    // authToken,
-    // authTokenExpireAt,
-    // refreshTokenExpiresAt,
-    authUserState,
-    refreshToken,
-  }) => {
-    console.log(authUserState,"authUserState");
-    
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
+const refreshApi = createRefresh({
+  interval: 1, // Increase the interval to reduce frequent refreshes
+  refreshApiCallback: async ({ authUserState, refreshToken }) => {
     try {
       const { data } = await axios.post(
-        "http://localhost:8000/token/refresh/",
+        `${BACKEND_URL}/token/refresh/`,
         {
-          token: refreshToken,
+          refresh: refreshToken,
         }
       );
-      // the token will be changed access token every minute also set the new authTokenExpireIn to
-      // higher or near to refresh token expuration time
-      // cookie will be deleted after 1 minute when the user again open the app after 1 minute he have to login again so make the time higher near to refresh token time
+
+      let accessDecoded = jwtDecode(data.access);
+      let refreshDecoded = jwtDecode(data.refresh);
+
+      console.log(authUserState); // Ensure you're using this state properly
+
+      // Return the updated tokens and state
       return {
         isSuccess: true,
-        newAuthToken: data.token,
-        newAuthTokenExpireIn: 1,
-        newRefreshTokenExpiresIn: 10,
+        newAuthToken: data.access,
+        newAuthTokenExpireIn: accessDecoded.exp, // Ensure this matches expected time format
         newRefreshToken: data.refresh,
-        newAuthUserState: {
-            token:data.token
-        },
+        newRefreshTokenExpiresIn: refreshDecoded.exp, // Ensure this matches expected time format
       };
     } catch (error) {
-      console.error(error,"sad");
+      console.error('Error refreshing token:', error);
       return {
         isSuccess: false,
       };

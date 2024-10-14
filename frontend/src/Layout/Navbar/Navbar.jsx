@@ -11,6 +11,7 @@ const Navbar = () => {
   const hover = 'hover:text-subMain transitions text-white'
   const Hover = ({isActive}) => (isActive? 'text-subMain' : hover) 
   const auth = useAuthUser()
+  console.log(auth)
   const isAuthenticated = useIsAuthenticated()
   return (
     <>

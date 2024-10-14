@@ -9,6 +9,7 @@ import Backend from '../utils/Backend'
 import { CgSpinner } from 'react-icons/cg'
 import { jwtDecode } from 'jwt-decode'
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
+import refreshApi from '../utils/Refresh'
 
 
 const backend = Backend()
@@ -40,6 +41,7 @@ const Login = () => {
           refresh: tokens.refresh,
           userState: jwtDecode(tokens.access)
         })) {
+          // refreshApi() 
           navigate("/dashboard")
         } else {
           setInvalid('Invalid Credential')

@@ -17,22 +17,11 @@ import MoviesList from './Screens/Dashboard/Admin/MoviesList';
 import Dashboard from './Screens/Dashboard/Admin/Dashboard';
 import Categories from './Screens/Dashboard/Admin/Categories';
 import Users from './Screens/Dashboard/Admin/Users';
-import createStore from 'react-auth-kit/createStore';
 import "aos";
 import "aos/dist/aos.css";
-import refreshApi from './utils/Refresh.js';
 
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 const App = () => {
-
-  const store = createStore({
-    authName: '_auth',
-    authType: 'cookies',
-    cookieDomain: window.location.hostname,
-    cookieSecure: window.location.protocol === 'https:',
-    refresh: refreshApi
-  });
 
   Aos.init();
   return (
