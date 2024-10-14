@@ -20,8 +20,8 @@ const Uploader = () => {
             <span className='mx-auto flex-colo text-subMain text-3xl'>
                 <FiUploadCloud/>
             </span>
-            <p class="text-sm mt-2">Drag your image here</p>
-            <em class="text-xs text-border">(only .jpg and .png files will be accepted)</em>
+            <p className="text-sm mt-2">Drag your image here</p>
+            <em className="text-xs text-border">(only .jpg and .png files will be accepted)</em>
         </div>
       
     </div>

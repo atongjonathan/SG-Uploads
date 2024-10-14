@@ -1,18 +1,18 @@
 import React from "react";
-import { Link, NavLink } from "react-router-dom";
-import { FaSearch, FaHeart} from "react-icons/fa";
-import { CgUser } from "react-icons/cg";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import { FaSearch, FaHeart } from "react-icons/fa";
 import logo from "../../images/4x3.jpg"
-import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated'
-
+import useSignOut from 'react-auth-kit/hooks/useSignOut';
+import { Button } from "@headlessui/react";
 
 const Navbar = () => {
   const hover = 'hover:text-subMain transitions text-white'
-  const Hover = ({isActive}) => (isActive? 'text-subMain' : hover) 
-  const auth = useAuthUser()
-  console.log(auth)
+  const Hover = ({ isActive }) => (isActive ? 'text-subMain' : hover)
+  const signOut = useSignOut()
+  const navigate = useNavigate()
   const isAuthenticated = useIsAuthenticated()
+
   return (
     <>
       <div className="bg-main shadow-md sticky top-0 z-20">
@@ -23,14 +23,14 @@ const Navbar = () => {
               <img
                 src={logo}
                 alt="logo"
-                style={{scale:'1.2'}}
+                style={{ scale: '1.2' }}
                 className="w-full h-12 object-contain"
               />
             </Link>
           </div>
           {/* Search form */}
           <div className="col-span-3">
-            <form className="w-full text-sm bg-dryGray rounded flex-btn gap-4">
+            <form className="w-10/12 text-sm bg-dryGray rounded flex-btn gap-4">
               <button
                 type="submit"
                 className="bg-subMain w-12 flex-colo h-12 rounded text-white"
@@ -40,32 +40,41 @@ const Navbar = () => {
               <input
                 type="text"
                 placeholder="Search Movie Name from here"
-                className="font-medium placeholder:text-border text-sm w-11/12 h-12 bg-transparent border-none px-2 text-black"
+                className="font-medium placeholder:text-border text-sm w-10/12 h-12 bg-transparent border-none px-2 text-black"
               ></input>
             </form>
           </div>
           {/* menus */}
           <div className="col-span-3 font-medium text-sm hidden xl:gap-14 2xl:gap-20 justify-between lg:flex xl:justify-end items-center">
-            <NavLink className={Hover} to="/movies">
+            {isAuthenticated &&
+              <NavLink title="Dashboard" to='/dashboard' className={Hover}>
+                Dashboard
+              </NavLink>}
+            <NavLink title="Movies" className={Hover} to="/movies">
               Movies
             </NavLink>
-            <NavLink className={Hover} to="/about-us">
-              About Us
+            <NavLink title="About Us" className={Hover} to="/about-us">
+              About
             </NavLink>
-            <NavLink className={Hover} to="/contact-us">
-              Contact Us
+
+            <NavLink title="Contact Us" className={Hover} to="/contact-us">
+              Contact
             </NavLink>
-            <NavLink className={Hover} to="/login">
-              
-              <div>
-       {isAuthenticated ? (auth ? auth.username : "No Data") :<CgUser className="w-8 h-8"></CgUser>}
-    </div>
-            </NavLink>
-            <NavLink className={`${Hover} relative`} to="/favourites">
-              <FaHeart className="w-6 h-6"></FaHeart>
-              <div className="w-5 h-5 flex-colo rounded-full text-xs bg-subMain text-white absolute -top-5 -right-1">3</div>
-            </NavLink>
-            
+            {isAuthenticated &&
+              <NavLink className={`${Hover} relative`} to="/favourites">
+                <FaHeart className="w-5 h-5"></FaHeart>
+                <div className="w-4 h-4 flex-colo rounded-full text-xs bg-subMain text-white absolute -top-3 -right-3">3</div>
+              </NavLink>
+            }
+            {isAuthenticated ?
+              (<Button title="Log Out" className={Hover} onClick={() => {
+                signOut()
+                navigate("/login")
+              }}>
+                LogOut
+              </Button>) : <NavLink className={Hover} to="/login">
+                <p>Log In</p></NavLink>}
+
           </div>
         </div>
       </div>

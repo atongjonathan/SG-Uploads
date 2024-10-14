@@ -1,8 +1,8 @@
 export const Message = ({ label, placeholder }) => {
     return (
-        <div class="text-sm w-full">
-            <label class="text-border font-semibold">{label}</label>
-            <textarea class="w-full h-40 mt-2 p-6 bg-main border border-border rounded" placeholder={placeholder}></textarea></div>
+        <div className="text-sm w-full">
+            <label className="text-border font-semibold">{label}</label>
+            <textarea className="w-full h-40 mt-2 p-6 bg-main border border-border rounded" placeholder={placeholder}></textarea></div>
     )
 }
 

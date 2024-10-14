@@ -42,7 +42,7 @@ const MovieRates = ({ movie }) => {
             </div>
           </div>
           <Message label="Message" placeholder="Make it short and sweet ..."></Message>
-          <button class="bg-subMain text-white py-3 w-full flex-colo rounded">Submit</button>
+          <button className="bg-subMain text-white py-3 w-full flex-colo rounded">Submit</button>
         </div>
         <div className="col-span-3 flex flex-col gap-6">
           <h3 className="text-xl text-text font-semibold"></h3>
@@ -53,9 +53,9 @@ const MovieRates = ({ movie }) => {
                   <div className="col-span-2 bg-main hidden md:block">
                     <img src="https://images-na.ssl-images-amazon.com/images/M/MV5BMjQ4MTY5NzU2M15BMl5BanBnXkFtZTgwNDc5NTgwMTI@._V1_SY100_SX100_.jpg" alt={review.author} className="w-full h-24 rounded-lg object-cover" />
                   </div>
-                  <div class="col-span-7 flex flex-col gap-2">
+                  <div className="col-span-7 flex flex-col gap-2">
                     <h2>{review.author}</h2>
-                    <p class="text-xs leading-6 font-medium text-text">{review.heading}</p>
+                    <p className="text-xs leading-6 font-medium text-text">{review.heading}</p>
                       </div>
                       <div className="col-span-3 flex flex-rows border-l border-border text-xs gap-1 text-star">
                         <Rating value={review.stars/2}></Rating>

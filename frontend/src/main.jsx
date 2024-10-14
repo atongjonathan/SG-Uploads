@@ -24,9 +24,7 @@ createRoot(document.getElementById("root")).render(
   <StrictMode>
     <AuthProvider store={store}>  
       <MovieProvider> 
-        <BrowserRouter>
           <App />
-        </BrowserRouter>
       </MovieProvider>
     </AuthProvider>
   </StrictMode>

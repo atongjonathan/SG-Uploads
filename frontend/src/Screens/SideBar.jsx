@@ -19,11 +19,11 @@ const SideBar = ({ children }) => {
             link: '/movieslist',
             icon: FaListAlt
         },
-        {
-            name: 'Categories',
-            link: '/categories',
-            icon: HiViewGridAdd
-        },
+        // {
+        //     name: 'Categories',
+        //     link: '/categories',
+        //     icon: HiViewGridAdd
+        // },
         {
             name: 'Users',
             link: '/users',

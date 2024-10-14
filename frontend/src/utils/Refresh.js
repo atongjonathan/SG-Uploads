@@ -6,7 +6,7 @@ import { jwtDecode } from 'jwt-decode';
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 const refreshApi = createRefresh({
-  interval: 1, // Increase the interval to reduce frequent refreshes
+  interval: 4 , // Increase the interval to reduce frequent refreshes
   refreshApiCallback: async ({ authUserState, refreshToken }) => {
     try {
       const { data } = await axios.post(
@@ -18,8 +18,8 @@ const refreshApi = createRefresh({
 
       let accessDecoded = jwtDecode(data.access);
       let refreshDecoded = jwtDecode(data.refresh);
-
-      console.log(authUserState); // Ensure you're using this state properly
+      let time_to_expire = accessDecoded.exp * 1000;
+      console.log("Token will expire on " + new Date(time_to_expire).toString());
 
       // Return the updated tokens and state
       return {

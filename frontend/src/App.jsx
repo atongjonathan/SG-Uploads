@@ -15,35 +15,37 @@ import Password from './Screens/Password';
 import FavouriteMovies from './Screens/FavouriteMovies';
 import MoviesList from './Screens/Dashboard/Admin/MoviesList';
 import Dashboard from './Screens/Dashboard/Admin/Dashboard';
-import Categories from './Screens/Dashboard/Admin/Categories';
 import Users from './Screens/Dashboard/Admin/Users';
 import "aos";
 import "aos/dist/aos.css";
-
+import AuthOutlet from '@auth-kit/react-router/AuthOutlet'
 
 const App = () => {
 
   Aos.init();
   return (
+    <BrowserRouter>
+      <Routes>
+        <Route element={<AuthOutlet fallbackPath='/login' />}>
+          <Route path='/movieslist' element={<MoviesList />}></Route>
+          <Route path='/dashboard' element={<Dashboard />}></Route>
+          <Route path='/users' element={<Users />}></Route>
+          <Route path='/favourites' element={<FavouriteMovies />}></Route>
+          <Route path='/profile' element={<Profile />}></Route>
+        </Route>
+        <Route path="/" element={<HomeScreen />}></Route>
+        <Route path='/about-us' element={<AboutUs />}></Route>
+        <Route path='/contact-us' element={<ContactUs />}></Route>
+        <Route path='/movies' element={<MoviesPage />}></Route>
+        <Route path='/movie/:id' element={<SingleMovie />}></Route>
+        <Route path='/watch/:id' element={<WatchPage />}></Route>
+        <Route path='/login' element={<Login />}></Route>
+        <Route path='/register' element={<Register />}></Route>
+        <Route path='/password' element={<Password />}></Route>
 
-          <Routes>
-            <Route path="/" element={<HomeScreen />}></Route>
-            <Route path='/about-us' element={<AboutUs />}></Route>
-            <Route path='/contact-us' element={<ContactUs />}></Route>
-            <Route path='/movies' element={<MoviesPage />}></Route>
-            <Route path='/movie/:id' element={<SingleMovie />}></Route>
-            <Route path='/watch/:id' element={<WatchPage />}></Route>
-            <Route path='/login' element={<Login />}></Route>
-            <Route path='/register' element={<Register />}></Route>
-            <Route path='/profile' element={<Profile />}></Route>
-            <Route path='/password' element={<Password />}></Route>
-            <Route path='/favourites' element={<FavouriteMovies />}></Route>
-            <Route path='/movieslist' element={<MoviesList />}></Route>
-            <Route path='/dashboard' element={<Dashboard />}></Route>
-            <Route path='/categories' element={<Categories />}></Route>
-            <Route path='/users' element={<Users />}></Route>
-            <Route path='*' element={<NotFound />}></Route>
-          </Routes>
+        <Route path='*' element={<NotFound />}></Route>
+      </Routes>
+    </BrowserRouter>
   );
 };
 
