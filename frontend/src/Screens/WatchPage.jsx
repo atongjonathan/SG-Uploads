@@ -2,14 +2,14 @@ import React, { useContext, useState } from 'react'
 import Layout from '../Layout/Layout'
 import { Link, useParams } from 'react-router-dom'
 import { BiArrowBack } from 'react-icons/bi'
-import MovieContext from '../Data/MovieContext'
 import { FaCloud, FaHeart, FaPlay } from 'react-icons/fa'
 import MyPlyrVideo from './MyPlyrVideo'
 import SGFaHeart from '../Components/SGFaHeart'
+import { useMovies } from '../utils/SWR'
 
 const WatchPage = () => {
     let { id } = useParams()
-    const { movies } = useContext(MovieContext)
+    const { movies } = useMovies()
     const movie = movies.find((movie) => movie.title == id)
     const [play, setPlay] = useState(false)
     return (

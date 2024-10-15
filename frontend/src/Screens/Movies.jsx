@@ -1,12 +1,11 @@
 import React, { useContext, useState } from 'react'
 import Layout from '../Layout/Layout'
 import Filters from '../Components/Filters'
-import MovieContext from "../Data/MovieContext";
 import Movie from '../Components/Movie'
-import { CgSpinner } from 'react-icons/cg';
+import { useMovies } from '../utils/SWR';
 
 const MoviesPage = () => {
-  const { movies } = useContext(MovieContext)
+  const movies = useMovies().movies
 
   const maxpage = 2
   const [page, setPage] = useState(maxpage)
@@ -20,11 +19,11 @@ const MoviesPage = () => {
       <div className="min-height-screen container mx-auto px-2 my-6">
         <Filters />
         <p className='text-lg font-medium my-6'>
-          Total <span className=' font-bold test-subMain'>{movies.length}</span>
+          Total <span className=' font-bold test-subMain'>{movies?.length}</span>
         </p>
         <div className="grid sm:mt-10 mt-6 xl:grid-cols-4 2xl:grid-cols-5 lg:grid-cols-3 sm:grid-cols-2 gap-6">
           {
-            movies.slice(0, page)?.map((movie, idx) =>
+            movies?.slice(0, page)?.map((movie, idx) =>
             (
               <Movie key={idx} movie={movie}></Movie>
             ))

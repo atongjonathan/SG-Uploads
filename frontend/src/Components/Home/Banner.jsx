@@ -1,18 +1,17 @@
-import React, { useContext, useEffect, useState } from "react";
+import React from "react";
 import { Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import FlexMovieItems from "../FlexMovieItems";
 import { Link } from "react-router-dom";
-import { FaHeart } from "react-icons/fa";
-import MovieContext from "../../Data/MovieContext";
 import SGFaHeart from "../SGFaHeart";
+import { useMovies } from "../../utils/SWR";
 
 
 
 
 const Banner = () => {
 
-  const { movies } = useContext(MovieContext)
+  const movies = useMovies().movies
 
   return (
     <div className="relative w-full">
@@ -29,7 +28,7 @@ const Banner = () => {
         }}
 
       >
-        {movies.slice(0, 6).map((movie, idx) => (
+        {movies?.slice(0, 6).map((movie, idx) => (
           <SwiperSlide key={idx} className="relative rounded overflow-hidden">
             <img
               src={movie.images[0]}

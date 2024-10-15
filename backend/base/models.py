@@ -1,3 +1,4 @@
+from email.mime import image
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.db import models
@@ -58,6 +59,8 @@ class Movie(models.Model):
 class SGUser(AbstractUser):
     email = models.EmailField(unique=True)
     favourites = models.ManyToManyField(Movie, related_name='favourites', blank=True)
+    image = models.ImageField(null=True, blank=True, upload_to="images/")
+    name = models.CharField(max_length=150, null=True, blank=True)
 
     def __str__(self) -> str:
         return f"{self.username} User"    

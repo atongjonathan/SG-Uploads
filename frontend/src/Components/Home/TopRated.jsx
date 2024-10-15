@@ -6,15 +6,16 @@ import { Autoplay, Navigation } from "swiper/modules";
 import { FaHeart } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import Rating from "../Star";
-import MovieContext from "../../Data/MovieContext";
 import SGFaHeart from "../SGFaHeart";
+import { useMovies } from "../../utils/SWR";
 
 
 const TopRated = () => {
   const [nextEl, setNextEl] = useState(null);
   const [prevEl, setPrevEl] = useState(null);
 
-  const { movies } = useContext(MovieContext)
+  const movies = useMovies().movies
+
 
   const classNames = 'hover:bg-dry transitions text-sm rounded w-8 h-8 flex-colo bg-subMain text-white';
 
@@ -53,7 +54,7 @@ const TopRated = () => {
             }
           }
         >
-          {movies.map((movie, idx) => (
+          {movies?.map((movie, idx) => (
             <SwiperSlide key={idx}>
               <div className="relative group p-4 h-rate border border-border bg-dry rounded-lg overflow-hidden">
                 {/* Movie Poster */}

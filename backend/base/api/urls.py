@@ -1,9 +1,11 @@
+from django.conf import settings
 from . import views
 from django.urls import path
 from .views import MyTokenObtainView
 from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
+from django.conf.urls.static import static
 
 
 urlpatterns = [
@@ -14,10 +16,10 @@ urlpatterns = [
     path('movies', views.movies_list, name="movies"),
     path('create-user', views.create_user, name="create_user"),
     path('create-movie', views.create_movie, name="create_movie"),
-    path('update-user/<pk>', views.update_user, name="update_user"),
+    path('update-user', views.update_user, name="update_user"),
     path('user', views.user, name="user"),
     path('like/<id>', views.like_movie, name='like_movie'),
     path('unlike/<id>', views.unlike_movie, name='unlike_movie')
 
 
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_URL)

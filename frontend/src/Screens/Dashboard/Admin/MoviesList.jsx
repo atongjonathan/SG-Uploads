@@ -1,7 +1,6 @@
 import React, { useContext } from 'react'
 import SideBar from '../../SideBar'
 import Table from '../../../Components/Table'
-import MovieContext from '../../../Data/MovieContext'
 
 const MoviesList = () => {
   const data = useContext(MovieContext)

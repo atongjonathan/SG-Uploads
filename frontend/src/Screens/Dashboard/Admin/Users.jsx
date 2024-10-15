@@ -1,6 +1,5 @@
 import React, { useContext } from 'react'
 import SideBar from '../../SideBar'
-import MovieContext from '../../../Data/MovieContext'
 import { HiPlusCircle } from 'react-icons/hi'
 import Table2 from '../../../Components/Table2'
 import { useUser, useUsers } from '../../../utils/SWR'

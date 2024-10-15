@@ -68,8 +68,20 @@ const Backend = () => {
         }
     };
 
+    const updateProfile = async (authHeader, data) => {
+        const refreshUrl = `${BACKEND_URL}/update-user`;
+        const reqOptions = createRequestOptions(refreshUrl, "POST", data, authHeader);
+        try {
+            const response = await axios.request(reqOptions);
+            return response;
+        } catch (error) {
+            console.log(error);
+            return error;
+        }
+    };
 
-    return { signUp, loginUser, like, unlike};
+
+    return { signUp, loginUser, like, unlike, updateProfile};
 };
 
 export default Backend;

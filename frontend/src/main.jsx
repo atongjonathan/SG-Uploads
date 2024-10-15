@@ -5,7 +5,6 @@ import "./index.css";
 import "swiper/css";
 import "aos";
 import "aos/dist/aos.css";
-import { MovieProvider } from "./Data/MovieContext.jsx"; // Import MovieProvider
 import createStore from 'react-auth-kit/createStore';
 import AuthProvider from 'react-auth-kit';
 import refreshApi from "./utils/Refresh.js";
@@ -22,9 +21,7 @@ const store = createStore({
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <AuthProvider store={store}>  
-      <MovieProvider> 
           <App />
-      </MovieProvider>
     </AuthProvider>
   </StrictMode>
 );

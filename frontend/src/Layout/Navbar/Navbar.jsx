@@ -18,9 +18,11 @@ const Navbar = () => {
   const auth = useAuthHeader()
   const user = useUser(auth).user
 
+
   return (
     <>
       <div className="bg-main shadow-md sticky top-0 z-20">
+
         <div className="container mx-auto py-6 px-2 lg:grid gap-10 grid-cols-7 justify-between items-center">
           {/* logo */}
           <div className="col-span-1 lg:block hidden">
@@ -65,12 +67,12 @@ const Navbar = () => {
             </NavLink>
             {isAuthenticated && user?.is_superuser ? <NavLink title="Dashboard" className={Hover} to="/dashboard">
               Dashboard
-            </NavLink> :
-              <NavLink title="Dashboard" to='/profile' className={Hover}>
-                Profile
-              </NavLink>}
+            </NavLink> : isAuthenticated &&
+            <NavLink title="Dashboard" to='/profile' className={Hover}>
+              Profile
+            </NavLink>}
             {isAuthenticated &&
-              <NavLink className={`${Hover} relative`} to="/favourites">
+              <NavLink className={`${Hover} relative`} to="/favourites" title="Favourites">
                 <FaHeart className="w-5 h-5"></FaHeart>
                 <div className="w-4 h-4 flex-colo rounded-full text-xs bg-subMain text-white absolute -top-3 -right-3">{user?.favourites?.length}</div>
               </NavLink>
