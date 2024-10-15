@@ -51,10 +51,7 @@ const Navbar = () => {
           </div>
           {/* menus */}
           <div className="col-span-3 font-medium text-sm hidden xl:gap-14 2xl:gap-20 justify-between lg:flex xl:justify-end items-center">
-            {isAuthenticated &&
-              <NavLink title="Dashboard" to='/dashboard' className={Hover}>
-                Dashboard
-              </NavLink>}
+           
             <NavLink title="Movies" className={Hover} to="/movies">
               Movies
             </NavLink>
@@ -66,9 +63,13 @@ const Navbar = () => {
               Contact
             </NavLink>
             {isAuthenticated &&
+              <NavLink title="Dashboard" to='/profile' className={Hover}>
+                Profile
+              </NavLink>}
+            {isAuthenticated &&
               <NavLink className={`${Hover} relative`} to="/favourites">
                 <FaHeart className="w-5 h-5"></FaHeart>
-                <div className="w-4 h-4 flex-colo rounded-full text-xs bg-subMain text-white absolute -top-3 -right-3">{user?.favourites.length}</div>
+                <div className="w-4 h-4 flex-colo rounded-full text-xs bg-subMain text-white absolute -top-3 -right-3">{user?.favourites?.length}</div>
               </NavLink>
             }
             {isAuthenticated ?

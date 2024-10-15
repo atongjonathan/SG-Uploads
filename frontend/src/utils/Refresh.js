@@ -6,7 +6,7 @@ import { jwtDecode } from 'jwt-decode';
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 const refreshApi = createRefresh({
-  interval: 4 , // Increase the interval to reduce frequent refreshes
+  interval: 1 , // Increase the interval to reduce frequent refreshes
   refreshApiCallback: async ({ authUserState, refreshToken }) => {
     try {
       const { data } = await axios.post(

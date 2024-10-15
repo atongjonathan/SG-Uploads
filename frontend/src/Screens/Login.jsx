@@ -42,11 +42,11 @@ const Login = () => {
           userState: jwtDecode(tokens.access)
         })) {
           // refreshApi() 
-          navigate("/dashboard")
+          navigate("/profile")
         } else {
           setInvalid('Invalid Credential')
           //Throw error
-        }
+        } 
 
       }
       else if (response?.status == 401) {

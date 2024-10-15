@@ -18,21 +18,32 @@ import Dashboard from './Screens/Dashboard/Admin/Dashboard';
 import Users from './Screens/Dashboard/Admin/Users';
 import "aos";
 import "aos/dist/aos.css";
+import NotAllowed from './Screens/NotAllowed';
 import AuthOutlet from '@auth-kit/react-router/AuthOutlet'
+import SuperUserOutlet from './utils/SuperUserOutlet';
+
+
 
 const App = () => {
-
   Aos.init();
   return (
     <BrowserRouter>
       <Routes>
-        <Route element={<AuthOutlet fallbackPath='/login' />}>
+        {/* Protected routes for superusers */}
+        <Route element={<SuperUserOutlet fallbackPath='/403' />}>
           <Route path='/movieslist' element={<MoviesList />}></Route>
-          <Route path='/dashboard' element={<Dashboard />}></Route>
           <Route path='/users' element={<Users />}></Route>
+          <Route path='/dashboard' element={<Dashboard />}></Route>
+    
+        </Route>
+
+        {/* Protected routes for authenticated users */}
+        <Route element={<AuthOutlet fallbackPath='/login' />}>
           <Route path='/favourites' element={<FavouriteMovies />}></Route>
           <Route path='/profile' element={<Profile />}></Route>
         </Route>
+
+        {/* Public routes */}
         <Route path="/" element={<HomeScreen />}></Route>
         <Route path='/about-us' element={<AboutUs />}></Route>
         <Route path='/contact-us' element={<ContactUs />}></Route>
@@ -42,7 +53,9 @@ const App = () => {
         <Route path='/login' element={<Login />}></Route>
         <Route path='/register' element={<Register />}></Route>
         <Route path='/password' element={<Password />}></Route>
+        <Route path='/403' element={<NotAllowed />}></Route>
 
+        {/* Catch-all for not found */}
         <Route path='*' element={<NotFound />}></Route>
       </Routes>
     </BrowserRouter>
