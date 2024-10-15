@@ -5,6 +5,8 @@ import logo from "../../images/4x3.jpg"
 import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated'
 import useSignOut from 'react-auth-kit/hooks/useSignOut';
 import { Button } from "@headlessui/react";
+import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
+import { useUser } from "../../utils/SWR";
 
 const Navbar = () => {
   const hover = 'hover:text-subMain transitions text-white'
@@ -12,6 +14,9 @@ const Navbar = () => {
   const signOut = useSignOut()
   const navigate = useNavigate()
   const isAuthenticated = useIsAuthenticated()
+
+  const auth = useAuthHeader()
+  const user = useUser(auth).user
 
   return (
     <>
@@ -63,7 +68,7 @@ const Navbar = () => {
             {isAuthenticated &&
               <NavLink className={`${Hover} relative`} to="/favourites">
                 <FaHeart className="w-5 h-5"></FaHeart>
-                <div className="w-4 h-4 flex-colo rounded-full text-xs bg-subMain text-white absolute -top-3 -right-3">3</div>
+                <div className="w-4 h-4 flex-colo rounded-full text-xs bg-subMain text-white absolute -top-3 -right-3">{user?.favourites.length}</div>
               </NavLink>
             }
             {isAuthenticated ?

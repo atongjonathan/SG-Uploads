@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { FaHeart } from "react-icons/fa";
+import SGFaHeart from "./SGFaHeart";
+
 
 const Movie = ({ movie }) => {
   return (
@@ -10,10 +12,8 @@ const Movie = ({ movie }) => {
           <img src={movie.poster} alt={movie.title} className="w-full h-64 object-cover" />
         </Link>
         <div className="absolute flex-btn gap-2 bottom-0 right-0 left-0 bg-main bg-opacity-60 text-white px-4 py-3">
-            <h3 className="font-semibold truncate">{movie.title}</h3>
-            <button className="h-9 w-9 text-sm flex-colo transitions hover:bg-transparent border-2 border-subMain rounded-md bg-subMain text-white">
-                <FaHeart></FaHeart>
-            </button>
+          <h3 className="font-semibold truncate">{movie.title}</h3>
+          <SGFaHeart movie={movie}></SGFaHeart>
         </div>
       </div>
     </>

@@ -7,6 +7,8 @@ import { FaHeart } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import Rating from "../Star";
 import MovieContext from "../../Data/MovieContext";
+import SGFaHeart from "../SGFaHeart";
+
 
 const TopRated = () => {
   const [nextEl, setNextEl] = useState(null);
@@ -64,9 +66,7 @@ const TopRated = () => {
                 {/* Overlay Content */}
                 <div className="px-4 flex-colo gap-6 text-center absolute bg-black bg-opacity-70 top-0 left-0 right-0 bottom-0 opacity-0 group-hover:opacity-100 transitions duration-300">
                   {/* Like Button */}
-                  <button className="w-12 h-12 flex-colo transitions hover:bg-subMain rounded-full bg-white bg-opacity-30 text-white">
-                    <FaHeart />
-                  </button>
+                  <SGFaHeart />
 
                   {/* Movie Title */}
                   <Link

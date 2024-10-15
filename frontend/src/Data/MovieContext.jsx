@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { createContext, useEffect, useState } from 'react';
-import { movies } from './movies';
+import { useMovies } from '../utils/SWR';
+// import { movies } from './movies';
 
 export const MovieContext = createContext();
 
@@ -9,22 +10,13 @@ export const MovieProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  async function getMovies() {
-    // try {
-    //   const response = await axios.get("https://api.safone.dev/imdb?query=Marvel");
-    //   console.log(response.data.results)
-    //   setMovies(response.data.results);
-    // } catch (err) {
-    //   setError(err.message);
-    // } finally {
-    //   setLoading(false);
-    // }
-
+  let movies = []
+  const response = useMovies()
+  if (response.movies) {
+    movies = response.movies
+    // setLoading(response.loading)
+    // setError(response.error)
   }
-
-  // useEffect(() => {
-  //   getMovies();
-  // }, []);
 
   return (
     <MovieContext.Provider value={{ movies, loading, error }}>

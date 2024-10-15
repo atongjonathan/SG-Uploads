@@ -5,13 +5,14 @@ import FlexMovieItems from "../FlexMovieItems";
 import { Link } from "react-router-dom";
 import { FaHeart } from "react-icons/fa";
 import MovieContext from "../../Data/MovieContext";
+import SGFaHeart from "../SGFaHeart";
 
 
 
 
 const Banner = () => {
 
-  const {movies} = useContext(MovieContext)
+  const { movies } = useContext(MovieContext)
 
   return (
     <div className="relative w-full">
@@ -26,7 +27,7 @@ const Banner = () => {
           delay: 4000,
           disableOnInteraction: false,
         }}
-        
+
       >
         {movies.slice(0, 6).map((movie, idx) => (
           <SwiperSlide key={idx} className="relative rounded overflow-hidden">
@@ -41,16 +42,14 @@ const Banner = () => {
                 <FlexMovieItems movie={movie}></FlexMovieItems>
               </div>
               <div className="flex gap-5 items-center">
-        <Link
-          to={`/movie/${movie.title}`}
-          className="bg-subMain hover:text-main transitions text-white px-8 py-3 rounded font-medium sm:text-sm text-xs"
-        >
-          Watch
-        </Link>
-        <button className="bg-white hover:text-subMain transitions text-white px-4 py-3 rounded text-sm bg-opacity-30">
-          <FaHeart></FaHeart>
-        </button>
-      </div>
+                <Link
+                  to={`/movie/${movie.title}`}
+                  className="bg-subMain hover:text-main transitions text-white px-8 py-3 rounded font-medium sm:text-sm text-xs"
+                >
+                  Watch
+                </Link>
+                <SGFaHeart movie={movie}></SGFaHeart>
+              </div>
             </div>
           </SwiperSlide>
         ))}

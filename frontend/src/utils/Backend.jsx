@@ -4,12 +4,12 @@ const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 const Backend = () => {
 
-    const createRequestOptions = (url, method, data = null, authTokens = null) => {
+    const createRequestOptions = (url, method, data = null, authHeader = null) => {
         let headers = {
             'Content-Type': 'application/json',
         };
-        if (authTokens) {
-            headers['Authorization'] = 'Bearer ' + authTokens?.access;
+        if (authHeader) {
+            headers['Authorization'] = authHeader
         }
         return {
             url,
@@ -18,6 +18,8 @@ const Backend = () => {
             data,
         };
     };
+
+
 
     async function signUp(formObject) {
         const signUpUrl = `${BACKEND_URL}/create-user`;
@@ -41,10 +43,22 @@ const Backend = () => {
         }
     }
 
+    const like = async (authHeader, id) => {
+        const refreshUrl = `${BACKEND_URL}/like/${id}`;
+        const reqOptions = createRequestOptions(refreshUrl, "POST", null, authHeader);
+        try {
+            const response = await axios.request(reqOptions);
+            return response;
+        } catch (error) {
+            console.log(error);
+            return error;
+        }
+    };
 
-    const refreshAccessToken = async (authTokens) => {
-        const refreshUrl = `${BACKEND_URL}/token/refresh/`;
-        const reqOptions = createRequestOptions(refreshUrl, "POST", { refresh: authTokens?.refresh });
+    
+    const unlike = async (authHeader, id) => {
+        const refreshUrl = `${BACKEND_URL}/unlike/${id}`;
+        const reqOptions = createRequestOptions(refreshUrl, "POST", null, authHeader);
         try {
             const response = await axios.request(reqOptions);
             return response;
@@ -55,7 +69,7 @@ const Backend = () => {
     };
 
 
-    return { signUp, loginUser,  refreshAccessToken};
+    return { signUp, loginUser, like, unlike};
 };
 
 export default Backend;

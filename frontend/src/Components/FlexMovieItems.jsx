@@ -1,5 +1,5 @@
 import React from "react";
-import { FaRegCalendarAlt, FaHeart } from "react-icons/fa";
+import { FaRegCalendarAlt } from "react-icons/fa";
 import { BiTime } from "react-icons/bi";
 
 const FlexMovieItems = ({ movie }) => {

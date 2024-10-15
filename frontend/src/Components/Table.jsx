@@ -3,6 +3,7 @@ import { FaCloudDownloadAlt, FaEdit } from 'react-icons/fa'
 import { GoEye } from 'react-icons/go'
 import { MdDelete } from 'react-icons/md'
 import { Link } from 'react-router-dom'
+import SGFaHeart from './SGFaHeart'
 
 const Head = "text-xs text-left text-main font-semibold px-6 py-2 uppercase"
 const Text = 'text-sm text-left leading-6 whitespace-nowrap px-5 py-3'
@@ -34,6 +35,8 @@ const Rows = (movie, idx, admin) =>
                             Download <FaCloudDownloadAlt className='text-green-500'></FaCloudDownloadAlt>
                         </button>
                         <Link to={`/movie/${movie.title}`} className='bg-subMain text-white rounded flex-colo w-6 h-6'> <GoEye></GoEye></Link>
+                        <SGFaHeart movie={movie}></SGFaHeart>
+
                     </>)
             }
 
