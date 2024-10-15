@@ -10,7 +10,7 @@ class SGUserSerializer(serializers.ModelSerializer):
     )
     class Meta:
         model = SGUser
-        fields = ['username', 'email', 'favourites', 'is_superuser']
+        fields = ['username', 'email', 'favourites', 'is_superuser', 'date_joined']
 
     def create(self, validated_data):
         # Create a new user instance

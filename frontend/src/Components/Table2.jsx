@@ -8,11 +8,25 @@ const Head = "text-xs text-left text-main font-semibold px-6 py-2 uppercase"
 
 const Text = 'text-sm text-left leading-6 whitespace-nowrap px-5 py-3'
 
+function convertTime(created) {
+    const date = new Date(created);
+    return date.toLocaleString('en-US', {
+        weekday: 'long', // "Sunday"
+        year: 'numeric', // "2024"
+        month: 'long', // "October"
+        day: 'numeric', // "13"
+        hour: 'numeric', // "10"
+        minute: 'numeric', // "34"
+        second: 'numeric', // "13"
+        timeZoneName: 'short' // "GMT"
+    });
+}
 
 const Rows = (data, idx, users) => {
     return users ? (
         <tr key={idx}>
             {/* Users */}
+            <td className={Text + ' truncate'}>{idx + 1}</td>
             <td className={`${Text}`}>
                 <div className="w-12 p-1 bg-dry border border-border h-12 rounded overflow-hidden">
                     <img
@@ -22,24 +36,16 @@ const Rows = (data, idx, users) => {
                     />
                 </div>
             </td>
-            <td className={Text + ' truncate'}>{data.id ? data.id : '0909'}</td>
-            <td className={Text + ' truncate'}>{data.created ? data.created : '12 Jan 2024'}</td>
-            <td className={Text}>{data.fullName ? data.fullName : 'Jona'}</td>
-            <td className={Text}>{data.email ? data.email : 'johndoe@gmail.com'}</td>
-            <td className={Text + ' float-right flex-rows gap-2'}>
-            <button className="border border-border bg-dry flex-rows gap-2 text-border rounded py-1 px-2">
-                    Edit <FaEdit className="text-green-500" />
-                </button>
-                <button className="bg-subMain text-white rounded flex-colo w-6 h-6">
-                    <MdDelete />
-                </button>
-            </td>
+            <td className={Text + ' truncate'}>{data.date_joined}</td>
+            <td className={Text}>{data.username}</td>
+            <td className={Text}>{data.email}</td>
+
         </tr>
     ) : (
         // Categories
         <tr key={idx}>
             <td className={Text + ' font-bold'}>{data.id ? data.id : '0909'}</td>
-            <td className={Text + ' truncate'}>{data.created ? data.created : '12 Jan 2024'}</td>
+            <td className={Text + ' truncate'}>{convertTime(data.created)}</td>
             <td className={Text}>{data.title ? data.title : 'Title'}</td>
             <td className={Text + ' float-right flex-rows gap-2'}>
 
@@ -65,8 +71,8 @@ const Table2 = ({ data, users }) => {
                         {
                             users ? (
                                 <>
+                                    <th scope='col' className={`${Head}`}>No</th>
                                     <th scope='col' className={`${Head}`}>image</th>
-                                    <th scope='col' className={`${Head}`}>Id</th>
                                     <th scope='col' className={`${Head}`}>Date</th>
                                     <th scope='col' className={`${Head}`}>Full Name</th>
                                     <th scope='col' className={`${Head}`}>Email</th>
@@ -77,12 +83,13 @@ const Table2 = ({ data, users }) => {
                                     <th scope='col' className={`${Head}`}>ID</th>
                                     <th scope='col' className={`${Head}`}>Date</th>
                                     <th scope='col' className={`${Head}`}>Title</th>
+                                    <th scope='col' className={`${Head} text-end`}>Actions</th>
+
                                 </>
 
                             )
 
                         }
-                        <th scope='col' className={`${Head} text-end`}>Actions</th>
 
 
                     </tr>

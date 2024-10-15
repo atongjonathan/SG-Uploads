@@ -51,7 +51,8 @@ const Navbar = () => {
           </div>
           {/* menus */}
           <div className="col-span-3 font-medium text-sm hidden xl:gap-14 2xl:gap-20 justify-between lg:flex xl:justify-end items-center">
-           
+
+            { }
             <NavLink title="Movies" className={Hover} to="/movies">
               Movies
             </NavLink>
@@ -62,7 +63,9 @@ const Navbar = () => {
             <NavLink title="Contact Us" className={Hover} to="/contact-us">
               Contact
             </NavLink>
-            {isAuthenticated &&
+            {isAuthenticated && user?.is_superuser ? <NavLink title="Dashboard" className={Hover} to="/dashboard">
+              Dashboard
+            </NavLink> :
               <NavLink title="Dashboard" to='/profile' className={Hover}>
                 Profile
               </NavLink>}

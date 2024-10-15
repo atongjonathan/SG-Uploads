@@ -20,6 +20,23 @@ export function useUser(auth) {
     };
 }
 
+export function useUsers(auth) {
+    let headers = {
+        Authorization: auth
+    };
+    const fetcher = (...args) => fetch(...args, {
+        headers: headers
+    }).then(res => res.json());
+
+    const { data, error, isLoading } = useSWR(`${BACKEND_URL}/users`, fetcher);
+
+    return {
+        users: data,
+        isLoading,
+        isError: error
+    };
+}
+
 export function useMovies() {
     const fetcher = async () => {
         const response = await axios.request({

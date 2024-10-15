@@ -2,21 +2,21 @@ import React from 'react'
 import SideBar from '../../SideBar'
 import { FaRegListAlt, FaUser } from 'react-icons/fa'
 import { HiViewGridAdd } from 'react-icons/hi'
-import { movies } from '../../../Data/movies'
 import Table from '../../../Components/Table'
+import { useMovies, useUsers } from '../../../utils/SWR'
+import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader'
+import Table2 from '../../../Components/Table2'
 
 const Dashboard = () => {
+
+    const movies = useMovies().movies
+    const auth = useAuthHeader()
+    const users = useUsers(auth).users
     const DashboardData = [
         {
             bg:"bg-orange-600", 
             icon:FaRegListAlt,
             title:"Total Movies",
-            total:4
-        },
-        {
-            bg:"bg-blue-600", 
-            icon:HiViewGridAdd,
-            title:"Total Categories",
             total:4
         },
         {
@@ -44,7 +44,9 @@ const Dashboard = () => {
         ))}
         </div>
       <h3 className='text-md font-medium my-6 text-border'>Recent Movies</h3>
-      <Table data={movies.slice(0,5)} admin={true}></Table>
+      <Table data={movies?.slice(0,5)} admin={true}></Table>
+      <h3 className='text-md font-medium my-6 text-border'>Recent Users</h3>
+      <Table2 data={users?.slice(0,5)} users={true}></Table2>
     </SideBar>
   )
 }
