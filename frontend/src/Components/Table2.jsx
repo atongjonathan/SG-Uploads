@@ -17,8 +17,6 @@ function convertTime(created) {
         day: 'numeric', // "13"
         hour: 'numeric', // "10"
         minute: 'numeric', // "34"
-        second: 'numeric', // "13"
-        timeZoneName: 'short' // "GMT"
     });
 }
 
@@ -36,7 +34,7 @@ const Rows = (data, idx, users) => {
                     />
                 </div>
             </td>
-            <td className={Text + ' truncate'}>{data.date_joined}</td>
+            <td className={Text + ' truncate'}>{convertTime(data.date_joined)}</td>
             <td className={Text}>{data.username}</td>
             <td className={Text}>{data.email}</td>
 
