@@ -4,20 +4,23 @@ import useSWR from 'swr';
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 export function useUser(auth) {
-    let headers = {
-        Authorization: auth
-    };
-    const fetcher = (...args) => fetch(...args, {
-        headers: headers
-    }).then(res => res.json());
+    if (auth) {
+        let headers = {
+            Authorization: auth
+        };
+        const fetcher = (...args) => fetch(...args, {
+            headers: headers
+        }).then(res => res.json());
 
-    const { data, error, isLoading } = useSWR(`${BACKEND_URL}/user`, fetcher);
+        const { data, error, isLoading } = useSWR(`${BACKEND_URL}/user`, fetcher);
 
-    return {
-        user: data,
-        isLoading,
-        isError: error
-    };
+        return {
+            user: data,
+            isLoading,
+            isError: error
+        };
+    }
+
 }
 
 export function useUsers(auth) {

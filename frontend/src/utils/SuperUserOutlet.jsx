@@ -9,7 +9,7 @@ const SuperUserOutlet = ({ fallbackPath = '/403', loginPath = '/login' }) => {
   const authHeader = useAuthHeader();
 
   // Get the user details based on the authHeader
-  const { user, error } = useUser(auth?.user_id, authHeader);
+  const user = useUser(auth?.user_id, authHeader)?.user;
 
   // If user is not authenticated, redirect to login page
   if (!auth) {
