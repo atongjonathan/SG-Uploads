@@ -1,9 +1,10 @@
 import React, { useContext } from 'react'
 import SideBar from '../../SideBar'
 import Table from '../../../Components/Table'
+import { useMovies } from '../../../utils/SWR'
 
 const MoviesList = () => {
-  const data = useContext(MovieContext)
+  const movies = useMovies().movies
   return (
     <SideBar>
       <div className="flex flex-col gap-6">
@@ -11,8 +12,7 @@ const MoviesList = () => {
           <h2 className='text-xl font-bold'>Movies List</h2>
           <button className="bg-main font-medium transitions hover:bg-subMain border border-subMain text-white py-3 px-6 rounded">Delete All</button>
         </div>
-        <Table data={data.movies} admin={true}></Table>
-
+        {movies && <Table data={movies} admin={true}></Table>}
       </div>
 
     </SideBar>
