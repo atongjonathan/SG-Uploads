@@ -18,7 +18,7 @@ function MyPlyrVideo({ play, title }) {
                 kind: "captions",
                 label: "English",
                 srclang: "en",
-                src: "/subs/smarter.vtt",
+                src: "https://atongjona.pythonanywhere.com/subs/smarter.vtt",
                 default: true
             }
         ],

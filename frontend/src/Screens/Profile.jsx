@@ -12,7 +12,7 @@ const Profile = () => {
 const backend = Backend()
 
   const authHeader = useAuthHeader()
-  const user = useUser(authHeader).user
+  const user = useUser(authHeader)?.user
   const username = user?.username
   const email = user?.email
   const [image, setFileResponse] = useState(null)

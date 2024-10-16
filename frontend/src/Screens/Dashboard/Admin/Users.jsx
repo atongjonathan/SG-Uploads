@@ -8,7 +8,6 @@ import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader'
 const Users = () => {
     const authHeader = useAuthHeader()
     const response = useUsers(authHeader)
-    console.log(response.users)
     return (
         <SideBar>
             <div className="flex flex-col gap-6">

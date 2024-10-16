@@ -7,7 +7,7 @@ import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader'
 const FavouriteMovies = () => {
   const data = useContext(MovieContext)
   const auth = useAuthHeader()
-  const user = useUser(auth).user
+  const user = useUser(auth)?.user
   const favourites = data.movies.filter((movie) => user.favourites.includes(movie.id))
   return (
     <SideBar>

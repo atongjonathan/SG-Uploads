@@ -11,7 +11,7 @@ const Dashboard = () => {
 
     const movies = useMovies().movies
     const auth = useAuthHeader()
-    const users = useUsers(auth).users
+    const users = useUsers(auth)?.users
     const DashboardData = [
         {
             bg:"bg-orange-600", 

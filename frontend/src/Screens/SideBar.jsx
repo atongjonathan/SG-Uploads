@@ -11,7 +11,7 @@ import { useUser } from '../utils/SWR'
 const SideBar = ({ children }) => {
 
     const auth = useAuthHeader()
-    const user = useUser(auth).user
+    const user = useUser(auth)?.user
 
     const adminLinks = [
         {

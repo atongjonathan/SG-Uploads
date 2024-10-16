@@ -16,7 +16,7 @@ const Navbar = () => {
   const isAuthenticated = useIsAuthenticated()
 
   const auth = useAuthHeader()
-  const user = useUser(auth).user
+  const user = useUser(auth)?.user
 
 
   return (
@@ -37,7 +37,7 @@ const Navbar = () => {
           </div>
           {/* Search form */}
           <div className="col-span-3">
-            <form className="w-10/12 text-sm bg-dryGray rounded flex-btn gap-4">
+            <form className="w-full text-sm bg-dryGray rounded flex-btn gap-4">
               <button
                 type="submit"
                 className="bg-subMain w-12 flex-colo h-12 rounded text-white"

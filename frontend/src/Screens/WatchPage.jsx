@@ -10,7 +10,7 @@ import { useMovies } from '../utils/SWR'
 const WatchPage = () => {
     let { id } = useParams()
     const { movies } = useMovies()
-    const movie = movies.find((movie) => movie.title == id)
+    const movie = movies?.find((movie) => movie.title == id)
     const [play, setPlay] = useState(false)
     return (
         <Layout>
@@ -28,7 +28,7 @@ const WatchPage = () => {
                 </div>
                 {
                     play ? (
-                        <MyPlyrVideo play={play} title={movie.titlem}></MyPlyrVideo>
+                        <MyPlyrVideo play={play} title={movie?.title}></MyPlyrVideo>
 
                     ) : (
                         <div className="w-full h-screen rounded-lg overflow-hidden relative">
@@ -37,7 +37,7 @@ const WatchPage = () => {
                                     <FaPlay></FaPlay>
                                 </button>
                             </div>
-                            <img src={movie.images[0]} alt={movie.name} className='w-full h-full object-cover rounded-lg' />
+                            <img src={movie?.images[0]} alt={movie?.name} className='w-full h-full object-cover rounded-lg' />
                         </div>
                     )
                 }
