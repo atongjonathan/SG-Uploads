@@ -22,4 +22,4 @@ urlpatterns = [
     path('unlike/<id>', views.unlike_movie, name='unlike_movie')
 
 
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_URL)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
