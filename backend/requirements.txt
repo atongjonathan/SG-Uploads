@@ -6,3 +6,4 @@ whitenoise
 django-import-export
 python-dotenv
 requests
+pillow
