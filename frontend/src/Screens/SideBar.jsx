@@ -1,6 +1,6 @@
 import React from 'react'
 import { BsFillGridFill } from 'react-icons/bs'
-import { FaHeart, FaListAlt, FaUsers } from 'react-icons/fa'
+import { FaFilm, FaHeart, FaListAlt, FaUsers } from 'react-icons/fa'
 import { FiSettings } from 'react-icons/fi'
 import { RiLockPasswordLine } from 'react-icons/ri'
 import Layout from '../Layout/Layout'
@@ -23,6 +23,12 @@ const SideBar = ({ children }) => {
             name: 'Movies List',
             link: '/movieslist',
             icon: FaListAlt,
+
+        },
+        {
+            name: 'Add Movie',
+            link: '/addmovie',
+            icon: FaFilm,
 
         },
         // {

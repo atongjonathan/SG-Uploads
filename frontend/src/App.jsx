@@ -21,6 +21,7 @@ import "aos/dist/aos.css";
 import NotAllowed from './Screens/NotAllowed';
 import AuthOutlet from '@auth-kit/react-router/AuthOutlet'
 import SuperUserOutlet from './utils/SuperUserOutlet';
+import AddMovie from './Screens/Dashboard/Admin/AddMovie';
 
 
 
@@ -34,6 +35,7 @@ const App = () => {
           <Route path='/movieslist' element={<MoviesList />}></Route>
           <Route path='/users' element={<Users />}></Route>
           <Route path='/dashboard' element={<Dashboard />}></Route>
+          <Route path='/addmovie' element={<AddMovie />}></Route>
     
         </Route>
 

@@ -6,12 +6,21 @@ import { FaCloud, FaHeart, FaPlay } from 'react-icons/fa'
 import MyPlyrVideo from './MyPlyrVideo'
 import SGFaHeart from '../Components/SGFaHeart'
 import { useMovies } from '../utils/SWR'
+import MovieCasts from '../Components/Single/MovieCasts'
+import MovieRates from '../Components/Single/MovieRates'
+import Titles from '../Components/Titles'
+import { BsCollectionFill } from 'react-icons/bs'
+import Movie from '../Components/Movie';
+
 
 const WatchPage = () => {
     let { id } = useParams()
     const { movies } = useMovies()
     const movie = movies?.find((movie) => movie.title == id)
     const [play, setPlay] = useState(false)
+
+    const RelatesMovies = movies.filter((m) => m.genre[0] = movie.genre[0])
+
     return (
         <Layout>
             <div className="container mx-auto bg-dry p-6 mb-12">
@@ -42,6 +51,22 @@ const WatchPage = () => {
                     )
                 }
             </div>
+            <div className="container mx-auto min-h-screen px-2 my-6">
+                <MovieCasts movie={movie} />
+                <MovieRates movie={movie}></MovieRates>
+                <div className="my-16">
+                    <Titles title="Related Movies" Icon={BsCollectionFill}></Titles>
+                    <div className="grid sm:mt-10 mt-6 xl:grid-cols-4 2xl:grid-cols-5 lg:grid-cols-3 sm:grid-cols-2 gap-6">
+                        {
+                            RelatesMovies.map((movie, idx) => (
+                                <Movie key={idx} movie={movie}></Movie>
+                            ))
+                        }
+                    </div>
+                </div>
+            </div>
+
+
         </Layout>
     )
 }

@@ -1,10 +1,14 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Titles from '../Titles'
 import { BsBook, BsBookmarkStarFill } from 'react-icons/bs'
 import { Message, Select } from '../UserInputs'
 import Rating from '../Star'
 
+const IMDB_API = import.meta.env.VITE_IMDB_API
 const MovieRates = ({ movie }) => {
+
+  const [title, setTitle] = useState(null)
+  const [reviews, setReviews] = useState([])
   const Ratings = [
     {
       title: "1 - Poor",
@@ -28,6 +32,23 @@ const MovieRates = ({ movie }) => {
     },
   ]
   const [rating, setRating] = useState(null)
+
+
+
+  useEffect(() => {
+
+    const title = movie?.link?.split("/")[movie?.link.split("/")?.length - 1]
+
+    fetch(`${IMDB_API}/reviews/${title}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setReviews(data.reviews)
+      })
+      .catch((err) => console.log(err))
+
+
+  }, [movie])
+
   return movie && (
     <div className='my-12'>
       <Titles title="Reviews" Icon={BsBookmarkStarFill}></Titles>
@@ -48,18 +69,18 @@ const MovieRates = ({ movie }) => {
           <h3 className="text-xl text-text font-semibold"></h3>
           <div className="w-full flex flex-col bg-main gap-6 rounded-lg md:p-12 p-6 h-header overflow-y-scroll">
             {
-              movie.reviews.splice(0, 5).map((review, idx) => (
-                <div className="md:grid flex flex-col w-full grid-cols-12 gap-6 bg-dry p-4 border border-gray-800 rounded-lg">
+              reviews?.splice(0, 5).map((review, idx) => (
+                <div key={idx} className="md:grid flex flex-col w-full grid-cols-12 gap-6 bg-dry p-4 border border-gray-800 rounded-lg">
                   <div className="col-span-2 bg-main hidden md:block">
                     <img src="https://images-na.ssl-images-amazon.com/images/M/MV5BMjQ4MTY5NzU2M15BMl5BanBnXkFtZTgwNDc5NTgwMTI@._V1_SY100_SX100_.jpg" alt={review.author} className="w-full h-24 rounded-lg object-cover" />
                   </div>
                   <div className="col-span-7 flex flex-col gap-2">
                     <h2>{review.author}</h2>
                     <p className="text-xs leading-6 font-medium text-text">{review.heading}</p>
-                      </div>
-                      <div className="col-span-3 flex flex-rows border-l border-border text-xs gap-1 text-star">
-                        <Rating value={review.stars/2}></Rating>
-                      </div>
+                  </div>
+                  <div className="col-span-3 flex flex-rows border-l border-border text-xs gap-1 text-star">
+                    <Rating value={review.stars / 2}></Rating>
+                  </div>
                 </div>
 
               ))

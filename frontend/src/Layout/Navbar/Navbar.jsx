@@ -85,7 +85,7 @@ const Navbar = () => {
 
             {isAuthenticated &&
               <NavLink className={`${Hover} relative`} to="/profile" title="Favourites">
-                <div class="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
+                <div className="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
                   {user?.image && <img className="absolute w-12 h-12 rounded-full " src={BACKEND_URL + user.image} alt={user?.username + ' image'} />}
 
                 </div>              </NavLink>
