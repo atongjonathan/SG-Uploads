@@ -1,10 +1,12 @@
 import React from 'react'
 import { BsCollectionPlay } from 'react-icons/bs'
-import { FiHeart, FiUser, FiUserCheck } from 'react-icons/fi'
+import { FiHeart } from 'react-icons/fi'
+import { RxDashboard } from "react-icons/rx";
+import { MdLogout, MdOutlineContactMail, MdLogin, MdOutlineInfo } from "react-icons/md";
 import { NavLink } from 'react-router-dom'
 import { useUser } from '../../utils/SWR'
 import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader'
-import { FaHome, FaPersonBooth, FaPhone, FaQuestion, FaUserMinus } from 'react-icons/fa'
+import { FaPersonBooth, } from 'react-icons/fa'
 import { Button } from '@headlessui/react'
 import useSignOut from 'react-auth-kit/hooks/useSignOut'
 
@@ -18,19 +20,17 @@ const MobileFooter = () => {
 
     return (
         <>
-            <div className='flex-btn h-full bg-white rounded cursor-pointer overflow-y-scroll flex-grow w-full'>
 
-            </div>
 
             <footer className='lg:hidden fixed z-50 bottom-0 w-full px-1'>
                 <div className="bg-dry rounded-md flex-btn w-full p-1">
 
                     <NavLink title="Movies" className={Hover} to="/movies">
-                        <BsCollectionPlay></BsCollectionPlay>
+                        <BsCollectionPlay></BsCollectionPlay><p className='text-xs'>Movies</p>
                     </NavLink>
 
                     {user && user?.is_superuser ? <NavLink title="Dashboard" className={Hover} to="/dashboard">
-                        <FaHome></FaHome>
+                        <RxDashboard></RxDashboard> <p className='text-xs'>Dashboard</p>
                     </NavLink> : user &&
                     <NavLink title="Dashboard" to='/profile' className={Hover}>
                         <FaPersonBooth></FaPersonBooth>
@@ -38,10 +38,11 @@ const MobileFooter = () => {
                     {user ?
                         (<Button title="Log Out" className={Hover} onClick={() => {
                             signOut()
+                            window.location.assign("/")
                         }}>
-                            <FaUserMinus></FaUserMinus>
+                            <MdLogout></MdLogout><p className='text-xs'>LogOut</p>
                         </Button>) : <NavLink className={Hover} to="/login">
-                            <FiUser> </FiUser></NavLink>}
+                            <MdLogin> </MdLogin><p className='text-xs'>LogIn</p></NavLink>}
 
                     {user &&
                         <NavLink className={Hover} to="/favourites" title="Favourites">
@@ -49,16 +50,16 @@ const MobileFooter = () => {
 
                                 <div className="w-4 h-4 flex-colo rounded-full text-xs bg-subMain text-white absolute -top-3 -right-3">{user?.favourites?.length}</div>
                             </div>
-                            <FiHeart></FiHeart>
+                            <FiHeart></FiHeart><p className='text-xs'>Favourites</p>
                         </NavLink>}
                     <NavLink title="About Us" className={Hover} to="/about-us">
-                        <FaQuestion></FaQuestion>
+                        <MdOutlineInfo></MdOutlineInfo ><p className='text-xs'>About</p>
                     </NavLink>
                     {
-                        !user && 
+                        !user &&
                         <NavLink title="About Us" className={Hover} to="/contact-us">
-                        <FaPhone></FaPhone>
-                    </NavLink>
+                            <MdOutlineContactMail></MdOutlineContactMail><p className='text-xs'>Contact</p>
+                        </NavLink>
                     }
                 </div>
             </footer>

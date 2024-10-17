@@ -70,8 +70,8 @@ const Login = () => {
     <Layout>
       <form action="" method='post' onSubmit={(e) => handleSubmit(e)}>
         <div className='container mx-auto px-2 my-5 flex-colo'>
-          <div className="w-full 2xl:w-2/5 gap-8 flex-colo p-5 sm:p-14 md:w-6/12 bg-dry rounded-lg border border-border">
-            <img style={{ scale: '2' }} src={logo} alt="" className='w-full h-12 object-contain' />
+          <div className="w-full 2xl:w-2/5 gap-5 flex-colo p-5 sm:p-14 md:w-6/12 bg-dry rounded-lg border border-border">
+            <img style={{ scale: '1.5' }} src={logo} alt="" className='w-full h-12 object-contain' />
             {
               invalid && <div className="text-oldMain w-full mt-2 text-sm font-medium text-center pt-4">
                 <p>{invalid}</p>
