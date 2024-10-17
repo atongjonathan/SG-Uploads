@@ -8,7 +8,7 @@ function MyPlyrVideo({ play, title }) {
         title: title,
         sources: [
             {
-                src: 'https://other-cecilia-atong-jonathan-04e43c80.koyeb.app/dl/670a0fcdb020015cf937cc7c',
+                src: 'https://other-cecilia-atong-jonathan-04e43c80.koyeb.app/video/670a0fcdb020015cf937cc7c',                
                 type: "video/mp4",
                 size: 720
             }
