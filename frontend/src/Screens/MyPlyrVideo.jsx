@@ -24,6 +24,6 @@ function MyPlyrVideo({ play, title }) {
         ],
          autoplay: play
     };
-    return <Plyr source={videoSrc} />
+    return <Plyr source={videoSrc} crossOrigin="" />
 }
 export default MyPlyrVideo
