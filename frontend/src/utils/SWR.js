@@ -2,6 +2,7 @@ import axios from 'axios';
 import useSWR from 'swr';
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+const VITE_IMDB_API = import.meta.env.VITE_IMDB_API;
 
 export function useUser(auth) {
     if (auth) {
@@ -53,6 +54,24 @@ export function useMovies() {
 
     return {
         movies: data,
+        isLoading,
+        isError: error
+    };
+}
+
+export function useSearchResults(query) {
+    const fetcher = async () => {
+        const response = await axios.request({
+            method: 'GET',
+            url: `${VITE_IMDB_API}/search/query?=${query}`
+        });
+        return response.data; // Return the data from the response
+    };
+
+    const { data, error, isLoading } = useSWR(`${BACKEND_URL}/movies`, fetcher);
+
+    return {
+        results: data,
         isLoading,
         isError: error
     };

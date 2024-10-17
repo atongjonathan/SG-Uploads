@@ -37,7 +37,7 @@ const WatchPage = () => {
                 </div>
                 {
                     play ? (
-                        <MyPlyrVideo play={play} title={movie?.title}></MyPlyrVideo>
+                        <MyPlyrVideo play={play} title={movie?.title} stream={movie.stream}></MyPlyrVideo>
 
                     ) : (
                         <div className="w-full h-screen rounded-lg overflow-hidden relative">

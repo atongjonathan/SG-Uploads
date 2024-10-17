@@ -49,6 +49,8 @@ class Movie(models.Model):
     # Genres and Awards
     genre = models.JSONField(blank=True, null=True)  # List of genres
     award = models.JSONField(blank=True, null=True)  # List of awards won
+
+    stream = models.URLField(blank=True, null=True)
     
         # Additional Fields
     # Add any additional fields as necessary
