@@ -1,3 +1,6 @@
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import api_view, permission_classes, parser_classes
+from django.http import HttpRequest
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAuthenticated
@@ -76,37 +79,20 @@ def create_movie(request):
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-from rest_framework.decorators import api_view, permission_classes, parser_classes
-from rest_framework.parsers import MultiPartParser, FormParser
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.response import Response
-from rest_framework import status
-
-@permission_classes([IsAuthenticated])
 @api_view(['POST'])
-def update_user(request):
-    try:
-        # Retrieve the uploaded image file
-        image = request.FILES.get('image')
-        username = request.data.get('username')
-        email = request.data.get('email')
+@parser_classes([MultiPartParser, FormParser])
+@permission_classes([IsAuthenticated])
+def update_user(request: HttpRequest):
+    user = request.user  # Get the authenticated user
+    serializer = SGUserSerializer(user, data=request.data, partial=True)  # Use partial update
 
-        # Validate the data
-        if not username or not email:
-            return Response({"error": "Username and email are required."}, status=status.HTTP_400_BAD_REQUEST)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-        # Update the current user's profile
-        user = request.user  # Since SGUser extends AbstractUser, this is already an SGUser instance
 
-        if image:
-            user.image = image  # Update the image if provided
-        user.username = username  # Update the username
-        user.email = email  # Update the email
-        user.save()  # Save the changes
-
-        return Response({"message": "Profile updated successfully."}, status=status.HTTP_200_OK)
-    except Exception as e:
-        return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 @api_view(['POST'])

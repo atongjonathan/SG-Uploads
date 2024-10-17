@@ -10,6 +10,8 @@ import { FaPersonBooth, } from 'react-icons/fa'
 import { Button } from '@headlessui/react'
 import useSignOut from 'react-auth-kit/hooks/useSignOut'
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
+
 const MobileFooter = () => {
     const active = 'bg-subMain text-main'
     const inActive = 'transitions text-2xl flex-colo hover:bg-white hover:text-main text-white rounded-md px-4 py-3'
@@ -25,7 +27,7 @@ const MobileFooter = () => {
             <footer className='lg:hidden fixed z-50 bottom-0 w-full px-1'>
                 <div className="bg-dry rounded-md flex-btn w-full p-1">
 
-                    <NavLink title="Movies" className={Hover} to="/movies">
+                    <NavLink title="Movies" className={Hover} to="/">
                         <BsCollectionPlay></BsCollectionPlay><p className='text-xs'>Movies</p>
                     </NavLink>
 
@@ -45,16 +47,21 @@ const MobileFooter = () => {
                             <MdLogin> </MdLogin><p className='text-xs'>LogIn</p></NavLink>}
 
                     {user &&
-                        <NavLink className={Hover} to="/favourites" title="Favourites">
-                            <div className="relative">
+                        <NavLink className={Hover} to="/profile" title="Profile">
+                            <div class="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
+                                {user?.image && <img className="absolute w-12 h-12 rounded-full " src={BACKEND_URL + user.image} alt={user?.username + ' image'} />}
 
-                                <div className="w-4 h-4 flex-colo rounded-full text-xs bg-subMain text-white absolute -top-3 -right-3">{user?.favourites?.length}</div>
                             </div>
-                            <FiHeart></FiHeart><p className='text-xs'>Favourites</p>
+                            <p className='text-xs'>Profile</p>
                         </NavLink>}
-                    <NavLink title="About Us" className={Hover} to="/about-us">
-                        <MdOutlineInfo></MdOutlineInfo ><p className='text-xs'>About</p>
-                    </NavLink>
+
+                    {
+                        !user &&
+                        <NavLink title="About Us" className={Hover} to="/about-us">
+                            <MdOutlineInfo></MdOutlineInfo ><p className='text-xs'>About</p>
+
+                        </NavLink>
+                    }
                     {
                         !user &&
                         <NavLink title="About Us" className={Hover} to="/contact-us">

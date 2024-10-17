@@ -8,6 +8,9 @@ import { Button } from "@headlessui/react";
 import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
 import { useUser } from "../../utils/SWR";
 
+
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
 const Navbar = () => {
   const hover = 'hover:text-subMain transitions text-white'
   const Hover = ({ isActive }) => (isActive ? 'text-subMain' : hover)
@@ -52,19 +55,21 @@ const Navbar = () => {
             </form>
           </div>
           {/* menus */}
-          <div className="col-span-3 font-medium text-sm hidden xl:gap-14 2xl:gap-20 justify-between lg:flex xl:justify-end items-center">
+          <div className="col-span-3 font-medium text-sm hidden xl:gap-10 2xl:gap-20 justify-between lg:flex xl:justify-end items-center">
 
             { }
             <NavLink title="Movies" className={Hover} to="/movies">
               Movies
             </NavLink>
-            <NavLink title="About Us" className={Hover} to="/about-us">
+            {!user && <NavLink title="About Us" className={Hover} to="/about-us">
               About
-            </NavLink>
+            </NavLink>}
 
-            <NavLink title="Contact Us" className={Hover} to="/contact-us">
+            {!user && <NavLink title="Contact Us" className={Hover} to="/contact-us">
               Contact
-            </NavLink>
+            </NavLink>}
+
+
             {isAuthenticated && user?.is_superuser ? <NavLink title="Dashboard" className={Hover} to="/dashboard">
               Dashboard
             </NavLink> : isAuthenticated &&
@@ -77,12 +82,22 @@ const Navbar = () => {
                 <div className="w-4 h-4 flex-colo rounded-full text-xs bg-subMain text-white absolute -top-3 -right-3">{user?.favourites?.length}</div>
               </NavLink>
             }
+
+            {isAuthenticated &&
+              <NavLink className={`${Hover} relative`} to="/profile" title="Favourites">
+                <div class="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
+                  {user?.image && <img className="absolute w-12 h-12 rounded-full " src={BACKEND_URL + user.image} alt={user?.username + ' image'} />}
+
+                </div>              </NavLink>
+            }
             {isAuthenticated ?
               (<Button title="Log Out" className={Hover} onClick={() => {
                 signOut()
                 navigate("/login")
               }}>
-                LogOut
+                Logout
+
+
               </Button>) : <NavLink className={Hover} to="/login">
                 <p>Log In</p></NavLink>}
 

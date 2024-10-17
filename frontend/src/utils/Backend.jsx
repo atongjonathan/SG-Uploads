@@ -71,6 +71,8 @@ const Backend = () => {
     const updateProfile = async (authHeader, data) => {
         const refreshUrl = `${BACKEND_URL}/update-user`;
         const reqOptions = createRequestOptions(refreshUrl, "POST", data, authHeader);
+        reqOptions.headers["Content-Type"] = 'multipart/form-data'
+        console.log(reqOptions)
         try {
             const response = await axios.request(reqOptions);
             return response;
