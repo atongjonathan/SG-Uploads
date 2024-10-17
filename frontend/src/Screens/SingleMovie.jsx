@@ -16,7 +16,7 @@ const SingleMovie = () => {
     ? movies.find((movie) => movie.title === id)
     : null;  // Fallback if movies is not an array
 
-  const RelatesMovies = movies.filter((m) => m.genre[0] = movie.genre[0])
+  const RelatesMovies = movies?.filter((m) => m.genre[0] = movie.genre[0])
   return (
     <Layout>
       <MovieInfo movie={movie}></MovieInfo>
@@ -27,7 +27,7 @@ const SingleMovie = () => {
           <Titles title="Related Movies" Icon={BsCollectionFill}></Titles>
           <div className="grid sm:mt-10 mt-6 xl:grid-cols-4 2xl:grid-cols-5 lg:grid-cols-3 sm:grid-cols-2 gap-6">
             {
-              RelatesMovies.map((movie, idx) => (
+              RelatesMovies?.map((movie, idx) => (
                 <Movie key={idx} movie={movie}></Movie>
               ))
             }
