@@ -73,11 +73,9 @@ const AddMovie = () => {
         if (response.data) {
             toast(movie.title + ' added successfully')
         }
-        else if (response.message) {
-            toast(response.message)
-        }
         else {
-            toast(movie.title + ' addition failes')
+            console.log(response)
+            toast(movie.title + ' addition failed')
 
         }
     }
@@ -90,17 +88,15 @@ const AddMovie = () => {
                 </div>
                 {
                     movie && !isloading ?
-                        <form method='post' onSubmit={(e) => handleSubmit(e)}>
+                        <form className='xl:col-span-6 w-full' method='post' onSubmit={(e) => handleSubmit(e)}>
 
-                            <div className={`text-3xl py-3 flex justify-start`}>
+                            <div className={`text-3xl py-3 flex justify-start flex-wrap`}>
                                 <div className="w-12 p-1 bg-dry border border-border h-12 rounded overflow-hidden">
                                     <img src={movie.image} alt={movie.title} className='h-full w-full object-cover' />
                                 </div>
-                                <p className={Text}>{movie.title}</p>
-                                <p className={Text}>{movie.year}</p>
-                                <p className={Text}>{movie.contentType.toLocaleUpperCase()}</p>
+                                <p className={Text}>{movie.title} -  {movie.year}</p>
+                                <p className={Text}><a href={movie.imdb}>{movie.genre[0]} - {movie.contentType.toLocaleUpperCase()}</a></p>
                                 <p className={Text}><a href={movie.imdb}>{movie.link}</a></p>
-                                <p className={Text}><a href={movie.imdb}>{movie.genre[0]}</a></p>
 
                             </div>
                             <Input name='stream' type='text' placeholder='Stream Link'></Input>

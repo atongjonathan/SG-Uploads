@@ -6,7 +6,7 @@ import Titles from '../Titles'
 
 
 const MovieCasts = ({movie}) => {
-  return (
+  return movie && (
     <div className="my-12">
         <Titles title="Casts" Icon={FaUserFriends}></Titles>
         <div className="mt-10">
