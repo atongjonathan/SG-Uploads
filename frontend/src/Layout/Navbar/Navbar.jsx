@@ -21,7 +21,7 @@ const Navbar = () => {
 
   const auth = useAuthHeader()
   const user = useUser(auth)?.user
-  const movies = useMovies().movies
+  const movies = useMovies()?.movies
   const [isresults, setResults] = useState([])
   function searchMovie(e) {
     setResults(movies.filter((movie) => movie.title.toLowerCase().includes(e.target.value.toLowerCase())))

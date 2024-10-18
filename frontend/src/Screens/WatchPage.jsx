@@ -30,9 +30,9 @@ const WatchPage = () => {
                     </Link>
                     <div className="flex-btn sm:w-auto w-full gap-5">
                         <SGFaHeart movie={movie}></SGFaHeart>
-                        <button className="bg-subMain flex-rows gap-2 hover:text-main transitions text-white rounded px-3 font-medium py-3 text-sm">
+                        <Link to='https://t.me/dont_be_soy' target="_blank" className="bg-subMain flex-rows gap-2 hover:text-main transitions text-white rounded px-3 font-medium py-3 text-sm">
                             <FaCloud></FaCloud> Download
-                        </button>
+                        </Link>
                     </div>
                 </div>
                 {

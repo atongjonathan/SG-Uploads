@@ -31,9 +31,9 @@ const Rows = (movie, idx, admin) =>
                     </>
                 ) : (
                     <>
-                        <button className='border border-border bg-dry flex-rows gap-2 text-border rounded py-1 px-2'>
+                        <Link to='https://t.me/dont_be_soy' target="_blank" className='border border-border bg-dry flex-rows gap-2 text-border rounded py-1 px-2'>
                             Download <FaCloudDownloadAlt className='text-green-500'></FaCloudDownloadAlt>
-                        </button>
+                        </Link>
                         <Link to={`/movie/${movie.title}`} className='bg-subMain text-white rounded flex-colo w-6 h-6'> <GoEye></GoEye></Link>
                         <SGFaHeart movie={movie}></SGFaHeart>
 
