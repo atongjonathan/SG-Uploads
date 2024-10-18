@@ -83,11 +83,11 @@ const Backend = () => {
     };
 
 
-    const addMovie = async (authHeader, data) => {
+    const addMovie =  (authHeader, data) => {
         const refreshUrl = `${BACKEND_URL}/create-movie`;
         const reqOptions = createRequestOptions(refreshUrl, "POST", data, authHeader);
         try {
-            const response = await axios.request(reqOptions);
+            const response =  axios.request(reqOptions);
             return response;
         } catch (error) {
             console.log(error);

@@ -60,6 +60,7 @@ const AddMovie = () => {
 
 
     }
+    
 
     function handleSubmit(e) {
         e.preventDefault()
@@ -69,7 +70,7 @@ const AddMovie = () => {
         let movieData = movie
         movieData.stream = formObject.stream
         movieData.poster = movie.image
-        const response = backend.addMovie(auth, movieData)
+        const response =  backend.addMovie(auth, movieData)
         if (response.data) {
             toast(movie.title + ' added successfully')
         }

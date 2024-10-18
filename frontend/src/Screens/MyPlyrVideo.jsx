@@ -13,22 +13,18 @@ function MyPlyrVideo({ play, movie }) {
                 size: 720
             }
         ],
-        tracks: [
-            {
-                kind: "captions",
-                label: "English",
-                srclang: "en",
-                src: "https://other-cecilia-atong-jonathan-04e43c80.koyeb.app/dl/670ad8896382ea424bfc95c3",
-            }
-        ],
+        tracks: movie.captions?.map((caption) => {
+            caption.kind = 'captions'
+            return caption
+        }),
         autoplay: play,
         mediaMetadata:
         {
-            title:movie.title,
-            artwork:movie.poster
+            title: movie.title,
+            artwork: movie.poster
         },
-        poster:movie.images[0],
-        previewThumbnails:movie.images
+        poster: movie.images[0],
+        previewThumbnails: movie.images
     };
     return <Plyr source={videoSrc} crossOrigin="" />
 }
