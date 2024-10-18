@@ -84,6 +84,9 @@ def create_movie(request):
 @permission_classes([IsAuthenticated])
 def update_user(request: HttpRequest):
     user = request.user  # Get the authenticated user
+    if (request.data.get("name")):
+        user.name = request.data.get("name")
+        user.save()
     serializer = SGUserSerializer(user, data=request.data, partial=True)  # Use partial update
 
     if serializer.is_valid():

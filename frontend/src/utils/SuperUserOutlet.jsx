@@ -17,7 +17,7 @@ const SuperUserOutlet = ({ fallbackPath = '/403', loginPath = '/login' }) => {
   }
 
   // If user is authenticated but not a superuser, redirect to "Not Allowed" page
-  if (user && !user.is_superuser) {
+  if (!user?.is_superuser) {
     return <Navigate to={fallbackPath} />;
   }
 

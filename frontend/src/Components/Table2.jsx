@@ -3,6 +3,7 @@ import { FaCloudDownloadAlt, FaEdit } from 'react-icons/fa'
 import { GoEye } from 'react-icons/go'
 import { MdDelete } from 'react-icons/md'
 import { Link } from 'react-router-dom'
+import Backend from '../utils/Backend'
 
 const Head = "text-xs text-left text-main font-semibold px-6 py-2 uppercase"
 
@@ -20,6 +21,7 @@ function convertTime(created) {
     });
 }
 
+const backend = Backend()
 const Rows = (data, idx, users) => {
     return users ? (
         <tr key={idx}>
@@ -28,7 +30,7 @@ const Rows = (data, idx, users) => {
             <td className={`${Text}`}>
                 <div className="w-12 p-1 bg-dry border border-border h-12 rounded overflow-hidden">
                     <img
-                        src={data.image ? data.image : 'https://images-na.ssl-images-amazon.com/images/M/MV5BMjQ4MTY5NzU2M15BMl5BanBnXkFtZTgwNDc5NTgwMTI@._V1_SY100_SX100_.jpg'}
+                        src={data.image ? backend.BACKEND_URL + data.image : 'https://images-na.ssl-images-amazon.com/images/M/MV5BMjQ4MTY5NzU2M15BMl5BanBnXkFtZTgwNDc5NTgwMTI@._V1_SY100_SX100_.jpg'}
                         alt={data.fullName}
                         className="h-full w-full object-cover"
                     />
@@ -36,6 +38,7 @@ const Rows = (data, idx, users) => {
             </td>
             <td className={Text + ' truncate'}>{convertTime(data.date_joined)}</td>
             <td className={Text}>{data.username}</td>
+            <td className={Text}>{data.name ? data.name : '_'}</td>
             <td className={Text}>{data.email}</td>
 
         </tr>
@@ -71,7 +74,8 @@ const Table2 = ({ data, users }) => {
                                 <>
                                     <th scope='col' className={`${Head}`}>No</th>
                                     <th scope='col' className={`${Head}`}>image</th>
-                                    <th scope='col' className={`${Head}`}>Date</th>
+                                    <th scope='col' className={`${Head}`}>Date joined</th>
+                                    <th scope='col' className={`${Head}`}>Username</th>
                                     <th scope='col' className={`${Head}`}>Full Name</th>
                                     <th scope='col' className={`${Head}`}>Email</th>
 
