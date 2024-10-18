@@ -2,13 +2,13 @@ import Plyr from "plyr-react"
 import "plyr-react/plyr.css"
 
 
-function MyPlyrVideo({ play, title, stream }) {
+function MyPlyrVideo({ play, movie }) {
     const videoSrc = {
         type: "video",
-        title: title,
+        title: movie.title,
         sources: [
             {
-                src: stream ? stream : 'https://other-cecilia-atong-jonathan-04e43c80.koyeb.app/video/670a0fcdb020015cf937cc7c',
+                src: movie.stream ? movie.stream : 'https://other-cecilia-atong-jonathan-04e43c80.koyeb.app/video/670a0fcdb020015cf937cc7c',
                 type: "video/mp4",
                 size: 720
             }
@@ -18,10 +18,17 @@ function MyPlyrVideo({ play, title, stream }) {
                 kind: "captions",
                 label: "English",
                 srclang: "en",
-                src: "https://atongjona.pythonanywhere.com/subs/smarter.vtt",
+                src: "https://other-cecilia-atong-jonathan-04e43c80.koyeb.app/dl/670ad8896382ea424bfc95c3",
             }
         ],
-        autoplay: play
+        autoplay: play,
+        mediaMetadata:
+        {
+            title:movie.title,
+            artwork:movie.poster
+        },
+        poster:movie.images[0],
+        previewThumbnails:movie.images
     };
     return <Plyr source={videoSrc} crossOrigin="" />
 }

@@ -24,7 +24,7 @@ const SGFaHeart = ({ movie }) => {
     if (user && movie) {
       setIsFavourite(user.favourites?.includes(movie?.id));
     }
-  }, [user, movie]);
+  }, [user]);
 
   const like = async (id) => {
     const response = await backend.like(authHeader, id);

@@ -73,10 +73,13 @@ const AddMovie = () => {
         if (response.data) {
             toast(movie.title + ' added successfully')
         }
-        else {
-            toast(movie.title + ' addition failed')
+        else if (response.message) {
+            toast(response.message)
         }
-        console.log(movieData)
+        else {
+            toast(movie.title + ' addition failes')
+
+        }
     }
     return (
         <SideBar>

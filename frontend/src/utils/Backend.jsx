@@ -96,7 +96,7 @@ const Backend = () => {
     };
 
 
-    return { signUp, loginUser, like, unlike, updateProfile, addMovie};
+    return { signUp, loginUser, like, unlike, updateProfile, addMovie, BACKEND_URL};
 };
 
 export default Backend;

@@ -6,6 +6,9 @@
 :root {
     --plyr-color-main: #14759f;
     /* --plyr-captions-text-color:#14759f; */
+    --plyr-progress-loading-background:#14759f;
+
+
 }
 
 body,

@@ -19,25 +19,25 @@ const WatchPage = () => {
     const movie = movies?.find((movie) => movie.title == id)
     const [play, setPlay] = useState(false)
 
-    const RelatesMovies = movies.filter((m) => m.genre[0] = movie.genre[0])
+    const RelatesMovies = movies?.filter((m) => m.genre[0] = movie?.genre[0])
 
     return (
         <Layout>
             <div className="container mx-auto bg-dry p-6 mb-12">
-                <div className="flex-btn flex-wrap mb-6 gap-2 bg-main rounded border border-gray-800 p-6 ">
-                    <Link to={`/movie/${movie?.title}`} className='md:text-xl text-sm flex gap-3 items-center font-bold text-dryGray'>
+                <div className="flex-btn flex-wrap mb-6 gap-4 bg-main rounded border border-gray-800 p-6 ">
+                    <Link to={`/movie/${movie?.title}`} className='text-lg flex gap-3 items-center font-bold text-dryGray'>
                         <BiArrowBack></BiArrowBack> {movie?.title}
                     </Link>
                     <div className="flex-btn sm:w-auto w-full gap-5">
                         <SGFaHeart movie={movie}></SGFaHeart>
-                        <button className="bg-subMain flex-rows gap-2 hover:text-main transitions text-white rounded px-8 font-medium py-3 text-sm">
+                        <button className="bg-subMain flex-rows gap-2 hover:text-main transitions text-white rounded px-3 font-medium py-3 text-sm">
                             <FaCloud></FaCloud> Download
                         </button>
                     </div>
                 </div>
                 {
-                    play ? (
-                        <MyPlyrVideo play={play} title={movie?.title} stream={movie.stream}></MyPlyrVideo>
+                    play && movie ?  (
+                        <MyPlyrVideo play={play} movie={movie}></MyPlyrVideo>
 
                     ) : (
                         <div className="w-full h-screen rounded-lg overflow-hidden relative">
@@ -52,13 +52,13 @@ const WatchPage = () => {
                 }
             </div>
             <div className="container mx-auto min-h-screen px-2 my-6">
-                <MovieCasts movie={movie} />
+                {/* <MovieCasts movie={movie} /> */}
                 <MovieRates movie={movie}></MovieRates>
                 <div className="my-16">
                     <Titles title="Related Movies" Icon={BsCollectionFill}></Titles>
                     <div className="grid sm:mt-10 mt-6 xl:grid-cols-4 2xl:grid-cols-5 lg:grid-cols-3 sm:grid-cols-2 gap-6">
                         {
-                            RelatesMovies.map((movie, idx) => (
+                            RelatesMovies?.map((movie, idx) => (
                                 <Movie key={idx} movie={movie}></Movie>
                             ))
                         }

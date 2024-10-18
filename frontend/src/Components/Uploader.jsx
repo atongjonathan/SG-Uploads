@@ -33,7 +33,7 @@ const Uploader = ({ updateParentFile }) => {
         {...getRootProps()}
         className="px-6 py-8 border-2 border-border border-dashed bg-main rounded-md cursor-pointer"
       >
-        <input name="image" {...getInputProps()} />
+        <input {...getInputProps()} />
         <span className="mx-auto flex-colo text-subMain text-3xl">
           <FiUploadCloud />
         </span>
