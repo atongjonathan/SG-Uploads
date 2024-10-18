@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import SideBar from './SideBar'
 import Table from '../Components/Table'
 import { useMovies, useUser } from '../utils/SWR'
@@ -9,6 +9,11 @@ const FavouriteMovies = () => {
   const auth = useAuthHeader()
   const user = useUser(auth)?.user
   const favourites = movies?.filter((movie) => user.favourites.includes(movie.id))
+
+  useEffect(()=>{
+    document.title = `Favourite Movies`
+
+}, [])
   return (
     <SideBar>
       <div className="flex flex-col gap-6">

@@ -26,6 +26,10 @@ const Dashboard = () => {
             total:4
         },
     ]
+    useEffect(()=>{
+        document.title = `Dashboard`
+
+    }, [])
   return (
     <SideBar>
         <h2 className='text-xl font-semibold'>Dashboard</h2>

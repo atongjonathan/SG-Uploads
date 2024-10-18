@@ -8,6 +8,11 @@ import CategoryModal from '../../../Components/Modals/CategoryModal'
 const Categories = () => {
     const data = useContext(MovieContext)
     const [modalOpen, setModalOpen] = useState(false)
+
+    useEffect(()=>{
+        document.title = `Categories`
+
+    }, [])
     return (
         <SideBar>
             <CategoryModal modalOpen={modalOpen} setModalOpen={setModalOpen}></CategoryModal>

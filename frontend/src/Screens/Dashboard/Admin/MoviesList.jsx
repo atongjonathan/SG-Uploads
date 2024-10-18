@@ -5,6 +5,11 @@ import { useMovies } from '../../../utils/SWR'
 
 const MoviesList = () => {
   const movies = useMovies().movies
+
+  useEffect(()=>{
+    document.title = `Movies List`
+
+}, [])
   return (
     <SideBar>
       <div className="flex flex-col gap-6">

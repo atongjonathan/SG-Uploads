@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import SideBar from './SideBar'
 import Uploader from '../Components/Uploader'
 import { Input } from '../Components/UserInputs'
@@ -65,6 +65,11 @@ const Profile = () => {
   const handleDataFromChild = useCallback((data) => {
     setFileResponse(data)
   })
+
+  useEffect(()=>{
+    document.title = `Update Profile`
+
+}, [])
   return (
     <>
       <SideBar>

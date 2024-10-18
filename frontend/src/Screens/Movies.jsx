@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Layout from '../Layout/Layout'
 import Filters from '../Components/Filters'
 import Movie from '../Components/Movie'
@@ -14,6 +14,11 @@ const MoviesPage = () => {
     setPage(page + maxpage)
 
   }
+
+  useEffect(()=>{
+    document.title = `All Movies`
+
+}, [])
   return (
     <Layout>
       <div className="min-height-screen container mx-auto px-2 my-6">

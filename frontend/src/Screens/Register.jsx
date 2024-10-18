@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Layout from '../Layout/Layout'
 import { Input } from '../Components/UserInputs'
 import { Link, useNavigate } from 'react-router-dom'
@@ -35,6 +35,11 @@ const Register = () => {
     setLoading(false)
 
   }
+
+  useEffect(()=>{
+    document.title = `Sign Up`
+
+}, [])
   return (
     <Layout>
       <form method='post' onSubmit={(e) => handleSubmit(e)} className='container mx-auto px-2 my-24 flex-colo'>

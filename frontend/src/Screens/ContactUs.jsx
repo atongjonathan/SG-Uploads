@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Layout from "../Layout/Layout";
 import Head from "../Components/Head";
 import { FaTelegram, FaVoicemail, FaWhatsapp } from 'react-icons/fa';
@@ -26,6 +26,11 @@ const ContactUs = () => {
       contact: 'https://maps.app.goo.gl/GLUK7ouvs8WA1ViSA'
     }
   ]
+
+  useEffect(()=>{
+    document.title = `Contact Us`
+
+}, [])
   return (
     <Layout>
       <div className="min-height-screen container mx-auto px-2 my-6">

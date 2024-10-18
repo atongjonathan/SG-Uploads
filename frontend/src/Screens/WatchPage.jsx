@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Layout from '../Layout/Layout'
 import { Link, useParams } from 'react-router-dom'
 import { BiArrowBack } from 'react-icons/bi'
@@ -21,7 +21,12 @@ const WatchPage = () => {
 
     const RelatesMovies = movies?.filter((m) => m.genre[0] = movie?.genre[0])
 
-    return (
+    useEffect(()=>{
+        document.title = `Watch ${movie?.title} (${movie?.year})`
+
+    }, [])
+
+    return movie && (
         <Layout>
             <div className="container mx-auto bg-dry p-6 mb-12">
                 <div className="flex-btn flex-wrap mb-6 gap-4 bg-main rounded border border-gray-800 p-6 ">

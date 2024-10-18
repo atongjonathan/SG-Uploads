@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Layout from '../Layout/Layout'
 import { Input } from '../Components/UserInputs'
 import { Link, useNavigate } from 'react-router-dom'
@@ -66,6 +66,11 @@ const Login = () => {
       }
     }
   }
+
+  useEffect(()=>{
+    document.title = `Log In`
+
+}, [])
   return (
     <Layout>
       <form action="" method='post' onSubmit={(e) => handleSubmit(e)}>

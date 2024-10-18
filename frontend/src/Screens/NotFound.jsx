@@ -1,10 +1,14 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { BiHomeAlt } from 'react-icons/bi'
 import { Link } from 'react-router-dom'
 import notfound from '../images/404.svg'
 
 
 const NotFound = () => {
+  useEffect(()=>{
+    document.title = `Not Found`
+
+}, [])
   return (
     <div className='flex-colo gap-8 w-full min-h-screen text-white bg-main lg:py-20 py-10 px-6'>
       <img className="w-full h-96 object-contain" src={notfound} alt="notfound" />

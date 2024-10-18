@@ -79,6 +79,10 @@ const AddMovie = () => {
 
         }
     }
+    useEffect(()=>{
+        document.title = `Add Movie`
+
+    }, [])
     return (
         <SideBar>
             <div className="flex flex-col gap-6">
