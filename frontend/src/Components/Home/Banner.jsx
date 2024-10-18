@@ -1,5 +1,5 @@
 import React from "react";
-import { Autoplay } from "swiper/modules";
+import { Autoplay, FreeMode, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import FlexMovieItems from "../FlexMovieItems";
 import { Link } from "react-router-dom";

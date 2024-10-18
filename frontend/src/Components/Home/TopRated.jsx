@@ -36,7 +36,7 @@ const TopRated = () => {
           breakpoints={
             {
               0: {
-                slidesPerView: 1,
+                slidesPerView: 2,
                 spaceBetween: 10
               },
               768: {
@@ -48,8 +48,8 @@ const TopRated = () => {
                 spaceBetween: 30
               },
               1280: {
-                slidesPerView: 4,
-                spaceBetween: 40
+                slidesPerView: 5,
+                spaceBetween: 30
               },
             }
           }

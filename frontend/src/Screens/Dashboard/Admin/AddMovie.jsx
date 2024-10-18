@@ -62,7 +62,7 @@ const AddMovie = () => {
     }
     
 
-    function handleSubmit(e) {
+    async function handleSubmit (e) {
         e.preventDefault()
         const formData = new FormData(e.target)
         const formObject = Object.fromEntries(formData.entries())
@@ -70,12 +70,11 @@ const AddMovie = () => {
         let movieData = movie
         movieData.stream = formObject.stream
         movieData.poster = movie.image
-        const response =  backend.addMovie(auth, movieData)
+        const response = await backend.addMovie(auth, movieData)
         if (response.data) {
             toast(movie.title + ' added successfully')
         }
         else {
-            console.log(response)
             toast(movie.title + ' addition failed')
 
         }

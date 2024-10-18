@@ -8,6 +8,8 @@ import "aos/dist/aos.css";
 import createStore from 'react-auth-kit/createStore';
 import AuthProvider from 'react-auth-kit';
 import refreshApi from "./utils/Refresh.js";
+import 'swiper/css/free-mode';
+import 'swiper/css/pagination';
 
 
 const store = createStore({
