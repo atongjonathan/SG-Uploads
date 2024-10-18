@@ -8,7 +8,13 @@ const Layout = ({ children }) => {
   return (
     <>
       <div className="bg-main text-white">
-        <Toaster></Toaster>
+        <Toaster position="top-right" toastOptions={{
+          classNames: {
+            toast: 'bg-subMain',
+            title: 'text-white',
+            closeButton: 'bg-subMain text-white hover:text-subMain',
+          },
+        }} ></Toaster>
         <Navbar></Navbar>
         {children}
         <Footer></Footer>
