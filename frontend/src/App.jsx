@@ -31,13 +31,13 @@ const App = () => {
     <BrowserRouter>
       <Routes>
         {/* Protected routes for superusers */}
-        <Route element={<SuperUserOutlet fallbackPath='/403' />}>
-          <Route path='/movieslist' element={<MoviesList />}></Route>
-          <Route path='/users' element={<Users />}></Route>
-          <Route path='/dashboard' element={<Dashboard />}></Route>
-          <Route path='/addmovie' element={<AddMovie />}></Route>
-    
-        </Route>
+        {/* <Route element={<SuperUserOutlet fallbackPath='/403' />}> */}
+        <Route path='/movieslist' element={<MoviesList />}></Route>
+        <Route path='/users' element={<Users />}></Route>
+        <Route path='/dashboard' element={<Dashboard />}></Route>
+        <Route path='/addmovie' element={<AddMovie />}></Route>
+
+        {/* </Route> */}
 
         {/* Protected routes for authenticated users */}
         <Route element={<AuthOutlet fallbackPath='/login' />}>

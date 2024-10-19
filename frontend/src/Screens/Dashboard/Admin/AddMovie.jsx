@@ -14,9 +14,6 @@ const backend = Backend()
 const VITE_IMDB_API = import.meta.env.VITE_IMDB_API
 const AddMovie = () => {
 
-    const active = 'bg-dryGray text-subMain'
-    const hover = ''
-    const inActive = 'rounded font-medium text-sm transitions flex gap-3 items-center p-4'
 
     const Head = "text-xs text-left text-main font-semibold px-6 py-2 uppercase"
     const Text = 'text-sm text-left leading-6 whitespace-nowrap px-5 py-3'
@@ -53,16 +50,15 @@ const AddMovie = () => {
             .then((data) => {
                 data.link = link
                 setMovie(data)
-                console.log(data)
                 setLoading(false)
             })
 
 
 
     }
-    
 
-    async function handleSubmit (e) {
+
+    async function handleSubmit(e) {
         e.preventDefault()
         const formData = new FormData(e.target)
         const formObject = Object.fromEntries(formData.entries())
@@ -70,16 +66,26 @@ const AddMovie = () => {
         let movieData = movie
         movieData.stream = formObject.stream
         movieData.poster = movie.image
+        movieData.captions = [
+            {
+                "label": "English",
+                "srclang": "en",
+                "src": formObject.caption
+            }
+        ]
+
         const response = await backend.addMovie(auth, movieData)
         if (response.data) {
             toast(movie.title + ' added successfully')
+            setMovie(null)
         }
         else {
             toast(movie.title + ' addition failed')
 
         }
+
     }
-    useEffect(()=>{
+    useEffect(() => {
         document.title = `Add Movie`
 
     }, [])
@@ -104,6 +110,7 @@ const AddMovie = () => {
 
                             </div>
                             <Input name='stream' type='text' placeholder='Stream Link'></Input>
+                            <Input name='caption' type='text' placeholder='English Caption link'></Input>
                             <div className="flex gap-2 flex-wrap flex-col-reverse sm:flex-row justify-between items-center my-4">
                                 {/* <button className="bg-subMain font-medium transitions hover:bg-main border border-subMain text-white py-3 px-6 rounded w-full sm:w-auto">Delete Account</button> */}
                                 <button className="bg-main font-medium transitions hover:bg-subMain border border-subMain text-white py-3 px-6 rounded w-full sm:w-auto">Add Movie</button>
@@ -152,7 +159,9 @@ const AddMovie = () => {
                         </div>
                 }
                 {
-                    isloading && <CgSpinner className='animate-spin'></CgSpinner>
+                    isloading && <div className="col-span-3">
+                        <CgSpinner size='20' className='animate-spin'></CgSpinner>
+                    </div>
                 }
 
             </div>
