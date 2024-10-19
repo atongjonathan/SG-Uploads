@@ -29,11 +29,11 @@ const WatchPage = () => {
     return movie && (
         <Layout>
             <div className="container mx-auto bg-dry p-6 mb-12">
-                <div className="flex-btn flex-wrap mb-6 gap-4 bg-main rounded border border-gray-800 p-6 ">
-                    <Link to={`/movie/${movie?.title}`} className='text-lg flex gap-3 items-center font-bold text-dryGray'>
-                        <BiArrowBack></BiArrowBack> {movie?.title}
+                <div className="flex-btn flex-row mb-6 gap-4 bg-main rounded border border-gray-800 p-6 ">
+                    <Link to={`/`} className='md:text-lg  flex gap-3 items-center font-bold text-dryGray'>
+                        <BiArrowBack></BiArrowBack> <p className='hidden lg:inline-block'>{movie?.title}</p>
                     </Link>
-                    <div className="flex-btn sm:w-auto w-full gap-5">
+                    <div className="flex flex-btn gap-5">
                         <SGFaHeart movie={movie}></SGFaHeart>
                         <Link to='https://t.me/dont_be_soy' target="_blank" className="bg-subMain flex-rows gap-2 hover:text-main transitions text-white rounded px-3 font-medium py-3 text-sm">
                             <FaCloud></FaCloud> Download
@@ -45,7 +45,7 @@ const WatchPage = () => {
                         <MyPlyrVideo play={play} movie={movie}></MyPlyrVideo>
 
                     ) : (
-                        <div className="w-full h-screen rounded-lg overflow-hidden relative">
+                        <div className="w-full h-rate rounded-lg overflow-hidden relative">
                             <div className="absolute top-0 left-0 bottom-0 right-0 bg-main bg-opacity-30 flex-colo">
                                 <button onClick={() => setPlay(true)} className='bg-white text-subMain flex-colo border border-subMain rounded-full w-20 h-20 font-medium text-xl'>
                                     <FaPlay></FaPlay>
@@ -57,7 +57,7 @@ const WatchPage = () => {
                 }
             </div>
             <div className="container mx-auto min-h-screen px-2 my-6">
-                {/* <MovieCasts movie={movie} /> */}
+                <MovieCasts movie={movie} />
                 <MovieRates movie={movie}></MovieRates>
                 <div className="my-16">
                     <Titles title="Related Movies" Icon={BsCollectionFill}></Titles>

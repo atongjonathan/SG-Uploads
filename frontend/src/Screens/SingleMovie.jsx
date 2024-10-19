@@ -13,7 +13,7 @@ const SingleMovie = () => {
 
 
     useEffect(()=>{
-      document.title = movie.title
+      document.title = movie?.title
 
   }, [])
 
