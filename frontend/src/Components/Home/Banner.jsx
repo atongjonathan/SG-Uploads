@@ -28,14 +28,14 @@ const Banner = () => {
         }}
 
       >
-        {movies?.slice(0, 6).map((movie, idx) => (
+        {movies?.slice(movies?.length - 4, movies?.length - 1).map((movie, idx) => (
           <SwiperSlide key={idx} className="relative rounded overflow-hidden">
             <img
               src={movie.poster}
               alt={movie.title}
               className="w-full md:hidden h-100 object-cover"
             />
-             <img
+            <img
               src={movie.images[0]}
               alt={movie.title}
               className="w-full md:inline-block hidden h-full object-cover"

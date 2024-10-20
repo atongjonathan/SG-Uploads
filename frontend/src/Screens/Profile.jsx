@@ -42,7 +42,6 @@ const Profile = () => {
         closeButton: 'bg-subMain text-white hover:text-subMain',
       },
     }
-    console.log(formObject)
     try {
       const response = await backend.updateProfile(authHeader, formObject);
       if (response.data) {

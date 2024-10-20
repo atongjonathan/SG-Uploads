@@ -6,26 +6,25 @@ import { jwtDecode } from 'jwt-decode';
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 const refreshApi = createRefresh({
-  interval: 4 , // Increase the interval to reduce frequent refreshes
-  refreshApiCallback: async ({ authUserState, refreshToken }) => {
+  interval: 2, // Increase the interval to reduce frequent refreshes
+  refreshApiCallback: async (param) => {
+    console.log(param)
     try {
-      const { data } = await axios.post(
-        `${BACKEND_URL}/token/refresh/`,
-        { refresh: refreshToken },
-        { withCredentials: true } 
-      );
+      const response = await axios.post(BACKEND_URL + "/token/refresh/", {
+        headers: { 'Authorization': `Bearer ${param.authToken}` },
+        refresh: param.refreshToken
+      })
 
-      let accessDecoded = jwtDecode(data.access);
-      let refreshDecoded = jwtDecode(data.refresh);
-      
+      let accessDecoded = jwtDecode(response.access);
+      let refreshDecoded = jwtDecode(response.refresh);
+
       console.log("Token will expire on " + new Date(accessDecoded.exp * 1000).toString());
 
       return {
         isSuccess: true,
-        newAuthToken: data.access,
+        newAuthToken: response.access,
         newAuthTokenExpireIn: accessDecoded.exp - Math.floor(Date.now() / 1000), // seconds until expiration
-        newRefreshToken: data.refresh,
-        newRefreshTokenExpiresIn: refreshDecoded.exp - Math.floor(Date.now() / 1000), // seconds until expiration
+        newRefreshTokenExpiresIn: refreshDecoded.exp - Math.floor(Date.now() / 1000), // seconds until expiration,
       };
     } catch (error) {
       console.error('Error refreshing token:', error);

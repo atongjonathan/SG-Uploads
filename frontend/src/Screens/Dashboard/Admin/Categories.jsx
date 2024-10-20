@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import SideBar from '../../SideBar'
 import MovieContext from '../../../Data/MovieContext'
 import { HiPlusCircle } from 'react-icons/hi'

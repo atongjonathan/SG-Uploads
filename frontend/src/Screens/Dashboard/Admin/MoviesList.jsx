@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import SideBar from '../../SideBar'
 import Table from '../../../Components/Table'
 import { useMovies } from '../../../utils/SWR'
@@ -7,7 +7,7 @@ const MoviesList = () => {
   const movies = useMovies().movies
 
   useEffect(()=>{
-    document.title = `Movies List`
+    useEffect.title = `Movies List`
 
 }, [])
   return (
