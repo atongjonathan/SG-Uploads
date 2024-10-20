@@ -49,8 +49,7 @@ const MobileFooter = () => {
                     {user &&
                         <NavLink className={Hover} to="/profile" title="Profile">
                             <div className="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
-                                {user?.image && <img className="absolute w-12 h-12 rounded-full " src={BACKEND_URL + user.image} alt={user?.username + ' image'} />}
-
+                                <img className="absolute w-12 h-12 rounded-full " src={user?.image ? BACKEND_URL + user.image : `https://ui-avatars.com/api/?name=${user?.name ? user.name : user?.username}&rounded=true&background=14759f&size=35&color=fff`} alt={user?.username + ' image'} />
                             </div>
                             <p className='text-xs'>Profile</p>
                         </NavLink>}
