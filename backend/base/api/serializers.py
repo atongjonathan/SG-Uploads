@@ -8,11 +8,22 @@ class SGUserSerializer(serializers.ModelSerializer):
         queryset=Movie.objects.all(),
         required=False  # Makes the field optional during creation/update
     )
+
     class Meta:
         model = SGUser
-        fields = ['username', 'email', 'favourites', 'is_superuser', 'date_joined', 'image', 'name', 'password']
+        fields = ['username', 'email', 'favourites', 'is_superuser',
+                  'date_joined', 'image', 'name', 'password']
 
-    
+    def create(self, validated_data):
+        # Create a new user instance
+        user = SGUser.objects.create_user(
+            username=validated_data['username'],
+            email=validated_data.get('email'),
+            password=validated_data['password']
+        )
+        return user
+
+
 class MovieSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -25,4 +36,3 @@ class MovieSerializer(serializers.ModelSerializer):
             **validated_data
         )
         return movie
-
