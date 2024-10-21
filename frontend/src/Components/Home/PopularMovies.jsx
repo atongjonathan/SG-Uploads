@@ -8,7 +8,13 @@ import { Link } from "react-router-dom";
 
 const PopularMovies = () => {
   const movies = useMovies().movies
+  let popular = []
+  if (movies)
+  {
+    console.log(movies[0])
+    popular = movies.sort((a, b)=> b.rating.count - a.rating.count)
 
+  }
   return movies && (
     <div className="my-14">
       <Titles title="Popular Movies" Icon={BsCollectionFill}></Titles>
@@ -41,7 +47,7 @@ const PopularMovies = () => {
           }}
       >
 
-        {movies?.slice(0, 8).map((movie, idx) => (
+        {popular?.slice(0, 8).map((movie, idx) => (
           <SwiperSlide key={idx}>
             <Link to={`/movie/${movie.title}`} className="w-full truncate p-3 text-text flex-colo bg-dry border border-gray-800 hover:scale-95 transitions relative rounded overflow-hidden">
               <img src={movie.poster} alt={movie.title} className='w-full h-rate object-cover rounded mb-4' />

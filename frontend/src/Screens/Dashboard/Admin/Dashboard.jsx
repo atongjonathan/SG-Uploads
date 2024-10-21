@@ -16,13 +16,13 @@ const Dashboard = () => {
             bg: "bg-orange-600",
             icon: FaRegListAlt,
             title: "Total Movies",
-            total: users?.length
+            total: movies?.length
         },
         {
             bg: "bg-green-600",
             icon: FaUser,
             title: "Total Users",
-            total: movies?.length
+            total: users?.length
         },
     ]
     document.title = `Dashboard`

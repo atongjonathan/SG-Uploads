@@ -12,6 +12,11 @@ import { useMovies } from "../../utils/SWR";
 const Banner = () => {
 
   const movies = useMovies().movies
+  let latest = []
+  if (movies) {
+   latest = movies.sort((a, b) => new Date(b.releaseDetailed.date) - new Date(a.releaseDetailed.date))
+
+  }
 
   return movies && (
     <div className="relative w-full">
@@ -28,7 +33,7 @@ const Banner = () => {
         }}
 
       >
-        {movies?.slice(movies?.length - 4, movies?.length - 1).map((movie, idx) => (
+        {latest?.slice(0, 6).map((movie, idx) => (
           <SwiperSlide key={idx} className="relative rounded overflow-hidden">
             <img
               src={movie.poster}
