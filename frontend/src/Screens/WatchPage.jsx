@@ -5,12 +5,16 @@ import { BiArrowBack } from 'react-icons/bi'
 import { FaCloud, FaHeart, FaPlay } from 'react-icons/fa'
 import MyPlyrVideo from './MyPlyrVideo'
 import SGFaHeart from '../Components/SGFaHeart'
-import { useMovies } from '../utils/SWR'
+import { useMovies, useUser } from '../utils/SWR'
 import MovieCasts from '../Components/Single/MovieCasts'
 import MovieRates from '../Components/Single/MovieRates'
 import Titles from '../Components/Titles'
 import { BsCollectionFill } from 'react-icons/bs'
 import Movie from '../Components/Movie';
+import AuthContext from '../context/AuthContext'
+import { Button } from '@headlessui/react'
+import { FiLogIn } from 'react-icons/fi'
+import { toast } from 'sonner'
 
 
 const WatchPage = () => {
@@ -21,6 +25,9 @@ const WatchPage = () => {
 
 
     const RelatesMovies = movies?.filter((m) => m.genre[0] = movie?.genre[0])
+
+    const { authTokens } = useContext(AuthContext)
+    const user = useUser(authTokens?.access)
 
     useEffect(() => {
         document.title = `Watch ${movie?.title} (${movie?.year})`
@@ -36,9 +43,14 @@ const WatchPage = () => {
                     </Link>
                     <div className="flex flex-btn gap-5">
                         <SGFaHeart movie={movie}></SGFaHeart>
-                        <Link to='https://t.me/dont_be_soy' target="_blank" className="bg-subMain flex-rows gap-2 hover:text-main transitions text-white rounded px-3 font-medium py-3 text-sm">
-                            <FaCloud></FaCloud> Download
-                        </Link>
+                        {
+                            user ? <Link to='https://t.me/dont_be_soy' target="_blank" className="bg-subMain flex-rows gap-2 hover:text-main transitions text-white rounded px-3 font-medium py-3 text-sm">
+                                <FaCloud></FaCloud> Download
+                            </Link> : <Button onClick={() => toast("Only logged in users can download", { closeButton: true })} target="_blank" className="bg-subMain flex-rows gap-2 hover:text-main transitions text-white rounded px-3 font-medium py-3 text-sm">
+                                <FaCloud></FaCloud> Download
+                            </Button>
+                        }
+
                     </div>
                 </div>
                 {

@@ -1,10 +1,16 @@
-import React from 'react'
+import React, { useContext, useState } from 'react'
 import FlexMovieItems from '../FlexMovieItems'
 import { FaPlay, FaShareAlt } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 import { FiLogIn } from 'react-icons/fi'
+import { useUser } from '../../utils/SWR'
+import AuthContext from '../../context/AuthContext'
+import { Button } from '@headlessui/react'
+import { toast } from 'sonner'
 
 const MovieInfo = ({ movie }) => {
+    const { authTokens } = useContext(AuthContext)
+    const user = useUser(authTokens?.access)
     return movie && (
         <div className='w-full xl:h-screen relative text-white'>
             <img src={movie.poster} alt={movie.title} className='w-full hidden xl:inline-block h-full object-cover' />
@@ -37,9 +43,20 @@ const MovieInfo = ({ movie }) => {
                             </div>
                         </div>
                         <div className="col-span-2 md:mt-0 mt-2 flex justify-end">
-                            <Link to='https://t.me/dont_be_soy' target="_blank" className='md:w-1/4 w-full relative flex-colo bg-subMain hover:bg-transparent border-2 border-subMain transitions md:h-64 h-20 rounded font-medium'>
-                                <div style={{ flexDirection: 'row' }} className="flex-rows gap-4 text-md uppercase tracking-widest absolute md:rotate-90">
-                                    Download <FiLogIn className='w-6 h-6' /></div></Link>
+                            {
+                                user ?
+                                    (
+                                        <Link to={movie.stream.replace('video', 'dl')} target="_blank" className='md:w-1/4 w-full relative flex-colo bg-subMain hover:bg-transparent border-2 border-subMain transitions md:h-64 h-20 rounded font-medium'>
+                                            <div style={{ flexDirection: 'row' }} className="flex-rows gap-4 text-md uppercase tracking-widest absolute md:rotate-90">
+                                                Download <FiLogIn className='w-6 h-6' /></div>
+                                        </Link>) : (
+                                        <Button onClick={() => toast("Only logged in users can download",{closeButton:true}) } className='md:w-1/4 w-full relative flex-colo bg-subMain hover:bg-transparent border-2 border-subMain transitions md:h-64 h-20 rounded font-medium'>
+                                            <div style={{ flexDirection: 'row' }} className="flex-rows gap-4 text-md uppercase tracking-widest absolute md:rotate-90">
+                                                Download <FiLogIn className='w-6 h-6' /></div>
+                                        </Button>
+                                    )
+                            }
+
                         </div>
                     </div>
                 </div>

@@ -18,14 +18,14 @@ const SGFaHeart = ({ movie }) => {
   // Effect to sync component state with user's favourites from the backend
   useEffect(() => {
     if (user && movie) {
-      setIsFavourite(user.favourites?.includes(movie?.id));
+      setIsFavourite(user.favourites?.includes(movie));
     }
   }, [user]);
 
   const like = async (id) => {
-    const response = await backend.like(authTokens?.access, id);
+    const response = await backend.like(authTokens?.access, movie?.id);
     if (response.data) {
-      toast('Added to favourites', {
+      toast(`Added '${movie?.title}' to favourites`, {
         classNames: {
           toast: 'bg-subMain',
           title: 'text-white',
@@ -41,9 +41,9 @@ const SGFaHeart = ({ movie }) => {
   };
 
   const unlike = async (id) => {
-    const response = await backend.unlike(authTokens?.access, id);
+    const response = await backend.unlike(authTokens?.access, movie?.id);
     if (response.data) {
-      toast('Removed from favourites', {
+      toast(`Removed '${movie?.title}' from favourites`, {
         classNames: {
           toast: 'bg-subMain',
           title: 'text-white',
@@ -83,7 +83,7 @@ const SGFaHeart = ({ movie }) => {
           </button>
         ) : isFavourite ? (
           <button
-            onClick={() => unlike(movie?.id)}
+            onClick={() => unlike(movie)}
             title="Remove from Favourites"
             className="bg-white hover:text-white transitions text-subMain px-4 py-3 rounded text-sm bg-opacity-30"
           >
@@ -91,7 +91,7 @@ const SGFaHeart = ({ movie }) => {
           </button>
         ) : (
           <button
-            onClick={() => like(movie?.id)}
+            onClick={() => like(movie)}
             title="Add to Favourites"
             className="bg-white hover:text-subMain transitions text-white px-4 py-3 rounded text-sm bg-opacity-30"
           >

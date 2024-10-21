@@ -16,7 +16,6 @@ const TopRated = () => {
   const movies = useMovies().movies
   let topRated = []
   if (movies) {
-    console.log(movies[0])
     topRated = movies.sort((a, b) => b.rating.star - a.rating.star)
   }
 
