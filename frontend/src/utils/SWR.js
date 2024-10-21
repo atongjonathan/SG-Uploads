@@ -15,6 +15,11 @@ export function useUser(auth) {
 
         const { data, error, isLoading } = useSWR(`${BACKEND_URL}/user`, fetcher);
 
+        if (!data?.username && !isLoading) {
+            localStorage.removeItem('authTokens');
+            window.location.reload()
+        }
+
         return {
             user: data,
             isLoading,
