@@ -11,7 +11,6 @@ const PopularMovies = () => {
   let popular = []
   if (movies)
   {
-    console.log(movies[0])
     popular = movies.sort((a, b)=> b.rating.count - a.rating.count)
 
   }

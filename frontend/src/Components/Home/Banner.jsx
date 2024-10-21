@@ -14,7 +14,7 @@ const Banner = () => {
   const movies = useMovies().movies
   let latest = []
   if (movies) {
-   latest = movies.sort((a, b) => new Date(b.releaseDetailed.date) - new Date(a.releaseDetailed.date))
+    latest = movies.sort((a, b) => new Date(b.releaseDetailed.date) - new Date(a.releaseDetailed.date))
 
   }
 
@@ -41,7 +41,7 @@ const Banner = () => {
               className="w-full md:hidden h-100 object-cover"
             />
             <img
-              src={movie.images[0]}
+              src={movie?.images[Math.floor(Math.random() * movie?.images.length)]}
               alt={movie.title}
               className="w-full md:inline-block hidden h-full object-cover"
             />
