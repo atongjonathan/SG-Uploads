@@ -36,10 +36,11 @@ const WatchPage = () => {
 
     return movie && (
         <Layout>
-            <div className="container mx-auto bg-dry p-6 mb-12">
-                <div className="flex-btn flex-row mb-6 gap-4 bg-main rounded border border-gray-800 p-6 ">
+            <div className="container mx-auto bg-dry p-6 mb-2">
+
+                <div className="flex-btn flex-row mb-6 gap-4bg-main rounded border border-gray-800 p-6">
                     <Link to={`/`} className='md:text-lg  flex gap-3 items-center font-bold text-dryGray'>
-                        <BiArrowBack></BiArrowBack> <p className='hidden lg:inline-block'>{movie?.title}</p>
+                        <BiArrowBack></BiArrowBack> <p className='hidden lg:inline-block'>{`${movie?.title} (${movie.year})`}</p>
                     </Link>
                     <div className="flex flex-btn gap-5">
                         <SGFaHeart movie={movie}></SGFaHeart>
@@ -53,6 +54,11 @@ const WatchPage = () => {
 
                     </div>
                 </div>
+                <div className="w-full flex sm:gap-5 gap-4 justify-start items-center">
+                    <p className='w-full md:text-lg  flex gap-3 items-center font-bold text-dryGra text-center mb-3 lg:hidden'>{`${movie?.title} (${movie.year})`}</p>
+
+                </div>
+
                 {
                     play && movie ? (
                         <MyPlyrVideo play={play} movie={movie}></MyPlyrVideo>
@@ -69,8 +75,10 @@ const WatchPage = () => {
                     )
                 }
             </div>
+            {/* <MovieCasts movie={movie} /> */}
+
             <div className="container mx-auto min-h-screen px-2 my-6">
-                <MovieCasts movie={movie} />
+
                 <MovieRates movie={movie}></MovieRates>
                 <div className="my-16">
                     <Titles title="Related Movies" Icon={BsCollectionFill}></Titles>
