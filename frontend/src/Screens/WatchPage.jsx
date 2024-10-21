@@ -46,7 +46,7 @@ const WatchPage = () => {
                     <div className="flex flex-btn gap-5">
                         <SGFaHeart movie={movie}></SGFaHeart>
                         {
-                            user ? <Link to='https://t.me/dont_be_soy' target="_blank" className="bg-subMain flex-rows gap-2 hover:text-main transitions text-white rounded px-3 font-medium py-3 text-sm">
+                            user ? <Link to={movie.stream.replace("video", "dl")} target="_blank" className="bg-subMain flex-rows gap-2 hover:text-main transitions text-white rounded px-3 font-medium py-3 text-sm">
                                 <FaCloud></FaCloud> Download
                             </Link> : <Button onClick={() => toast("Only logged in users can download", { closeButton: true })} target="_blank" className="bg-subMain flex-rows gap-2 hover:text-main transitions text-white rounded px-3 font-medium py-3 text-sm">
                                 <FaCloud></FaCloud> Download
