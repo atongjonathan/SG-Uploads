@@ -24,7 +24,7 @@ const Banner = () => {
         className="w-full h-96 bg-dry"
         slidesPerView={1}
         loop={true}
-        direction="horizontal"
+        direction="vertical"
         speed={1000}
         modules={[Autoplay]}
         autoplay={{
