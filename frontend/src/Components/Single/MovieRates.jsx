@@ -74,7 +74,7 @@ const MovieRates = ({ movie }) => {
           }
         </div>
       </div>
-      <div className="mt-10 xl:grid flex-colo grid-cols-5 gap-12 bg-dry xs:p-10 py-10 px-2 sm:p-20 rounded">
+      {/* <div className="mt-10 xl:grid flex-colo grid-cols-5 gap-12 bg-dry xs:p-10 py-10 px-2 sm:p-20 rounded">
         <div className="xl:col-span-2 w-full flex flex-col gap-8">
           <h3 className="text-xl text-text font-semibold">Review "{movie.title}"</h3>
           <p className="text-sm leading-7 font-medium text-border">Write a review for this movie. It will be posted on this page. lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec</p>
@@ -88,7 +88,7 @@ const MovieRates = ({ movie }) => {
           <button className="bg-subMain text-white py-3 w-full flex-colo rounded">Submit</button>
         </div>
 
-      </div>
+      </div> */}
 
     </div>
   )
