@@ -53,6 +53,7 @@ function MyPlyrVideo({ play, movie }) {
         clickToPlay: true,
         invertTime: true,
         toggleInvert: true,
+        playsinline: true
     }
     return <Plyr source={videoSrc} options={options} crossOrigin="" />
 }
