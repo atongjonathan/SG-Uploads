@@ -19,11 +19,9 @@ import Users from './Screens/Dashboard/Admin/Users';
 import "aos";
 import "aos/dist/aos.css";
 import NotAllowed from './Screens/NotAllowed';
-import AuthOutlet from '@auth-kit/react-router/AuthOutlet'
-import SuperUserOutlet from './utils/SuperUserOutlet';
 import AddMovie from './Screens/Dashboard/Admin/AddMovie';
-
-
+import PrivateRoute from './context/PrivateRoute'
+import { SuperRoute } from './context/PrivateRoute'
 
 const App = () => {
   Aos.init();
@@ -31,19 +29,16 @@ const App = () => {
     <BrowserRouter>
       <Routes>
         {/* Protected routes for superusers */}
-        {/* <Route element={<SuperUserOutlet fallbackPath='/403' />}> */}
-        <Route path='/movieslist' element={<MoviesList />}></Route>
-        <Route path='/users' element={<Users />}></Route>
-        <Route path='/dashboard' element={<Dashboard />}></Route>
-        <Route path='/addmovie' element={<AddMovie />}></Route>
+        <Route path='/movieslist' element={<PrivateRoute><SuperRoute><MoviesList /></SuperRoute></PrivateRoute>}></Route>
+        <Route path='/users' element={<PrivateRoute><SuperRoute><Users /></SuperRoute></PrivateRoute>}></Route>
+        <Route path='/dashboard' element={<PrivateRoute><SuperRoute><Dashboard /></SuperRoute></PrivateRoute>}></Route>
+        <Route path='/addmovie' element={<PrivateRoute><SuperRoute><AddMovie /></SuperRoute></PrivateRoute>}></Route>
 
-        {/* </Route> */}
 
         {/* Protected routes for authenticated users */}
-        <Route element={<AuthOutlet fallbackPath='/login' />}>
-          <Route path='/favourites' element={<FavouriteMovies />}></Route>
-          <Route path='/profile' element={<Profile />}></Route>
-        </Route>
+
+        <Route path='/favourites' element={<PrivateRoute><FavouriteMovies /></PrivateRoute>}></Route>
+        <Route path='/profile' element={<PrivateRoute><Profile /></PrivateRoute>}></Route>
 
         {/* Public routes */}
         <Route path="/" element={<HomeScreen />}></Route>

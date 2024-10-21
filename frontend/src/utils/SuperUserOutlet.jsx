@@ -1,15 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
-import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
-import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
-import { useUser } from './SWR';
+import AuthContext from '../context/AuthContext';
 
 const SuperUserOutlet = ({ fallbackPath = '/403', loginPath = '/login' }) => {
-  const auth = useAuthUser();
-  const authHeader = useAuthHeader();
-
-  // Get the user details based on the authHeader
-  const user = useUser(auth?.user_id, authHeader)?.user;
+  const { authtokens, SGUser } = useContext(AuthContext)
+  const auth = AuthContext.access
+  const user = SGUser
 
   // If user is not authenticated, redirect to login page
   if (!auth) {

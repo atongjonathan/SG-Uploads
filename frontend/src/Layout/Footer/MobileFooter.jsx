@@ -1,14 +1,13 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { BsCollectionPlay } from 'react-icons/bs'
 import { FiHeart } from 'react-icons/fi'
 import { RxDashboard } from "react-icons/rx";
 import { MdLogout, MdOutlineContactMail, MdLogin, MdOutlineInfo } from "react-icons/md";
 import { NavLink } from 'react-router-dom'
 import { useUser } from '../../utils/SWR'
-import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader'
 import { FaPersonBooth, } from 'react-icons/fa'
 import { Button } from '@headlessui/react'
-import useSignOut from 'react-auth-kit/hooks/useSignOut'
+import AuthContext from '../../context/AuthContext';
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
 
@@ -16,9 +15,9 @@ const MobileFooter = () => {
     const active = 'bg-subMain text-main'
     const inActive = 'transitions text-2xl flex-colo hover:bg-white hover:text-main text-white rounded-md px-4 py-3'
     const Hover = ({ isActive }) => isActive ? `${active} ${inActive}` : inActive
-    const auth = useAuthHeader()
-    const user = useUser(auth)?.user
-    const signOut = useSignOut()
+    const {logoutUser, authTokens} = useContext(AuthContext)
+    const user = useUser(authTokens?.access)?.user
+
 
     return (
         <>
@@ -39,7 +38,7 @@ const MobileFooter = () => {
                     </NavLink>}
                     {user ?
                         (<Button title="Log Out" className={Hover} onClick={() => {
-                            signOut()
+                            logoutUser()
                             window.location.assign("/")
                         }}>
                             <MdLogout></MdLogout><p className='text-xs'>LogOut</p>

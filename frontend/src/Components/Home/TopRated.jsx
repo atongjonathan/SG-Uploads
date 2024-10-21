@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import Titles from "../Titles";
 import { BsBookmarkStarFill, BsCaretLeftFill, BsCaretRightFill } from "react-icons/bs";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -66,7 +66,7 @@ const TopRated = () => {
                 {/* Overlay Content */}
                 <div className="px-4 flex-colo gap-6 text-center absolute bg-black bg-opacity-70 top-0 left-0 right-0 bottom-0 opacity-0 group-hover:opacity-100 transitions duration-300">
                   {/* Like Button */}
-                  <SGFaHeart />
+                  <SGFaHeart movie={movie} />
 
                   {/* Movie Title */}
                   <Link

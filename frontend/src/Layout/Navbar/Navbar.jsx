@@ -1,12 +1,10 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { FaSearch, FaHeart } from "react-icons/fa";
 import logo from "../../images/4x3.jpg"
-import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated'
-import useSignOut from 'react-auth-kit/hooks/useSignOut';
 import { Button } from "@headlessui/react";
-import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
 import { useMovies, useUser } from "../../utils/SWR";
+import AuthContext from "../../context/AuthContext";
 
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
@@ -14,13 +12,11 @@ const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 const Navbar = () => {
   const hover = 'hover:text-subMain transitions text-white'
   const Hover = ({ isActive }) => (isActive ? 'text-subMain' : hover)
-  const signOut = useSignOut()
   const navigate = useNavigate()
-  const isAuthenticated = useIsAuthenticated()
 
+  const {authTokens, logoutUser} = useContext(AuthContext)
 
-  const auth = useAuthHeader()
-  const user = useUser(auth)?.user
+  const user = useUser(authTokens?.access)?.user
   const movies = useMovies()?.movies
   const [isresults, setResults] = useState([])
   function searchMovie(e) {
@@ -102,20 +98,20 @@ const Navbar = () => {
             </NavLink>}
 
 
-            {isAuthenticated && user?.is_superuser ? <NavLink title="Dashboard" className={Hover} to="/dashboard">
+            {user && user?.is_superuser ? <NavLink title="Dashboard" className={Hover} to="/dashboard">
               Dashboard
-            </NavLink> : isAuthenticated &&
+            </NavLink> : user &&
             <NavLink title="Dashboard" to='/profile' className={Hover}>
               Profile
             </NavLink>}
-            {isAuthenticated &&
+            {user &&
               <NavLink className={`${Hover} relative`} to="/favourites" title="Favourites">
                 <FaHeart className="w-5 h-5"></FaHeart>
                 <div className="w-4 h-4 flex-colo rounded-full text-xs bg-subMain text-white absolute -top-3 -right-3">{user?.favourites?.length}</div>
               </NavLink>
             }
 
-            {isAuthenticated &&
+            {user &&
               <NavLink className={`${Hover} relative`} to="/profile" title="Favourites">
                 <div className="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
                    <img className="absolute w-12 h-12 rounded-full " src={user?.image ? BACKEND_URL + user.image : `https://ui-avatars.com/api/?name=${user?.name?user.name:user?.username}&rounded=true&background=14759f&size=35&color=fff`} alt={user?.username + ' image'} />
@@ -123,9 +119,9 @@ const Navbar = () => {
 
                 </div>              </NavLink>
             }
-            {isAuthenticated ?
+            {user ?
               (<Button title="Log Out" className={Hover} onClick={() => {
-                signOut()
+                logoutUser()
                 navigate("/login")
               }}>
                 Logout

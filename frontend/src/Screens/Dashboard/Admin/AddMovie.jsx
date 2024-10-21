@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Input } from '../../../Components/UserInputs'
 import SideBar from '../../SideBar'
 import { FaSearch } from 'react-icons/fa'
 import { CgSpinner } from 'react-icons/cg'
 import Backend from '../../../utils/Backend'
-import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader'
 import { toast } from 'sonner'
+import AuthContext from '../../../context/AuthContext'
 
 
 const backend = Backend()
@@ -21,7 +21,9 @@ const AddMovie = () => {
     const [isloading, setLoading] = useState(false)
     const [isresults, setResults] = useState([])
     const [query, setQuery] = useState('')
-    const auth = useAuthHeader()
+    const { SGUser, authTokens} = useContext(AuthContext)
+    const auth = authTokens?.access
+    const user = SGUser
 
 
 

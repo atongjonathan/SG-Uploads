@@ -7,7 +7,7 @@ const VITE_IMDB_API = import.meta.env.VITE_IMDB_API;
 export function useUser(auth) {
     if (auth) {
         let headers = {
-            Authorization: auth
+            Authorization: 'Bearer ' + auth
         };
         const fetcher = (...args) => fetch(...args, {
             headers: headers
@@ -26,7 +26,7 @@ export function useUser(auth) {
 
 export function useUsers(auth) {
     let headers = {
-        Authorization: auth
+        Authorization: 'Bearer ' + auth
     };
     const fetcher = (...args) => fetch(...args, {
         headers: headers

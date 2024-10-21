@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Layout from '../Layout/Layout'
 import { Input } from '../Components/UserInputs'
 import { Link, useNavigate } from 'react-router-dom'
 import { FiLogIn } from 'react-icons/fi'
 import logo from "../images/4x3.jpg"
-import useSignIn from 'react-auth-kit/hooks/useSignIn';
 import Backend from '../utils/Backend'
 import { CgSpinner } from 'react-icons/cg'
-import { jwtDecode } from 'jwt-decode'
-import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
+import AuthContext from '../context/AuthContext'
+import { useUser } from '../utils/SWR'
 
 
 const backend = Backend()
@@ -19,9 +18,10 @@ const Login = () => {
   const [usernameError, setusernameError] = useState(null)
   const [invalid, setInvalid] = useState(null)
 
-  const signIn = useSignIn();
-  const auth = useAuthUser()
   const navigate = useNavigate()
+
+  const { saveAuthTokens, authTokens } = useContext(AuthContext)
+  const user = useUser(authTokens?.access)?.user
 
   async function handleSubmit(e) {
     setLoading(true)
@@ -32,19 +32,9 @@ const Login = () => {
       const response = await backend.loginUser(formObject.username, formObject.password);
       if (response.data) {
         const tokens = response.data;
-        if (signIn({
-          auth: {
-            token: tokens.access,
-            type: 'Bearer'
-          },
-          refresh: tokens.refresh,
-          userState: jwtDecode(tokens.access)
-        })) {
-          // refreshApi() 
-          navigate("/profile")
-        } else {
-          setInvalid('Invalid Credentials')
-        } 
+        saveAuthTokens(tokens)
+        navigate("/")
+
 
       }
       else if (response?.status == 401) {
@@ -67,10 +57,15 @@ const Login = () => {
     }
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     document.title = `Log In`
 
-}, [])
+    if (authTokens) {
+      navigate("/")
+
+    }
+
+  }, [])
   return (
     <Layout>
       <form action="" method='post' onSubmit={(e) => handleSubmit(e)}>

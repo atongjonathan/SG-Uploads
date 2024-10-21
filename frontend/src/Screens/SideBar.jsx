@@ -1,17 +1,17 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { BsFillGridFill } from 'react-icons/bs'
 import { FaFilm, FaHeart, FaListAlt, FaUsers } from 'react-icons/fa'
 import { FiSettings } from 'react-icons/fi'
 import { RiLockPasswordLine } from 'react-icons/ri'
 import Layout from '../Layout/Layout'
 import { NavLink } from 'react-router-dom'
-import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader'
 import { useUser } from '../utils/SWR'
+import AuthContext from '../context/AuthContext'
 
 const SideBar = ({ children }) => {
 
-    const auth = useAuthHeader()
-    const user = useUser(auth)?.user
+    const { authTokens} = useContext(AuthContext)
+    const user = useUser(authTokens.access).user
 
     const adminLinks = [
         {

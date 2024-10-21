@@ -5,25 +5,17 @@ import "./index.css";
 import "swiper/css";
 import "aos";
 import "aos/dist/aos.css";
-import createStore from 'react-auth-kit/createStore';
-import AuthProvider from 'react-auth-kit';
-import refreshApi from "./utils/Refresh.js";
 import 'swiper/css/free-mode';
 import 'swiper/css/pagination';
+import { AuthProvider } from "./context/AuthContext.jsx";
 
 
-const store = createStore({
-  authName: '_auth',
-  authType: 'cookie',
-  cookieDomain: window.location.hostname,
-  cookieSecure: window.location.protocol === 'https:',
-  refresh:refreshApi
-}); 
+
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <AuthProvider store={store}>  
-          <App />
+    <AuthProvider >
+      <App />
     </AuthProvider>
   </StrictMode>
 );

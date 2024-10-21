@@ -1,23 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { FaHeart } from 'react-icons/fa';
-import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
-import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
-import { useUser } from '../utils/SWR';
 import Backend from '../utils/Backend';
 import { toast } from 'sonner';
+import AuthContext from '../context/AuthContext';
+import { useUser } from '../utils/SWR';
 
 const backend = Backend();
 
 const SGFaHeart = ({ movie }) => {
-  const auth = useAuthUser();
-  const authHeader = useAuthHeader();
   const [isFavourite, setIsFavourite] = useState(false);
-  let user = null;
-  let response = null;
 
-  if (auth) {
-    user = useUser(authHeader)?.user;
-  }
+  const { authTokens } = useContext(AuthContext)
+
+  const user = useUser(authTokens?.access)?.user;
+
 
   // Effect to sync component state with user's favourites from the backend
   useEffect(() => {
@@ -27,82 +23,83 @@ const SGFaHeart = ({ movie }) => {
   }, [user]);
 
   const like = async (id) => {
-    const response = await backend.like(authHeader, id);
+    const response = await backend.like(authTokens?.access, id);
     if (response.data) {
-      toast('Liked', {
+      toast('Added to favourites', {
         classNames: {
           toast: 'bg-subMain',
           title: 'text-white',
           closeButton: 'bg-subMain text-white hover:text-subMain',
         },
+        closeButton:true
       });
       setIsFavourite(true); // Update state to re-render
+    }
+    else {
+      unlike(id)
     }
   };
 
   const unlike = async (id) => {
-    const response = await backend.unlike(authHeader, id);
+    const response = await backend.unlike(authTokens?.access, id);
     if (response.data) {
-      toast('Unliked', {
+      toast('Removed from favourites', {
         classNames: {
           toast: 'bg-subMain',
           title: 'text-white',
           closeButton: 'bg-subMain text-white hover:text-subMain',
         },
-      });
-      setIsFavourite(false); // Update state to re-render
+        closeButton:true
+
+      },
+    );
+      setIsFavourite(false);
+    }
+    else {
+      like(id)
     }
   };
 
-  if (response?.error) {
-    return (
-      <button
-        onClick={() => toast('An error occurred')}
-        className="bg-white hover:text-subMain transitions text-white px-4 py-3 rounded text-sm bg-opacity-30"
-      >
-        <FaHeart />
-      </button>
-    );
-  }
 
-  if (!user) {
-    return (
-      <button
-        onClick={() =>
-          toast('Login to be able to save favourites', {
-            classNames: {
-              toast: 'bg-subMain',
-              title: 'text-white',
-              closeButton: 'bg-subMain text-white hover:text-subMain',
-            },
-          })
-        }
-        className="bg-white hover:text-subMain transitions text-white px-4 py-3 rounded text-sm bg-opacity-30"
-      >
-        <FaHeart />
-      </button>
-    );
-  }
 
   return (
     <>
-      {isFavourite ? (
-        <button
-          onClick={() => unlike(movie?.id)}
-          title="Remove from Favourites"
-          className="bg-white hover:text-white transitions text-subMain px-4 py-3 rounded text-sm bg-opacity-30"
-        >
-          <FaHeart />
-        </button>
-      ) : (
-        <button
-          onClick={() => like(movie?.id)}
-          title="Add to Favourites"
-          className="bg-white hover:text-subMain transitions text-white px-4 py-3 rounded text-sm bg-opacity-30"
-        >
-          <FaHeart />
-        </button>
-      )}
+      {
+        !user ? (
+          <button
+            onClick={() =>
+              toast('Login to be able to save favourites', {
+                classNames: {
+                  toast: 'bg-subMain',
+                  title: 'text-white',
+                  closeButton: 'bg-subMain text-white hover:text-subMain',
+                },
+                closeButton:true
+              })
+            }
+            className="bg-white hover:text-subMain transitions text-white px-4 py-3 rounded text-sm bg-opacity-30"
+          >
+            <FaHeart />
+          </button>
+        ) : isFavourite ? (
+          <button
+            onClick={() => unlike(movie?.id)}
+            title="Remove from Favourites"
+            className="bg-white hover:text-white transitions text-subMain px-4 py-3 rounded text-sm bg-opacity-30"
+          >
+            <FaHeart />
+          </button>
+        ) : (
+          <button
+            onClick={() => like(movie?.id)}
+            title="Add to Favourites"
+            className="bg-white hover:text-subMain transitions text-white px-4 py-3 rounded text-sm bg-opacity-30"
+          >
+            <FaHeart />
+          </button>
+        )
+      }
+
     </>
   );
 };

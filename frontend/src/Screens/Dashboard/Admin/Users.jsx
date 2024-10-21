@@ -1,15 +1,14 @@
 import React, { useContext, useEffect } from 'react'
 import SideBar from '../../SideBar'
-import { HiPlusCircle } from 'react-icons/hi'
 import Table2 from '../../../Components/Table2'
-import { useUser, useUsers } from '../../../utils/SWR'
-import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader'
+import { useUsers } from '../../../utils/SWR'
+import AuthContext from '../../../context/AuthContext'
 
 const Users = () => {
-    const authHeader = useAuthHeader()
-    const response = useUsers(authHeader)
+    const { authTokens } = useContext(AuthContext)
+    const users = useUsers(authTokens?.access).users
 
-    useEffect(()=>{
+    useEffect(() => {
         document.title = `Users`
 
     }, [])
@@ -18,10 +17,10 @@ const Users = () => {
             <div className="flex flex-col gap-6">
                 <div className="flex-btn gap-2">
                     <h2 className='text-xl font-bold'>Users</h2>
-                   
+
                 </div>
-                <Table2 data={response.users? response.users : []} users={true}></Table2>
-                </div>
+                <Table2 data={users ? users : []} users={true}></Table2>
+            </div>
 
         </SideBar>
     )

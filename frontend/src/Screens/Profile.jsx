@@ -1,11 +1,11 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import SideBar from './SideBar'
 import Uploader from '../Components/Uploader'
 import { Input } from '../Components/UserInputs'
 import Backend from '../utils/Backend'
-import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader'
 import { useUser } from '../utils/SWR'
 import { toast } from 'sonner'
+import AuthContext from '../context/AuthContext'
 
 
 const Profile = () => {
@@ -13,25 +13,17 @@ const Profile = () => {
   const backend = Backend()
 
 
-  const authHeader = useAuthHeader()
-  const user = useUser(authHeader)?.user
-  const username = user?.username
-  const email = user?.email
+  const { authTokens } = useContext(AuthContext)
+  const user = useUser(authTokens.access)
   const [image, setFileResponse] = useState(null)
 
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent form from being submitted the default way
 
-    // Create a new FormData instance from the form data
     const formData = new FormData(e.target);
     const newEnail = formData.get('email')
     const formObject = Object.fromEntries(formData.entries())
 
-    // Add any additional fields if needed
-    // formData.append('username', username);  // Assuming `username` comes from state
-    // formData.append('email', newEnail ? newEnail : email);        // Assuming `email` comes from state
-
-    // Add the file (assuming `image` comes from state or a file input)
     if (image) {
       formObject['image'] = image      // Append the actual file object
     }
@@ -65,10 +57,10 @@ const Profile = () => {
     setFileResponse(data)
   })
 
-  useEffect(()=>{
+  useEffect(() => {
     document.title = `Update Profile`
 
-}, [])
+  }, [])
   return (
     <>
       <SideBar>
@@ -76,7 +68,7 @@ const Profile = () => {
           <h2 className='text-xl font-bold'>Profile</h2>
 
           {user?.image &&
-            <div style={{alignItems:'center'}} className="flex gap-5 my-auto">
+            <div style={{ alignItems: 'center' }} className="flex gap-5 my-auto">
               <p>Current image:</p>
               <img className="w-20 h-20 rounded-full" src={backend.BACKEND_URL + user.image} alt={user?.username + ' image'} />
             </div>
