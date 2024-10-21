@@ -33,7 +33,7 @@ const App = () => {
         <Route path='/users' element={<PrivateRoute><SuperRoute><Users /></SuperRoute></PrivateRoute>}></Route>
         <Route path='/dashboard' element={<PrivateRoute><SuperRoute><Dashboard /></SuperRoute></PrivateRoute>}></Route>
         <Route path='/addmovie' element={<PrivateRoute><SuperRoute><AddMovie /></SuperRoute></PrivateRoute>}></Route>
-
+        <Route path='/password' element={<PrivateRoute><SuperRoute> <Password /></SuperRoute></PrivateRoute>}></Route>
 
         {/* Protected routes for authenticated users */}
 
@@ -49,7 +49,6 @@ const App = () => {
         <Route path='/watch/:id' element={<WatchPage />}></Route>
         <Route path='/login' element={<Login />}></Route>
         <Route path='/register' element={<Register />}></Route>
-        <Route path='/password' element={<Password />}></Route>
         <Route path='/403' element={<NotAllowed />}></Route>
 
         {/* Catch-all for not found */}
