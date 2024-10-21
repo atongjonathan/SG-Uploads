@@ -10,7 +10,8 @@ export default function PrivateRoute({ children }) {
 
 
 export function SuperRoute({ children }) {
-    const { authTokens } = useCallback(AuthContext)
+    const { authTokens } = useContext(AuthContext)
     const user = useUser(authTokens?.access)?.user
-    return user?.is_superuser ? children : <Navigate to="/403" />;
+
+    return user ? (user.is_superuser ? children : <Navigate to="/403"></Navigate>) : <Navigate to="/login" />;
 }
