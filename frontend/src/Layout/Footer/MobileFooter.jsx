@@ -24,7 +24,9 @@ const MobileFooter = () => {
 
 
             <footer className='lg:hidden fixed z-50 bottom-0 w-full px-1'>
-                <div className="bg-dry rounded-md flex-btn w-full p-1">
+                <div style={{
+                    width:'88%'
+                }} className="bg-dry rounded-md flex-btn p-1">
 
                     <NavLink title="Movies" className={Hover} to="/">
                         <BsCollectionPlay></BsCollectionPlay><p className='text-xs'>Movies</p>
