@@ -1,17 +1,15 @@
 import React from "react";
 import Titles from "../Titles";
 import { BsCollectionFill } from "react-icons/bs";
-import Movie from "../Movie";
 import { useMovies } from "../../utils/SWR";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { FreeMode, Pagination } from 'swiper/modules';
-import MovieCasts from "../Single/MovieCasts";
 import { Link } from "react-router-dom";
 
 const PopularMovies = () => {
   const movies = useMovies().movies
 
-  return (
+  return movies && (
     <div className="my-14">
       <Titles title="Popular Movies" Icon={BsCollectionFill}></Titles>
       <Swiper className='mt-6'
@@ -24,22 +22,22 @@ const PopularMovies = () => {
         modules={[FreeMode, Pagination]}
         breakpoints={
           {
-            0:{
-              slidesPerView:2,
+            0: {
+              slidesPerView: 2,
             },
-            400:{
-              slidesPerView:2,  
+            400: {
+              slidesPerView: 2,
             },
-            768:{
-              slidesPerView:3,
+            768: {
+              slidesPerView: 3,
             },
-            1024:{
-              slidesPerView:4,
+            1024: {
+              slidesPerView: 4,
             },
-            1280:{
+            1280: {
               slidesPerView: 5
             }
-            
+
           }}
       >
 

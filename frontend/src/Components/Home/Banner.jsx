@@ -13,7 +13,7 @@ const Banner = () => {
 
   const movies = useMovies().movies
 
-  return (
+  return movies && (
     <div className="relative w-full">
       <Swiper
         className="w-full h-96 bg-dry"

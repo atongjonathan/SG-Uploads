@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import Layout from '../Layout/Layout'
 import { Link, useParams } from 'react-router-dom'
 import { BiArrowBack } from 'react-icons/bi'
@@ -19,9 +19,10 @@ const WatchPage = () => {
     const movie = movies?.find((movie) => movie.title == id)
     const [play, setPlay] = useState(false)
 
+
     const RelatesMovies = movies?.filter((m) => m.genre[0] = movie?.genre[0])
 
-    useEffect(()=>{
+    useEffect(() => {
         document.title = `Watch ${movie?.title} (${movie?.year})`
 
     }, [])
@@ -41,7 +42,7 @@ const WatchPage = () => {
                     </div>
                 </div>
                 {
-                    play && movie ?  (
+                    play && movie ? (
                         <MyPlyrVideo play={play} movie={movie}></MyPlyrVideo>
 
                     ) : (

@@ -20,7 +20,7 @@ const TopRated = () => {
 
 
 
-  return (
+  return movies && (
     <div className="my-16">
       <Titles title="Top Rated" Icon={BsBookmarkStarFill} />
       <div className="mt-10">
