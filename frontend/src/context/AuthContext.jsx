@@ -40,7 +40,7 @@ export const AuthProvider = ({ children }) => {
             return true
         }
         else if (response?.status == 401) {
-            console.log('Failed to refresh token', error);
+            console.log('Failed to refresh token', response);
             logoutUser();
         }
         else {

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { BsCollectionPlay } from 'react-icons/bs'
+import { BsCollectionPlay, BsHouseAddFill, BsHouseExclamationFill } from 'react-icons/bs'
 import { FiHeart } from 'react-icons/fi'
 import { RxDashboard } from "react-icons/rx";
 import { MdLogout, MdOutlineContactMail, MdLogin, MdOutlineInfo } from "react-icons/md";
@@ -27,7 +27,7 @@ const MobileFooter = () => {
                 <div className="bg-dry rounded-md flex-btn p-1">
 
                     <NavLink title="Movies" className={Hover} to="/">
-                        <BsCollectionPlay></BsCollectionPlay><p className='text-xs'>Movies</p>
+                        <BsHouseAddFill></BsHouseAddFill><p className='text-xs'>Home</p>
                     </NavLink>
 
                     {user && user?.is_superuser ? <NavLink title="Dashboard" className={Hover} to="/dashboard">
