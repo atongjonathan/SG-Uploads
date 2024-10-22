@@ -80,7 +80,7 @@ const WatchPage = () => {
 
             <div className="container mx-auto min-h-screen px-2 my-6">
 
-                <MovieRates movie={movie}></MovieRates>
+                <MovieRates movie={movie} play={play}></MovieRates>
                 <div className="my-14">
                     <Titles title="Related Movies" Icon={BsCollectionFill}></Titles>
                     <Swiper className='mt-6'

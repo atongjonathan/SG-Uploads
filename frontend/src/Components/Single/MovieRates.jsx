@@ -7,7 +7,7 @@ import Puff from "react-loading-icons/dist/esm/components/puff";
 
 
 const IMDB_API = import.meta.env.VITE_IMDB_API
-const MovieRates = ({ movie }) => {
+const MovieRates = ({ movie, play }) => {
 
   const [title, setTitle] = useState(null)
   const [reviews, setReviews] = useState(null)
@@ -49,7 +49,7 @@ const MovieRates = ({ movie }) => {
       .catch((err) => console.log(err))
 
 
-  }, [movie])
+  }, [movie, play])
 
   return movie && (
     <div className='my-12'>
@@ -59,7 +59,7 @@ const MovieRates = ({ movie }) => {
           reviews ? (
             <div className="w-full flex flex-col bg-main gap-6 rounded-lg md:p-12 p-6 h-header overflow-y-scroll">
               {
-                reviews?.splice(0, 5).map((review, idx) => (
+                reviews?.splice(0, 10).map((review, idx) => (
                   <div key={idx} className="md:grid flex flex-col w-full grid-cols-12 gap-6 bg-dry p-4 border border-gray-800 rounded-lg">
                     <div className="col-span-2 bg-main hidden md:block">
                       <img src="https://images-na.ssl-images-amazon.com/images/M/MV5BMjQ4MTY5NzU2M15BMl5BanBnXkFtZTgwNDc5NTgwMTI@._V1_SY100_SX100_.jpg" alt={review.author} className="w-full h-24 rounded-lg object-cover" />
@@ -79,7 +79,7 @@ const MovieRates = ({ movie }) => {
           ) : (
             <div style={
               {
-                alignItems:'center'
+                alignItems: 'center'
               }
             } className='w-full flex justify-center flex-col bg-main gap-6 rounded-lg md:p-12 p-6 h-header'>
               <Puff className='col-span-7 '></Puff>
