@@ -4,7 +4,7 @@ import SideBar from '../../SideBar'
 import { FaSearch } from 'react-icons/fa'
 import { CgSpinner } from 'react-icons/cg'
 import Backend from '../../../utils/Backend'
-import { toast } from 'sonner'
+import { toast, Toaster } from 'sonner'
 import AuthContext from '../../../context/AuthContext'
 
 
@@ -21,7 +21,7 @@ const AddMovie = () => {
     const [isloading, setLoading] = useState(false)
     const [isresults, setResults] = useState([])
     const [query, setQuery] = useState('')
-    const { SGUser, authTokens} = useContext(AuthContext)
+    const { SGUser, authTokens } = useContext(AuthContext)
     const auth = authTokens?.access
     const user = SGUser
 
@@ -39,6 +39,35 @@ const AddMovie = () => {
     }
 
 
+    async function sendSubs(id) {
+        try {
+          const response = await backend.sendCaptions(auth, { imdb_id: id });
+      
+          if (response.data.success) {
+            toast.success(`Captions sent to your Telegram`, {
+              classNames: {
+                toast: 'bg-subMain',
+                title: 'text-white',
+              },
+              closeButton: true,
+            });
+            setMovie(null);
+          } else if (response.data.error) {
+            toast.error(response.data.error, {
+              classNames: {
+                toast: 'bg-oldMain',
+                title: 'text-white',
+              },
+              closeButton: true,
+            });
+          }
+        } catch (error) {
+          toast.error('Something went wrong. Please try again.');
+          console.error(error);
+        }
+      }
+      
+
 
     function findMovie(link) {
         setLoading(true)
@@ -50,6 +79,7 @@ const AddMovie = () => {
             .then((data) => {
                 data.link = link
                 setMovie(data)
+                sendSubs(title)
                 setLoading(false)
             })
 
@@ -91,6 +121,7 @@ const AddMovie = () => {
     }, [])
     return (
         <SideBar>
+            <Toaster></Toaster>
             <div className="flex flex-col gap-6">
                 <div className="flex-btn gap-2">
                     <h2 className='text-xl font-bold'>Add Movie</h2>
@@ -109,8 +140,8 @@ const AddMovie = () => {
                                 <p className={Text}><a href={movie.imdb}>{movie.link}</a></p>
 
                             </div>
-                            <Input name='stream' type='text' placeholder='Stream Link'></Input>
-                            <Input name='caption' type='text' placeholder='English Caption link'></Input>
+                            <Input regex='https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)?' name='stream' type='text' placeholder='Stream Link'></Input>
+                            <Input regex='https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)?' name='caption' type='text' placeholder='English Caption link'></Input>
                             <div className="flex gap-2 flex-wrap flex-col-reverse sm:flex-row justify-between items-center my-4">
                                 {/* <button className="bg-subMain font-medium transitions hover:bg-main border border-subMain text-white py-3 px-6 rounded w-full sm:w-auto">Delete Account</button> */}
                                 <button className="bg-main font-medium transitions hover:bg-subMain border border-subMain text-white py-3 px-6 rounded w-full sm:w-auto">Add Movie</button>

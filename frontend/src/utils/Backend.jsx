@@ -108,8 +108,20 @@ const Backend = () => {
         }
     };
 
+    const sendCaptions = (authHeader, data) => {
+        const refreshUrl = `${BACKEND_URL}/captions`;
+        const reqOptions = createRequestOptions(refreshUrl, "POST", data, authHeader);
+        try {
+            const response = axios.request(reqOptions);
+            return response;
+        } catch (error) {
+            console.log(error);
+            return error;
+        }
+    };
 
-    return { signUp, loginUser, like, unlike, updateProfile, addMovie, BACKEND_URL, refreshAccessToken };
+
+    return { signUp, loginUser, like, unlike, updateProfile, addMovie, BACKEND_URL, refreshAccessToken, sendCaptions };
 };
 
 export default Backend;

@@ -19,11 +19,11 @@ export const Select = ({ label, options, onChange }) => {
 
     )
 }
-export const Input = ({ label, name, placeholder, type, bg, error = null }) => {
+export const Input = ({ label, name, placeholder, type, bg, error = null, regex=null }) => {
     return (
         <div className="text-sm w-full">
             <label className="text-border font-semibold" htmlFor={label}>{label}</label>
-            <input id={label} name={name} type={type} placeholder={placeholder} className={`w-full text-sm mt-2 p-5 border border-border rounded text-white bg-${bg ? 'main' : 'dry'}`} required />
+            <input pattern={regex} id={label} name={name} type={type} placeholder={placeholder} className={`w-full text-sm mt-2 p-5 border border-border rounded text-white bg-${bg ? 'main' : 'dry'}`} required />
             {
                 error && <div className="text-oldMain w-full mt-2 text-xs font-medium">
                     <p>Error</p>
