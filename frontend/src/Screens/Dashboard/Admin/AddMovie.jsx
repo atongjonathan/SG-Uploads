@@ -51,7 +51,6 @@ const AddMovie = () => {
               },
               closeButton: true,
             });
-            setMovie(null);
           } else if (response.data.error) {
             toast.error(response.data.error, {
               classNames: {
@@ -79,8 +78,8 @@ const AddMovie = () => {
             .then((data) => {
                 data.link = link
                 setMovie(data)
-                sendSubs(title)
                 setLoading(false)
+                sendSubs(title)
             })
 
 
@@ -121,7 +120,6 @@ const AddMovie = () => {
     }, [])
     return (
         <SideBar>
-            <Toaster></Toaster>
             <div className="flex flex-col gap-6">
                 <div className="flex-btn gap-2">
                     <h2 className='text-xl font-bold'>Add Movie</h2>

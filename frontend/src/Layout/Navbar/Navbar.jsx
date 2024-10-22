@@ -83,12 +83,12 @@ const Navbar = () => {
               } p-3 cursor-pointer rounded-2xl border border-gray-800`}
           >
             Horror
-          </Link>
+          </Link>          
         </div>
 
         {/* Search Form */}
-        <div className="col-span-3 relative lg:block hidden">
-          <form className="w-full text-sm bg-dryGray rounded flex-btn gap-4 relative">
+        <div className="col-span-3 relative">
+          <form className="w-full text-sm bg-dryGray rounded flex-btn gap-4">
             <button type="submit" className="bg-subMain w-12 flex-colo h-12 rounded text-white">
               <FaSearch />
             </button>
@@ -108,7 +108,7 @@ const Navbar = () => {
                   {isResults.slice(0, 3).map((movie, idx) => (
                     <tr
                       key={idx}
-                      className="hover:text-main hover:bg-dryGray hover:cursor-pointer"
+                      className="hover:text-main text-center hover:bg-dryGray hover:cursor-pointer"
                       title={movie.title}
                       onClick={() => handleResultClick(movie.title)}
                     >
