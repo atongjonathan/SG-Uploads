@@ -22,11 +22,13 @@ import NotAllowed from './Screens/NotAllowed';
 import AddMovie from './Screens/Dashboard/Admin/AddMovie';
 import PrivateRoute from './context/PrivateRoute'
 import { SuperRoute } from './context/PrivateRoute'
+import ScrollToTop from './ScrollToTop';
 
 const App = () => {
   Aos.init();
   return (
     <BrowserRouter>
+    <ScrollToTop></ScrollToTop>
       <Routes>
         {/* Protected routes for superusers */}
         <Route path='/movieslist' element={<PrivateRoute><SuperRoute><MoviesList /></SuperRoute></PrivateRoute>}></Route>
