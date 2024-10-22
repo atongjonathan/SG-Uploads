@@ -7,3 +7,6 @@ django-import-export
 python-dotenv
 requests
 pillow
+pyTelegramBotAPI
+opensubtitlescom
+python-dotenv

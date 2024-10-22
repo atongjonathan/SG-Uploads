@@ -79,6 +79,7 @@ class SGUser(AbstractUser):
         Movie, related_name='favourites', blank=True)
     image = models.ImageField(null=True, blank=True, upload_to="images/")
     name = models.CharField(max_length=150, null=True, blank=True)
+    telegram_id = models.IntegerField(null=True, blank=True)
 
     def __str__(self) -> str:
         return f"{self.username} User"

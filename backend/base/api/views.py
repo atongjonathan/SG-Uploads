@@ -1,4 +1,4 @@
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.decorators import api_view, permission_classes, parser_classes
 from django.http import HttpRequest
 from rest_framework.response import Response
@@ -6,12 +6,15 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAuthenticated
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
+
+from ..captions import search, send_to_tg
 from ..models import Movie, SGUser
 from .serializers import MovieSerializer, SGUserSerializer
 from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework import serializers
 from rest_framework.parsers import MultiPartParser, FormParser
+import os
 
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -77,7 +80,6 @@ def create_movie(request):
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
 
 
 @api_view(['POST'])
@@ -88,15 +90,14 @@ def update_user(request: HttpRequest):
     if (request.data.get("name")):
         user.name = request.data.get("name")
         user.save()
-    serializer = SGUserSerializer(user, data=request.data, partial=True)  # Use partial update
+    serializer = SGUserSerializer(
+        user, data=request.data, partial=True)  # Use partial update
 
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data, status=status.HTTP_200_OK)
-    
+
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
 
 
 @api_view(['POST'])
@@ -136,3 +137,39 @@ def unlike_movie(request, id):
 
     user.favourites.remove(movie)
     return Response({"message": "Movie unliked successfully."}, status=status.HTTP_200_OK)
+
+
+@api_view(["POST"])
+@permission_classes([IsAdminUser])
+def captions(request):
+    try:
+        user = request.user
+        imdb_id = request.data.get("imdb_id")
+
+        if not imdb_id:
+            return Response({"error": "IMDb ID is required"}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Search for subtitles and get the file path
+        file_path = search(imdb_id)
+
+        if "error" in file_path:
+            return Response(file_path, status=status.HTTP_400_BAD_REQUEST)
+
+        # Ensure the file path is absolute
+        absolute_path = os.path.abspath(file_path)
+
+        # Send the file to Telegram
+        if not hasattr(user, "telegram_id") or not user.telegram_id:
+            return Response({"error": "User does not have a Telegram ID"}, status=status.HTTP_400_BAD_REQUEST)
+
+        response = send_to_tg(user.telegram_id, absolute_path)
+
+        if type(response) == int:
+            return Response({"success": response}, status=status.HTTP_200_OK)
+        else:
+
+            return Response(response, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    except Exception as e:
+        # Return a string representation of the error
+        return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

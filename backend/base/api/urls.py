@@ -19,7 +19,8 @@ urlpatterns = [
     path('update-user', views.update_user, name="update_user"),
     path('user', views.user, name="user"),
     path('like/<id>', views.like_movie, name='like_movie'),
-    path('unlike/<id>', views.unlike_movie, name='unlike_movie')
+    path('unlike/<id>', views.unlike_movie, name='unlike_movie'),
+    path('captions', views.captions, name='captions')
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
