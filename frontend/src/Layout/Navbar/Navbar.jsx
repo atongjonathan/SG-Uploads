@@ -87,7 +87,7 @@ const Navbar = () => {
         </div>
 
         {/* Search Form */}
-        <div className="col-span-3 relative">
+        <div className="col-span-3 relative p-4">
           <form className="w-full text-sm bg-dryGray rounded flex-btn gap-4">
             <button type="submit" className="bg-subMain w-12 flex-colo h-12 rounded text-white">
               <FaSearch />

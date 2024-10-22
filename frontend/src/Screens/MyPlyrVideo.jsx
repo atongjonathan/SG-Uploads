@@ -12,7 +12,7 @@ function MyPlyrVideo({ play, movie }) {
             {
                 src: movie.stream ? movie.stream : 'https://other-cecilia-atong-jonathan-04e43c80.koyeb.app/video/670a0fcdb020015cf937cc7c',
                 type: "video/mp4",
-                size: 720
+                size: 1080
             }
         ],
         tracks: movie.captions?.map((caption) => {
