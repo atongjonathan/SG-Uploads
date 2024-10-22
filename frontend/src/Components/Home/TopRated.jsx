@@ -6,14 +6,11 @@ import { Autoplay, Navigation } from "swiper/modules";
 import { Link } from "react-router-dom";
 import Rating from "../Star";
 import SGFaHeart from "../SGFaHeart";
-import { useMovies } from "../../utils/SWR";
 
 
-const TopRated = () => {
+const TopRated = ({movies}) => {
   const [nextEl, setNextEl] = useState(null);
   const [prevEl, setPrevEl] = useState(null);
-
-  const movies = useMovies().movies
   let topRated = []
   if (movies) {
     topRated = movies.sort((a, b) => b.rating.star - a.rating.star)

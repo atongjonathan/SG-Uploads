@@ -3,12 +3,14 @@ import Titles from '../Titles'
 import { BsBook, BsBookmarkStarFill } from 'react-icons/bs'
 import { Message, Select } from '../UserInputs'
 import Rating from '../Star'
+import Puff from "react-loading-icons/dist/esm/components/puff";
+
 
 const IMDB_API = import.meta.env.VITE_IMDB_API
 const MovieRates = ({ movie }) => {
 
   const [title, setTitle] = useState(null)
-  const [reviews, setReviews] = useState([])
+  const [reviews, setReviews] = useState(null)
   const Ratings = [
     {
       title: "1 - Poor",
@@ -53,26 +55,39 @@ const MovieRates = ({ movie }) => {
     <div className='my-12'>
       <Titles title="Reviews" Icon={BsBookmarkStarFill}></Titles>
       <div className="col-span-3 flex flex-col gap-6">
-        <h3 className="text-xl text-text font-semibold"></h3>
-        <div className="w-full flex flex-col bg-main gap-6 rounded-lg md:p-12 p-6 h-header overflow-y-scroll">
-          {
-            reviews?.splice(0, 5).map((review, idx) => (
-              <div key={idx} className="md:grid flex flex-col w-full grid-cols-12 gap-6 bg-dry p-4 border border-gray-800 rounded-lg">
-                <div className="col-span-2 bg-main hidden md:block">
-                  <img src="https://images-na.ssl-images-amazon.com/images/M/MV5BMjQ4MTY5NzU2M15BMl5BanBnXkFtZTgwNDc5NTgwMTI@._V1_SY100_SX100_.jpg" alt={review.author} className="w-full h-24 rounded-lg object-cover" />
-                </div>
-                <div className="col-span-7 flex flex-col gap-2">
-                  <h2>{review.author}</h2>
-                  <p className="text-xs leading-6 font-medium text-text">{review.heading}</p>
-                </div>
-                <div className="col-span-3 flex flex-rows border-l border-border text-xs gap-1 text-star">
-                  <Rating value={review.stars / 2}></Rating>
-                </div>
-              </div>
+        {
+          reviews ? (
+            <div className="w-full flex flex-col bg-main gap-6 rounded-lg md:p-12 p-6 h-header overflow-y-scroll">
+              {
+                reviews?.splice(0, 5).map((review, idx) => (
+                  <div key={idx} className="md:grid flex flex-col w-full grid-cols-12 gap-6 bg-dry p-4 border border-gray-800 rounded-lg">
+                    <div className="col-span-2 bg-main hidden md:block">
+                      <img src="https://images-na.ssl-images-amazon.com/images/M/MV5BMjQ4MTY5NzU2M15BMl5BanBnXkFtZTgwNDc5NTgwMTI@._V1_SY100_SX100_.jpg" alt={review.author} className="w-full h-24 rounded-lg object-cover" />
+                    </div>
+                    <div className="col-span-7 flex flex-col gap-2">
+                      <h2>{review.author}</h2>
+                      <p className="text-xs leading-6 font-medium text-text">{review.heading}</p>
+                    </div>
+                    <div className="col-span-3 flex flex-rows border-l border-border text-xs gap-1 text-star">
+                      <Rating value={review.stars / 2}></Rating>
+                    </div>
+                  </div>
 
-            ))
-          }
-        </div>
+                ))
+              }
+            </div>
+          ) : (
+            <div style={
+              {
+                alignItems:'center'
+              }
+            } className='w-full flex justify-center flex-col bg-main gap-6 rounded-lg md:p-12 p-6 h-header'>
+              <Puff className='col-span-7 '></Puff>
+            </div>
+
+          )
+        }
+
       </div>
       {/* <div className="mt-10 xl:grid flex-colo grid-cols-5 gap-12 bg-dry xs:p-10 py-10 px-2 sm:p-20 rounded">
         <div className="xl:col-span-2 w-full flex flex-col gap-8">

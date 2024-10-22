@@ -4,14 +4,12 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import FlexMovieItems from "../FlexMovieItems";
 import { Link } from "react-router-dom";
 import SGFaHeart from "../SGFaHeart";
-import { useMovies } from "../../utils/SWR";
 
 
 
 
-const Banner = () => {
+const Banner = ({movies}) => {
 
-  const movies = useMovies().movies
   let latest = []
   if (movies) {
     latest = movies.sort((a, b) => new Date(b.releaseDetailed.date) - new Date(a.releaseDetailed.date))

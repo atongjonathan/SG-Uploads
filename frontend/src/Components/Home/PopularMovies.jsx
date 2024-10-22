@@ -1,13 +1,11 @@
 import React from "react";
 import Titles from "../Titles";
 import { BsCollectionFill } from "react-icons/bs";
-import { useMovies } from "../../utils/SWR";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { FreeMode, Pagination } from 'swiper/modules';
 import { Link } from "react-router-dom";
 
-const PopularMovies = () => {
-  const movies = useMovies().movies
+const PopularMovies = ({movies}) => {
   let popular = []
   if (movies)
   {
