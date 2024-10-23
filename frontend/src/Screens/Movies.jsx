@@ -42,7 +42,7 @@ const MoviesPage = () => {
       movies = movies.filter(m => Math.ceil(m.rating.star / 2).toString() === params.rates);
     }
     if (params.year && !params.year.includes("Sort")) {
-      movies = movies.filter(m => m.year === params.year);
+      movies = movies.filter(m => m.year.toString() === params.year);
     }
     if (params.times && !params.times.includes("Sort")) {
       const maxTime = parseFloat(params.times.replace('< ', ''));
@@ -63,15 +63,7 @@ const MoviesPage = () => {
 
   return (filteredMovies && genresTuple.length > 0) && (
     <Layout>
-      <div className="min-height-screen container mx-auto px-2 my-3">
-        <div className="flex justify-end">
-          <button
-            onClick={() => navigate("/movies?category=Sort%20By%20Categories&year=Sort%20by%20Year&times=Sort%20by%20Hours&rates=Sort%20by%20Star%20Rates")}
-            className="flex-rows gap-3 text-white py-3 px-5 rounded font-semibold border-2 border-subMain"
-          >
-            Clear
-          </button>
-        </div>
+      <div className="min-height-screen container mx-auto px-2 my-3">        
         <Filters categories={genresTuple} />
 
         <p className='text-lg font-medium my-6'>

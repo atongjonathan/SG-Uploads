@@ -87,6 +87,20 @@ const Filters = ({ categories }) => {
     ];
 
     return (
+        <>
+        <div className="flex justify-end">
+          <button
+            onClick={() => {
+                setYear(YearData[0])
+                setCategory(CategoriesData[0])
+                setTimes(TimesData[0])
+                setRates(RatesData[0])
+            }}
+            className="flex-rows gap-3 text-white py-3 px-4 rounded border-2 border-subMain mr-2 hover:bg-subMain hover:border-main transitions"
+          >
+            Clear
+          </button>
+        </div>
         <div className='my-2 bg-dry border text-dryGray border-gray-800 grid md:grid-cols-4 grid-cols-2 lg:gap-12 gap-2 rounded p-6'>
             {Filter.map((item, idx) => (
                 <Listbox key={idx} value={item.value} onChange={item.onChange}>
@@ -128,6 +142,8 @@ const Filters = ({ categories }) => {
                 </Listbox>
             ))}
         </div>
+        </>
+        
     );
 };
 
