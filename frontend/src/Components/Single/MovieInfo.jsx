@@ -46,7 +46,7 @@ const MovieInfo = ({ movie }) => {
                             {
                                 user ?
                                     (
-                                        <Link to={movie.stream.replace('video', 'dl')} target="_blank" className='md:w-1/4 w-full relative flex-colo bg-subMain hover:bg-transparent border-2 border-subMain transitions md:h-64 h-20 rounded font-medium'>
+                                        <Link to={movie.stream.replace('video', 'dl')}  className='md:w-1/4 w-full relative flex-colo bg-subMain hover:bg-transparent border-2 border-subMain transitions md:h-64 h-20 rounded font-medium'>
                                             <div style={{ flexDirection: 'row' }} className="flex-rows gap-4 text-md uppercase tracking-widest absolute md:rotate-90">
                                                 Download <FiLogIn className='w-6 h-6' /></div>
                                         </Link>) : (
