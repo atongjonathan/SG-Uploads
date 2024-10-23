@@ -8,6 +8,7 @@ import SGFaHeart from '../Components/SGFaHeart'
 import { useMovies, useUser } from '../utils/SWR'
 import MovieCasts from '../Components/Single/MovieCasts'
 import MovieRates from '../Components/Single/MovieRates'
+import MovieInfo from '../Components/Single/MovieInfo'
 import Titles from '../Components/Titles'
 import { BsCollectionFill } from 'react-icons/bs'
 import Movie from '../Components/Movie';
@@ -17,6 +18,7 @@ import { FiLogIn } from 'react-icons/fi'
 import { toast } from 'sonner'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { FreeMode, Pagination } from 'swiper/modules';
+import FlexMovieItems from '../Components/FlexMovieItems'
 
 const WatchPage = () => {
     let { id } = useParams()
@@ -25,7 +27,13 @@ const WatchPage = () => {
     const [play, setPlay] = useState(false)
 
 
-    const RelatesMovies = movies?.filter((m) => m.genre[0] = movie?.genre[0])
+    const RelatesMovies = movies?.filter((m) => {
+        let present = false
+       m.genre.forEach(element => {
+        present = movie.genre.includes(element)
+       });
+       return present
+    })
 
     const { authTokens } = useContext(AuthContext)
     const user = useUser(authTokens?.access)
@@ -39,7 +47,7 @@ const WatchPage = () => {
         <Layout>
             <div className="container mx-auto bg-dry p-6 mb-2">
 
-                <div className="flex-btn flex-row mb-6 gap-4bg-main rounded border border-gray-800 p-6">
+                {/* <div className="flex-btn flex-row mb-6 gap-4bg-main rounded border border-gray-800 p-6">
                     <Link to={`/`} className='md:text-lg  flex gap-3 items-center font-bold text-dryGray'>
                         <BiArrowBack></BiArrowBack> <p className='hidden lg:inline-block'>{`${movie?.title} (${movie.year})`}</p>
                     </Link>
@@ -54,11 +62,8 @@ const WatchPage = () => {
                         }
 
                     </div>
-                </div>
-                <div className="w-full flex sm:gap-5 gap-4 justify-start items-center">
-                    <p className='w-full md:text-lg  flex gap-3 items-center font-bold text-dryGra text-center mb-3 lg:hidden'>{`${movie?.title} (${movie.year})`}</p>
+                </div> */}
 
-                </div>
 
                 {
                     play && movie ? (
@@ -75,6 +80,16 @@ const WatchPage = () => {
                         </div>
                     )
                 }
+                <div className="items-center mt-4">
+                    <div className="col-span-3 flex flex-col gap-5">
+                        <h1 className='xl:text-2xl capitalize font-sans text-lg font-bold'>{movie.title}</h1>
+                        <div className="flex items-center gap-4 font-medium text-dryGray">
+                            <div className="flex-colo bg-subMain text-xs px-2 py-1">720p</div>
+                            <FlexMovieItems movie={movie && movie}></FlexMovieItems>
+                        </div>
+                        <p className='text-text text-sm leading-7'>{movie.plot}</p>
+                    </div>
+                </div>
             </div>
             {/* <MovieCasts movie={movie} /> */}
 

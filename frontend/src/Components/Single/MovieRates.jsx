@@ -49,26 +49,23 @@ const MovieRates = ({ movie, play }) => {
       .catch((err) => console.log(err))
 
 
-  }, [movie, play])
+  }, [])
 
   return movie && (
     <div className='my-12'>
       <Titles title="Reviews" Icon={BsBookmarkStarFill}></Titles>
-      <div className="col-span-3 flex flex-col gap-6">
+      <div className="flex flex-row gap-6">
         {
           reviews ? (
-            <div className="w-full flex flex-col bg-main gap-6 rounded-lg md:p-12 p-6 h-header overflow-y-scroll">
+            <div className="w-full flex flex-wrap bg-main gap-6 rounded-lg md:p-12 p-6 h-header overflow-y-scroll">
               {
-                reviews?.splice(0, 10).map((review, idx) => (
-                  <div key={idx} className="md:grid flex flex-col w-full grid-cols-12 gap-6 bg-dry p-4 border border-gray-800 rounded-lg">
-                    <div className="col-span-2 bg-main hidden md:block">
-                      <img src="https://images-na.ssl-images-amazon.com/images/M/MV5BMjQ4MTY5NzU2M15BMl5BanBnXkFtZTgwNDc5NTgwMTI@._V1_SY100_SX100_.jpg" alt={review.author} className="w-full h-24 rounded-lg object-cover" />
-                    </div>
+                reviews?.splice(0, 6).map((review, idx) => (
+                  <div key={idx} className="w-96 md:grid grid-cols-12 gap-6 bg-dry p-4 border border-gray-800 rounded-lg align-middle text-center">
                     <div className="col-span-7 flex flex-col gap-2">
                       <h2>{review.author}</h2>
                       <p className="text-xs leading-6 font-medium text-text">{review.heading}</p>
                     </div>
-                    <div className="col-span-3 flex flex-rows border-l border-border text-xs gap-1 text-star">
+                    <div className="col-span-3 flex flex-rows  mt-2 text-xs gap-1 text-star">
                       <Rating value={review.stars / 2}></Rating>
                     </div>
                   </div>

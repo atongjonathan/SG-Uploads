@@ -13,6 +13,7 @@ const Navbar = () => {
   const Hover = ({ isActive }) => (isActive ? 'text-subMain' : hover);
   const navigate = useNavigate();
 
+
   const { authTokens, logoutUser } = useContext(AuthContext);
   const user = useUser(authTokens?.access)?.user;
   const movies = useMovies()?.movies || [];
@@ -27,10 +28,17 @@ const Navbar = () => {
 
   const handleSearch = (e) => {
     const query = e.target.value.toLowerCase();
-    const filtered = movies.filter(movie =>
-      movie.title.toLowerCase().includes(query)
-    );
-    setResults(filtered);
+    if (query == '') {
+      setResults([])
+    }
+    else {
+      const filtered = movies.filter(movie =>
+        movie.title.toLowerCase().includes(query)
+      );
+
+      setResults(filtered);
+    }
+
   };
 
   const handleResultClick = (title) => {
@@ -58,36 +66,42 @@ const Navbar = () => {
         </div>
 
         {/* Links for small screens */}
-        <div className="col-span-3 lg:hidden flex-rows text-text text-sm gap-3">
-          <Link
-            to="/movies?category=Sort%20By%20Categories&year=Sort%20by%20Year&times=Sort%20by%20Hours&rates=Sort%20by%20Star%20Rates"
-            className={`${isActive("/movies?category=Sort%20By%20Categories&year=Sort%20by%20Year&times=Sort%20by%20Hours&rates=Sort%20by%20Star%20Rates") ? "bg-subMain" : "bg-dry"
-              } p-3 cursor-pointer rounded-2xl border border-gray-800`}
-          >
-            All Movies
-          </Link>
+        {
+          !pathname.includes("/watch") && (
+            <div className="col-span-3 lg:hidden flex-rows text-text text-sm gap-3">
+              <Link
+                to="/movies?category=Sort%20By%20Categories&year=Sort%20by%20Year&times=Sort%20by%20Hours&rates=Sort%20by%20Star%20Rates"
+                className={`${isActive("/movies?category=Sort%20By%20Categories&year=Sort%20by%20Year&times=Sort%20by%20Hours&rates=Sort%20by%20Star%20Rates") ? "bg-subMain" : "bg-dry"
+                  } p-3 cursor-pointer rounded-2xl border border-gray-800`}
+              >
+                All Movies
+              </Link>
 
-          {/* Action Movies Link */}
-          <Link
-            to="/movies?category=Action"
-            className={`${isActive("/movies?category=Action") ? "bg-subMain" : "bg-dry"
-              } p-3 cursor-pointer rounded-2xl border border-gray-800`}
-          >
-            Action
-          </Link>
+              {/* Action Movies Link */}
+              <Link
+                to="/movies?category=Action"
+                className={`${isActive("/movies?category=Action") ? "bg-subMain" : "bg-dry"
+                  } p-3 cursor-pointer rounded-2xl border border-gray-800`}
+              >
+                Action
+              </Link>
 
-          {/* Horror Movies Link */}
-          <Link
-            to="/movies?category=Horror"
-            className={`${isActive("/movies?category=Horror") ? "bg-subMain" : "bg-dry"
-              } p-3 cursor-pointer rounded-2xl border border-gray-800`}
-          >
-            Horror
-          </Link>          
-        </div>
+              {/* Horror Movies Link */}
+              <Link
+                to="/movies?category=Horror"
+                className={`${isActive("/movies?category=Horror") ? "bg-subMain" : "bg-dry"
+                  } p-3 cursor-pointer rounded-2xl border border-gray-800`}
+              >
+                Horror
+              </Link>
+            </div>
+          )
+        }
+
 
         {/* Search Form */}
-        <div className="col-span-3 relative p-4">
+        
+        <div className={`col-span-3 relative p-4 ${pathname.includes("/watch")?'hidden lg:inline-block':''}`}>
           <form className="w-full text-sm bg-dryGray rounded flex-btn gap-4">
             <button type="submit" className="bg-subMain w-12 flex-colo h-12 rounded text-white">
               <FaSearch />
@@ -102,7 +116,7 @@ const Navbar = () => {
 
           {/* Search Results */}
           {isResults.length > 0 && (
-            <div className="w-full bg-dry border border-gray-800 p-1 rounded-md absolute">
+            <div className="w-full bg-dry border border-gray-800 p-1 rounded-md absolute left-0">
               <table className="w-full table-auto border border-border divide-y divide-border">
                 <tbody className="bg-main divide-y divide-gray-800">
                   {isResults.slice(0, 3).map((movie, idx) => (
@@ -119,8 +133,8 @@ const Navbar = () => {
                           className="h-full w-full object-cover"
                         />
                       </td>
-                      <td className="text-white">{movie.title}</td>
-                      <td className="text-white">{movie.year}</td>
+                      <td>{movie.title}</td>
+                      <td>{movie.year}</td>
                     </tr>
                   ))}
                 </tbody>
