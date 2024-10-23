@@ -31,8 +31,14 @@ function MyPlyrVideo({ play, movie }) {
         // debug:true,
         mediaMetadata:
         {
-            title: movie.title,
-            artwork: movie.poster
+            title: `${movie.title} (${movie.year})`,
+            artwork: [{
+                src: movie.poster,
+                sizes: "512x512",
+                type: "image/png",
+              }],
+            artist: 'SG Uploads',
+            album: movie.title
         },
         poster: movie.images[0],
         disableContextMenu: true,
@@ -44,17 +50,15 @@ function MyPlyrVideo({ play, movie }) {
             'progress', // The progress bar and scrubber for playback and buffering
             'current-time', // The current time of playback
             'duration', // The full duration of the media
-            'captions', // Toggle captions
             'settings', // Settings menu
             'pip', // Picture-in-picture (currently Safari only)
             'airplay', // Airplay (currently Safari only)
             'fullscreen', // Toggle fullscreen
         ],
         clickToPlay: true,
-        invertTime: true,
-        toggleInvert: true,
-        playsinline: true
+        keyboard: { focused: true, global: true },
+        tooltips: { controls: true, seek: true }
     }
-    return <Plyr source={videoSrc} options={options} crossOrigin="" />
+    return <Plyr source={videoSrc} options={options} preload={movie.images[0]} crossOrigin="" />
 }
 export default MyPlyrVideo

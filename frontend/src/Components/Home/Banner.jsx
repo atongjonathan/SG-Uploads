@@ -8,7 +8,7 @@ import SGFaHeart from "../SGFaHeart";
 
 
 
-const Banner = ({movies}) => {
+const Banner = ({ movies }) => {
 
   let latest = []
   if (movies) {
@@ -31,7 +31,7 @@ const Banner = ({movies}) => {
         }}
 
       >
-        {latest?.slice(0, 6).map((movie, idx) => (
+        {latest?.slice(0, 6).sort(() => .5 - Math.random()).map((movie, idx) => (
           <SwiperSlide key={idx} className="relative rounded overflow-hidden">
             <img
               src={movie.poster}
