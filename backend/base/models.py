@@ -70,6 +70,8 @@ class Movie(models.Model):
 
     # Additional Fields
     # Add any additional fields as necessary
+    def __str__(self) -> str:
+        return f"{self.title} ({self.year})"
 
 
 
