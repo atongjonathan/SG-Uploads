@@ -1,9 +1,11 @@
 import Plyr from "plyr-react"
 import "plyr-react/plyr.css"
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 
 function MyPlyrVideo({ play, movie }) {
+    const playerRef = useRef(null); // Reference to the Plyr player
+    const mediaSourceRef = useRef(null); // Reference to MediaSourc
 
     const videoSrc = {
         type: "video",
@@ -36,7 +38,7 @@ function MyPlyrVideo({ play, movie }) {
                 src: movie.poster,
                 sizes: "512x512",
                 type: "image/png",
-              }],
+            }],
             artist: 'SG Uploads',
             album: movie.title
         },
@@ -59,6 +61,38 @@ function MyPlyrVideo({ play, movie }) {
         keyboard: { focused: true, global: true },
         tooltips: { controls: true, seek: true }
     }
-    return <Plyr source={videoSrc} options={options} preload={movie.images[0]} crossOrigin="" />
+
+    useEffect(() => {
+        const videoElement = playerRef.current?.plyr?.media; // Get the Plyr video element
+
+        if ("MediaSource" in window && videoElement) {
+            const mediaSource = new MediaSource();
+            mediaSourceRef.current = mediaSource;
+            videoElement.src = URL.createObjectURL(mediaSource);
+
+            mediaSource.addEventListener("sourceopen", () =>
+                handleSourceOpen(mediaSource, movie.stream)
+            );
+        }
+    }, [movie.stream]);
+
+    // Function to load and append video chunks
+    const handleSourceOpen = async (mediaSource, streamUrl) => {
+        const sourceBuffer = mediaSource.addSourceBuffer('video/mp4; codecs="avc1.42E01E, mp4a.40.2"');
+
+        const response = await fetch(streamUrl);
+        const reader = response.body.getReader();
+
+        let result;
+        while (!(result = await reader.read()).done) {
+            sourceBuffer.appendBuffer(result.value);
+            await new Promise((resolve) => {
+                sourceBuffer.addEventListener("updateend", resolve, { once: true });
+            });
+        }
+
+        mediaSource.endOfStream(); // Mark the stream as completed
+    };
+    return <Plyr ref={playerRef} source={videoSrc} options={options} preload={movie.images[0]} crossOrigin="" />
 }
 export default MyPlyrVideo
