@@ -59,11 +59,7 @@ select:focus {
 .plyr.plyr--loading::after {
     content: "";
     position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 40px;
-    height: 40px;
     border: 5px solid rgb(255, 255, 255, 0.3);
-    @apply animate-spin rounded-full border-t-subMain;
+    @apply animate-spin rounded-full border-t-subMain my-auto mx-auto w-10 h-10 top-1/3 lg:top-2/4;
     z-index: 10;
 }
