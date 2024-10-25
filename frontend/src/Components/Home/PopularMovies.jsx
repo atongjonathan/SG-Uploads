@@ -2,7 +2,7 @@ import React from "react";
 import Titles from "../Titles";
 import { BsCollectionFill } from "react-icons/bs";
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { FreeMode, Pagination } from 'swiper/modules';
+import { FreeMode } from 'swiper/modules';
 import { Link } from "react-router-dom";
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 
@@ -23,7 +23,7 @@ const PopularMovies = ({movies}) => {
         pagination={{
           clickable: true,
         }}
-        modules={[FreeMode, Pagination]}
+        modules={[FreeMode]}
         breakpoints={
           {
             0: {
