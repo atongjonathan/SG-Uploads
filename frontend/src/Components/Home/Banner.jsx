@@ -4,6 +4,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import FlexMovieItems from "../FlexMovieItems";
 import { Link } from "react-router-dom";
 import SGFaHeart from "../SGFaHeart";
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 
 
@@ -33,12 +34,12 @@ const Banner = ({ movies }) => {
       >
         {latest?.slice(0, 6).sort(() => .5 - Math.random()).map((movie, idx) => (
           <SwiperSlide key={idx} className="relative rounded overflow-hidden">
-            <img
+            <LazyLoadImage
               src={movie.poster}
               alt={movie.title}
               className="w-full md:hidden h-100 object-cover"
             />
-            <img
+            <LazyLoadImage
               src={movie?.images[Math.floor(Math.random() * movie?.images.length)]}
               alt={movie.title}
               className="w-full md:inline-block hidden h-full object-cover"

@@ -19,6 +19,7 @@ import { toast } from 'sonner'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { FreeMode, Pagination } from 'swiper/modules';
 import FlexMovieItems from '../Components/FlexMovieItems'
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 const WatchPage = () => {
     let { id } = useParams()
@@ -76,7 +77,7 @@ const WatchPage = () => {
                                     <FaPlay></FaPlay>
                                 </button>
                             </div>
-                            <img src={movie?.images[0]} alt={movie?.name} className='w-full h-full object-cover rounded-lg' />
+                            <LazyLoadImage src={movie?.images[0]} alt={movie?.name} className='w-full max-h-screen object-contain rounded-lg' />
                         </div>
                     )
                 }
@@ -130,7 +131,7 @@ const WatchPage = () => {
                         {RelatesMovies?.slice(0, 8).map((movie, idx) => (
                             <SwiperSlide key={idx}>
                                 <Link to={`/movie/${movie.title}`} className="w-full truncate p-3 text-text flex-colo bg-dry border border-gray-800 hover:scale-95 transitions relative rounded overflow-hidden">
-                                    <img src={movie.poster} alt={movie.title} className='w-full h-rate object-cover rounded mb-4' />
+                                    <LazyLoadImage src={movie.poster} alt={movie.title} className='w-full h-rate object-cover rounded mb-4' />
                                     <h3>{movie.title}</h3>
                                 </Link>
                             </SwiperSlide>

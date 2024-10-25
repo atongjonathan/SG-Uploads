@@ -6,6 +6,7 @@ import { Autoplay, Navigation } from "swiper/modules";
 import { Link } from "react-router-dom";
 import Rating from "../Star";
 import SGFaHeart from "../SGFaHeart";
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 
 const TopRated = ({movies}) => {
@@ -58,7 +59,7 @@ const TopRated = ({movies}) => {
               <SwiperSlide key={idx}>
                 <div className="relative group p-4 h-rate border border-border bg-dry rounded-lg overflow-hidden">
                   {/* Movie Poster */}
-                  <img
+                  <LazyLoadImage
                     src={movie.poster}
                     alt={movie.title}
                     className="w-full h-full object-cover rounded-lg"
