@@ -27,7 +27,7 @@ const Banner = ({ movies }) => {
         speed={1000}
         modules={[Autoplay]}
         autoplay={{
-          delay: 4000,
+          delay: 5000,
           disableOnInteraction: false,
         }}
 

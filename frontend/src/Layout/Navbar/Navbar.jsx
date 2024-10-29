@@ -23,6 +23,7 @@ const Navbar = () => {
   const { authTokens, logoutUser, user } = useContext(AuthContext);
   const movies = useMovies()?.movies || [];
   const [isResults, setResults] = useState([]);
+  const [showModal, setShowModal] = useState(false)
 
   const location = useLocation(); // Get the current path
   const { pathname, search } = location; // Extract pathname and search
@@ -78,7 +79,7 @@ const Navbar = () => {
     : `https://ui-avatars.com/api/?name=${user?.name || user?.username}&rounded=true&background=14759f&size=35&color=fff`;
 
   return (
-    <div className="bg-main shadow-md sticky top-0 z-20">
+    <div className="bg-main shadow-md fixed top-0 z-20 w-full">
       <div className="container mx-auto py-3 px-2 lg:py-6 lg:grid gap-10 grid-cols-7 justify-between items-center">
         {/* Logo */}
         <div className="col-span-1 lg:block hidden">
@@ -96,6 +97,9 @@ const Navbar = () => {
         {
           !pathname.includes("/watch") && (
             <div className="col-span-3 lg:hidden flex-rows text-text text-sm gap-3">
+              <button type="button" onClick={() => setShowModal(true)} className="bg-subMain w-12 flex-colo h-12 rounded text-white">
+                <FaSearch className="w-6" />
+              </button>
               <Link
                 to="/movies"
                 className={`${isActive("/movies") ? "bg-subMain" : "bg-dry"
@@ -128,9 +132,9 @@ const Navbar = () => {
 
         {/* Search Form */}
 
-        <div className={`col-span-3 relative p-4 ${pathname.includes("/watch") ? 'hidden lg:inline-block' : ''}`}>
+        <div className={`col-span-3 relative p-4 hidden lg:inline-block`}>
           <form className="w-full text-sm bg-dryGray rounded flex-btn gap-4">
-            <button type="submit" className="bg-subMain w-12 flex-colo h-12 rounded text-white">
+            <button type="button" className="bg-subMain w-12 flex-colo h-12 rounded text-white">
               <FaSearch />
             </button>
             <input
@@ -140,6 +144,49 @@ const Navbar = () => {
               onInput={handleSearch}
             />
           </form>
+
+          <Dialog open={showModal} onClose={() => setShowModal(false)} className="relative z-50">
+            <div className="fixed inset-0 flex w-full items-start justify-center p-4">
+              <DialogPanel className="relative max-w-lg space-y-4 border bg-main p-6 lg:p-10 text-text rounded-lg w-full">
+              <DialogTitle className="font-bold">Find a Movie</DialogTitle>
+              <Button onClick={() => setShowModal(false)} className='absolute top-0 right-3 text-text hover:text-subMain transitions'><IoClose className="h-5 w-5"></IoClose></Button>
+                <Input
+                  type="text"
+                  placeholder="Search Movie Name from here"
+                  className={"font-medium placeholder:text-text text-sm w-full h-12 bg-transparent border-none px-2 text-black bg-white mt-10" + {Hover}}
+                  onInput={handleSearch}
+                />
+                {(isResults.length > 0 && showModal) && (
+                  <div className="w-full bg-dry border border-gray-800 p-1 rounded-md absolute left-0">
+                    <table className="w-full table-auto border border-border divide-y divide-border">
+                      <tbody className="bg-main divide-y divide-gray-800">
+                        {isResults.slice(0, 3).map((movie, idx) => (
+                          <tr
+                            key={idx}
+                            className="hover:text-main text-center hover:bg-dryGray hover:cursor-pointer"
+                            title={movie.title}
+                            onClick={() => {handleResultClick(movie.title)
+                              setShowModal(false)
+                            }}
+                          >
+                            <td className="w-12 p-1 bg-dry border border-border h-12 rounded overflow-hidden">
+                              <img
+                                src={movie.poster}
+                                alt={movie.title}
+                                className="h-full w-full object-cover"
+                              />
+                            </td>
+                            <td>{movie.title}</td>
+                            <td>{movie.year}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
+              </DialogPanel>
+            </div>
+          </Dialog>
 
           {/* Search Results */}
           {isResults.length > 0 && (
