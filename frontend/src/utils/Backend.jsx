@@ -87,9 +87,9 @@ const Backend = () => {
         const reqOptions = createRequestOptions(refreshUrl, "POST", data, authHeader);
         try {
             const response = await axios.request(reqOptions);
-            return response.response;
+            return response.data;
         } catch (error) {
-            console.log(error);
+            // console.log(error);
             return error;
         }
     };

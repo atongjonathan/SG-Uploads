@@ -8,6 +8,7 @@ import Backend from '../utils/Backend'
 import { CgSpinner } from 'react-icons/cg'
 import AuthContext from '../context/AuthContext'
 import { Button } from '@headlessui/react'
+import { toast } from 'sonner'
 
 
 const backend = Backend()
@@ -33,6 +34,7 @@ const Login = ({ openSignUp, closeLogin }) => {
         const tokens = response.data;
         saveAuthTokens(tokens)
         closeLogin()
+        toast.success("Logged in")
 
       }
       else if (response?.status == 401) {
@@ -65,10 +67,10 @@ const Login = ({ openSignUp, closeLogin }) => {
         }
 
         <Input label="Username" placeholder='johndoe' type='text' bg name="username" error={usernameError}></Input>
-        <div>
+        {/* <div> */}
           <Input label="Password" placeholder='*******' type='password' name="password" bg error={passwordError}></Input>
-          <Link to='/password'onClick={closeLogin} className='w-full'><p className='text-xs text-right mt-3 text-subMain'>Forgot password?</p></Link>
-        </div>
+          {/* <Link to='/password'onClick={closeLogin} className='w-full'><p className='text-xs text-right mt-3 text-subMain'>Forgot password?</p></Link> */}
+        {/* </div> */}
 
         <button type="submit" className='bg-subMain transitions hover:bg-main flex-rows gap-4 text-white p-4 rounded-lg w-full my-4'><FiLogIn></FiLogIn>Sign In
           {

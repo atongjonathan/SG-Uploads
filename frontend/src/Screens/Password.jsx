@@ -4,10 +4,13 @@ import { Input } from '../Components/UserInputs'
 import { Button } from '@headlessui/react'
 import Backend from '../utils/Backend'
 import AuthContext from '../context/AuthContext'
+import { toast } from 'sonner'
+import { useNavigate } from 'react-router-dom'
 
 const backend = Backend()
 const Password = () => {
   const [error, setError] = useState(null)
+  const navigate = useNavigate()
   const { authTokens } = useContext(AuthContext)
 
   async function handleSubmit(e) {
@@ -18,19 +21,30 @@ const Password = () => {
     const new_password = formData.get('new');
     const confirmPassword = formData.get('confirm');
     if (confirmPassword !== new_password) {
-      console.log(confirmPassword, new_password)
       setError("Passwords do not match")
     }
     else {
       const response = await backend.changePassword(authTokens.access, { old_password, new_password })
-      console.log(response)
-      if (response.old_password)
-      {
-        setError(response.old_password)
+      if (response.detail) {
+        toast.success(response.detail)
+        setTimeout(() => {
+          navigate("/")
+        }, 1000);
+
       }
-      else if (response.non_field_errors)
-      {
-        setError(response.non_field_errors)
+      else if (response.response.data) {
+        let data = response.response.data
+        let error = null
+        if (data.non_field_errors) {
+          error = data.non_field_errors
+
+        }
+        else if (data.old_password) {
+          error = data.old_password
+
+        }
+        toast.error(error)
+        setError(error)
       }
     }
 

@@ -4,7 +4,6 @@ import AuthContext from "./AuthContext";
 
 export default function PrivateRoute({ children }) {
     let { authTokens } = useContext(AuthContext)
-    console.log(authTokens)
     return authTokens ? children : <Navigate to="/" />;
 }
 
