@@ -14,7 +14,7 @@ const backend = Backend()
 
 
 
-const Register = ({openLogin}) => {
+const Register = ({openLogin, closeSignUp}) => {
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
 
@@ -26,7 +26,8 @@ const Register = ({openLogin}) => {
     const formObject = Object.fromEntries(formData.entries())
     const response = await backend.signUp(formObject)
     if (response.status == 201) {
-      navigate("/login")
+      closeSignUp()
+      openLogin()
     }
     else if (response.data) {
       let data = response.data
@@ -41,7 +42,7 @@ const Register = ({openLogin}) => {
 
   }, [])
   return (
-    <form method='post' onSubmit={(e) => handleSubmit(e)} className='container mx-auto lg:px-2 my-24 flex-colo'>
+    <form method='post' onSubmit={(e) => handleSubmit(e)} className='container mx-auto lg:px-2 my-24 flex-colo gap-2'>
       <Input name='username' label="Username" placeholder='username' type='text' bg></Input>
       <Input name='email' label="Email" placeholder='johndoe@gmail.com' type='email' bg></Input>
       <Input name='password' label="Password" placeholder='*******' type='password' bg></Input>

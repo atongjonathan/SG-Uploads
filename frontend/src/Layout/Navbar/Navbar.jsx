@@ -30,16 +30,17 @@ const Navbar = () => {
   // Helper function to determine active state
   const isActive = (linkPath) => pathname + search === linkPath;
 
-  let [isLoginOpen, setisLoginOpen] = useState(false)
-  let [isSignUpOpen, setisSignUpOpen] = useState(false)
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const [isSignUpOpen, setIsSignUpOpen] = useState(false);
 
-
-
-
-  const closeModal = useCallback(() => {
+  const closeLogin = useCallback(() => {
     setIsLoginOpen(false);
+  }, []);
+
+  const closeSignUp = useCallback(() => {
     setIsSignUpOpen(false);
   }, []);
+
   const openSignUp = useCallback(() => {
     setisLoginOpen(false)
     setisSignUpOpen(true)
@@ -50,7 +51,6 @@ const Navbar = () => {
     setisLoginOpen(true)
 
   })
-
 
   const handleSearch = (e) => {
     const query = e.target.value.toLowerCase();
@@ -97,8 +97,8 @@ const Navbar = () => {
           !pathname.includes("/watch") && (
             <div className="col-span-3 lg:hidden flex-rows text-text text-sm gap-3">
               <Link
-                to="/movies?category=Sort%20By%20Categories&year=Sort%20by%20Year&times=Sort%20by%20Hours&rates=Sort%20by%20Star%20Rates"
-                className={`${isActive("/movies?category=Sort%20By%20Categories&year=Sort%20by%20Year&times=Sort%20by%20Hours&rates=Sort%20by%20Star%20Rates") ? "bg-subMain" : "bg-dry"
+                to="/movies"
+                className={`${isActive("/movies") ? "bg-subMain" : "bg-dry"
                   } p-3 cursor-pointer rounded-2xl border border-gray-800`}
               >
                 All Movies
@@ -227,7 +227,7 @@ const Navbar = () => {
               <DialogPanel className="relative max-w-lg space-y-4 border bg-main p-6 lg:p-10 text-text rounded-lg">
                 <Button onClick={() => setisLoginOpen(false)} className='absolute top-5 right-5 text-text hover:text-subMain transitions'><IoClose className="h-5 w-5"></IoClose></Button>
                 <DialogTitle className="font-bold">Log In</DialogTitle>
-                <Login openSignUp={openSignUp} closeModal={closeModal} />
+                <Login openSignUp={openSignUp} closeLogin={closeLogin} />
 
               </DialogPanel>
             </div>
@@ -240,7 +240,7 @@ const Navbar = () => {
               <DialogPanel className="relative max-w-lg space-y-4 border bg-main p-6 lg:p-10 text-text rounded-lg">
                 <Button onClick={() => setisSignUpOpen(false)} className='absolute top-5 right-5 text-text hover:text-subMain transitions'><IoClose className="h-5 w-5"></IoClose></Button>
                 <DialogTitle className="font-bold">Sign Up</DialogTitle>
-                <Register openLogin={openLogin} closeModal={setisSignUpOpen}></Register>
+                <Register openLogin={openLogin} closeModal={closeSignUp}></Register>
               </DialogPanel>
             </div>
           </Dialog>
