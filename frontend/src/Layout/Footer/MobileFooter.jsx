@@ -19,24 +19,31 @@ const MobileFooter = () => {
     const active = 'bg-subMain text-main'
     const inActive = 'transitions text-2xl flex-colo hover:bg-white hover:text-main text-white rounded-md px-4 py-3'
     const { logoutUser, authTokens, user } = useContext(AuthContext)
+    let [isLoginOpen, setisLoginOpen] = useState(false)
+    let [isSignUpOpen, setIsSignUpOpen] = useState(false)
 
     const Hover = useCallback(({ isActive }) =>
         isActive ? `${active} ${inActive}` : inActive,
         []
     );
 
+    const closeLogin = useCallback(() => {
+        setisLoginOpen(false);
+    })
 
-    let [isLoginOpen, setisLoginOpen] = useState(false)
-    let [isSignUpOpen, setisSignUpOpen] = useState(false)
+    const closeSignUp = useCallback(() => {
+        setIsSignUpOpen(false);
+    }, []);
+
 
 
     const openSignUp = useCallback(() => {
         setisLoginOpen(false)
-        setisSignUpOpen(true)
+        setIsSignUpOpen(true)
 
     })
     const openLogin = useCallback(() => {
-        setisSignUpOpen(false)
+        setIsSignUpOpen(false)
         setisLoginOpen(true)
 
     })
@@ -109,7 +116,7 @@ const MobileFooter = () => {
                         <DialogPanel className="relative max-w-lg space-y-4 border bg-main p-6 lg:p-10 text-text rounded-lg">
                             <Button onClick={() => setisLoginOpen(false)} className='absolute top-5 right-5 text-text hover:text-subMain transitions'><IoClose className="h-5 w-5"></IoClose></Button>
                             <DialogTitle className="font-bold">Log In</DialogTitle>
-                            <Login openSignUp={openSignUp}></Login>
+                            <Login openSignUp={openSignUp} closeLogin={closeLogin}></Login>
                         </DialogPanel>
                     </div>
                 </Dialog>
@@ -119,9 +126,9 @@ const MobileFooter = () => {
 
 
                         <DialogPanel className="relative max-w-lg space-y-4 border bg-main p-6 lg:p-10 text-text rounded-lg">
-                            <Button onClick={() => setisSignUpOpen(false)} className='absolute top-5 right-5 text-text hover:text-subMain transitions'><IoClose className="h-5 w-5"></IoClose></Button>
+                            <Button onClick={() => setIsSignUpOpen(false)} className='absolute top-5 right-5 text-text hover:text-subMain transitions'><IoClose className="h-5 w-5"></IoClose></Button>
                             <DialogTitle className="font-bold">Sign Up</DialogTitle>
-                            <Register openLogin={openLogin}></Register>
+                            <Register openLogin={openLogin} closeSignUp={closeSignUp}></Register>
                         </DialogPanel>
                     </div>
                 </Dialog>

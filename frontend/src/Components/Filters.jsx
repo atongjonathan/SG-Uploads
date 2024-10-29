@@ -58,7 +58,8 @@ const Filters = ({ categories }) => {
 
     useEffect(() => {
         const params = `category=${category.title}&year=${year.title}&times=${times.title}&rates=${rates.title}`
-        navigate(`/movies?${params}`)
+        const paramsList = params.split("&").filter((param)=> !param.split("=")[1].includes("Sort"))
+        navigate(`/movies?${paramsList.join("&")}`)
     }, [category, year, times, rates])
 
 

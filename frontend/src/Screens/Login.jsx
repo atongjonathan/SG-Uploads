@@ -11,13 +11,13 @@ import { Button } from '@headlessui/react'
 
 
 const backend = Backend()
-const Login = ({ openSignUp, closeModal }) => {
+const Login = ({ openSignUp, closeLogin }) => {
 
   const [loading, setLoading] = useState(false)
   const [passwordError, setPasswordError] = useState(null)
   const [usernameError, setusernameError] = useState(null)
   const [invalid, setInvalid] = useState(null)
-  console.log(openSignUp)
+
 
 
   const { saveAuthTokens } = useContext(AuthContext)
@@ -32,7 +32,7 @@ const Login = ({ openSignUp, closeModal }) => {
       if (response.data) {
         const tokens = response.data;
         saveAuthTokens(tokens)
-
+        closeLogin()
 
       }
       else if (response?.status == 401) {
@@ -57,7 +57,7 @@ const Login = ({ openSignUp, closeModal }) => {
 
   return (
     <form action="" method='post' onSubmit={(e) => handleSubmit(e)}>
-      <div className='container mx-auto flex-colo'>
+      <div className='container mx-auto flex-colo gap-2'>
         {
           invalid && <div className="text-oldMain w-full mt-2 text-sm font-medium text-center pt-4">
             <p>{invalid}</p>

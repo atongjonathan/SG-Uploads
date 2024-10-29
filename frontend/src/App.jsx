@@ -49,8 +49,6 @@ const App = () => {
         <Route path='/movies' element={<MoviesPage />}></Route>
         <Route path='/movie/:id' element={<SingleMovie />}></Route>
         <Route path='/watch/:id' element={<WatchPage />}></Route>
-        <Route path='/login' element={<Login />}></Route>
-        <Route path='/register' element={<Register />}></Route>
         <Route path='/403' element={<NotAllowed />}></Route>
 
         {/* Catch-all for not found */}
