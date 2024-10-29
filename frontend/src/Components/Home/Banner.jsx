@@ -3,8 +3,8 @@ import { Autoplay, FreeMode, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import FlexMovieItems from "../FlexMovieItems";
 import { Link } from "react-router-dom";
-import SGFaHeart from "../SGFaHeart";
 import { LazyLoadImage } from 'react-lazy-load-image-component';
+import { FaHeart } from "react-icons/fa";
 
 
 
@@ -57,7 +57,7 @@ const Banner = ({ movies }) => {
                 >
                   Watch
                 </Link>
-                <SGFaHeart movie={movie}></SGFaHeart>
+                <FaHeart></FaHeart>
               </div>
             </div>
           </SwiperSlide>

@@ -3,15 +3,13 @@ import FlexMovieItems from '../FlexMovieItems'
 import { FaPlay, FaShareAlt } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 import { FiLogIn } from 'react-icons/fi'
-import { useUser } from '../../utils/SWR'
 import AuthContext from '../../context/AuthContext'
 import { Button } from '@headlessui/react'
 import { toast } from 'sonner'
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 const MovieInfo = ({ movie }) => {
-    const { authTokens } = useContext(AuthContext)
-    const user = useUser(authTokens?.access)
+    const { authTokens, user } = useContext(AuthContext)
     return movie && (
         <div className='w-full xl:h-screen relative text-white'>
             <LazyLoadImage src={movie.poster} alt={movie.title} className='w-full hidden xl:inline-block h-full object-cover' />

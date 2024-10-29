@@ -1,10 +1,15 @@
-import React, { useContext, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { FaSearch, FaHeart } from "react-icons/fa";
 import logo from "../../images/4x3.jpg";
-import { Button } from "@headlessui/react";
-import { useMovies, useUser } from "../../utils/SWR";
+import { Button, Input } from "@headlessui/react";
+import { useMovies } from "../../utils/SWR";
 import AuthContext from "../../context/AuthContext";
+import { Description, Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
+import { IoClose } from "react-icons/io5";
+import Login from "../../Screens/Login";
+import Register from "../../Screens/Register";
+
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
@@ -12,10 +17,10 @@ const Navbar = () => {
   const hover = 'hover:text-subMain transitions text-white';
   const Hover = ({ isActive }) => (isActive ? 'text-subMain' : hover);
   const navigate = useNavigate();
+  const [SGUSer, setSGUser] = useState(null)
 
 
-  const { authTokens, logoutUser } = useContext(AuthContext);
-  const user = useUser(authTokens?.access)?.user;
+  const { authTokens, logoutUser, user } = useContext(AuthContext);
   const movies = useMovies()?.movies || [];
   const [isResults, setResults] = useState([]);
 
@@ -24,6 +29,27 @@ const Navbar = () => {
 
   // Helper function to determine active state
   const isActive = (linkPath) => pathname + search === linkPath;
+
+  let [isLoginOpen, setisLoginOpen] = useState(false)
+  let [isSignUpOpen, setisSignUpOpen] = useState(false)
+
+
+
+
+  const closeModal = useCallback(() => {
+    setIsLoginOpen(false);
+    setIsSignUpOpen(false);
+  }, []);
+  const openSignUp = useCallback(() => {
+    setisLoginOpen(false)
+    setisSignUpOpen(true)
+
+  })
+  const openLogin = useCallback(() => {
+    setisSignUpOpen(false)
+    setisLoginOpen(true)
+
+  })
 
 
   const handleSearch = (e) => {
@@ -45,6 +71,7 @@ const Navbar = () => {
     navigate(`/movie/${title}`);
     setResults([]);
   };
+
 
   const userAvatar = user?.image
     ? `${BACKEND_URL}${user.image}`
@@ -100,8 +127,8 @@ const Navbar = () => {
 
 
         {/* Search Form */}
-        
-        <div className={`col-span-3 relative p-4 ${pathname.includes("/watch")?'hidden lg:inline-block':''}`}>
+
+        <div className={`col-span-3 relative p-4 ${pathname.includes("/watch") ? 'hidden lg:inline-block' : ''}`}>
           <form className="w-full text-sm bg-dryGray rounded flex-btn gap-4">
             <button type="submit" className="bg-subMain w-12 flex-colo h-12 rounded text-white">
               <FaSearch />
@@ -179,14 +206,44 @@ const Navbar = () => {
             </NavLink>
           )}
           {user ? (
-            <Button title="Log Out" className={Hover} onClick={() => { logoutUser(); navigate("/login"); }}>
+            <Button title="Log Out" className={Hover} onClick={logoutUser}>
               Logout
             </Button>
           ) : (
-            <NavLink className={Hover} to="/login">
-              Log In
-            </NavLink>
+            <>
+              <Button className={Hover} onClick={() => setisLoginOpen(true)}>
+                Log In
+              </Button>
+
+              <Button className={Hover} onClick={() => setisSignUpOpen(true)}>
+                Sign Up
+              </Button>
+            </>
           )}
+          <Dialog open={isLoginOpen} onClose={() => setisLoginOpen(false)} className="relative z-50">
+            <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
+
+
+              <DialogPanel className="relative max-w-lg space-y-4 border bg-main p-6 lg:p-10 text-text rounded-lg">
+                <Button onClick={() => setisLoginOpen(false)} className='absolute top-5 right-5 text-text hover:text-subMain transitions'><IoClose className="h-5 w-5"></IoClose></Button>
+                <DialogTitle className="font-bold">Log In</DialogTitle>
+                <Login openSignUp={openSignUp} closeModal={closeModal} />
+
+              </DialogPanel>
+            </div>
+          </Dialog>
+
+          <Dialog open={isSignUpOpen} onClose={() => setisSignUpOpen(false)} className="relative z-50">
+            <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
+
+
+              <DialogPanel className="relative max-w-lg space-y-4 border bg-main p-6 lg:p-10 text-text rounded-lg">
+                <Button onClick={() => setisSignUpOpen(false)} className='absolute top-5 right-5 text-text hover:text-subMain transitions'><IoClose className="h-5 w-5"></IoClose></Button>
+                <DialogTitle className="font-bold">Sign Up</DialogTitle>
+                <Register openLogin={openLogin} closeModal={setisSignUpOpen}></Register>
+              </DialogPanel>
+            </div>
+          </Dialog>
         </div>
       </div>
     </div>

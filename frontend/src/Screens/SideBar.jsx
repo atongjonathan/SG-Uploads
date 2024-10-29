@@ -5,13 +5,11 @@ import { FiSettings } from 'react-icons/fi'
 import { RiLockPasswordLine } from 'react-icons/ri'
 import Layout from '../Layout/Layout'
 import { NavLink } from 'react-router-dom'
-import { useUser } from '../utils/SWR'
 import AuthContext from '../context/AuthContext'
 
 const SideBar = ({ children }) => {
 
-    const { authTokens} = useContext(AuthContext)
-    const user = useUser(authTokens.access).user
+    const { authTokens, user } = useContext(AuthContext)
 
     const adminLinks = [
         {

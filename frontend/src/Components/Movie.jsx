@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import SGFaHeart from "./SGFaHeart";
 import { LazyLoadImage } from 'react-lazy-load-image-component';
+import { FaHeart } from "react-icons/fa";
 
 
 const Movie = ({ movie }) => {
@@ -13,7 +13,7 @@ const Movie = ({ movie }) => {
         </Link>
         <div className="absolute flex-btn gap-2 bottom-0 right-0 left-0 bg-main bg-opacity-60 text-white px-4 py-3">
           <h6 className="font-semibold truncate">{movie.title}</h6>
-          <SGFaHeart movie={movie}></SGFaHeart>
+          <FaHeart movie={movie}></FaHeart>
         </div>
       </div>
     </>

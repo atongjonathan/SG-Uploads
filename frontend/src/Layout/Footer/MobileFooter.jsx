@@ -1,23 +1,57 @@
-import React, { useContext } from 'react'
+import React, { useCallback, useContext, useState } from 'react'
 import { BsCollectionPlay, BsHouseAddFill, BsHouseExclamationFill } from 'react-icons/bs'
 import { FiHeart } from 'react-icons/fi'
 import { RxDashboard } from "react-icons/rx";
 import { MdLogout, MdOutlineContactMail, MdLogin, MdOutlineInfo } from "react-icons/md";
 import { NavLink } from 'react-router-dom'
-import { useUser } from '../../utils/SWR'
 import { FaHeart, FaPersonBooth, } from 'react-icons/fa'
 import { Button } from '@headlessui/react'
 import AuthContext from '../../context/AuthContext';
+import { Description, Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
+import Login from '../../Screens/Login';
+import Register from '../../Screens/Register';
+import { IoClose } from 'react-icons/io5';
+import { toast } from 'sonner';
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
 
 const MobileFooter = () => {
     const active = 'bg-subMain text-main'
     const inActive = 'transitions text-2xl flex-colo hover:bg-white hover:text-main text-white rounded-md px-4 py-3'
-    const Hover = ({ isActive }) => isActive ? `${active} ${inActive}` : inActive
-    const { logoutUser, authTokens } = useContext(AuthContext)
-    const user = useUser(authTokens?.access)?.user
+    const { logoutUser, authTokens, user } = useContext(AuthContext)
 
+    const Hover = useCallback(({ isActive }) =>
+        isActive ? `${active} ${inActive}` : inActive,
+        []
+    );
+
+
+    let [isLoginOpen, setisLoginOpen] = useState(false)
+    let [isSignUpOpen, setisSignUpOpen] = useState(false)
+
+
+    const openSignUp = useCallback(() => {
+        setisLoginOpen(false)
+        setisSignUpOpen(true)
+
+    })
+    const openLogin = useCallback(() => {
+        setisSignUpOpen(false)
+        setisLoginOpen(true)
+
+    })
+
+    const handleLogout = () => {
+        logoutUser()
+
+        toast.info("Logged Out", {
+            classNames: {
+                toast: 'bg-subMain',
+                title: 'text-white',
+            },
+            closeButton: true,
+        })
+    }
 
     return (
         <>
@@ -41,13 +75,10 @@ const MobileFooter = () => {
 
                     </NavLink>}
                     {user ?
-                        (<Button title="Log Out" className={Hover} onClick={() => {
-                            logoutUser()
-                            window.location.assign("/")
-                        }}>
+                        (<Button title="Log Out" className={Hover} onClick={handleLogout}>
                             <MdLogout></MdLogout><p className='text-xs'>LogOut</p>
-                        </Button>) : <NavLink className={Hover} to="/login">
-                            <MdLogin> </MdLogin><p className='text-xs'>LogIn</p></NavLink>}
+                        </Button>) : <Button onClick={() => setisLoginOpen(true)} className={Hover} to="/login">
+                            <MdLogin> </MdLogin><p className='text-xs'>LogIn</p></Button>}
 
                     {user &&
                         <NavLink className={Hover} to="/profile" title="Profile">
@@ -71,6 +102,29 @@ const MobileFooter = () => {
                         </NavLink>
                     }
                 </div>
+                <Dialog open={isLoginOpen} onClose={() => setisLoginOpen(false)} className="relative z-50">
+                    <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
+
+
+                        <DialogPanel className="relative max-w-lg space-y-4 border bg-main p-6 lg:p-10 text-text rounded-lg">
+                            <Button onClick={() => setisLoginOpen(false)} className='absolute top-5 right-5 text-text hover:text-subMain transitions'><IoClose className="h-5 w-5"></IoClose></Button>
+                            <DialogTitle className="font-bold">Log In</DialogTitle>
+                            <Login openSignUp={openSignUp}></Login>
+                        </DialogPanel>
+                    </div>
+                </Dialog>
+
+                <Dialog open={isSignUpOpen} onClose={() => setisSignUpOpen(false)} className="relative z-50">
+                    <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
+
+
+                        <DialogPanel className="relative max-w-lg space-y-4 border bg-main p-6 lg:p-10 text-text rounded-lg">
+                            <Button onClick={() => setisSignUpOpen(false)} className='absolute top-5 right-5 text-text hover:text-subMain transitions'><IoClose className="h-5 w-5"></IoClose></Button>
+                            <DialogTitle className="font-bold">Sign Up</DialogTitle>
+                            <Register openLogin={openLogin}></Register>
+                        </DialogPanel>
+                    </div>
+                </Dialog>
             </footer>
         </>
 

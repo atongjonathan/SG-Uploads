@@ -1,15 +1,14 @@
 import React, { useContext, useEffect } from 'react'
 import SideBar from './SideBar'
 import Table from '../Components/Table'
-import { useMovies, useUser } from '../utils/SWR'
 import AuthContext from '../context/AuthContext'
+import { useMovies } from '../utils/SWR'
 
 const FavouriteMovies = () => {
   const movies = useMovies().movies
 
 
-  const { authTokens } = useContext(AuthContext)
-  const user = useUser(authTokens.access).user
+  const { authTokens, user } = useContext(AuthContext)
   const favourites = movies?.filter((movie) => user?.favourites.includes(movie.id))
 
   useEffect(() => {

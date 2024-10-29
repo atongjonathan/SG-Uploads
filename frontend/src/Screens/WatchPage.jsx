@@ -4,8 +4,7 @@ import { Link, useParams } from 'react-router-dom'
 import { BiArrowBack } from 'react-icons/bi'
 import { FaCloud, FaHeart, FaPlay } from 'react-icons/fa'
 import MyPlyrVideo from './MyPlyrVideo'
-import SGFaHeart from '../Components/SGFaHeart'
-import { useMovies, useUser } from '../utils/SWR'
+import { useMovies } from '../utils/SWR'
 import MovieCasts from '../Components/Single/MovieCasts'
 import MovieRates from '../Components/Single/MovieRates'
 import MovieInfo from '../Components/Single/MovieInfo'
@@ -37,7 +36,6 @@ const WatchPage = () => {
     })
 
     const { authTokens } = useContext(AuthContext)
-    const user = useUser(authTokens?.access)
 
     useEffect(() => {
         document.title = `Watch ${movie?.title} (${movie?.year})`
@@ -53,7 +51,7 @@ const WatchPage = () => {
                         <BiArrowBack></BiArrowBack> <p className='hidden lg:inline-block'>{`${movie?.title} (${movie.year})`}</p>
                     </Link>
                     <div className="flex flex-btn gap-5">
-                        <SGFaHeart movie={movie}></SGFaHeart>
+                        <FaHeart movie={movie}></FaHeart>
                         {
                             user ? <Link to={movie.stream.replace("video", "dl")}  className="bg-subMain flex-rows gap-2 hover:text-main transitions text-white rounded px-3 font-medium py-3 text-sm">
                                 <FaCloud></FaCloud> Download

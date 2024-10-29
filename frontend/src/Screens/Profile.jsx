@@ -3,7 +3,6 @@ import SideBar from './SideBar'
 import Uploader from '../Components/Uploader'
 import { Input } from '../Components/UserInputs'
 import Backend from '../utils/Backend'
-import { useUser } from '../utils/SWR'
 import { toast } from 'sonner'
 import AuthContext from '../context/AuthContext'
 
@@ -13,8 +12,7 @@ const Profile = () => {
   const backend = Backend()
 
 
-  const { authTokens } = useContext(AuthContext)
-  const user = useUser(authTokens.access)
+  const { authTokens, user } = useContext(AuthContext)
   const [image, setFileResponse] = useState(null)
 
   const handleSubmit = async (e) => {

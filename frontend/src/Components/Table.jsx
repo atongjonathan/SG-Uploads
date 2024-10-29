@@ -1,9 +1,8 @@
 import React from 'react'
-import { FaCloudDownloadAlt, FaEdit } from 'react-icons/fa'
+import { FaCloudDownloadAlt, FaEdit, FaHeart } from 'react-icons/fa'
 import { GoEye } from 'react-icons/go'
 import { MdDelete } from 'react-icons/md'
 import { Link } from 'react-router-dom'
-import SGFaHeart from './SGFaHeart'
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 const Head = "text-xs text-left text-main font-semibold px-6 py-2 uppercase"
@@ -36,7 +35,7 @@ const Rows = (movie, idx, admin) =>
                             Download <FaCloudDownloadAlt className='text-green-500'></FaCloudDownloadAlt>
                         </Link>
                         <Link to={`/movie/${movie.title}`} className='bg-subMain text-white rounded flex-colo w-6 h-6'> <GoEye></GoEye></Link>
-                        <SGFaHeart movie={movie}></SGFaHeart>
+                        <FaHeart></FaHeart>
 
                     </>)
             }

@@ -1,8 +1,8 @@
 import React, { useContext, useEffect } from 'react'
 import SideBar from '../../SideBar'
 import Table2 from '../../../Components/Table2'
-import { useUsers } from '../../../utils/SWR'
 import AuthContext from '../../../context/AuthContext'
+import { useUsers } from '../../../utils/SWR'
 
 const Users = () => {
     const { authTokens } = useContext(AuthContext)

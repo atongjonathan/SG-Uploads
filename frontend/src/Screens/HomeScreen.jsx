@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Layout from "../Layout/Layout";
 import Banner from "../Components/Home/Banner";
 import PopularMovies from "../Components/Home/PopularMovies";
