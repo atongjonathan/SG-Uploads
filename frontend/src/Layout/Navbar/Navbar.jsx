@@ -9,6 +9,7 @@ import { Description, Dialog, DialogPanel, DialogTitle } from '@headlessui/react
 import { IoClose } from "react-icons/io5";
 import Login from "../../Screens/Login";
 import Register from "../../Screens/Register";
+import { BiArrowBack } from "react-icons/bi";
 
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
@@ -80,7 +81,7 @@ const Navbar = () => {
 
   return (
     <div className="bg-main shadow-md fixed top-0 z-20 w-full">
-      <div className="container mx-auto py-3 px-2 lg:py-6 lg:grid gap-10 grid-cols-7 justify-between items-center">
+      <div className="container mx-auto py-3 px-2 lg:py-6 lg:grid gap-10 grid-cols-7 justify-between items-center min-h-7">
         {/* Logo */}
         <div className="col-span-1 lg:block hidden">
           <Link to="/">
@@ -93,41 +94,38 @@ const Navbar = () => {
           </Link>
         </div>
 
-        {/* Links for small screens */}
-        {
-          !pathname.includes("/watch") && (
-            <div className="col-span-3 lg:hidden flex-rows text-text text-sm gap-3">
-              <button type="button" onClick={() => setShowModal(true)} className="bg-subMain w-12 flex-colo h-12 rounded text-white">
-                <FaSearch className="w-6" />
-              </button>
-              <Link
-                to="/movies"
-                className={`${isActive("/movies") ? "bg-subMain" : "bg-dry"
-                  } p-3 cursor-pointer rounded-2xl border border-gray-800`}
-              >
-                All Movies
-              </Link>
+   
+              <div className="col-span-3 lg:hidden flex-rows text-text text-sm gap-3">
+                <button type="button" onClick={() => setShowModal(true)} className="bg-subMain w-12 flex-colo h-12 rounded text-white">
+                  <FaSearch className="w-6" />
+                </button>
+                <Link
+                  to="/movies"
+                  className={`${isActive("/movies") ? "bg-subMain" : "bg-dry"
+                    } p-3 cursor-pointer rounded-2xl border border-gray-800`}
+                >
+                  All Movies
+                </Link>
 
-              {/* Action Movies Link */}
-              <Link
-                to="/movies?category=Action"
-                className={`${isActive("/movies?category=Action") ? "bg-subMain" : "bg-dry"
-                  } p-3 cursor-pointer rounded-2xl border border-gray-800`}
-              >
-                Action
-              </Link>
+                {/* Action Movies Link */}
+                <Link
+                  to="/movies?category=Action"
+                  className={`${isActive("/movies?category=Action") ? "bg-subMain" : "bg-dry"
+                    } p-3 cursor-pointer rounded-2xl border border-gray-800`}
+                >
+                  Action
+                </Link>
 
-              {/* Horror Movies Link */}
-              <Link
-                to="/movies?category=Horror"
-                className={`${isActive("/movies?category=Horror") ? "bg-subMain" : "bg-dry"
-                  } p-3 cursor-pointer rounded-2xl border border-gray-800`}
-              >
-                Horror
-              </Link>
-            </div>
-          )
-        }
+                {/* Horror Movies Link */}
+                <Link
+                  to="/movies?category=Horror"
+                  className={`${isActive("/movies?category=Horror") ? "bg-subMain" : "bg-dry"
+                    } p-3 cursor-pointer rounded-2xl border border-gray-800`}
+                >
+                  Horror
+                </Link>
+              </div>
+  
 
 
         {/* Search Form */}
@@ -148,12 +146,12 @@ const Navbar = () => {
           <Dialog open={showModal} onClose={() => setShowModal(false)} className="relative z-50">
             <div className="fixed inset-0 flex w-full items-start justify-center p-4">
               <DialogPanel className="relative max-w-lg space-y-4 border bg-main p-6 lg:p-10 text-text rounded-lg w-full">
-              <DialogTitle className="font-bold">Find a Movie</DialogTitle>
-              <Button onClick={() => setShowModal(false)} className='absolute top-0 right-3 text-text hover:text-subMain transitions'><IoClose className="h-5 w-5"></IoClose></Button>
+                <DialogTitle className="font-bold">Find a Movie</DialogTitle>
+                <Button onClick={() => setShowModal(false)} className='absolute top-0 right-3 text-text hover:text-subMain transitions'><IoClose className="h-5 w-5"></IoClose></Button>
                 <Input
                   type="text"
                   placeholder="Search Movie Name from here"
-                  className={"font-medium placeholder:text-text text-sm w-full h-12 bg-transparent border-none px-2 text-black bg-white mt-10" + {Hover}}
+                  className={"font-medium placeholder:text-text text-sm w-full h-12 bg-transparent border-none px-2 text-black bg-white mt-10" + { Hover }}
                   onInput={handleSearch}
                 />
                 {(isResults.length > 0 && showModal) && (
@@ -165,7 +163,8 @@ const Navbar = () => {
                             key={idx}
                             className="hover:text-main text-center hover:bg-dryGray hover:cursor-pointer"
                             title={movie.title}
-                            onClick={() => {handleResultClick(movie.title)
+                            onClick={() => {
+                              handleResultClick(movie.title)
                               setShowModal(false)
                             }}
                           >
