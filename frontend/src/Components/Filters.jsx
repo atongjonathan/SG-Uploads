@@ -40,6 +40,7 @@ const RatesData = [
 
 const Filters = ({ categories }) => {
     const [searchParams] = useSearchParams()
+    const navigate = useNavigate()
     // Utility function to get the parameter or a default value
     const getParamOrDefault = (paramName, defaultValue) => {
         const paramValue = searchParams.get(paramName);
@@ -66,6 +67,7 @@ const Filters = ({ categories }) => {
     useEffect(() => {
         const params = `category=${category.title}&year=${year.title}&times=${times.title}&rates=${rates.title}`
         const paramsList = params.split("&").filter((param) => !param.split("=")[1].includes("Sort"))
+        navigate("/movies?" + paramsList.join("&"))
     }, [category, year, times, rates])
 
 
