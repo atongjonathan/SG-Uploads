@@ -4,12 +4,13 @@ import AuthContext from "./AuthContext";
 
 export default function PrivateRoute({ children }) {
     let { authTokens } = useContext(AuthContext)
-    return authTokens ? children : <Navigate to="/login" />;
+    console.log(authTokens)
+    return authTokens ? children : <Navigate to="/" />;
 }
 
 
 export function SuperRoute({ children }) {
-    const { authTokens, user} = useContext(AuthContext)
+    const { user } = useContext(AuthContext)
 
-    return user ? (user.is_superuser ? children : <Navigate to="/403"></Navigate>) : <Navigate to="/login" />;
+    return user ? (user.is_superuser ? children : <Navigate to="/403"></Navigate>) : <Navigate to="/" />;
 }

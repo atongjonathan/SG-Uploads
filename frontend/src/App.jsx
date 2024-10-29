@@ -35,10 +35,10 @@ const App = () => {
         <Route path='/users' element={<PrivateRoute><SuperRoute><Users /></SuperRoute></PrivateRoute>}></Route>
         <Route path='/dashboard' element={<PrivateRoute><SuperRoute><Dashboard /></SuperRoute></PrivateRoute>}></Route>
         <Route path='/addmovie' element={<PrivateRoute><SuperRoute><AddMovie /></SuperRoute></PrivateRoute>}></Route>
-        <Route path='/password' element={<PrivateRoute><SuperRoute> <Password /></SuperRoute></PrivateRoute>}></Route>
 
         {/* Protected routes for authenticated users */}
 
+        <Route path='/password' element={<PrivateRoute><Password /></PrivateRoute>}></Route>
         <Route path='/favourites' element={<PrivateRoute><FavouriteMovies /></PrivateRoute>}></Route>
         <Route path='/profile' element={<PrivateRoute><Profile /></PrivateRoute>}></Route>
 

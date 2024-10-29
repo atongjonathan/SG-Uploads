@@ -73,10 +73,21 @@ const Backend = () => {
         const refreshUrl = `${BACKEND_URL}/update-user`;
         const reqOptions = createRequestOptions(refreshUrl, "POST", data, authHeader);
         reqOptions.headers["Content-Type"] = 'multipart/form-data'
-        console.log(reqOptions)
         try {
             const response = await axios.request(reqOptions);
             return response;
+        } catch (error) {
+            console.log(error);
+            return error;
+        }
+    };
+
+    const changePassword = async (authHeader, data) => {
+        const refreshUrl = `${BACKEND_URL}/change-password`;
+        const reqOptions = createRequestOptions(refreshUrl, "POST", data, authHeader);
+        try {
+            const response = await axios.request(reqOptions);
+            return response.response;
         } catch (error) {
             console.log(error);
             return error;
@@ -121,7 +132,7 @@ const Backend = () => {
     };
 
 
-    return { signUp, loginUser, like, unlike, updateProfile, addMovie, BACKEND_URL, refreshAccessToken, sendCaptions };
+    return { signUp, loginUser, like, unlike, updateProfile, addMovie, BACKEND_URL, refreshAccessToken, sendCaptions, changePassword };
 };
 
 export default Backend;

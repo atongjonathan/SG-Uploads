@@ -20,7 +20,8 @@ urlpatterns = [
     path('user', views.user, name="user"),
     path('like/<id>', views.like_movie, name='like_movie'),
     path('unlike/<id>', views.unlike_movie, name='unlike_movie'),
-    path('captions', views.captions, name='captions')
+    path('captions', views.captions, name='captions'),
+    path('change-password', views.change_password, name='password')
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

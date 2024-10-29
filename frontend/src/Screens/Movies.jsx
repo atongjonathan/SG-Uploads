@@ -27,7 +27,6 @@ const MoviesPage = () => {
   // Parse search params into an object
   const params = useMemo(() => Object.fromEntries(searchParams.entries()), [searchParams]);
 
-  const navigate = useNavigate()
 
   // Filter movies based on search parameters
   const filteredMovies = useMemo(() => {

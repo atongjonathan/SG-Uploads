@@ -6,7 +6,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAuthenticated
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
-
+from rest_framework import generics, permissions
 from ..captions import search, send_to_tg
 from ..models import Movie, SGUser
 from .serializers import MovieSerializer, SGUserSerializer
@@ -15,6 +15,7 @@ from rest_framework import status
 from rest_framework import serializers
 from rest_framework.parsers import MultiPartParser, FormParser
 import os
+from .serializers import ChangePasswordSerializer
 
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -97,6 +98,18 @@ def update_user(request: HttpRequest):
         serializer.save()
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def change_password(request):
+    serializer = ChangePasswordSerializer(data=request.data, context={'request': request})
+    if serializer.is_valid():
+        user = request.user
+        user.set_password(serializer.validated_data['new_password'])
+        user.save()
+        return Response({"detail": "Password updated successfully."}, status=status.HTTP_200_OK)
+    
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
