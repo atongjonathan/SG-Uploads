@@ -5,13 +5,14 @@ import { RxDashboard } from "react-icons/rx";
 import { MdLogout, MdOutlineContactMail, MdLogin, MdOutlineInfo } from "react-icons/md";
 import { NavLink } from 'react-router-dom'
 import { FaHeart, FaPersonBooth, } from 'react-icons/fa'
-import { Button } from '@headlessui/react'
+import { Button, Popover, PopoverButton, PopoverPanel } from '@headlessui/react'
 import AuthContext from '../../context/AuthContext';
 import { Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
 import Login from '../../Screens/Login';
 import Register from '../../Screens/Register';
 import { IoClose } from 'react-icons/io5';
 import { toast } from 'sonner';
+import PopMenu from './PopMenu';
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
 
@@ -40,6 +41,10 @@ const MobileFooter = () => {
     const openSignUp = useCallback(() => {
         setisLoginOpen(false)
         setIsSignUpOpen(true)
+
+    })
+    const isOpen = useCallback(() => {
+        setisLoginOpen(false)
 
     })
     const openLogin = useCallback(() => {
@@ -71,43 +76,16 @@ const MobileFooter = () => {
                         <BsHouseAddFill></BsHouseAddFill><p className='text-xs'>Home</p>
                     </NavLink>
 
-                    {user && user?.is_superuser ? <NavLink title="Dashboard" className={Hover} to="/dashboard">
-                        <RxDashboard></RxDashboard> <p className='text-xs'>Dashboard</p>
-                    </NavLink> : user &&
-                    <NavLink className={`${Hover}`} to="/favourites" title="Favourites">
-                        <div className="relative">
-                            <FaHeart className="w-5 h-5"></FaHeart>
-                            <div className="w-4 h-4 flex-colo rounded-full text-xs bg-subMain text-white absolute -top-3 -right-3">{user?.favourites?.length}</div>
-                        </div>
+                  
+                    <PopMenu user={user}></PopMenu>
 
-                    </NavLink>}
                     {user ?
                         (<Button title="Log Out" className={Hover} onClick={handleLogout}>
                             <MdLogout></MdLogout><p className='text-xs'>LogOut</p>
                         </Button>) : <Button onClick={() => setisLoginOpen(true)} className={Hover} to="/login">
                             <MdLogin> </MdLogin><p className='text-xs'>LogIn</p></Button>}
 
-                    {user &&
-                        <NavLink className={Hover} to="/profile" title="Profile">
-                            <div className="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
-                                <img className="absolute w-12 h-12 rounded-full " src={user?.image ? BACKEND_URL + user.image : `https://ui-avatars.com/api/?name=${user?.name ? user.name : user?.username}&rounded=true&background=14759f&size=35&color=fff`} alt={user?.username + ' image'} />
-                            </div>
-                            <p className='text-xs'>Profile</p>
-                        </NavLink>}
 
-                    {
-                        !user &&
-                        <NavLink title="About Us" className={Hover} to="/about-us">
-                            <MdOutlineInfo></MdOutlineInfo ><p className='text-xs'>About</p>
-
-                        </NavLink>
-                    }
-                    {
-                        !user &&
-                        <NavLink title="About Us" className={Hover} to="/contact-us">
-                            <MdOutlineContactMail></MdOutlineContactMail><p className='text-xs'>Contact</p>
-                        </NavLink>
-                    }
                 </div>
                 <Dialog open={isLoginOpen} onClose={() => setisLoginOpen(false)} className="relative z-50">
                     <div className="fixed inset-0 flex w-screen items-center justify-center p-4">

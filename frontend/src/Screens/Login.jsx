@@ -34,7 +34,14 @@ const Login = ({ openSignUp, closeLogin }) => {
         const tokens = response.data;
         saveAuthTokens(tokens)
         closeLogin()
-        toast.success("Logged in")
+        toast.success("Logged in", {
+          classNames: {
+            toast: 'bg-subMain',
+            title: 'text-white',
+            closeButton: 'bg-subMain text-white hover:text-subMain',
+          },
+          closeButton: true,
+        })
 
       }
       else if (response?.status == 401) {

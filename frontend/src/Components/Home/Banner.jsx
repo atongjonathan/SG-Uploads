@@ -5,8 +5,7 @@ import FlexMovieItems from "../FlexMovieItems";
 import { Link } from "react-router-dom";
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { FaHeart } from "react-icons/fa";
-
-
+import SGFaHeart from  '../SGFaHeart'
 
 
 const Banner = ({ movies }) => {
@@ -65,7 +64,7 @@ const Banner = ({ movies }) => {
                 >
                   Watch
                 </Link>
-                <FaHeart></FaHeart>
+                <SGFaHeart movie={movie}></SGFaHeart>
               </div>
             </div>
           </SwiperSlide>

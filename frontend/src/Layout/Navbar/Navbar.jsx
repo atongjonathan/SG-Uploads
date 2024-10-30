@@ -10,6 +10,7 @@ import { IoClose } from "react-icons/io5";
 import Login from "../../Screens/Login";
 import Register from "../../Screens/Register";
 import { BiArrowBack } from "react-icons/bi";
+import { toast } from "sonner";
 
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
@@ -94,38 +95,38 @@ const Navbar = () => {
           </Link>
         </div>
 
-   
-              <div className="col-span-3 lg:hidden flex-rows text-text text-sm gap-3">
-                <button type="button" onClick={() => setShowModal(true)} className="bg-subMain w-12 flex-colo h-12 rounded text-white">
-                  <FaSearch className="w-6" />
-                </button>
-                <Link
-                  to="/movies"
-                  className={`${isActive("/movies") ? "bg-subMain" : "bg-dry"
-                    } p-3 cursor-pointer rounded-2xl border border-gray-800`}
-                >
-                  All Movies
-                </Link>
 
-                {/* Action Movies Link */}
-                <Link
-                  to="/movies?category=Action"
-                  className={`${isActive("/movies?category=Action") ? "bg-subMain" : "bg-dry"
-                    } p-3 cursor-pointer rounded-2xl border border-gray-800`}
-                >
-                  Action
-                </Link>
+        <div className="col-span-3 lg:hidden flex-rows text-text text-sm gap-3">
+          <button type="button" onClick={() => setShowModal(true)} className="bg-subMain w-12 flex-colo h-12 rounded text-white">
+            <FaSearch className="w-6" />
+          </button>
+          <Link
+            to="/movies"
+            className={`${isActive("/movies") ? "bg-subMain" : "bg-dry"
+              } p-3 cursor-pointer rounded-2xl border border-gray-800`}
+          >
+            All Movies
+          </Link>
 
-                {/* Horror Movies Link */}
-                <Link
-                  to="/movies?category=Horror"
-                  className={`${isActive("/movies?category=Horror") ? "bg-subMain" : "bg-dry"
-                    } p-3 cursor-pointer rounded-2xl border border-gray-800`}
-                >
-                  Horror
-                </Link>
-              </div>
-  
+          {/* Action Movies Link */}
+          <Link
+            to="/movies?category=Action"
+            className={`${isActive("/movies?category=Action") ? "bg-subMain" : "bg-dry"
+              } p-3 cursor-pointer rounded-2xl border border-gray-800`}
+          >
+            Action
+          </Link>
+
+          {/* Horror Movies Link */}
+          <Link
+            to="/movies?category=Horror"
+            className={`${isActive("/movies?category=Horror") ? "bg-subMain" : "bg-dry"
+              } p-3 cursor-pointer rounded-2xl border border-gray-800`}
+          >
+            Horror
+          </Link>
+        </div>
+
 
 
         {/* Search Form */}
@@ -145,7 +146,7 @@ const Navbar = () => {
 
           <Dialog open={showModal} onClose={() => setShowModal(false)} className="relative z-50">
             <div className="fixed inset-0 flex w-full items-start justify-center p-4">
-              <DialogPanel className="relative max-w-lg space-y-4 border bg-main p-6 lg:p-10 text-text rounded-lg w-full">
+              <DialogPanel className="relative max-w-lg space-y-4 border bg-dry p-6 lg:p-10 text-text rounded-lg w-full">
                 <DialogTitle className="font-bold">Find a Movie</DialogTitle>
                 <Button onClick={() => setShowModal(false)} className='absolute top-0 right-3 text-text hover:text-subMain transitions'><IoClose className="h-5 w-5"></IoClose></Button>
                 <Input
@@ -252,7 +253,17 @@ const Navbar = () => {
             </NavLink>
           )}
           {user ? (
-            <Button title="Log Out" className={Hover} onClick={logoutUser}>
+            <Button title="Log Out" className={Hover} onClick={() => {
+              logoutUser()
+              toast.info("Logged Out", {
+                classNames: {
+                  toast: 'bg-subMain',
+                  title: 'text-white',
+                  closeButton: 'bg-subMain text-white hover:text-subMain',
+                },
+                closeButton: true,
+              })
+            }}>
               Logout
             </Button>
           ) : (
@@ -261,7 +272,7 @@ const Navbar = () => {
                 Log In
               </Button>
 
-              <Button className={Hover} onClick={() => setIsSignUpOpen(true)}>
+              <Button className={'bg-subMain border-b-subMain py-2 px-3 rounded-lg hover:bg-main transitions'} onClick={() => setIsSignUpOpen(true)}>
                 Sign Up
               </Button>
             </>

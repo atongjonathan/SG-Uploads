@@ -3,6 +3,7 @@ import { FaHeart } from 'react-icons/fa';
 import Backend from '../utils/Backend';
 import { toast } from 'sonner';
 import AuthContext from '../context/AuthContext';
+import { Button } from '@headlessui/react';
 
 const backend = Backend();
 
@@ -58,7 +59,7 @@ const SGFaHeart = ({ movie }) => {
   return (
     <>
       {!user ? (
-        <button
+        <Button
           onClick={() =>
             toast('Login to be able to save favourites', {
               classNames: {
@@ -72,9 +73,9 @@ const SGFaHeart = ({ movie }) => {
           className="bg-white hover:text-subMain transitions text-white px-4 py-3 rounded text-sm bg-opacity-30"
         >
           <FaHeart />
-        </button>
+        </Button>
       ) : (
-        <button
+        <Button
           onClick={isFavourite ? unlike : like}
           title={isFavourite ? 'Remove from Favourites' : 'Add to Favourites'}
           disabled={isLoading} // Disable button during loading
@@ -83,7 +84,7 @@ const SGFaHeart = ({ movie }) => {
           }`}
         >
           <FaHeart />
-        </button>
+        </Button>
       )}
     </>
   );
