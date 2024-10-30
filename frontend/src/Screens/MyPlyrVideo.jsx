@@ -129,7 +129,7 @@ export function TrailerVideo({ movie }) {
     };
 
     const options = {
-        autoplay:true,
+        autoplay: true,
         mediaMetadata:
         {
             title: `Preview: ${movie.trackName}`,
@@ -160,5 +160,7 @@ export function TrailerVideo({ movie }) {
         keyboard: { focused: true, global: true },
         tooltips: { controls: true, seek: true }
     }
-    return <Plyr source={videoSrc} options={options}></Plyr>
+    return (<div>
+        <Plyr source={videoSrc} options={options}></Plyr>
+    </div>)
 }
