@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { FaHeart } from "react-icons/fa";
 import SGFaHeart from  '../SGFaHeart'
+import { BiPlay } from "react-icons/bi";
 
 
 const Banner = ({ movies }) => {
@@ -51,7 +52,7 @@ const Banner = ({ movies }) => {
               alt={movie.title}
               className="absolute right-36 z-10 object-contain w-100 rotate-12 hidden md:inline-block "
             />
-            <div className="lg:w-7/12 absolute linear-bg xl:pl-32 sm:pl-32 pl-8 top-0 bottom-0 right-0 left-0 flex flex-col justify-center lg:gap-8 md:gap-5 gap-4 z-20 md:h-80 min-h-80 max-h-96">
+            <div className="lg:w-7/12 absolute linear-bg xl:pl-32 sm:pl-32 pl-8 top-0 bottom-0 right-0 left-0 flex flex-col justify-center lg:gap-8 md:gap-5 gap-4 z-20 md:h-96 min-h-80 max-h-96">
               <h1 className="xl:text-4xl truncate capitalize font-sans sm:text-2xl text-xl font-bold">{movie.title}</h1>
               <div className="flex gap-5 items-center text-dryGray">
                 <FlexMovieItems movie={movie}></FlexMovieItems>
@@ -59,10 +60,11 @@ const Banner = ({ movies }) => {
               <p className='text-text text-sm text-left'>{movie.plot}</p>
               <div className="flex gap-5 items-center">
                 <Link
-                  to={`/watch/${movie.title}`}
-                  className="bg-subMain hover:text-main transitions text-white px-8 py-3 rounded font-medium sm:text-sm text-xs"
+                  to={`/movie/${movie.title}`}
+                  className="bg-subMain hover:bg-main border-subMain transitions text-white px-8 py-3 rounded font-medium sm:text-sm text-xs flex"
                 >
-                  Watch
+                  <BiPlay className="w-5 h-5"></BiPlay>
+                  Watch Now
                 </Link>
                 <SGFaHeart movie={movie}></SGFaHeart>
               </div>

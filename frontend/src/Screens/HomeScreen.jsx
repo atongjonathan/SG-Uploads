@@ -5,7 +5,7 @@ import PopularMovies from "../Components/Home/PopularMovies";
 import Promos from "../Components/Home/Promos";
 import TopRated from "../Components/Home/TopRated";
 import { useMovies } from "../utils/SWR";
-import Bars from "react-loading-icons/dist/esm/components/bars";
+import LoadingIcons from 'react-loading-icons'
 
 const HomeScreen = () => {
   document.title = `SG Uploads | Home`;
@@ -16,26 +16,27 @@ const HomeScreen = () => {
   useEffect(() => {
     if (movies)
       setLoaded(true); // Mark as loaded when movies are fetched
-  }, [movies]);
+  }, [movies, isLoading]);
 
   return (
     <Layout>
-      {movies ? (
+
+      {isLoading ? (
+        <div
+          className="h-96 flex justify-center items-center"
+        >
+          <LoadingIcons.Puff className="h-16 animate-pulse" speed={2} />
+        </div>
+      ) : (movies && loaded) ? (
         <div className="container mx-auto min-h-screen px-2 mb-6">
           <Banner movies={movies} />
           <PopularMovies movies={movies} />
           <TopRated movies={movies} />
           <Promos />
         </div>
-      ) : isLoading && !loaded ? (
-        <div
-          className="h-96 flex justify-center items-center"
-        >
-          <Bars className="h-16 animate-pulse" speed={2} />
-        </div>
-      ) : (
-        <div className="text-center mt-4">Failed to load movies.</div>
-      )}
+      ) : <div className="text-center mt-4">Failed to load movies.</div>
+
+      }
     </Layout>
   );
 };
