@@ -5,11 +5,10 @@ import logo from "../../images/4x3.jpg";
 import { Button, Input } from "@headlessui/react";
 import { useMovies } from "../../utils/SWR";
 import AuthContext from "../../context/AuthContext";
-import { Description, Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
+import { DialogBackdrop, Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
 import { IoClose } from "react-icons/io5";
 import Login from "../../Screens/Login";
 import Register from "../../Screens/Register";
-import { BiArrowBack } from "react-icons/bi";
 import { toast } from "sonner";
 
 
@@ -145,6 +144,8 @@ const Navbar = () => {
           </form>
 
           <Dialog open={showModal} onClose={() => setShowModal(false)} className="relative z-50">
+            <DialogBackdrop className="fixed inset-0 bg-main/10"></DialogBackdrop>
+
             <div className="fixed inset-0 flex w-full items-start justify-center p-4">
               <DialogPanel className="relative max-w-lg space-y-4 border bg-dry p-6 lg:p-10 text-text rounded-lg w-full">
                 <DialogTitle className="font-bold">Find a Movie</DialogTitle>
@@ -278,6 +279,8 @@ const Navbar = () => {
             </>
           )}
           <Dialog open={isLoginOpen} onClose={() => setIsLoginOpen(false)} className="relative z-50">
+            <DialogBackdrop className="fixed inset-0 bg-main/10"></DialogBackdrop>
+
             <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
 
 
@@ -291,6 +294,8 @@ const Navbar = () => {
           </Dialog>
 
           <Dialog open={isSignUpOpen} onClose={() => setIsSignUpOpen(false)} className="relative z-50">
+            <DialogBackdrop className="fixed inset-0 bg-main/10"></DialogBackdrop>
+
             <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
 
 

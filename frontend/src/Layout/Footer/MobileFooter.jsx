@@ -7,7 +7,7 @@ import { NavLink } from 'react-router-dom'
 import { FaHeart, FaPersonBooth, } from 'react-icons/fa'
 import { Button, Popover, PopoverButton, PopoverPanel } from '@headlessui/react'
 import AuthContext from '../../context/AuthContext';
-import { Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
+import { Dialog, DialogPanel, DialogTitle, DialogBackdrop } from '@headlessui/react'
 import Login from '../../Screens/Login';
 import Register from '../../Screens/Register';
 import { IoClose } from 'react-icons/io5';
@@ -76,7 +76,7 @@ const MobileFooter = () => {
                         <BsHouseAddFill></BsHouseAddFill><p className='text-xs'>Home</p>
                     </NavLink>
 
-                  
+
                     <PopMenu user={user}></PopMenu>
 
                     {user ?
@@ -88,6 +88,7 @@ const MobileFooter = () => {
 
                 </div>
                 <Dialog open={isLoginOpen} onClose={() => setisLoginOpen(false)} className="relative z-50">
+                    <DialogBackdrop className="fixed inset-0 bg-main/10"></DialogBackdrop>
                     <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
 
 
@@ -100,6 +101,8 @@ const MobileFooter = () => {
                 </Dialog>
 
                 <Dialog open={isSignUpOpen} onClose={() => setisSignUpOpen(false)} className="relative z-50">
+                    <DialogBackdrop className="fixed inset-0 bg-main"></DialogBackdrop>
+
                     <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
 
 

@@ -44,7 +44,7 @@ const PopMenu = ({ user }) => {
             <PopoverButton className={Hover} ref={popButton}>
                 <HiViewGridAdd></HiViewGridAdd><p className='text-xs'>Menu</p>
             </PopoverButton>
-            {/* <PopoverBackdrop className="fixed inset-0 bg-main/10" /> */}
+            <PopoverBackdrop className="fixed inset-0 bg-main/10" />
             {!scroll && (
                 <PopoverPanel anchor="bottom" className="flex flex-row bg-dry z-50">
                     {
