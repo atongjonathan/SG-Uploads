@@ -39,7 +39,7 @@ const WatchPage = () => {
     const RelatesMovies = movies?.filter((m) => {
         let present = false
         m.genre.forEach(element => {
-            present = movie?.genre.includes(element)
+            present = movie?.genre.includes(element) && !movie.id === m.id
         });
         return present
     })
@@ -94,14 +94,14 @@ const WatchPage = () => {
                                 <h1 className='xl:text-2xl capitalize font-sans text-lg font-bold'>{movie.title}</h1>
 
                                 <div className="grid sm:grid-cols-5 grid-cols-3 gap-4 p-6 bg-main border border-gray-800 rounded-lg">
-                                <div className="col-span-2 flex-colo font-medium text-sm">
+                                    <div className="col-span-2 flex-colo font-medium text-sm">
                                         <p>Language: {' '} <span className='ml-2 truncate'>{movie.spokenLanguages[0].language}</span></p>
                                     </div>
                                     <div className="col-span-1 flex-colo border-r border-border">
                                         <button className="w-10 h-10 flex-colo rounded-lg bg-white bg-opacity-20"><FaShareAlt /></button>
 
                                     </div>
-                                   
+
 
                                 </div>                            </div>
                         </div>
@@ -113,44 +113,50 @@ const WatchPage = () => {
                         <MovieRates movie={movie} play={play}></MovieRates>
                         <div className="my-14">
                             <Titles title="Related Movies" Icon={BsCollectionFill}></Titles>
-                            <Swiper className='mt-6'
-                                slidesPerView={3}
-                                spaceBetween={30}
-                                freeMode={true}
-                                pagination={{
-                                    clickable: true,
-                                }}
-                                modules={[FreeMode, Pagination]}
-                                breakpoints={
-                                    {
-                                        0: {
-                                            slidesPerView: 2,
-                                        },
-                                        400: {
-                                            slidesPerView: 2,
-                                        },
-                                        768: {
-                                            slidesPerView: 3,
-                                        },
-                                        1024: {
-                                            slidesPerView: 4,
-                                        },
-                                        1280: {
-                                            slidesPerView: 5
-                                        }
+                            {
+                                RelatesMovies.length > 0 ? (
+                                    <Swiper className='mt-6'
+                                        slidesPerView={3}
+                                        spaceBetween={30}
+                                        freeMode={true}
+                                        pagination={{
+                                            clickable: true,
+                                        }}
+                                        modules={[FreeMode, Pagination]}
+                                        breakpoints={
+                                            {
+                                                0: {
+                                                    slidesPerView: 2,
+                                                },
+                                                400: {
+                                                    slidesPerView: 2,
+                                                },
+                                                768: {
+                                                    slidesPerView: 3,
+                                                },
+                                                1024: {
+                                                    slidesPerView: 4,
+                                                },
+                                                1280: {
+                                                    slidesPerView: 5
+                                                }
 
-                                    }}
-                            >
+                                            }}
+                                    >
 
-                                {RelatesMovies?.slice(0, 8).map((movie, idx) => (
-                                    <SwiperSlide key={idx}>
-                                        <Link to={`/movie/${movie.title}`} className="w-full truncate p-3 text-text flex-colo bg-dry border border-gray-800 hover:scale-95 transitions relative rounded overflow-hidden">
-                                            <LazyLoadImage src={movie.poster} alt={movie.title} className='w-full h-rate object-cover rounded mb-4' />
-                                            <h3>{movie.title}</h3>
-                                        </Link>
-                                    </SwiperSlide>
-                                ))}
-                            </Swiper>
+                                        {RelatesMovies?.slice(0, 8).map((movie, idx) => (
+                                            <SwiperSlide key={idx}>
+                                                <Link to={`/movie/${movie.title}`} className="w-full truncate p-3 text-text flex-colo bg-dry border border-gray-800 hover:scale-95 transitions relative rounded overflow-hidden">
+                                                    <LazyLoadImage src={movie.poster} alt={movie.title} className='w-full h-rate object-cover rounded mb-4' />
+                                                    <h3>{movie.title}</h3>
+                                                </Link>
+                                            </SwiperSlide>
+                                        ))}
+                                    </Swiper>
+                                ) : <div className="w-full mt-10 mx-auto rounded bg-dry border border-gray-800 p-6 text-center"> <p>"{movie.title}" is quite unique!</p></div>
+
+                            }
+
                             {/* </div> */}
                         </div>
                     </div>

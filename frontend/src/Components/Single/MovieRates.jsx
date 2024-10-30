@@ -56,37 +56,39 @@ const MovieRates = ({ movie, play }) => {
       <Titles title="Reviews" Icon={BsBookmarkStarFill}></Titles>
       <div className="flex flex-row gap-6">
         {
-          reviews?.length < 0 && <p className='text-xs'> No Reviews yet</p>
-        }
+          reviews?.length == 0 ? (
+            <div className="w-full mt-10 mx-auto rounded bg-dry border border-gray-800 p-6 text-center"> <p>No reviews yet</p></div>
+          ) :
+
+            (
+              <div className="w-full flex flex-wrap bg-main gap-6 rounded-lg md:p-12 p-6 h-header">
+                {
+                  reviews?.splice(0, 6).map((review, idx) => (
+                    <div key={idx} className="w-96 md:grid grid-cols-12 gap-6 bg-dry p-4 border border-gray-800 rounded-lg align-middle text-center">
+                      <div className="col-span-7 flex flex-col gap-2">
+                        <h2>{review.author}</h2>
+                        <p className="text-xs leading-6 font-medium text-text">{review.heading}</p>
+                      </div>
+                      <div className="col-span-3 flex flex-rows  mt-2 text-xs gap-1 text-star">
+                        <Rating value={review.stars / 2}></Rating>
+                      </div>
+                    </div>
+
+                  ))
+                }
+              </div>
+            )}
         {
-          reviews?.length > 0 ? (
-            <div className="w-full flex flex-wrap bg-main gap-6 rounded-lg md:p-12 p-6 h-header overflow-y-scroll">
-              {
-                reviews?.splice(0, 6).map((review, idx) => (
-                  <div key={idx} className="w-96 md:grid grid-cols-12 gap-6 bg-dry p-4 border border-gray-800 rounded-lg align-middle text-center">
-                    <div className="col-span-7 flex flex-col gap-2">
-                      <h2>{review.author}</h2>
-                      <p className="text-xs leading-6 font-medium text-text">{review.heading}</p>
-                    </div>
-                    <div className="col-span-3 flex flex-rows  mt-2 text-xs gap-1 text-star">
-                      <Rating value={review.stars / 2}></Rating>
-                    </div>
-                  </div>
 
-                ))
-              }
-            </div>
-          ) : (
-            <div style={
-              {
-                alignItems: 'center'
-              }
-            } className='w-full flex justify-center flex-col bg-main gap-6 rounded-lg md:p-12 p-6 h-header'>
-              <Puff className='col-span-7 '></Puff>
-            </div>
-
-          )
+          !reviews && (<div style={
+            {
+              alignItems: 'center'
+            }
+          } className='w-full flex justify-center flex-col bg-main gap-6 rounded-lg md:p-12 p-6 h-header'>
+            <Puff className='col-span-7 '></Puff>
+          </div>)
         }
+
 
       </div>
       {/* <div className="mt-10 xl:grid flex-colo grid-cols-5 gap-12 bg-dry xs:p-10 py-10 px-2 sm:p-20 rounded">

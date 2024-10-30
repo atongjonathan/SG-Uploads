@@ -35,9 +35,11 @@ const MovieInfo = ({ movie }) => {
                 let result = response.data.results.find((item) => item.trackName == movie.title)
                 if (result) {
                     setTrailer(result)
-
                 }
-
+            
+            }
+            else {
+                setTrailer(null)
             }
         }
     }
@@ -72,7 +74,7 @@ const MovieInfo = ({ movie }) => {
                                 <FlexMovieItems movie={movie && movie}></FlexMovieItems>
                             </div>
                             <p className='text-text text-sm leading-7'>{movie.plot}</p>
-                            
+
                         </div>
 
                     </div>
