@@ -19,7 +19,7 @@ const Banner = ({ movies }) => {
   return movies && (
     <div className="relative w-full">
       <Swiper
-        className="w-full md:h-96 min-h-80 bg-dry"
+        className="w-full md:h-96 min-h-80 max-h-96 bg-dry"
         slidesPerView={1}
         loop={true}
         direction="horizontal"
@@ -36,7 +36,7 @@ const Banner = ({ movies }) => {
             <img
               src={movie.poster}
               alt={movie.title}
-              className="w-full md:hidden h-100 object-cover"
+              className="w-full md:hidden h-100 object-contain"
             />
             <div style={{
               background: `url('${movie?.poster}'`
@@ -51,7 +51,7 @@ const Banner = ({ movies }) => {
               alt={movie.title}
               className="absolute right-36 z-10 object-contain w-100 rotate-12 hidden md:inline-block "
             />
-            <div className="lg:w-7/12 absolute linear-bg xl:pl-32 sm:pl-32 pl-8 top-0 bottom-0 right-0 left-0 flex flex-col justify-center lg:gap-8 md:gap-5 gap-4 z-20">
+            <div className="lg:w-7/12 absolute linear-bg xl:pl-32 sm:pl-32 pl-8 top-0 bottom-0 right-0 left-0 flex flex-col justify-center lg:gap-8 md:gap-5 gap-4 z-20 md:h-80 min-h-80 max-h-96">
               <h1 className="xl:text-4xl truncate capitalize font-sans sm:text-2xl text-xl font-bold">{movie.title}</h1>
               <div className="flex gap-5 items-center text-dryGray">
                 <FlexMovieItems movie={movie}></FlexMovieItems>
