@@ -49,9 +49,9 @@ const Banner = ({ movies }) => {
             }}
               src={movie?.poster}
               alt={movie.title}
-              className="absolute right-36 z-10 object-contain w-100 rotate-12 hidden lg:inline-block "
+              className="absolute right-36 z-10 object-contain w-100 rotate-12 hidden md:inline-block "
             />
-            <div className="lg:w-7/12 absolute linear-bg xl:pl-32 sm:pl-32 pl-8 top-0 bottom-0 right-0 left-0 flex flex-col justify-center lg:gap-8 md:gap-5 gap-4">
+            <div className="lg:w-7/12 absolute linear-bg xl:pl-32 sm:pl-32 pl-8 top-0 bottom-0 right-0 left-0 flex flex-col justify-center lg:gap-8 md:gap-5 gap-4 z-20">
               <h1 className="xl:text-4xl truncate capitalize font-sans sm:text-2xl text-xl font-bold">{movie.title}</h1>
               <div className="flex gap-5 items-center text-dryGray">
                 <FlexMovieItems movie={movie}></FlexMovieItems>

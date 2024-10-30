@@ -1,20 +1,42 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import SideBar from './SideBar'
 import Table from '../Components/Table'
 import AuthContext from '../context/AuthContext'
-import { useMovies } from '../utils/SWR'
+import { useMovies, useUser } from '../utils/SWR'
+import Backend from '../utils/Backend'
+import axios from 'axios'
 
 const FavouriteMovies = () => {
   const movies = useMovies().movies
+  const [favourites, setFavourites] = useState(null)
 
 
-  const { authTokens, user } = useContext(AuthContext)
-  const favourites = movies?.filter((movie) => user?.favourites.includes(movie.id))
+  const { authTokens } = useContext(AuthContext)
+
+
+  async function fetchUser() {
+
+    const headers = { Authorization: `Bearer ${authTokens.access}` };
+
+    const response = await axios.get(`${Backend().BACKEND_URL}/user`, { headers })
+    const user = response?.data
+    if (movies)
+    {
+      const favs = movies?.filter((movie) => user?.favourites.includes(movie.id))
+      setFavourites(favs)
+    }
+
+  }
+
+
 
   useEffect(() => {
-    document.title = `Favourite Movies`
 
-  }, [])
+
+
+    fetchUser()
+  }, [movies])
+
   return (
     <SideBar>
       <div className="flex flex-col gap-6">

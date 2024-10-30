@@ -16,7 +16,7 @@ const SGFaHeart = ({ movie }) => {
   // Effect to sync state with the backend
   useEffect(() => {
     if (user && movie) {
-      setIsFavourite(user.favourites?.includes(movie));
+      setIsFavourite(user.favourites?.includes(movie.id));
     }
   }, [user, movie]);
 

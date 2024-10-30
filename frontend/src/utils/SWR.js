@@ -14,14 +14,16 @@ export function useUser(auth) {
     axios.get(`${BACKEND_URL}/user`, { headers })
         .then((response) => {
             user = response.data
+            return user
         })
         .catch((error) => {
             isError = true
             console.error('Error fetching user:', error);
             localStorage.removeItem('authTokens');
+            return error
         });
 
-    return { user, isLoading, isError };
+    // return { user, isLoading, isError };
 }   
 
 export function useUsers(auth) {
