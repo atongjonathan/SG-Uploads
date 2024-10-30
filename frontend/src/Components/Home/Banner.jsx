@@ -61,9 +61,9 @@ const Banner = ({ movies }) => {
               <div className="flex gap-5 items-center">
                 <Link
                   to={`/movie/${movie.title}`}
-                  className="bg-subMain hover:bg-main border-subMain transitions text-white px-8 py-3 rounded font-medium sm:text-sm text-xs flex"
+                  className="bg-subMain hover:bg-main border-subMain transitions text-white px-8 py-3 rounded font-medium sm:text-sm text-xs flex justify-center items-center"
                 >
-                  <BiPlay className="w-5 h-5"></BiPlay>
+                  <BiPlay className="w-5 h-5 mx-auto"></BiPlay>
                   Watch Now
                 </Link>
                 <SGFaHeart movie={movie}></SGFaHeart>
