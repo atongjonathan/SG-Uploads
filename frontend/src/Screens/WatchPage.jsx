@@ -29,28 +29,26 @@ const WatchPage = () => {
 
     const RelatesMovies = movies?.filter((m) => {
         let present = false
-       m.genre.forEach(element => {
-        present = movie.genre.includes(element)
-       });
-       return present
+        m.genre.forEach(element => {
+            present = movie.genre.includes(element)
+        });
+        return present
     })
 
-    const { authTokens } = useContext(AuthContext)
 
-    useEffect(() => {
-        document.title = `Watch ${movie?.title} (${movie?.year})`
+    let title = `${movie?.title} (${movie?.year})`
 
-    }, [])
+    document.title = movie ? title : 'SG Uplaods | Watch'
 
     return movie && (
         <Layout>
             <div className="container mx-auto bg-dry p-6 mb-2">
 
                 {/* <div className="flex-btn flex-row mb-6 gap-4bg-main rounded border border-gray-800 p-6"> */}
-                    {/* <Link to={`/`} className='md:text-lg  flex gap-3 items-center font-bold text-dryGray'>
+                {/* <Link to={`/`} className='md:text-lg  flex gap-3 items-center font-bold text-dryGray'>
                         <BiArrowBack></BiArrowBack> <p className='hidden lg:inline-block'>{`${movie?.title} (${movie.year})`}</p>
                     </Link> */}
-                    {/* <div className="flex flex-btn gap-5">
+                {/* <div className="flex flex-btn gap-5">
                         <FaHeart movie={movie}></FaHeart>
                         {
                             user ? <Link to={movie.stream.replace("video", "dl")}  className="bg-subMain flex-rows gap-2 hover:text-main transitions text-white rounded px-3 font-medium py-3 text-sm">
@@ -82,7 +80,7 @@ const WatchPage = () => {
                 <div className="items-center mt-4">
                     <div className="col-span-3 flex flex-col gap-5">
                         <h1 className='xl:text-2xl capitalize font-sans text-lg font-bold'>{movie.title}</h1>
-                       
+
                         <p className='text-text text-sm leading-7'>{movie.plot}</p>
                     </div>
                 </div>

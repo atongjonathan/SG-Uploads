@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Input } from '../../../Components/UserInputs'
 import SideBar from '../../SideBar'
 import { FaSearch } from 'react-icons/fa'
@@ -41,31 +41,31 @@ const AddMovie = () => {
 
     async function sendSubs(id) {
         try {
-          const response = await backend.sendCaptions(auth, { imdb_id: id });
-      
-          if (response.data.success) {
-            toast.success(`Captions sent to your Telegram`, {
-              classNames: {
-                toast: 'bg-subMain',
-                title: 'text-white',
-              },
-              closeButton: true,
-            });
-          } else if (response.data.error) {
-            toast.error(response.data.error, {
-              classNames: {
-                toast: 'bg-oldMain',
-                title: 'text-white',
-              },
-              closeButton: true,
-            });
-          }
+            const response = await backend.sendCaptions(auth, { imdb_id: id });
+
+            if (response.data.success) {
+                toast.success(`Captions sent to your Telegram`, {
+                    classNames: {
+                        toast: 'bg-subMain',
+                        title: 'text-white',
+                    },
+                    closeButton: true,
+                });
+            } else if (response.data.error) {
+                toast.error(response.data.error, {
+                    classNames: {
+                        toast: 'bg-oldMain',
+                        title: 'text-white',
+                    },
+                    closeButton: true,
+                });
+            }
         } catch (error) {
-          toast.error('Something went wrong. Please try again.');
-          console.error(error);
+            toast.error('Something went wrong. Please try again.');
+            console.error(error);
         }
-      }
-      
+    }
+
 
 
     function findMovie(link) {
@@ -114,10 +114,8 @@ const AddMovie = () => {
         }
 
     }
-    useEffect(() => {
-        document.title = `Add Movie`
+    document.title = `Add Movie`
 
-    }, [])
     return (
         <SideBar>
             <div className="flex flex-col gap-6">

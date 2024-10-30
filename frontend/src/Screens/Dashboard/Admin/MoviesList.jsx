@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React from 'react'
 import SideBar from '../../SideBar'
 import Table from '../../../Components/Table'
 import { useMovies } from '../../../utils/SWR'
@@ -6,10 +6,8 @@ import { useMovies } from '../../../utils/SWR'
 const MoviesList = () => {
   const movies = useMovies().movies
 
-  useEffect(()=>{
-    useEffect.title = `Movies List`
+  document.title = `Movies List`
 
-}, [])
   return (
     <SideBar>
       <div className="flex flex-col gap-6">

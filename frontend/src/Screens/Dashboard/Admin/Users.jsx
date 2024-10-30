@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext } from 'react'
 import SideBar from '../../SideBar'
 import Table2 from '../../../Components/Table2'
 import AuthContext from '../../../context/AuthContext'
@@ -8,10 +8,8 @@ const Users = () => {
     const { authTokens } = useContext(AuthContext)
     const users = useUsers(authTokens?.access).users
 
-    useEffect(() => {
-        document.title = `Users`
+    document.title = `Users`
 
-    }, [])
     return (
         <SideBar>
             <div className="flex flex-col gap-6">

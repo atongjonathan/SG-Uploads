@@ -14,7 +14,7 @@ const backend = Backend()
 
 
 
-const Register = ({openLogin, closeSignUp}) => {
+const Register = ({ openLogin, closeSignUp }) => {
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
 
@@ -37,10 +37,7 @@ const Register = ({openLogin, closeSignUp}) => {
 
   }
 
-  useEffect(() => {
-    document.title = `Sign Up`
-
-  }, [])
+  document.title = `Sign Up`
   return (
     <form method='post' onSubmit={(e) => handleSubmit(e)} className='container mx-auto lg:px-2 my-24 flex-colo gap-2'>
       <Input name='username' label="Username" placeholder='username' type='text' bg></Input>

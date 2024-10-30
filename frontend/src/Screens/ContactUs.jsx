@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import Layout from "../Layout/Layout";
 import Head from "../Components/Head";
 import { FaTelegram, FaVoicemail, FaWhatsapp } from 'react-icons/fa';
@@ -27,10 +27,8 @@ const ContactUs = () => {
     }
   ]
 
-  useEffect(()=>{
-    document.title = `Contact Us`
+  document.title = `Contact Us`
 
-}, [])
   return (
     <Layout>
       <div className="min-height-screen container mx-auto px-2 my-6">
@@ -40,7 +38,7 @@ const ContactUs = () => {
         {contactData.map((contact, idx) => (
           <div key={idx} className="border border-border flex-colo p-10 bg-dry rounded-lg text-center">
             <span className='flex-colo w-20 h-20 mb-4 rounded-full bg-main text-subMain text-2xl'>
-              <contact.icon/>
+              <contact.icon />
             </span>
             <h5 className="text-xl font-semibold mb-2">{contact.title}</h5>
             <p className="mb-0 text-sm text-text leading-7">

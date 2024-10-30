@@ -1,9 +1,9 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import Layout from '../Layout/Layout';
 import Filters from '../Components/Filters';
 import Movie from '../Components/Movie';
 import { useMovies } from '../utils/SWR';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 
 function toTitleCase(str) {
   return str.toLowerCase().split(' ').map(word =>
@@ -56,13 +56,11 @@ const MoviesPage = () => {
 
   const handleLoadingMore = () => setPage(prevPage => prevPage + 4);
 
-  useEffect(() => {
-    document.title = 'All Movies';
-  }, []);
+  document.title = 'All Movies';
 
   return (filteredMovies && genresTuple.length > 0) && (
     <Layout>
-      <div className="min-height-screen container mx-auto px-2 my-3">        
+      <div className="min-height-screen container mx-auto px-2 my-3">
         <Filters categories={genresTuple} />
 
         <p className='text-lg font-medium my-6'>

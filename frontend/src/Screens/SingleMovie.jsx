@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import Layout from '../Layout/Layout'
 import { useParams } from 'react-router-dom'
 import MovieInfo from '../Components/Single/MovieInfo'
@@ -11,11 +11,6 @@ const SingleMovie = () => {
     ? movies.find((movie) => movie.title === id)
     : null;  // Fallback if movies is not an array
 
-
-    useEffect(()=>{
-      document.title = movie?.title
-
-  }, [])
 
   return (
     <Layout>

@@ -1,13 +1,11 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Layout from "../Layout/Layout";
 import Head from "../Components/Head";
 
 const AboutUs = () => {
 
-  useEffect(()=>{
-    document.title = `About Us`
+  document.title = `About Us`
 
-}, [])
   return (
     <Layout>
       <div className="min-height-screen container mx-auto px-2 my-6">
@@ -20,7 +18,7 @@ const AboutUs = () => {
               Welcome to SG Uploads
             </h3>
             <p className="mt-3 text-sm leading-8 text-text">
-            We’re thrilled to have you here. At SG Uploads, we bring you the latest and greatest in film, from blockbuster hits to indie gems. Whether you’re a casual viewer or a die-hard cinephile, there’s something for everyone. Explore our features to stay updated with the newest movies,  and join the conversation in our community discussions. Grab your popcorn, sit back, and enjoy the show! 🍿
+              We’re thrilled to have you here. At SG Uploads, we bring you the latest and greatest in film, from blockbuster hits to indie gems. Whether you’re a casual viewer or a die-hard cinephile, there’s something for everyone. Explore our features to stay updated with the newest movies,  and join the conversation in our community discussions. Grab your popcorn, sit back, and enjoy the show! 🍿
             </p>
             <div className="grid md:grid-cols-2 gap-6 mt-8">
               <div className="p-8 bg-dry rounded-lg">
@@ -39,7 +37,7 @@ const AboutUs = () => {
               </div>
             </div>
           </div>
-          <img src="https://netflixo.vercel.app/images/about2.jpg" className="w-full xl:block h-header rounded-lg object-cover" alt="about us"/>
+          <img src="https://netflixo.vercel.app/images/about2.jpg" className="w-full xl:block h-header rounded-lg object-cover" alt="about us" />
 
         </div>
       </div>

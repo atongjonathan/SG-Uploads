@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../Layout/Layout";
 import Banner from "../Components/Home/Banner";
 import PopularMovies from "../Components/Home/PopularMovies";
@@ -8,9 +8,7 @@ import { useMovies } from "../utils/SWR";
 import Bars from "react-loading-icons/dist/esm/components/bars";
 
 const HomeScreen = () => {
-  useEffect(() => {
-    document.title = `SG Uploads | Home`;
-  }, []);
+  document.title = `SG Uploads | Home`;
 
   const { movies, isLoading, error } = useMovies();
   const [loaded, setLoaded] = useState(false);
