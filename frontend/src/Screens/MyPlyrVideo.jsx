@@ -1,6 +1,6 @@
 import Plyr from "plyr-react"
 import "plyr-react/plyr.css"
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 
 function MyPlyrVideo({ play, movie }) {
@@ -75,24 +75,90 @@ function MyPlyrVideo({ play, movie }) {
             );
         }
     }, [movie.stream]);
+    useEffect(() => {
+        return () => {
+            if (mediaSourceRef.current) {
+                mediaSourceRef.current = null;
+            }
+        };
+    }, []);
+
 
     // Function to load and append video chunks
     const handleSourceOpen = async (mediaSource, streamUrl) => {
-        const sourceBuffer = mediaSource.addSourceBuffer('video/mp4; codecs="avc1.42E01E, mp4a.40.2"');
+        try {
+            const sourceBuffer = mediaSource.addSourceBuffer('video/mp4; codecs="avc1.42E01E, mp4a.40.2"');
+            const response = await fetch(streamUrl);
 
-        const response = await fetch(streamUrl);
-        const reader = response.body.getReader();
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
 
-        let result;
-        while (!(result = await reader.read()).done) {
-            sourceBuffer.appendBuffer(result.value);
-            await new Promise((resolve) => {
-                sourceBuffer.addEventListener("updateend", resolve, { once: true });
-            });
+            const reader = response.body.getReader();
+            let result;
+
+            while (!(result = await reader.read()).done) {
+                sourceBuffer.appendBuffer(result.value);
+                await new Promise((resolve) => {
+                    sourceBuffer.addEventListener("updateend", resolve, { once: true });
+                });
+            }
+
+            mediaSource.endOfStream();
+        } catch (error) {
+            console.error('Error loading video:', error);
+            // Handle error (e.g., show a message to the user)
         }
-
-        mediaSource.endOfStream(); // Mark the stream as completed
     };
+
     return <Plyr ref={playerRef} source={videoSrc} options={options} preload={movie.images[0]} crossOrigin="" />
 }
 export default MyPlyrVideo
+
+export function TrailerVideo({ movie }) {
+    const videoSrc = {
+        type: "video",
+        title: movie.trackName,
+        sources: [
+            {
+                src: movie.previewUrl,
+                type: "video/mp4",
+                size: 1080
+            }
+        ],
+    };
+
+    const options = {
+        autoplay:true,
+        mediaMetadata:
+        {
+            title: `Preview: ${movie.trackName}`,
+            artwork: [{
+                src: movie.artworkUrl100,
+                sizes: "265x256",
+                type: "image/png",
+            }],
+            artist: 'SG Uploads',
+            album: movie.title
+        },
+        poster: movie.artworkUrl100,
+        disableContextMenu: true,
+        controls: [
+            'play-large', // The large play button in the center
+            'rewind', // Rewind by the seek time (default 10 seconds)
+            'play', // Play/pause playback
+            'fast-forward', // Fast forward by the seek time (default 10 seconds)
+            'progress', // The progress bar and scrubber for playback and buffering
+            'current-time', // The current time of playback
+            'duration', // The full duration of the media
+            'settings', // Settings menu
+            'pip', // Picture-in-picture (currently Safari only)
+            'airplay', // Airplay (currently Safari only)
+            'fullscreen', // Toggle fullscreen
+        ],
+        clickToPlay: true,
+        keyboard: { focused: true, global: true },
+        tooltips: { controls: true, seek: true }
+    }
+    return <Plyr source={videoSrc} options={options}></Plyr>
+}

@@ -56,7 +56,10 @@ const MovieRates = ({ movie, play }) => {
       <Titles title="Reviews" Icon={BsBookmarkStarFill}></Titles>
       <div className="flex flex-row gap-6">
         {
-          reviews ? (
+          reviews?.length < 0 && <p className='text-xs'> No Reviews yet</p>
+        }
+        {
+          reviews?.length > 0 ? (
             <div className="w-full flex flex-wrap bg-main gap-6 rounded-lg md:p-12 p-6 h-header overflow-y-scroll">
               {
                 reviews?.splice(0, 6).map((review, idx) => (

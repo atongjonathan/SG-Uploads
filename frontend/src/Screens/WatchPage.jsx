@@ -14,6 +14,8 @@ import Movie from '../Components/Movie';
 import AuthContext from '../context/AuthContext'
 import { Button } from '@headlessui/react'
 import { FiLogIn } from 'react-icons/fi'
+import { FaShareAlt } from 'react-icons/fa'
+
 import { toast } from 'sonner'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { FreeMode, Pagination } from 'swiper/modules';
@@ -91,8 +93,17 @@ const WatchPage = () => {
                             <div className="col-span-3 flex flex-col gap-5">
                                 <h1 className='xl:text-2xl capitalize font-sans text-lg font-bold'>{movie.title}</h1>
 
-                                <p className='text-text text-sm leading-7'>{movie.plot}</p>
-                            </div>
+                                <div className="grid sm:grid-cols-5 grid-cols-3 gap-4 p-6 bg-main border border-gray-800 rounded-lg">
+                                <div className="col-span-2 flex-colo font-medium text-sm">
+                                        <p>Language: {' '} <span className='ml-2 truncate'>{movie.spokenLanguages[0].language}</span></p>
+                                    </div>
+                                    <div className="col-span-1 flex-colo border-r border-border">
+                                        <button className="w-10 h-10 flex-colo rounded-lg bg-white bg-opacity-20"><FaShareAlt /></button>
+
+                                    </div>
+                                   
+
+                                </div>                            </div>
                         </div>
                     </div>
                     {/* <MovieCasts movie={movie} /> */}
