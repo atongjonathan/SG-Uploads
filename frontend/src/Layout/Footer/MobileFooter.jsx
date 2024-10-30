@@ -70,7 +70,7 @@ const MobileFooter = () => {
 
 
             <footer className='lg:hidden fixed z-50 bottom-0 w-full px-1'>
-                <div className=" rounded-md flex-btn p-1 bg-gradient-to-t from-dry from-40% to-100%">
+                <div className=" rounded-md p-1 bg-gradient-to-t from-dry from-40% to-100% flex justify-around">
 
                     <NavLink title="Movies" className={Hover} to="/">
                         <BsHouseAddFill></BsHouseAddFill><p className='text-xs'>Home</p>
