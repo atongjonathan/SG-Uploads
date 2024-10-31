@@ -21,7 +21,7 @@ urlpatterns = [
     path('like/<id>', views.like_movie, name='like_movie'),
     path('unlike/<id>', views.unlike_movie, name='unlike_movie'),
     path('captions', views.captions, name='captions'),
-    path('itunes', views.search, name='search'),
+    path('itunes', views.search_itunes, name='search'),
     path('change-password', views.change_password, name='password')
 
 

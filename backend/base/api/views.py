@@ -45,7 +45,7 @@ def get_routes(request):
 
 
 @api_view(['GET'])
-def search(request: HttpRequest):
+def search_itunes(request):
     term = request.GET.get("search")
     reqUrl = f"https://itunes.apple.com/search?term={term}&entity=movie&media=movie"
     headersList = {
@@ -173,7 +173,7 @@ def unlike_movie(request, id):
 @api_view(["POST"])
 @permission_classes([IsAdminUser])
 def captions(request):
-    try:
+    # try:
         user = request.user
         imdb_id = request.data.get("imdb_id")
 
@@ -201,6 +201,6 @@ def captions(request):
 
             return Response(response, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-    except Exception as e:
-        # Return a string representation of the error
-        return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    # except Exception as e:
+    #     # Return a string representation of the error
+    #     return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
