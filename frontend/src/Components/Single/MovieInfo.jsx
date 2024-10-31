@@ -34,6 +34,7 @@ const MovieInfo = ({ movie }) => {
             if (response?.data?.results.length > 0) {
                 let result = response.data.results.find((item) => item.trackName == movie.title)
                 if (result) {
+                    result.image = movie.poster
                     setTrailer(result)
                 }
             
@@ -63,7 +64,7 @@ const MovieInfo = ({ movie }) => {
                     </div>
                     <div className="col-span-2 md:grid grid-cols-5 gap-4 items-center">
                         <div className="col-span-3 flex flex-col gap-10">
-                            <h1 className='xl:text-4xl capitalize font-sans text-2xl font-bold'>{movie.title}</h1>
+                            <h1 className='xl:text-3xl capitalize font-sans text-xl font-bold'>Preview: {movie.title} ({movie.year})</h1>
                             <div className="sm:col-span-2 col-span-3 flex justify-end font-medium text-sm">
                                 <Link style={{ flexDirection: 'row' }} to={`/watch/${movie.title}`} className='bg-dry py-4 hover:bg-subMain transitions border-2 border-subMain rounded-full flex flex-rows gap-4 w-full sm:py-3'>
                                     <FaPlay className='w-3 h-3'></FaPlay> Start Watching</Link>

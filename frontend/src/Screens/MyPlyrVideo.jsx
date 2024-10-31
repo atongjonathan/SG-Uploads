@@ -134,7 +134,7 @@ export function TrailerVideo({ movie }) {
         {
             title: `Preview: ${movie.trackName}`,
             artwork: [{
-                src: movie.artworkUrl100,
+                src: movie.poster,
                 sizes: "265x256",
                 type: "image/png",
             }],

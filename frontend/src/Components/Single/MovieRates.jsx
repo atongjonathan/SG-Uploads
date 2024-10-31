@@ -4,6 +4,7 @@ import { BsBook, BsBookmarkStarFill } from 'react-icons/bs'
 import { Message, Select } from '../UserInputs'
 import Rating from '../Star'
 import Puff from "react-loading-icons/dist/esm/components/puff";
+import axios from 'axios'
 
 
 const IMDB_API = import.meta.env.VITE_IMDB_API
@@ -35,21 +36,23 @@ const MovieRates = ({ movie, play }) => {
   ]
   const [rating, setRating] = useState(null)
 
+  async function getReviews() {
+    const title = movie?.link?.split("/")[movie?.link.split("/")?.length - 1]
 
+    const response = await axios.get(`${IMDB_API}/reviews/${title}`)
+    if (response.data) {
+      setReviews(response.data.reviews)
+    }
+
+  }
 
   useEffect(() => {
 
-    const title = movie?.link?.split("/")[movie?.link.split("/")?.length - 1]
 
-    fetch(`${IMDB_API}/reviews/${title}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setReviews(data.reviews)
-      })
-      .catch((err) => console.log(err))
+    getReviews()
 
 
-  }, [])
+  }, [title, movie, play])
 
   return movie && (
     <div className='my-12'>
@@ -61,10 +64,10 @@ const MovieRates = ({ movie, play }) => {
           ) :
 
             (
-              <div className="w-full flex flex-wrap bg-main gap-6 rounded-lg md:p-12 p-6 h-header">
+              <div className="w-full flex justify-center flex-wrap bg-main gap-6 rounded-lg md:p-12 p-6 h-header">
                 {
                   reviews?.splice(0, 6).map((review, idx) => (
-                    <div key={idx} className="w-96 md:grid grid-cols-12 gap-6 bg-dry p-4 border border-gray-800 rounded-lg align-middle text-center">
+                    <div key={idx} className="w-96 grid md:grid-cols-12 grid-cols-3  gap-6 bg-dry p-4 border border-gray-800 rounded-lg align-middle text-center">
                       <div className="col-span-7 flex flex-col gap-2">
                         <h2>{review.author}</h2>
                         <p className="text-xs leading-6 font-medium text-text">{review.heading}</p>
