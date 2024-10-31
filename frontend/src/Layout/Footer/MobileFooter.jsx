@@ -13,6 +13,7 @@ import Register from '../../Screens/Register';
 import { IoClose } from 'react-icons/io5';
 import { toast } from 'sonner';
 import PopMenu from './PopMenu';
+import Backend from '../../utils/Backend';
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
 
@@ -70,7 +71,7 @@ const MobileFooter = () => {
 
 
             <footer className='lg:hidden fixed z-50 bottom-0 w-full px-1'>
-                <div className=" rounded-md p-1 bg-gradient-to-t from-dry from-40% to-100% flex justify-around">
+                <div className=" rounded-md p-1 bg-gradient-to-t from-dry from-40% to-100% flex justify-around items-center">
 
                     <NavLink title="Movies" className={Hover} to="/">
                         <BsHouseAddFill></BsHouseAddFill><p className='text-xs'>Home</p>
@@ -78,6 +79,14 @@ const MobileFooter = () => {
 
 
                     <PopMenu user={user}></PopMenu>
+
+                    {user &&
+                        <NavLink className={Hover} to="/profile" title="Profile">
+                            <div className="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
+                                <img className="absolute w-12 h-12 rounded-full " src={user?.image ? Backend().BACKEND_URL + user.image : `https://ui-avatars.com/api/?name=${user?.name ? user.name : user?.username}&rounded=true&background=14759f&size=35&color=fff`} alt={user?.username + ' image'} />
+                            </div>
+                            <p className='text-xs'>Profile</p>
+                        </NavLink>}
 
                     {user ?
                         (<Button title="Log Out" className={Hover} onClick={handleLogout}>

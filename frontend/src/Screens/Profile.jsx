@@ -5,17 +5,21 @@ import { Input } from '../Components/UserInputs'
 import Backend from '../utils/Backend'
 import { toast } from 'sonner'
 import AuthContext from '../context/AuthContext'
+import { useNavigate } from 'react-router-dom'
+import { CgSpinner } from 'react-icons/cg'
 
 
 const Profile = () => {
 
   const backend = Backend()
+  const [loading, setLoading] = useState(false)
 
 
   const { authTokens, user } = useContext(AuthContext)
   const [image, setFileResponse] = useState(null)
 
   const handleSubmit = async (e) => {
+    setLoading(true)
     e.preventDefault(); // Prevent form from being submitted the default way
 
     const formData = new FormData(e.target);
@@ -33,9 +37,10 @@ const Profile = () => {
       },
     }
     try {
-      const response = await backend.updateProfile(authHeader, formObject);
+      const response = await backend.updateProfile(authTokens.access, formObject);
       if (response.data) {
         toast("Profile Updated", toastOptions)
+        window.location.assign("/")
       }
       else {
 
@@ -48,6 +53,7 @@ const Profile = () => {
     } catch (error) {
       console.error('Error uploading profile:', error); // Handle any errors
     }
+    setLoading(false)
   };
 
 
@@ -71,10 +77,9 @@ const Profile = () => {
           }
           <Uploader updateParentFile={handleDataFromChild}></Uploader>
           <Input label="Full Name" placeholder='SG Uploads' type='text' bg name='name'></Input>
-          <Input label="Email" placeholder='johndoe@gmail.com' type='email' name='email' bg></Input>
           <div className="flex gap-2 flex-wrap flex-col-reverse sm:flex-row justify-between items-center my-4">
             {/* <button className="bg-subMain font-medium transitions hover:bg-main border border-subMain text-white py-3 px-6 rounded w-full sm:w-auto">Delete Account</button> */}
-            <button className="bg-main font-medium transitions hover:bg-subMain border border-subMain text-white py-3 px-6 rounded w-full sm:w-auto">Update Profile</button>
+            <button className="bg-main font-medium transitions hover:bg-subMain border border-subMain text-white py-3 px-6 rounded w-full sm:w-auto flex justify-between items-center">Update Profile {loading && <CgSpinner className='animate-spin ml-4'></CgSpinner>}</button>
           </div>
         </form>
 
