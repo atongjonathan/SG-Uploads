@@ -82,21 +82,9 @@ const WatchPage = () => {
                         {/* </div> */}
 
 
-                        {
-                            play && movie ? (
-                                <MyPlyrVideo play={play} movie={movie}></MyPlyrVideo>
+                        <MyPlyrVideo play={play} movie={movie}></MyPlyrVideo>
 
-                            ) : (
-                                <div className="w-full h-rate rounded-lg overflow-hidden relative">
-                                    <div className="absolute top-0 left-0 bottom-0 right-0 bg-main bg-opacity-30 flex-colo">
-                                        <button onClick={() => setPlay(true)} className='bg-white text-subMain flex-colo border border-subMain rounded-full w-20 h-20 font-medium text-xl'>
-                                            <FaPlay></FaPlay>
-                                        </button>
-                                    </div>
-                                    <LazyLoadImage src={movie?.images[0]} alt={movie?.name} className='w-full max-h-screen object-contain rounded-lg' />
-                                </div>
-                            )
-                        }
+
                         <div className="items-center mt-4">
                             <div className="col-span-3 flex flex-col gap-5">
                                 <h1 className='xl:text-2xl capitalize font-sans text-lg font-bold'>{movie.title}</h1>
