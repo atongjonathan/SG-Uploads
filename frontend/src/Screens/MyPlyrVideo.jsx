@@ -19,7 +19,7 @@ function MyPlyrVideo({ play, movie }) {
             playsInline
             poster={movie?.poster} artist="SG Uploads">
             <MediaProvider>
-                <Track kind="captions" lang="en-US" src={movie.captions[0].src} label="English" default  />
+                {movie.captions?.length > 0 && <Track kind="captions" lang="en-US" src={movie.captions[0].src} label="English" default />}
                 <Poster className="vds-poster" />
             </MediaProvider>
             <DefaultVideoLayout
@@ -27,6 +27,7 @@ function MyPlyrVideo({ play, movie }) {
                 icons={defaultLayoutIcons}
             />
         </MediaPlayer>
-    </div>)}
+    </div>)
+}
 export default MyPlyrVideo
 
