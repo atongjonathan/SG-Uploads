@@ -91,7 +91,7 @@ const WatchPage = () => {
 
                                 <div className="grid grid-cols-3 gap-4 p-6 bg-main border border-gray-800 rounded-lg">
                                     <div className="col-span-2 flex-colo font-medium text-sm border-r border-border">
-                                        <p>Language: {' '} <span className='ml-2 truncate'>{movie.spokenLanguages[0].language}</span></p>
+                                        <p>Language: {' '} <span className='ml-2 truncate'>{movie.spokenLanguages.length > 0 ? movie.spokenLanguages[0].language : 'Foreign Language'}</span></p>
                                     </div>
                                     <div className="col-span-1 flex-colo ">
                                         <button onClick={() => setisModalOpen(true)} className="w-10 h-10 flex-colo rounded-lg bg-white bg-opacity-20"><FaShareAlt /></button>
