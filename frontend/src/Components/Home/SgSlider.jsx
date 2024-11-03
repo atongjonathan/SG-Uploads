@@ -6,16 +6,12 @@ import { FreeMode } from 'swiper/modules';
 import { Link } from "react-router-dom";
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 
-const PopularMovies = ({ movies }) => {
-  let popular = []
-  if (movies)
-  {
-    popular = movies.sort((a, b)=> b.rating.count - a.rating.count)
+const SgSlider = ({ movies, title, icon }) => {
 
-  }
+
   return movies && (
     <div className="my-14">
-      <Titles title="Popular Movies" Icon={BsCollectionFill}></Titles>
+      <Titles title={title} Icon={icon}></Titles>
       <Swiper className='mt-6'
         slidesPerView={3}
         spaceBetween={30}
@@ -45,11 +41,11 @@ const PopularMovies = ({ movies }) => {
           }}
       >
 
-        {popular?.slice(0, 8).map((movie, idx) => (
+        {movies?.slice(0, 8).map((movie, idx) => (
           <SwiperSlide key={idx}>
-            <Link to={`/movie/${movie.title}`} className="w-full truncate p-3 text-text flex-colo bg-dry border border-gray-800 hover:scale-95 transitions relative rounded overflow-hidden">
-              <LazyLoadImage src={movie.poster} alt={movie.title} className='w-full h-rate object-cover rounded mb-4' />
-              <h3>{movie.title}</h3>
+            <Link to={`/movie/${movie.title}`} className="w-full p-3 text-text flex-colo bg-dry border border-gray-800 hover:scale-95 transitions relative rounded overflow-hidden truncate max-h-fit">
+              <LazyLoadImage src={movie.poster} alt={movie.title} className='w-full h-full object-fill rounded mb-4' />
+              <h3 className="w-full text-ellipsis px-1 text-center">{movie.title}</h3>
             </Link>
           </SwiperSlide>
         ))}
@@ -59,4 +55,4 @@ const PopularMovies = ({ movies }) => {
   );
 };
 
-export default PopularMovies;
+export default SgSlider;

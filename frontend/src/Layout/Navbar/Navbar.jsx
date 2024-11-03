@@ -104,7 +104,7 @@ const Navbar = () => {
             className={`${isActive("/movies") ? "bg-subMain" : "bg-dry"
               } p-3 cursor-pointer rounded-2xl border border-gray-800`}
           >
-            All Movies
+            Browse
           </Link>
 
           {/* Action Movies Link */}
@@ -221,7 +221,7 @@ const Navbar = () => {
         {/* Menus for larger screens */}
         <div className="col-span-3 font-medium text-sm hidden xl:gap-10 2xl:gap-20 justify-between lg:flex xl:justify-end items-center">
           <NavLink title="Movies" className={Hover} to="/movies">
-            Movies
+            Browse
           </NavLink>
           {!user && (
             <>

@@ -6,12 +6,21 @@ import Promos from "../Components/Home/Promos";
 import TopRated from "../Components/Home/TopRated";
 import { useMovies } from "../utils/SWR";
 import LoadingIcons from 'react-loading-icons'
+import SgSlider from "../Components/Home/SgSlider";
+import { MdOutlineNewReleases } from "react-icons/md";
+import { BsCollectionFill } from "react-icons/bs";
 
 const HomeScreen = () => {
   document.title = `SG Uploads | Home`;
 
   const { movies, isLoading, error } = useMovies();
   const [loaded, setLoaded] = useState(false);
+
+  let trending = []
+  if (movies) {
+    trending = movies.sort((a, b) => new Date(b.releaseDetailed.date) - new Date(a.releaseDetailed.date))
+
+  }
 
   useEffect(() => {
     if (movies)
@@ -30,6 +39,7 @@ const HomeScreen = () => {
       ) : (movies && loaded) ? (
         <div className="container mx-auto min-h-screen px-2 mb-6">
           <Banner movies={movies} />
+          <SgSlider movies={trending} title='Trending' icon={BsCollectionFill} />
           <PopularMovies movies={movies} />
           <TopRated movies={movies} />
           <Promos />
