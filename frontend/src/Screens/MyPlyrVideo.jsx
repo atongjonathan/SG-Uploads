@@ -12,6 +12,7 @@ function MyPlyrVideo({ play, movie }) {
     return (<div>
         {/* <Plyr source={videoSrc} options={options}></Plyr> */}
         <MediaPlayer title={movie.title} src={{ src: movie.stream, type: "video/mp4" }}
+            autoPlay={movie.stream.includes("itunes")}
             viewType='video'
             streamType='on-demand'
             logLevel='warn'
@@ -19,7 +20,7 @@ function MyPlyrVideo({ play, movie }) {
             playsInline
             poster={movie?.poster} artist="SG Uploads">
             <MediaProvider>
-                {movie.captions?.length > 0 && <Track kind="captions" lang="en-US" src={movie.captions[0].src} label="English" default />}
+                {(movie.captions?.length > 0 && !movie.stream.includes("itunes")) && <Track kind="captions" lang="en-US" src={movie.captions[0].src} label="English" default />}
                 <Poster className="vds-poster" />
             </MediaProvider>
             <DefaultVideoLayout
