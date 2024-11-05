@@ -13,11 +13,12 @@ import { BsCollectionFill } from "react-icons/bs";
 const HomeScreen = () => {
   document.title = `SG Uploads | Home`;
 
-  const { movies, isLoading, error } = useMovies();
+  const { movies, isLoading, error } = useMovies(null);
   const [loaded, setLoaded] = useState(false);
 
   let trending = []
   if (movies) {
+    console.log(movies)
     trending = movies.sort((a, b) => new Date(b.releaseDetailed.date) - new Date(a.releaseDetailed.date))
 
   }
@@ -44,7 +45,11 @@ const HomeScreen = () => {
           <TopRated movies={movies} />
           <Promos />
         </div>
-      ) : <div className="text-center mt-4">Failed to load movies.</div>
+      ) :
+        <div className="h-96 flex flex-col justify-center items-center">
+          <h3>Site down for planned maintenance...</h3>
+          <p>We'll be back soon!</p>
+        </div>
 
       }
     </Layout>

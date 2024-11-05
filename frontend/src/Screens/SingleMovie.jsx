@@ -20,7 +20,11 @@ const SingleMovie = () => {
         isLoading ?
           <div className="h-96 flex justify-center items-center">
             <LoadingIcons.Puff className="h-16 animate-pulse" speed={2} />
-          </div> : <MovieInfo movie={movie}></MovieInfo>
+          </div> : movie ? <MovieInfo movie={movie}></MovieInfo>
+            : <div className="h-96 flex flex-col justify-center items-center">
+              <h3>Site down for planned maintenance...</h3>
+              <p>We'll be back soon!</p>
+            </div>
 
       }
     </Layout>

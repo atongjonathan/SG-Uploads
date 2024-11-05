@@ -50,7 +50,7 @@ export function useUsers(auth) {
 }
 
 export function useMovies() {
-    const [movies, setMovies] = useState([]);
+    const [movies, setMovies] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [isError, setIsError] = useState(false);
 

@@ -60,7 +60,7 @@ const WatchPage = () => {
     return (
         <Layout>
 
-            {(movie && !isLoading) ?
+            {(movie) ?
                 (<>
                     <div className="container mx-auto bg-dry p-6 mb-2">
 
@@ -157,12 +157,16 @@ const WatchPage = () => {
                         </div>
                     </div>
                 </>
-                ) :
-                (
-                    <div className="h-96 flex justify-center items-center" >
-                        <LoadingIcons.Puff className="h-16 animate-pulse" speed={2} />
+                ) : isLoading ?
+                    (
+                        <div className="h-96 flex justify-center items-center" >
+                            <LoadingIcons.Puff className="h-16 animate-pulse" speed={2} />
+                        </div>
+                    )
+                    : <div className="h-96 flex flex-col justify-center items-center">
+                        <h3>Site down for planned maintenance...</h3>
+                        <p>We'll be back soon!</p>
                     </div>
-                )
             }
 
         </Layout>
