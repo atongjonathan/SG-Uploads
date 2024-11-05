@@ -8,7 +8,7 @@ from rest_framework.permissions import IsAuthenticated, IsAuthenticated
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework import generics, permissions
-from ..captions import search, send_to_tg
+from ..captions import search, send_to_tg, update_group
 from ..models import Movie, SGUser
 from .serializers import MovieSerializer, SGUserSerializer
 from django.shortcuts import get_object_or_404
@@ -95,6 +95,7 @@ def create_movie(request):
     serializer = MovieSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
+        print(update_group(request.data))
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
