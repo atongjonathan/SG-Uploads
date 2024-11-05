@@ -94,9 +94,11 @@ def create_user(request):
 def create_movie(request):
     serializer = MovieSerializer(data=request.data)
     if serializer.is_valid():
-        serializer.save()
-        print(update_group(request.data))
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        updated = update_group(request.data)
+        if updated.get("success"):
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(updated, status=status.HTTP_400_BAD_REQUEST)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 

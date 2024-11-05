@@ -103,7 +103,7 @@ def update_group(movie):
     try:
         message = bot.send_photo( GROUP_CHAT_ID, movie.get("poster", ""), caption=movie_text, reply_markup=keyboard, parse_mode='HTML')
         bot.pin_chat_message(GROUP_CHAT_ID, message.message_id, True)
-        return message.id
+        return {"success": message.id}
     except Exception as e:
         print(f"Error: {e}")
         return {"error": str(e)}
