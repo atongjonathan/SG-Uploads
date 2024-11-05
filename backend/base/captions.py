@@ -5,7 +5,10 @@ from datetime import datetime
 from telebot.types import InlineKeyboardButton, InlineKeyboardMarkup
 from dotenv import load_dotenv
 
-load_dotenv()
+env = os.getcwd().split("base")[0] + '/.env'
+
+load_dotenv(env)
+
 
 bot = TeleBot(os.environ.get("TELEGRAM_BOT_TOKEN"))
 
