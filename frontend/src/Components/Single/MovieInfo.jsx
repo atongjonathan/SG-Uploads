@@ -32,7 +32,7 @@ const MovieInfo = ({ movie }) => {
 
             let response = await axios.request(reqOptions);
             if (response?.data?.results.length > 0) {
-                let result = response.data.results.find((item) => item.trackName == movie.title && result.releaseDate.split("T")[0] == movie.releaseDetailed.date.split("T")[0])
+                let result = response.data.results.find((item) => item.trackName == movie.title && item.releaseDate.split("T")[0] == movie.releaseDetailed.date.split("T")[0])
                 if (result) {
                     movie.stream = result.previewUrl
                     setTrailer(movie)
