@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import {  useEffect, useState } from 'react';
 import axios from 'axios';
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
@@ -6,8 +6,6 @@ const VITE_IMDB_API = import.meta.env.VITE_IMDB_API;
 
 export function useUser(auth) {
     let user = null;
-    let isLoading = false;
-    let isError = false;
 
     const headers = { Authorization: `Bearer ${auth}` };
 
@@ -24,7 +22,7 @@ export function useUser(auth) {
         });
 
     // return { user, isLoading, isError };
-}   
+}
 
 export function useUsers(auth) {
     const [users, setUsers] = useState([]);

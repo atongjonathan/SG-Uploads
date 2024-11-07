@@ -4,7 +4,6 @@ import { Link, useParams } from 'react-router-dom'
 import { BiArrowBack } from 'react-icons/bi'
 import { FaCloud, FaHeart, FaPlay } from 'react-icons/fa'
 import MyPlyrVideo from './MyPlyrVideo'
-import { useMovies } from '../utils/SWR'
 import MovieCasts from '../Components/Single/MovieCasts'
 import MovieRates from '../Components/Single/MovieRates'
 import MovieInfo from '../Components/Single/MovieInfo'
@@ -22,6 +21,7 @@ import { FreeMode, Pagination } from 'swiper/modules';
 import FlexMovieItems from '../Components/FlexMovieItems'
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import LoadingIcons from 'react-loading-icons'
+import { MovieContext } from '../context/MovieContext'
 
 const WatchPage = () => {
     let { id } = useParams()
@@ -31,7 +31,7 @@ const WatchPage = () => {
     const [isModalOpen, setisModalOpen] = useState(false)
 
 
-    const { movies, isLoading } = useMovies()
+    const { movies, isLoading } = useContext(MovieContext)
 
     useEffect(() => {
         setMovie(movies?.find((movie) => movie.title == id))
@@ -157,16 +157,11 @@ const WatchPage = () => {
                         </div>
                     </div>
                 </>
-                ) : isLoading ?
-                    (
-                        <div className="h-96 flex justify-center items-center" >
-                            <LoadingIcons.Puff className="h-16 animate-pulse" speed={2} />
-                        </div>
-                    )
-                    : <div className="h-96 flex flex-col justify-center items-center">
-                        <h3>Site down for planned maintenance...</h3>
-                        <p>We'll be back soon!</p>
-                    </div>
+                )
+                : <div className="h-96 flex flex-col justify-center items-center">
+                    <h3>Site down for planned maintenance...</h3>
+                    <p>We'll be back soon!</p>
+                </div>
             }
 
         </Layout>

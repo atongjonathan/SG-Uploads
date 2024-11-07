@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import SideBar from '../../SideBar'
 import Table from '../../../Components/Table'
-import { useMovies } from '../../../utils/SWR'
+import { MovieContext } from '../../../context/MovieContext'
 
 const MoviesList = () => {
-  const movies = useMovies().movies
+  const movies = useContext(MovieContext).movies
 
   document.title = `Movies List`
 

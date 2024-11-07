@@ -3,13 +3,13 @@ import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { FaSearch, FaHeart } from "react-icons/fa";
 import logo from "../../images/4x3.jpg";
 import { Button, Input } from "@headlessui/react";
-import { useMovies } from "../../utils/SWR";
 import AuthContext from "../../context/AuthContext";
 import { DialogBackdrop, Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
 import { IoClose } from "react-icons/io5";
 import Login from "../../Screens/Login";
 import Register from "../../Screens/Register";
 import { toast } from "sonner";
+import { MovieContext } from "../../context/MovieContext";
 
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
@@ -22,7 +22,7 @@ const Navbar = () => {
 
 
   const { authTokens, logoutUser, user } = useContext(AuthContext);
-  const movies = useMovies()?.movies || [];
+  const movies = useContext(MovieContext)?.movies || [];
   const [isResults, setResults] = useState([]);
   const [showModal, setShowModal] = useState(false)
 

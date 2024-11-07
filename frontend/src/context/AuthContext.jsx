@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useState, useRef, useCallback } from 'react';
 import { toast } from 'sonner';
-import {jwtDecode} from 'jwt-decode'; // Fixed import
+import { jwtDecode } from 'jwt-decode'; // Fixed import
 import Backend from '../utils/Backend';
 import axios from 'axios';
 
@@ -18,8 +18,10 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null); // Initial state for user
   const intervalRef = useRef(null); // Store interval ID
 
+  const [loading, setLoading] = useState(true)
 
-  
+
+
   const logoutUser = useCallback(() => {
     localStorage.removeItem('authTokens');
     setAuthTokens(null);
@@ -93,6 +95,8 @@ export const AuthProvider = ({ children }) => {
         authTokens,
         logoutUser,
         saveAuthTokens,
+        loading,
+        setLoading
       }}
     >
       {children}

@@ -1,10 +1,10 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import Layout from '../Layout/Layout';
 import Filters from '../Components/Filters';
 import Movie from '../Components/Movie';
-import { useMovies } from '../utils/SWR';
 import { useSearchParams } from 'react-router-dom';
 import LoadingIcons from 'react-loading-icons';
+import { MovieContext } from '../context/MovieContext';
 
 function toTitleCase(str) {
   return str.toLowerCase().split(' ').map(word =>
@@ -13,7 +13,7 @@ function toTitleCase(str) {
 }
 
 const MoviesPage = () => {
-  const { movies: allMovies, isLoading } = useMovies(); // Destructure from SWR hook
+  const { movies: allMovies, isLoading } = useContext(MovieContext); // Destructure from SWR hook
   const [searchParams] = useSearchParams();
   const [page, setPage] = useState(4);
 
@@ -65,36 +65,37 @@ const MoviesPage = () => {
     <Layout>
 
       {
-        isLoading ? <div className="h-96 flex justify-center items-center">
-          <LoadingIcons.Puff className="h-16 animate-pulse" speed={2} />
-        </div> :
-          (filteredMovies && genresTuple.length > 0) ?
-            (<div className="min-height-screen container mx-auto px-2 my-3">
-              <Filters categories={genresTuple} />
 
-              <p className='text-lg font-medium my-6'>
-                Total <span className='font-bold text-subMain'>{filteredMovies.length}</span>
-              </p>
-              <div className="grid sm:mt-10 mt-6 xl:grid-cols-4 2xl:grid-cols-5 grid-cols-2 gap-6">
-                {filteredMovies.slice(0, page).map((movie, idx) => (
-                  <Movie key={idx} movie={movie} />
-                ))}
-              </div>
-              <div className="w-full flex-colo md:my-20 my-10">
-                <button
-                  onClick={handleLoadingMore}
-                  className="flex-rows gap-3 text-white py-3 px-8 rounded font-semibold border-2 border-subMain"
-                >
-                  Load More ?
-                </button>
-              </div>
-            </div>)
-            :
-            <div className="h-96 flex flex-col justify-center items-center">
-              <h3>Site down for planned maintenance...</h3>
-              <p>We'll be back soon!</p>
-            </div>
+        (filteredMovies && genresTuple.length > 0) &&
+        (<div className="min-height-screen container mx-auto px-2 my-3">
+          <Filters categories={genresTuple} />
+
+          <p className='text-lg font-medium my-6'>
+            Total <span className='font-bold text-subMain'>{filteredMovies.length}</span>
+          </p>
+          <div className="grid sm:mt-10 mt-6 xl:grid-cols-4 2xl:grid-cols-5 grid-cols-2 gap-6">
+            {filteredMovies.slice(0, page).map((movie, idx) => (
+              <Movie key={idx} movie={movie} />
+            ))}
+          </div>
+          <div className="w-full flex-colo md:my-20 my-10">
+            <button
+              onClick={handleLoadingMore}
+              className="flex-rows gap-3 text-white py-3 px-8 rounded font-semibold border-2 border-subMain"
+            >
+              Load More ?
+            </button>
+          </div>
+        </div>)
       }
+      {
+        !allMovies && <div className="h-96 flex flex-col justify-center items-center">
+          <h3>Site down for planned maintenance...</h3>
+          <p>We'll be back soon!</p>
+        </div>
+      }
+           
+      
 
     </Layout>
   );

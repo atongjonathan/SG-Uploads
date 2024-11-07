@@ -2,12 +2,12 @@ import React, { useContext, useEffect, useState } from 'react'
 import SideBar from './SideBar'
 import Table from '../Components/Table'
 import AuthContext from '../context/AuthContext'
-import { useMovies, useUser } from '../utils/SWR'
 import Backend from '../utils/Backend'
 import axios from 'axios'
+import { MovieContext } from '../context/MovieContext'
 
 const FavouriteMovies = () => {
-  const movies = useMovies().movies
+  const movies = useContext(MovieContext).movies
   const [favourites, setFavourites] = useState(null)
 
 

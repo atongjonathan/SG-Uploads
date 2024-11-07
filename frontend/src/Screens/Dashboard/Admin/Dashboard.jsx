@@ -2,13 +2,14 @@ import React, { useContext, useEffect } from 'react'
 import SideBar from '../../SideBar'
 import { FaRegListAlt, FaUser } from 'react-icons/fa'
 import Table from '../../../Components/Table'
-import { useMovies, useUsers } from '../../../utils/SWR'
+import { useUsers } from '../../../utils/SWR'
 import Table2 from '../../../Components/Table2'
 import AuthContext from '../../../context/AuthContext'
+import { MovieContext } from '../../../context/MovieContext'
 
 const Dashboard = () => {
 
-    const movies = useMovies().movies
+    const movies = useContext(MovieContext).movies
     const { authTokens } = useContext(AuthContext)
     const { users } = useUsers(authTokens?.access)
     const DashboardData = [
