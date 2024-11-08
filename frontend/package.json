@@ -19,6 +19,7 @@
     "axios": "^1.7.7",
     "jwt-decode": "^4.0.0",
     "media-icons": "^1.1.5",
+    "movie-trailer": "^3.2.2",
     "plyr-react": "^5.3.0",
     "rc-drawer": "^7.2.0",
     "react": "^18.3.1",
