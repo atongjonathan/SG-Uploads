@@ -41,7 +41,9 @@ const Layout = ({ children }) => {
                 </div>
                 <Footer></Footer>
                 <MobileFooter></MobileFooter>
-                <ScrollToTop component={<BiArrowToTop className="h-6 w-6"/>} className="bg-subMain border-b-subMain rounded-lg hover:bg-main transitions flex items-center justify-center mb-8" smooth />
+                <ScrollToTop component={<BiArrowToTop className="h-6 w-6"/>} style={{
+                  backgroundColor:'#14759f'
+                }} className="border-b-subMain rounded-lg hover:bg-main transitions flex items-center justify-center mb-8" smooth />
               </div>
             )
       }
