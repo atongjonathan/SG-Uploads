@@ -45,7 +45,7 @@ const SgSlider = ({ movies, title, icon }) => {
           <SwiperSlide key={idx}>
             <Link to={`/movie/${movie.title}`} className="w-full p-3 text-text flex-colo bg-dry border border-gray-800 hover:scale-95 transitions relative rounded overflow-hidden truncate max-h-fit">
               <LazyLoadImage effect="blur" wrapperProps={{
-                style: { transitionDelay: "1s" },
+                style: { transitionDelay: "0.6s" },
               }}   src={movie.poster} alt={movie.title} className='w-full h-full object-fill rounded mb-4' />
               <h3 className="w-full text-ellipsis px-1 text-center">{movie.title}</h3>
             </Link>

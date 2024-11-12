@@ -60,7 +60,7 @@ const TopRated = ({movies}) => {
                 <div className="relative group p-4 h-rate border border-border bg-dry rounded-lg overflow-hidden">
                   {/* Movie Poster */}
                   <LazyLoadImage  effect="blur" wrapperProps={{
-                style: { transitionDelay: "1s" },
+                style: { transitionDelay: "0.6s" },
               }} 
                     src={movie.poster}
                     alt={movie.title}
