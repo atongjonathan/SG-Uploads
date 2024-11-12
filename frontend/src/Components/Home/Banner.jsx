@@ -33,7 +33,7 @@ const Banner = ({ movies }) => {
 
       >
         {latest?.slice(0, 6).sort(() => .5 - Math.random()).map((movie, idx) => (
-          <SwiperSlide key={idx} className="relative rounded overflow-hidden">
+          <SwiperSlide key={idx} className="relative rounded-xl overflow-hidden">
             <img
               src={movie.poster}
               alt={movie.title}
@@ -41,18 +41,18 @@ const Banner = ({ movies }) => {
             />
             <div style={{
               background: `url('${movie?.poster}'`
-            }} className={`w-full md:inline-block hidden h-full object-cover blur-lg relative`}>
+            }} className={`w-full md:inline-block hidden h-full object-cover blur-lg relative rounded-xl`}>
 
             </div>
             <img style={{
-              height: '130%',
-              bottom:'-80px'
+              height: '140%',
+              bottom:'-81px'
             }}
               src={movie?.poster}
               alt={movie.title}
-              className="absolute right-36 z-10 object-contain w-100 rotate-12 hidden md:inline-block "
+              className="absolute right-28 z-10 object-contain w-100 rotate-12 hidden md:inline-block "
             />
-            <div className="lg:w-7/12 absolute linear-bg xl:pl-32 sm:pl-32 pl-8 top-0 bottom-0 right-0 left-0 flex flex-col justify-center lg:gap-8 md:gap-5 gap-4 z-20 md:h-96 min-h-80 max-h-96">
+            <div className="lg:w-7/12 absolute linear-bg xl:pl-32 sm:pl-32 pl-8 top-0 bottom-0 right-0 left-0 flex flex-col justify-center lg:gap-8 md:gap-5 gap-4 z-20 md:h-96 min-h-80 max-h-96  rounded-xl">
               <h1 className="xl:text-4xl truncate capitalize font-sans sm:text-2xl text-xl font-bold">{movie.title}</h1>
               <div className="flex gap-5 items-center text-dryGray">
                 <FlexMovieItems movie={movie}></FlexMovieItems>

@@ -59,7 +59,9 @@ const TopRated = ({movies}) => {
               <SwiperSlide key={idx}>
                 <div className="relative group p-4 h-rate border border-border bg-dry rounded-lg overflow-hidden">
                   {/* Movie Poster */}
-                  <LazyLoadImage
+                  <LazyLoadImage  effect="blur" wrapperProps={{
+                style: { transitionDelay: "1s" },
+              }} 
                     src={movie.poster}
                     alt={movie.title}
                     className="w-full h-full object-cover rounded-lg"

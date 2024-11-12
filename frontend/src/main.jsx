@@ -9,6 +9,7 @@ import 'swiper/css/free-mode';
 import 'swiper/css/pagination';
 import { AuthProvider } from "./context/AuthContext.jsx";
 import MovieProvider from "./context/MovieContext.jsx";
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 
 

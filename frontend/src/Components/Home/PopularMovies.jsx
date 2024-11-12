@@ -48,7 +48,9 @@ const PopularMovies = ({ movies }) => {
         {popular?.slice(0, 8).map((movie, idx) => (
           <SwiperSlide key={idx}>
             <Link to={`/movie/${movie.title}`} className="w-full truncate p-3 text-text flex-colo bg-dry border border-gray-800 hover:scale-95 transitions relative rounded overflow-hidden">
-              <LazyLoadImage src={movie.poster} alt={movie.title} className='w-full h-rate object-cover rounded mb-4' />
+              <LazyLoadImage effect="blur" wrapperProps={{
+                style: { transitionDelay: "1s" },
+              }}  src={movie.poster} alt={movie.title} className='w-full h-rate object-cover rounded mb-4' />
               <h3>{movie.title}</h3>
             </Link>
           </SwiperSlide>
