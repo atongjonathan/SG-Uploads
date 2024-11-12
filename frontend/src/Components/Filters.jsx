@@ -97,7 +97,7 @@ const Filters = ({ categories }) => {
 
     return (
         <>
-            <div className="flex justify-end">
+            <div className="flex justify-end pt-3">
                 <button
                     onClick={() => {
                         setYear(YearData[0])

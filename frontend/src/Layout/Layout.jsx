@@ -5,6 +5,8 @@ import { Toaster } from "sonner";
 import MobileFooter from "./Footer/MobileFooter";
 import { MovieContext } from "../context/MovieContext";
 import LoadingIcons from "react-loading-icons";
+import ScrollToTop from "react-scroll-to-top";
+import { BiArrowToTop } from "react-icons/bi";
 
 const Layout = ({ children }) => {
   const { isLoading, movies } = useContext(MovieContext)
@@ -39,6 +41,7 @@ const Layout = ({ children }) => {
                 </div>
                 <Footer></Footer>
                 <MobileFooter></MobileFooter>
+                <ScrollToTop component={<BiArrowToTop className="h-6 w-6"/>} className="bg-subMain border-b-subMain rounded-lg hover:bg-main transitions flex items-center justify-center mb-8" smooth />
               </div>
             )
       }

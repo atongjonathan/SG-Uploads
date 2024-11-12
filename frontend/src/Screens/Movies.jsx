@@ -73,19 +73,16 @@ const MoviesPage = () => {
         (<div className="min-height-screen container mx-auto px-2 my-3">
           <Filters categories={genresTuple} />
 
-          <p className='text-lg font-medium my-6'>
+          {/* <p className='text-lg font-medium my-6'>
             Total <span className='font-bold text-subMain'>{filteredMovies.length}</span>
-          </p>
+          </p> */}
 
           <InfiniteScroll
             className="grid sm:mt-10 mt-6 xl:grid-cols-4 2xl:grid-cols-5 grid-cols-2 gap-6 overflow-hidden"
             dataLength={filteredMovies.slice(0, page).length}
             next={handleLoadingMore}
             hasMore={hasMore}
-            loader={
-              <div className="w-screen ml-4 bg-main flex justify-center items-center">
-                <LoadingIcons.Puff className="h-16 animate-pulse" speed={2} />
-              </div>}
+        
           >
             {filteredMovies.slice(0, page).map((movie, idx) => (
               <Movie key={idx} movie={movie} />
