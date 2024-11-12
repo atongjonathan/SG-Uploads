@@ -173,7 +173,7 @@ const Navbar = () => {
                             <td className="w-12 p-1 bg-dry border border-border h-12 rounded overflow-hidden">
                               <img
                                 src={movie.poster}
-                                alt={movie.title}
+                                alt={movie.title} title={movie.title}
                                 className="h-full w-full object-cover"
                               />
                             </td>
@@ -204,7 +204,7 @@ const Navbar = () => {
                       <td className="w-12 p-1 bg-dry border border-border h-12 rounded overflow-hidden">
                         <img
                           src={movie.poster}
-                          alt={movie.title}
+                          alt={movie.title} title={movie.title}
                           className="h-full w-full object-cover"
                         />
                       </td>

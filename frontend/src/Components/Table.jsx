@@ -12,7 +12,7 @@ const Rows = (movie, idx, admin) =>
     <tr key={idx}>
         <td className={`${Text}`}>
             <div className="w-12 p-1 bg-dry border border-border h-12 rounded overflow-hidden">
-                <LazyLoadImage src={movie.poster} alt={movie.title} className='h-full w-full object-cover' />
+                <LazyLoadImage src={movie.poster} alt={movie.title} title={movie.title} className='h-full w-full object-cover' />
             </div>
         </td>
         <td className={Text + ' truncate'}>{movie.title}</td>

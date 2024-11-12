@@ -129,7 +129,7 @@ const AddMovie = () => {
 
                             <div className={`text-3xl py-3 flex justify-start flex-wrap`}>
                                 <div className="w-12 p-1 bg-dry border border-border h-12 rounded overflow-hidden">
-                                    <img src={movie.image} alt={movie.title} className='h-full w-full object-cover' />
+                                    <img src={movie.image} alt={movie.title} title={movie.title} className='h-full w-full object-cover' />
                                 </div>
                                 <p className={Text}>{movie.title} -  {movie.year}</p>
                                 <p className={Text}><a href={movie.imdb}>{movie.genre[0]} - {movie.contentType.toLocaleUpperCase()}</a></p>
@@ -170,7 +170,7 @@ const AddMovie = () => {
                                                 <tr key={idx} className='hover:text-main hover:bg-dryGray hover:cursor-pointer' onClick={() => findMovie(movie.imdb)}>
                                                     <td key={movie.title} className={`${Text}`}>
                                                         <div className="w-12 p-1 bg-dry border border-border h-12 rounded overflow-hidden">
-                                                            <img src={movie.image} alt={movie.title} className='h-full w-full object-cover' />
+                                                            <img src={movie.image} alt={movie.title} title={movie.title} className='h-full w-full object-cover' />
                                                         </div>
                                                     </td>
                                                     <td className={Text}>{movie.title}</td>

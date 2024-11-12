@@ -38,7 +38,7 @@ export function TrailerVideo({ movie, trailer }) {
         }
     }
     return (
-        <MediaPlayer title={movie.title} src={trailer}
+        <MediaPlayer title={'Preview ' + movie.title} src={trailer}
             autoPlay
             viewType='video'
             logLevel='warn'
