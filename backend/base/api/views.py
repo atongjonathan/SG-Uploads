@@ -95,10 +95,9 @@ def create_movie(request):
     serializer = MovieSerializer(data=request.data)
     if serializer.is_valid():
         updated = update_group(request.data)
-        if updated.get("success"):
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(updated, status=status.HTTP_400_BAD_REQUEST)
+        if not updated.get("success"): print(updated)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
