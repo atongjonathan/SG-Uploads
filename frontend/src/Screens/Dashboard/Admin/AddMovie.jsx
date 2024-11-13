@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useCallback, useContext, useState } from 'react'
 import { Input } from '../../../Components/UserInputs'
 import SideBar from '../../SideBar'
 import { FaSearch } from 'react-icons/fa'
@@ -6,6 +6,7 @@ import { CgSpinner } from 'react-icons/cg'
 import Backend from '../../../utils/Backend'
 import { toast, Toaster } from 'sonner'
 import AuthContext from '../../../context/AuthContext'
+import SgCombo from './SgCombo'
 
 
 const backend = Backend()
@@ -27,8 +28,7 @@ const AddMovie = () => {
 
 
 
-
-    function searchMovie(e) {
+    const searchMovie = useCallback(function searchMovie(e) {
         setQuery(query)
         fetch(`${VITE_IMDB_API}/search?query=${e.target.value}`)
             .then((res) => res.json())
@@ -36,7 +36,8 @@ const AddMovie = () => {
                 setResults(data.results)
             })
 
-    }
+    })
+
 
 
     async function sendSubs(id) {
@@ -68,7 +69,7 @@ const AddMovie = () => {
 
 
 
-    function findMovie(link) {
+    const findMovie = useCallback(function findMovie(link) {
         setLoading(true)
         let split = link.split("/")
         const title = split[split.length - 1]
@@ -84,7 +85,8 @@ const AddMovie = () => {
 
 
 
-    }
+    })
+
 
 
     async function handleSubmit(e) {
@@ -136,8 +138,8 @@ const AddMovie = () => {
                                 <p className={Text}><a href={movie.imdb}>{movie.link}</a></p>
 
                             </div>
-                            <Input regex='https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)?' name='stream' type='text' placeholder='Stream Link'></Input>
-                            <Input regex='https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)?' name='caption' type='text' placeholder='English Caption link'></Input>
+                            <Input name='stream' type='text' placeholder='Stream Link'></Input>
+                            <Input name='caption' type='text' placeholder='English Caption link'></Input>
                             <div className="flex gap-2 flex-wrap flex-col-reverse sm:flex-row justify-between items-center my-4">
                                 {/* <button className="bg-subMain font-medium transitions hover:bg-main border border-subMain text-white py-3 px-6 rounded w-full sm:w-auto">Delete Account</button> */}
                                 <button className="bg-main font-medium transitions hover:bg-subMain border border-subMain text-white py-3 px-6 rounded w-full sm:w-auto">Add Movie</button>
@@ -145,43 +147,9 @@ const AddMovie = () => {
                         </form>
                         :
                         <div className="col-span-3">
-                            <form className="w-full text-sm bg-dryGray rounded flex-btn gap-4">
-                                <button
-                                    type="submit"
-                                    className="bg-subMain w-12 flex-colo h-12 rounded text-white"
-                                >
-                                    <FaSearch></FaSearch>
-                                </button>
-                                <input
-                                    type="text"
-                                    placeholder="Search Movie Name from here"
-                                    className="font-medium placeholder:text-border text-sm w-full h-12 bg-transparent border-none px-2 text-black"
-                                    onInput={(e) => searchMovie(e)}
-                                ></input>
-                            </form>
-                            <div className="col-span-2 bg-dry border border-gray-800 p-1 rounded-md xl:mb-0 mb-5">
-
-
-                                <table className='w-full table-auto border border-border divide-y divide-border'>
-
-                                    <tbody className='bg-main divide-y divide-gray-800'>
-                                        {
-                                            isresults.slice(0, 3).map((movie, idx) => (
-                                                <tr key={idx} className='hover:text-main hover:bg-dryGray hover:cursor-pointer' onClick={() => findMovie(movie.imdb)}>
-                                                    <td key={movie.title} className={`${Text}`}>
-                                                        <div className="w-12 p-1 bg-dry border border-border h-12 rounded overflow-hidden">
-                                                            <img src={movie.image} alt={movie.title} title={movie.title} className='h-full w-full object-cover' />
-                                                        </div>
-                                                    </td>
-                                                    <td className={Text}>{movie.title}</td>
-                                                    <td className={Text}>{movie.year}</td>
-                                                    <td className={Text}>{movie.type.toLocaleUpperCase()}</td>
-                                                    <td className={Text}><a href={movie.imdb}>IMDB link</a></td>
-
-                                                </tr>
-                                            ))}
-                                    </tbody>
-                                </table>
+                        
+                            <div className="col-span-2 bg-dry border border-gray-800 p-1 rounded-md xl:mb-0 mb-5">                         
+                                <SgCombo movies={isresults} searchMovie={searchMovie} findMovie={findMovie}></SgCombo>
                             </div>
                         </div>
                 }

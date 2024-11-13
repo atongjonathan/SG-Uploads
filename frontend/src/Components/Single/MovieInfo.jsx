@@ -12,7 +12,6 @@ import axios from 'axios'
 import Backend from '../../utils/Backend'
 import movieTrailer from 'movie-trailer';
 
-
 const MovieInfo = ({ movie }) => {
     const { pathname } = useLocation()
     const [trailer, setTrailer] = useState(null)
@@ -60,6 +59,8 @@ const MovieInfo = ({ movie }) => {
     return movie && (
         <div style={{
             backgroundImage: `url('${movie.poster}')`,
+            backgroundRepeat:'no-repeat',
+            backgroundSize:'cover'
         }} className='w-full xl:h-96 relative text-white'>
             {/* <LazyLoadImage src={movie.poster} alt={movie.title} title={movie.title} className='w-full hidden xl:inline-block h-100 object-cover' /> */}
             <div className="xl:bg-main bg-dry flex-colo xl:bg-opacity-90 xl:absolute top-0 left-0 right-0 bottom-0">
