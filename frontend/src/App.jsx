@@ -23,6 +23,7 @@ import AddMovie from './Screens/Dashboard/Admin/AddMovie';
 import PrivateRoute from './context/PrivateRoute'
 import { SuperRoute } from './context/PrivateRoute'
 import ScrollToTop from './ScrollToTop';
+import 'react-loading-skeleton/dist/skeleton.css'
 
 const App = () => {
   Aos.init();
