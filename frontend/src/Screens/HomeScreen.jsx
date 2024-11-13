@@ -6,7 +6,7 @@ import Promos from "../Components/Home/Promos";
 import TopRated from "../Components/Home/TopRated";
 import LoadingIcons from 'react-loading-icons'
 import SgSlider from "../Components/Home/SgSlider";
-import { BsCollectionFill } from "react-icons/bs";
+import { BsCollectionFill, BsBookmarkStarFill} from "react-icons/bs";
 import { MovieContext } from "../context/MovieContext";
 
 const HomeScreen = () => {
@@ -15,8 +15,14 @@ const HomeScreen = () => {
   const { movies, isLoading, error } = useContext(MovieContext);
 
   let trending = []
+  let topRated = []
+  let popular = []
   if (movies) {
     trending = movies.sort((a, b) => new Date(b.releaseDetailed.date) - new Date(a.releaseDetailed.date))
+    topRated = movies.sort((a, b) => b.rating.star - a.rating.star)
+    popular = movies.sort((a, b)=> b.rating.count - a.rating.count)
+
+
 
   }
 
@@ -30,9 +36,9 @@ const HomeScreen = () => {
         {movies && (
           <>
             <Banner movies={movies} />
-            <SgSlider movies={trending} title='Trending' icon={BsCollectionFill} />
-            <PopularMovies movies={movies} />
-            <TopRated movies={movies} />
+            <SgSlider movies={trending} title='Trending' Icon={BsCollectionFill} />
+            <SgSlider movies={movies} title='Popular Movies' Icon={BsCollectionFill} />
+            <SgSlider movies={topRated} title='Top Rated' Icon={BsBookmarkStarFill} />
             <Promos />
           </>
 

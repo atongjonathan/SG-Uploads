@@ -6,7 +6,8 @@ import { Autoplay, Navigation } from "swiper/modules";
 import { Link, useNavigate } from "react-router-dom";
 import Rating from "../Star";
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { FaHeart } from "react-icons/fa";
+import { FaArrowRight, FaHeart } from "react-icons/fa";
+import { FaArrowLeft } from "react-icons/fa";
 
 
 const TopRated = ({ movies }) => {
@@ -15,17 +16,31 @@ const TopRated = ({ movies }) => {
   const navigate = useNavigate()
   let topRated = []
   if (movies) {
-    topRated = movies.sort((a, b) => b.rating.star - a.rating.star)
   }
 
 
-  const classNames = 'hover:bg-dry transitions text-sm rounded w-8 h-8 flex-colo bg-subMain text-white';
+  const classNames = 'hover:bg-dry transitions text-sm rounded w-7 h-7 flex-colo bg-subMain text-white';
 
 
 
   return movies && (
     <div className="my-16">
-      <Titles title="Top Rated" Icon={BsBookmarkStarFill} />
+      <div className='w-full flex justify-between'>
+        <div className="flex sm:gap-8 gap-4 items-center">
+          <BsBookmarkStarFill className="sm:w-6 sm:h-6 w-4 h-4 text-subMain"></BsBookmarkStarFill>
+          <h2 className="sm:text-xl font-bold text-lg">Top Rated</h2>
+        </div>
+
+
+        <div className="px-2 flex justify-center gap-2">
+          <button className={classNames} ref={(node) => setPrevEl(node)}>
+            <FaArrowLeft />
+          </button>
+          <button className={classNames} ref={(node) => setNextEl(node)}>
+            <FaArrowRight />
+          </button>
+        </div>
+      </div>
       <div className="mt-10">
         <Swiper
           navigation={{ nextEl, prevEl }}
@@ -71,7 +86,11 @@ const TopRated = ({ movies }) => {
                 />
 
                 {/* Overlay Content */}
-                <div className="h-1/5 flex-colo gap-1 py-1 text-center absolute bg-black bg-opacity-70 left-0 right-0 bottom-0 opacity-100 transition duration-300">
+                <div style={{
+                  boxSizing: 'border-box',
+                  height: '25%'
+
+                }} className="flex-colo gap-1 py-2 text-center absolute bg-black bg-opacity-70 left-0 right-0 bottom-0 opacity-100 transition duration-300">
                   {/* Rating */}
                   <div className="flex gap-2 text-star">
                     <Rating value={movie.rating.star / 2} />
@@ -91,14 +110,7 @@ const TopRated = ({ movies }) => {
 
           ))}
         </Swiper>
-        <div className="w-full px-1 flex justify-center gap-6 pt-12">
-          <button className={classNames} ref={(node) => setPrevEl(node)}>
-            <BsCaretLeftFill />
-          </button>
-          <button className={classNames} ref={(node) => setNextEl(node)}>
-            <BsCaretRightFill />
-          </button>
-        </div>
+     
       </div>
     </div >
   );
