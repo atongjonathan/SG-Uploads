@@ -7,7 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Rating from "../Star";
 import { FaArrowRight, FaHeart } from "react-icons/fa";
 import { FaArrowLeft } from "react-icons/fa";
-
+import Movie from '../Movie'
 
 const SgSlider = ({ movies, title, Icon }) => {
 
@@ -19,94 +19,80 @@ const SgSlider = ({ movies, title, Icon }) => {
 
   return movies && (
     <div className="my-16">
-    <div className='w-full flex justify-between'>
-      <div className="flex sm:gap-8 gap-4 items-center truncate">
-        <Icon className="sm:w-6 sm:h-6 w-4 h-4 text-subMain"></Icon>
-        <h2 className="sm:text-xl text-lg font-semibold truncate">{title}</h2>
-      </div>
+      <div className='w-full flex justify-between'>
+        <div className="flex sm:gap-8 gap-4 items-center truncate">
+          <Icon className="sm:w-6 sm:h-6 w-4 h-4 text-subMain"></Icon>
+          <h2 className="sm:text-xl text-lg font-semibold truncate">{title}</h2>
+        </div>
 
 
-      <div className="px-2 flex justify-center gap-2">
-        <button className={classNames} ref={(node) => setPrevEl(node)}>
-          <FaArrowLeft />
-        </button>
-        <button className={classNames} ref={(node) => setNextEl(node)}>
-          <FaArrowRight />
-        </button>
+        <div className="px-2 flex justify-center gap-2">
+          <button className={classNames} ref={(node) => setPrevEl(node)}>
+            <FaArrowLeft />
+          </button>
+          <button className={classNames} ref={(node) => setNextEl(node)}>
+            <FaArrowRight />
+          </button>
+        </div>
       </div>
-    </div>
-    <div className="mt-10">
-      <Swiper
-        navigation={{ nextEl, prevEl }}
-        slidesPerView={3}
-        spaceBetween={40}
-        autoPlay={true}
-        speed={1000}
-        loop={true}
-        modules={[Navigation, Autoplay]}
-        breakpoints={
-          {
-            0: {
-              slidesPerView: 2,
-              spaceBetween: 10
-            },
-            768: {
-              slidesPerView: 2,
-              spaceBetween: 20
-            },
-            1024: {
-              slidesPerView: 3,
-              spaceBetween: 30
-            },
-            1280: {
-              slidesPerView: 5,
-              spaceBetween: 30
-            },
+      <div className="mt-10">
+        <Swiper
+          navigation={{ nextEl, prevEl }}
+          slidesPerView={3}
+          spaceBetween={40}
+          autoPlay={true}
+          speed={1000}
+          loop={true}
+          modules={[Navigation, Autoplay]}
+          breakpoints={
+            {
+              0: {
+                slidesPerView: 2,
+                spaceBetween: 10
+              },
+              768: {
+                slidesPerView: 2,
+                spaceBetween: 20
+              },
+              1024: {
+                slidesPerView: 3,
+                spaceBetween: 30
+              },
+              1280: {
+                slidesPerView: 5,
+                spaceBetween: 30
+              },
+            }
           }
-        }
-      >
-        {movies?.slice(0, 6).sort(() => .5 - Math.random()).map((movie, idx) => (
-          <SwiperSlide className="cursor-pointer" key={idx} onClick={() => navigate(`/movie/${movie.title}`)}>
-            <div className="relative group p-4 h-rate border border-border bg-dry rounded-lg overflow-hidden">
-              {/* Movie Poster */}
-              <LazyLoadImage
-                effect="blur"
-                wrapperProps={{
-                  style: { transitionDelay: "0.6s" },
-                }}
-                src={movie.poster}
-                alt={movie.title} title={movie.title}
-                className="w-full h-full object-cover rounded-lg"
-              />
-
-              {/* Overlay Content */}
-              <div style={{
-                boxSizing: 'border-box',
-                height: '25%'
-
-              }} className="flex-colo gap-1 py-2 absolute bg-black bg-opacity-70 left-0 right-0 bottom-0 opacity-100 transition duration-300">
-                {/* Rating */}
-                <div className="flex gap-2 text-star">
-                  <Rating value={movie.rating.star / 2} />
+        >
+          {movies?.slice(0, 6).sort(() => .5 - Math.random()).map((movie, idx) => (
+            <SwiperSlide className="cursor-pointer" key={idx} onClick={() => navigate(`/movie/${movie.title}`)}>
+              <div className="relative group p-4 h-rate border border-border bg-dry rounded-lg overflow-hidden">
+                {/* Movie Poster */}
+                <div className="border border-border p-1 hover:scale-95 transitions relative rounded overflow-hidden">
+                  <Link to={`/movie/${movie.title}`} className="w-full">
+                    <LazyLoadImage effect="blur" wrapperProps={{
+                      style: { transitionDelay: "0.6s" },
+                    }} src={movie.poster} alt={movie.title} title={movie.title} className="w-full h-h-rate object-cover" />
+                  </Link>
+                  <div className="absolute flex flex-col gap-2 bottom-0 right-0 left-0 bg-main bg-opacity-60 text-white px-4 py-3">
+                    <h6 className="font-semibold truncate">{movie.title}</h6>
+                    <div className="flex gap-2 text-star">
+                      <Rating value={movie.rating.star / 2} />
+                    </div>
+                  </div>
                 </div>
 
-                {/* Movie Title */}
-                <div
-                  className="text-md line-clamp-2 truncate"
-                >
-                  {movie.title}
-                </div>
-
+                {/* Overlay Content */}
 
               </div>
-            </div>
-          </SwiperSlide>
+            </SwiperSlide>
 
-        ))}
-      </Swiper>
-   
-    </div>
-  </div >
+          ))}
+        </Swiper>
+
+      </div>
+    </div >
   );
 };
 
