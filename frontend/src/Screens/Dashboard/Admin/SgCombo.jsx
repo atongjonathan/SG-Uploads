@@ -44,14 +44,14 @@ export default function SgCombo({ searchMovie, movies, findMovie }) {
                     transition
                     className={clsx(
                         'w-[var(--input-width)] rounded-xl border border-white/5 bg-dry p-1 [--anchor-gap:var(--spacing-1)] empty:invisible',
-                        'transition duration-100 ease-in data-[leave]:data-[closed]:opacity-0'
+                        'transition duration-100 ease-in data-[leave]:data-[closed]:opacity-0 data-[closed]:cursor-pointer'
                     )}
                 >
                     {filteredmovies.map((movie) => (
                         <ComboboxOption
                             key={movie.id}
                             value={movie.imdb}
-                            className="w-full group flex cursor-default gap-2 rounded-lg py-1.5 px-3 select-none data-[focus]:bg-white/10"
+                            className="w-full group flex gap-2 rounded-lg py-1.5 px-3 select-none data-[focus]:bg-white/10 cursor-pointer"
                         >
                             <div className="w-12 p-1 bg-dry border border-border h-12 rounded overflow-hidden">
                                 <img src={movie.image} alt={movie.title} title={movie.title} className='h-full w-full object-cover' />

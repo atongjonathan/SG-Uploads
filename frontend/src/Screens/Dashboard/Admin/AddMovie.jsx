@@ -8,6 +8,7 @@ import { toast, Toaster } from 'sonner'
 import AuthContext from '../../../context/AuthContext'
 import SgCombo from './SgCombo'
 import SgDropdown from './SgDropdown'
+import axios from 'axios'
 
 const backend = Backend()
 const VITE_IMDB_API = import.meta.env.VITE_IMDB_API
@@ -60,6 +61,9 @@ const AddMovie = () => {
             toast.error('Something went wrong. Please try again.');
             console.error(error);
         }
+        finally {
+            setLoading(false)
+        }
     }
     )
 
@@ -104,7 +108,6 @@ const AddMovie = () => {
             .then((data) => {
                 data.link = link
                 setMovie(data)
-                setLoading(false)
                 searchSubs(title)
             })
 
@@ -114,26 +117,58 @@ const AddMovie = () => {
 
 
 
+
+    async function makeOptions(movie) {
+
+        let token = await Backend().getMongoToken()
+        let headersList = {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        }
+
+        let bodyContent = JSON.stringify({
+            "collection": "movies",
+            "database": "F2LxBot",
+            "dataSource": "Cluster0",
+            "document": movie
+        });
+
+        let reqOptions = {
+            url: "https://eu-west-2.aws.data.mongodb-api.com/app/data-kmyiqtw/endpoint/data/v1/action/insertOne",
+            method: "POST",
+            headers: headersList,
+            data: bodyContent,
+        }
+
+        return reqOptions
+
+    }
+
     async function handleSubmit(e) {
         e.preventDefault()
         const formData = new FormData(e.target)
         const formObject = Object.fromEntries(formData.entries())
 
         let movieData = movie
-        movieData.stream = formObject.stream
+        movieData.stream = formObject.stream.replace("dl", "video").replace("watch", "video")
         movieData.poster = movie.image
         movieData.captions = [
             {
                 "label": "English",
                 "srclang": "en",
-                "src": formObject.caption
+                "src": formObject.caption.replace("video", "dl").replace("watch", "dl")
             }
         ]
 
-        const response = await backend.addMovie(auth, movieData)
-        if (response.data) {
+        const reqOptions = await makeOptions(movieData)
+
+        const responses = await Promise.all([backend.addMovie(auth, movieData), axios.request(reqOptions)])
+
+        if (responses[0].status == 201 || responses[1].status == 201) {
             toast(movie.title + ' added successfully')
             setMovie(null)
+            setCaption(null)
+            setSubs(null)
         }
         else {
             toast(movie.title + ' addition failed')
@@ -185,8 +220,8 @@ const AddMovie = () => {
                                 <button className="bg-main font-medium transitions hover:bg-subMain border border-subMain text-white py-3 px-6 rounded w-full sm:w-auto">Add Movie</button>
                             </div>
                         </form>
-                        : subs && !caption ?
-                            <SgDropdown subs={subs} sendSubs={sendSubs}>Seleting caption</SgDropdown>
+                        : subs && !caption && !isloading ?
+                            <SgDropdown subs={subs} sendSubs={sendSubs}></SgDropdown>
 
                             :
                             <div className="col-span-3">

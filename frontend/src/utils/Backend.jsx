@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
-
+const MONGO_USERNAME = import.meta.env.VITE_MONGO_USERNAME;
+const MONGO_PASSWORD = import.meta.env.VITE_MONGO_PASSWORD;
 const Backend = () => {
 
     const createRequestOptions = (url, method, data = null, authHeader = null) => {
@@ -143,8 +144,29 @@ const Backend = () => {
         }
     };
 
+    async function getMongoToken() {
+        let headersList = {
+            "Content-Type": "application/json"
+        }
+        let bodyContent = JSON.stringify({
+            "username": MONGO_USERNAME,
+            "password": MONGO_PASSWORD
+        });
+        let reqOptions = {
+            url: "https://eu-west-2.aws.services.cloud.mongodb.com/api/client/v2.0/app/data-kmyiqtw/auth/providers/local-userpass/login",
+            method: "POST",
+            headers: headersList,
+            data: bodyContent,
+        }
 
-    return { signUp, loginUser, like, unlike, updateProfile, addMovie, BACKEND_URL, refreshAccessToken, sendCaptions, changePassword, searchCaptions };
+        let response = await axios.request(reqOptions);
+        let access_token = response.data.access_token
+        return access_token
+    }
+
+    return { signUp, loginUser, like, unlike, updateProfile, addMovie, BACKEND_URL, refreshAccessToken, sendCaptions, changePassword, searchCaptions,
+        getMongoToken
+     };
 };
 
 export default Backend;

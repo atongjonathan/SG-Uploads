@@ -1,8 +1,9 @@
-import {  useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 const VITE_IMDB_API = import.meta.env.VITE_IMDB_API;
+
 
 export function useUser(auth) {
     let user = null;
@@ -47,26 +48,6 @@ export function useUsers(auth) {
     return { users, isLoading, isError };
 }
 
-export function useMovies() {
-    const [movies, setMovies] = useState(null);
-    const [isLoading, setIsLoading] = useState(true);
-    const [isError, setIsError] = useState(false);
-
-    useEffect(() => {
-        axios.get(`${BACKEND_URL}/movies`)
-            .then((response) => {
-                setMovies(response.data);
-                setIsLoading(false);
-            })
-            .catch((error) => {
-                setIsError(true);
-                setIsLoading(false);
-                console.error('Error fetching movies:', error);
-            });
-    }, []);
-
-    return { movies, isLoading, isError };
-}
 
 export function useSearchResults(query) {
     const [results, setResults] = useState([]);

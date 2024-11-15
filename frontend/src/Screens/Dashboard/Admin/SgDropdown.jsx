@@ -37,7 +37,7 @@ export default function SgDropdown({ subs, sendSubs }) {
                             <ListboxOption
                                 key={sub.id}
                                 value={sub}
-                                className="w-[var(--button-width)] group flex cursor-default gap-2 rounded-lg py-1.5 px-3 select-none data-[focus]:bg-white/10"
+                                className="w-[var(--button-width)] group flex gap-2 rounded-lg py-1.5 px-3 select-none data-[focus]:bg-white/10 cursor-pointer"
                             >
                                 <div className="text-sm/6 text-white">{sub.release} ({sub.year})</div>
                                 <kbd className="ml-auto hidden font-sans text-xs text-white/50 group-data-[focus]:inline">{sub.download_count} - {sub.language}</kbd>
