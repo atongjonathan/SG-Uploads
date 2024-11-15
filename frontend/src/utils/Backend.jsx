@@ -131,8 +131,20 @@ const Backend = () => {
         }
     };
 
+    const searchCaptions = (authHeader, data) => {
+        const refreshUrl = `${BACKEND_URL}/search`;
+        const reqOptions = createRequestOptions(refreshUrl, "POST", data, authHeader);
+        try {
+            const response = axios.request(reqOptions);
+            return response;
+        } catch (error) {
+            console.log(error);
+            return error;
+        }
+    };
 
-    return { signUp, loginUser, like, unlike, updateProfile, addMovie, BACKEND_URL, refreshAccessToken, sendCaptions, changePassword };
+
+    return { signUp, loginUser, like, unlike, updateProfile, addMovie, BACKEND_URL, refreshAccessToken, sendCaptions, changePassword, searchCaptions };
 };
 
 export default Backend;

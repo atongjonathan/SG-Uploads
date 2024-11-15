@@ -10,10 +10,6 @@ export default function SgCombo({ searchMovie, movies, findMovie }) {
     const [selected, setSelected] = useState(null)
 
 
-    useEffect(() => {
-        console.log(selected)
-
-    }, [selected])
 
     const filteredmovies =
         query === ''

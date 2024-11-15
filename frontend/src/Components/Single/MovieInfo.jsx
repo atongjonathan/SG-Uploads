@@ -42,7 +42,6 @@ const MovieInfo = ({ movie }) => {
             }
             else {
                 movieTrailer(movie.title, { multi: true, year: movie.year }).then((res) => {
-                    console.log(res)
                     setTrailer(res)
                 });
             }
