@@ -10,6 +10,7 @@ import Login from "../../Screens/Login";
 import Register from "../../Screens/Register";
 import { toast } from "sonner";
 import { MovieContext } from "../../context/MovieContext";
+import SgMenu from "./SgMenu";
 
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
@@ -223,6 +224,7 @@ const Navbar = () => {
           <NavLink title="Movies" className={Hover} to="/movies">
             Browse
           </NavLink>
+          <SgMenu></SgMenu>
           {!user && (
             <>
               <NavLink title="About Us" className={Hover} to="/about-us">

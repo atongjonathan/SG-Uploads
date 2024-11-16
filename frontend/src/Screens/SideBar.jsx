@@ -72,38 +72,12 @@ const SideBar = ({ children }) => {
         <Layout>
             <div className="w-full min-h-screen container mx-auto">
 
-                <div className="lg:grid grid-cols-8 gap-10 items-start md:py-12 py-6">
-                    <div className="col-span-2 sticky bg-dry border border-gray-800 p-6 rounded-md xl:mb-0 mb-5">
-                        {
-                            user?.is_superuser && adminLinks.map((link, idx) => (
-                                <NavLink
-                                    to={link.link}
-                                    key={idx}   
-                                    className={getNavLinkClass}
-                                >
-                                    <link.icon className="text-lg" />
-                                    <p>{link.name}</p>
-                                </NavLink>
-                            ))
-                        }
-                        {
-                            sideLinks.map((link, idx) => (
-                                <NavLink
-                                    to={link.link}
-                                    key={idx}
-                                    className={getNavLinkClass}
-                                >
-                                    <link.icon className="text-lg" />
-                                    <p>{link.name}</p>
-                                </NavLink>
-                            ))
-                        }
-
-                    </div>
+                <div className="w-full items-start md:py-12 py-6">
+                    
                     <div
                         data-aos="fade-up" data-aos-duration="1000" data-aos-delay="10" data-aos-offset="100"
 
-                        className="col-span-6 rounded bg-dry border border-gray-800 p-6">
+                        className="rounded bg-dry border border-gray-800 p-6">
                         {children}
 
                     </div>
