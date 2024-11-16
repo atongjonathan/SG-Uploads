@@ -284,7 +284,7 @@ const Navbar = () => {
             <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
 
 
-              <DialogPanel className="relative max-w-lg space-y-4 border bg-main p-6 lg:p-10 text-text rounded-lg">
+              <DialogPanel className="relative max-w-lg space-y-4 border bg-main p-6 lg:p-10 text-text rounded-lg  backdrop-blur-2xl duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0">
                 <Button onClick={() => setIsLoginOpen(false)} className='absolute top-5 right-5 text-text hover:text-subMain transitions'><IoClose className="h-5 w-5"></IoClose></Button>
                 <DialogTitle className="font-bold">Log In</DialogTitle>
                 <Login openSignUp={openSignUp} closeLogin={closeLogin} />
@@ -299,7 +299,7 @@ const Navbar = () => {
             <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
 
 
-              <DialogPanel className="relative max-w-lg space-y-4 border bg-main p-6 lg:p-10 text-text rounded-lg">
+              <DialogPanel className="relative max-w-lg space-y-4 border bg-main p-6 lg:p-10 text-text rounded-lg  backdrop-blur-2xl duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0">
                 <Button onClick={() => setIsSignUpOpen(false)} className='absolute top-5 right-5 text-text hover:text-subMain transitions'><IoClose className="h-5 w-5"></IoClose></Button>
                 <DialogTitle className="font-bold">Sign Up</DialogTitle>
                 <Register openLogin={openLogin} closeModal={closeSignUp}></Register>

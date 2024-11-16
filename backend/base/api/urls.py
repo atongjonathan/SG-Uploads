@@ -20,6 +20,7 @@ urlpatterns = [
     path('user', views.user, name="user"),
     path('like/<id>', views.like_movie, name='like_movie'),
     path('unlike/<id>', views.unlike_movie, name='unlike_movie'),
+    path('edit/<id>', views.edit_movie, name='edit'),
     path('captions', views.captions, name='captions'),
     path('search', views.search_captions, name='search_captions'),
     path('itunes', views.search_itunes, name='search'),

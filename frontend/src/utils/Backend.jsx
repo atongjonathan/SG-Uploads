@@ -162,11 +162,24 @@ const Backend = () => {
         let response = await axios.request(reqOptions);
         let access_token = response.data.access_token
         return access_token
-    }    
+    }
 
-    return { signUp, loginUser, like, unlike, updateProfile, addMovie, BACKEND_URL, refreshAccessToken, sendCaptions, changePassword, searchCaptions,
-        getMongoToken
-     };
+    const editMovie = (authHeader, data, id) => {
+        const refreshUrl = `${BACKEND_URL}/edit/${id}`;
+        const reqOptions = createRequestOptions(refreshUrl, "POST", data, authHeader);
+        try {
+            const response = axios.request(reqOptions);
+            return response;
+        } catch (error) {
+            console.log(error);
+            return error;
+        }
+    };
+
+    return {
+        signUp, loginUser, like, unlike, updateProfile, addMovie, BACKEND_URL, refreshAccessToken, sendCaptions, changePassword, searchCaptions,
+        getMongoToken, editMovie
+    };
 };
 
 export default Backend;

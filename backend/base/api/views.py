@@ -1,5 +1,6 @@
 import json
 import logging
+from re import I
 import requests
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.decorators import api_view, permission_classes, parser_classes
@@ -117,6 +118,19 @@ def update_user(request: HttpRequest):
     serializer = SGUserSerializer(
         user, data=request.data, partial=True)  # Use partial update
 
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def edit_movie(request: HttpRequest, id):
+    movie = Movie.objects.get(pk=id)
+    print(request.data)
+    serializer = MovieSerializer(
+        movie, data=request.data, partial=True)  # Use partial update
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data, status=status.HTTP_200_OK)

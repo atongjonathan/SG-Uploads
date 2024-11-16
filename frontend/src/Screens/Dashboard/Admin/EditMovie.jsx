@@ -1,0 +1,77 @@
+import { Button, Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
+import { useEffect, useState, useContext } from 'react'
+import { Input } from '../../../Components/UserInputs'
+import Backend from '../../../utils/Backend'
+import AuthContext from '../../../context/AuthContext'
+import { toast } from 'sonner'
+
+export default function EditMovie({ close, isOpen, movie }) {
+
+    const [currentMovie, setCurrentMovie] = useState(null)
+    const { authTokens } = useContext(AuthContext)
+    const auth = authTokens?.access
+
+    useEffect(() => {
+        setCurrentMovie(movie)
+    }, [movie])
+
+
+    async function handleSubmit(e) {
+        e.preventDefault()
+        const formData = new FormData(e.target)
+        const formObject = Object.fromEntries(formData.entries())
+
+        formObject.stream = formObject.stream.replace("dl", "video").replace("watch", "video")
+        if (formObject.caption !== '[]') {
+            formObject.captions = [
+                {
+                    "label": "English",
+                    "srclang": "en",
+                    "src": formObject.caption.replace("video", "dl").replace("watch", "dl")
+                }
+            ]
+        }
+        const response = await Backend().editMovie(auth, formObject, currentMovie.id)
+
+
+        if (response.status == 200) {
+            toast(movie.title + ' updated successfully')
+        }
+        else {
+            toast(movie.title + ' addition failed')
+
+        }
+        close()
+
+    }
+
+    return (
+        <>
+
+
+            <Dialog open={isOpen} as="div" className="relative z-20 focus:outline-none" onClose={close}>
+                <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+                    <div className="flex min-h-full items-center justify-center p-4">
+                        <DialogPanel
+                            transition
+                            className="relative w-3/5 space-y-4 border bg-main lg:p-5 text-text rounded-lg p-6 backdrop-blur-2xl duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0"
+                        >
+                            <DialogTitle as="h3" className="text-base/7 font-medium text-white">
+                                Edit "{currentMovie?.title}"
+                            </DialogTitle>
+                            <form className='flex flex-col gap-2 w-full' method='post' onSubmit={(e) => handleSubmit(e)}>
+                                <Input label='Poster' name='poster' type='text' placeholder='Poster' required={false}></Input>
+                                <Input label='Stream link' name='stream' type='text' placeholder='Stream Link' required={false}></Input>
+                                <Input label='Caption' name='caption' type='text' placeholder='English Caption link' required={false}></Input>
+                                <div className="flex gap-2 flex-wrap flex-col-reverse sm:flex-row justify-between items-center my-4">
+                                    <Button type='submit' className="bg-main font-medium transitions hover:bg-subMain border border-subMain text-white py-3 px-6 rounded w-full sm:w-auto">Save</Button>
+                                </div>
+                            </form>
+
+                        </DialogPanel>
+                    </div>
+                </div>
+            </Dialog>
+        </>
+    )
+}

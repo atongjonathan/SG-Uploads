@@ -3,7 +3,6 @@ import Layout from '../Layout/Layout';
 import Filters from '../Components/Filters';
 import Movie from '../Components/Movie';
 import { useSearchParams } from 'react-router-dom';
-import LoadingIcons from 'react-loading-icons';
 import { MovieContext } from '../context/MovieContext';
 import InfiniteScroll from "react-infinite-scroll-component";
 import Skeleton from 'react-loading-skeleton';
