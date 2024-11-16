@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom'
 import MovieInfo from '../Components/Single/MovieInfo'
 import LoadingIcons from 'react-loading-icons'
 import { MovieContext } from '../context/MovieContext'
+import Skeleton from 'react-loading-skeleton'
 
 
 const SingleMovie = () => {
@@ -18,10 +19,9 @@ const SingleMovie = () => {
     <Layout>
       {
         movie ? <MovieInfo movie={movie}></MovieInfo>
-          : <div className="h-96 flex flex-col justify-center items-center">
-            <h3>Site down for planned maintenance...</h3>
-            <p>We'll be back soon!</p>
-          </div>
+          :
+          <Skeleton baseColor="rgb(22 28 63)" className='animate-pulse' height={300} containerClassName="animate-pulse"></Skeleton>
+
 
       }
     </Layout>

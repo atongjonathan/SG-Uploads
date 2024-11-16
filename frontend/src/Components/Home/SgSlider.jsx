@@ -80,29 +80,30 @@ const SgSlider = ({ movies, title, Icon }) => {
             <SwiperSlide className="cursor-pointer" key={idx} onClick={() => navigate(`/movie/${movie.title}`)}>
 
               {
-                isLoading ? <Skeleton baseColor="rgb(11 15 41)" containerClassName="animate-pulse" height={270}></Skeleton> : <div className="relative group p-4 h-rate border border-border bg-dry rounded-lg overflow-hidden">
-                  {/* Movie Poster */}
+                isLoading ? <Skeleton baseColor="rgb(11 15 41)" containerClassName="animate-pulse" height={270}></Skeleton> :
+                  <div className="relative group p-4 h-rate border border-border bg-dry rounded-lg overflow-hidden">
+                    {/* Movie Poster */}
 
-                  <div className="border border-border p-1 hover:scale-95 transitions relative rounded overflow-hidden">
-                    <Link to={`/movie/${movie.title}`} className="w-full">
+                    <div className="hover:scale-95 transitions relative rounded overflow-hidden">
+                      <Link to={`/movie/${movie.title}`} className="w-full">
 
-                      <LazyLoadImage effect="blur" wrapperProps={{
-                        style: { transitionDelay: "0.6s" },
-                      }} src={movie.poster} alt={movie.title} title={movie.title} className="w-full h-h-rate object-cover" />
+                        <LazyLoadImage effect="blur" wrapperProps={{
+                          style: { transitionDelay: "0.6s" },
+                        }} src={movie.poster} alt={movie.title} title={movie.title} className="w-full h-h-rate object-cover" />
 
 
-                    </Link>
-                    <div className="absolute flex flex-col gap-2 bottom-0 right-0 left-0 bg-main bg-opacity-60 text-white px-4 py-3">
-                      <h6 className="font-semibold truncate">{movie.title}</h6>
-                      <div className="flex gap-2 text-star">
-                        <Rating value={movie.rating.star / 2} />
+                      </Link>
+                      <div className="absolute flex flex-col gap-2 bottom-0 right-0 left-0 bg-main bg-opacity-60 text-white px-4 py-3">
+                        <h6 className="font-semibold truncate">{movie.title}</h6>
+                        <div className="flex gap-2 text-star">
+                          <Rating value={movie.rating.star / 2} />
+                        </div>
                       </div>
                     </div>
+
+                    {/* Overlay Content */}
+
                   </div>
-
-                  {/* Overlay Content */}
-
-                </div>
               }
 
             </SwiperSlide>

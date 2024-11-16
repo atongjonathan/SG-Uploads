@@ -8,33 +8,32 @@ import axios from 'axios'
 
 
 const IMDB_API = import.meta.env.VITE_IMDB_API
-const MovieRates = ({ movie, play }) => {
+const MovieRates = ({ movie }) => {
 
   const [title, setTitle] = useState(null)
   const [reviews, setReviews] = useState(null)
-  const Ratings = [
-    {
-      title: "1 - Poor",
-      value: 1,
-    },
-    {
-      title: "2 - Good",
-      value: 2,
-    },
-    {
-      title: "3 - Very Good",
-      value: 3,
-    },
-    {
-      title: "4 - Excellent",
-      value: 4,
-    },
-    {
-      title: "5 - Masterpiece",
-      value: 5,
-    },
-  ]
-  const [rating, setRating] = useState(null)
+  // const Ratings = [
+  //   {
+  //     title: "1 - Poor",
+  //     value: 1,
+  //   },
+  //   {
+  //     title: "2 - Good",
+  //     value: 2,
+  //   },
+  //   {
+  //     title: "3 - Very Good",
+  //     value: 3,
+  //   },
+  //   {
+  //     title: "4 - Excellent",
+  //     value: 4,
+  //   },
+  //   {
+  //     title: "5 - Masterpiece",
+  //     value: 5,
+  //   },
+  // ]
 
   async function getReviews() {
     const title = movie?.link?.split("/")[movie?.link.split("/")?.length - 1]
@@ -52,27 +51,27 @@ const MovieRates = ({ movie, play }) => {
     getReviews()
 
 
-  }, [title, movie, play])
+  }, [title, movie])
 
   return movie && (
     <div className='my-12'>
       <Titles title="Reviews" Icon={BsBookmarkStarFill}></Titles>
-      <div className="flex flex-row gap-6">
+      <div className="gap-6">
         {
           reviews?.length == 0 ? (
             <div className="w-full mt-10 mx-auto rounded bg-dry border border-gray-800 p-6 text-center"> <p>No reviews yet</p></div>
           ) :
 
             (
-              <div className="w-full flex justify-center flex-wrap bg-main gap-6 rounded-lg md:p-12 p-6 h-header">
+              <div className="grid grid-cols-4 col-span-1 bg-main gap-6 rounded-lg md:p-12 p-6 h-header">
                 {
                   reviews?.splice(0, 6).map((review, idx) => (
-                    <div key={idx} className="w-96 grid md:grid-cols-12 grid-cols-3  gap-6 bg-dry p-4 border border-gray-800 rounded-lg align-middle text-center">
-                      <div className="col-span-7 flex flex-col gap-2">
-                        <h2>{review.author}</h2>
+                    <div key={idx} className="lg:col-span-1 col-span-2 flex flex-col gap-2 bg-dry p-2 border border-gray-800 rounded-lg align-middle text-center">
+                      <div className="flex flex-col gap-2">
+                        <h2 className='text-sm lg:text-md truncate'>{review.author}</h2>
                         <p className="text-xs leading-6 font-medium text-text">{review.heading}</p>
                       </div>
-                      <div className="col-span-3 flex flex-rows  mt-2 text-xs gap-1 text-star">
+                      <div className="flex flex-rows  mt-2 text-xs gap-1 text-star">
                         <Rating value={review.stars / 2}></Rating>
                       </div>
                     </div>

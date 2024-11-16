@@ -17,6 +17,7 @@ function MyPlyrVideo({ movie }) {
             logLevel='warn'
             crossOrigin
             playsInline
+            aspectRatio="16x9"
             poster={movie?.poster} artist="SG Uploads">
             <MediaProvider>
                 {(movie.captions?.length > 0 && !movie.stream.includes("itunes")) && <Track kind="captions" lang="en-US" src={movie.captions[0].src} label="English" default />}
@@ -44,6 +45,7 @@ export function TrailerVideo({ movie, trailer }) {
             logLevel='warn'
             crossOrigin
             playsInline
+            aspectRatio="16x9"
             poster={movie?.poster} artist="SG Uploads" onProviderChange={onProviderChange}>
             <MediaProvider>
                 <Poster className="vds-poster" />
