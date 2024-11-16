@@ -6,6 +6,7 @@ import { useSearchParams } from 'react-router-dom';
 import LoadingIcons from 'react-loading-icons';
 import { MovieContext } from '../context/MovieContext';
 import InfiniteScroll from "react-infinite-scroll-component";
+import Skeleton from 'react-loading-skeleton';
 
 function toTitleCase(str) {
   return str.toLowerCase().split(' ').map(word =>
@@ -98,10 +99,14 @@ const MoviesPage = () => {
       }
 
       {
-        !allMovies && <div className="h-96 flex flex-col justify-center items-center">
+        (!allMovies && !isLoading) && <div className="h-96 flex flex-col justify-center items-center">
           <h3>Site down for planned maintenance...</h3>
           <p>We'll be back soon!</p>
         </div>
+      }
+
+      {
+        isLoading && <Skeleton baseColor="rgb(22 28 63)" className='animate-pulse' containerClassName="animate-pulse" height={250}></Skeleton>
       }
 
     </Layout>
