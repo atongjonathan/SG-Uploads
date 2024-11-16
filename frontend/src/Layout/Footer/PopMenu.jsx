@@ -7,7 +7,9 @@ import { BsCollectionPlay, BsHouseAddFill, BsHouseExclamationFill } from 'react-
 import { FiHeart } from 'react-icons/fi'
 import { RxDashboard } from "react-icons/rx";
 import Backend from '../../utils/Backend';
-import { FaHeart } from 'react-icons/fa';
+import { FaFilm, FaHeart, FaListAlt, FaUsers, FaAngleDown } from 'react-icons/fa'
+import { FiSettings } from 'react-icons/fi'
+import { RiLockPasswordLine } from 'react-icons/ri'
 
 const PopMenu = ({ user }) => {
 
@@ -19,6 +21,59 @@ const PopMenu = ({ user }) => {
     );
     const [scroll, setIsScrolling] = useState(false)
     const popButton = useRef()
+
+    const adminLinks = [
+        {
+            name: 'Movies',
+            link: '/movieslist',
+            icon: FaListAlt,
+
+        },
+        {
+            name: 'Add',
+            link: '/addmovie',
+            icon: FaFilm,
+
+        },
+        // {
+        //     name: 'Categories',
+        //     link: '/categories',
+        //     icon: HiViewGridAdd
+        // },
+        {
+            name: 'Users',
+            link: '/users',
+            icon: FaUsers,
+
+        },
+        {
+            name: 'Dashboard',
+            link: '/dashboard',
+            icon: RxDashboard,
+
+        },
+    ]
+
+    const sideLinks = [
+
+        {
+            name: 'Profile',
+            link: '/profile',
+            icon: FiSettings
+        },
+        {
+            name: 'Favourites',
+            link: '/favourites',
+            icon: FaHeart
+        },
+        {
+            name: 'Password',
+            link: '/password',
+            icon: RiLockPasswordLine
+        },
+    ]
+
+
     useEffect(() => {
         let timeoutId; const handleScroll = () => {
             setIsScrolling(true);
@@ -46,7 +101,7 @@ const PopMenu = ({ user }) => {
             </PopoverButton>
             <PopoverBackdrop className="fixed inset-0 bg-main/10" />
             {!scroll && (
-                <PopoverPanel anchor="bottom" className="flex flex-row bg-dry z-50">
+                <PopoverPanel anchor="bottom" className="grid grid-cols-4 bg-dry z-50">
                     {
                         !user &&
                         <NavLink title="About Us" className={Hover} to="/about-us">
@@ -60,20 +115,25 @@ const PopMenu = ({ user }) => {
                             <MdOutlineContactMail className='w-7 h-7'></MdOutlineContactMail><p className='text-sm'>Contact</p>
                         </NavLink>
                     }
-                    {user && user?.is_superuser ? <NavLink title="Dashboard" className={Hover} to="/dashboard">
-                        <RxDashboard></RxDashboard> <p className='text-xs'>Dashboard</p>
-                    </NavLink> : user &&
-                    <NavLink className={`${Hover} relative flex flex-col my-auto items-center text-white mx-3`} to="/favourites" title="Favourites">
-                            <FaHeart className="w-8 h-8 relative text-subMain">
 
-                            </FaHeart>
-                            <div className="w-4 h-4 flex-colo rounded-full text-xs bg-subMain text-white absolute -top-2 right-0">{user?.favourites?.length}</div>
-                            <p className='text-xs mt-1'>Favourites</p>
+                    {
+                        user?.is_superuser && adminLinks.map((link, idx) => (
+                            <NavLink title={link.name} className={Hover} key={idx} to={link.link}>
+                                <link.icon className='w-7 h-7'></link.icon><p className='text-sm'> {link.name}</p>
+                            </NavLink>
+                        ))
+                    }
 
-                    </NavLink>}
+                    {
+                        sideLinks.map((link, idx) => (
+                            <NavLink title={link.name} className={Hover} key={idx} to={link.link}>
+                                <link.icon className='w-7 h-7'></link.icon><p className='text-sm'> {link.name}</p>
+                            </NavLink>
+                        ))
+                    }
 
 
-                   
+
                 </PopoverPanel>
             )}
 

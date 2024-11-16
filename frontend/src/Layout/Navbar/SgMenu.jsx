@@ -16,17 +16,17 @@ export default function SgMenu() {
 
     let [active, setActive] = useState('Menu')
 
-    
+
 
     const adminLinks = [
         {
-            name: 'Movies List',
+            name: 'Movies',
             link: '/movieslist',
             icon: FaListAlt,
 
         },
         {
-            name: 'Add Movie',
+            name: 'Add',
             link: '/addmovie',
             icon: FaFilm,
 
@@ -47,33 +47,28 @@ export default function SgMenu() {
     const sideLinks = [
 
         {
-            name: 'Update Profile',
+            name: 'Profile',
             link: '/profile',
             icon: FiSettings
         },
         {
-            name: 'Favourite Movies',
-            link: '/favourites',
-            icon: FaHeart
-        },
-        {
-            name: 'Change Password',
+            name: 'Password',
             link: '/password',
             icon: RiLockPasswordLine
         },
     ]
 
 
-    useEffect(()=>
-    {
-        setActive([...adminLinks, ...sideLinks].find((link)=>link.link == pathname)?.name)
+    useEffect(() => {
+        setActive([...adminLinks, ...sideLinks].find((link) => link.link == pathname)?.name)
     })
 
     return (
         <div className="text-right w-52 ">
             <Menu>
-                <MenuButton className="inline-flex items-center gap-2 text-sm/6 font-semibold text-white shadow-inner focus:outline-none data-[hover]:text-subMain data-[open]:text-subMain data-[focus]:outline-1 data-[focus]:outline-white data-[active]:text-subMain">
-                    {active?active:'Menu'}
+                <MenuButton className={`inline-flex items-center gap-2 text-sm/6 font-semibold text-white shadow-inner focus:outline-none data-[hover]:text-subMain data-[open]:text-subMain data-[focus]:outline-1 data-[focus]:outline-white data-[active]:text-subMain} transitions`}>
+                    <span className={`${active ? 'text-subMain' : ''}`}>{active ? active : 'Menu'}</span>
+
                     <FaAngleDown className="size-4 fill-white/60" />
                 </MenuButton>
 
@@ -86,8 +81,8 @@ export default function SgMenu() {
 
                     {
                         user?.is_superuser && adminLinks.map((link, idx) => (
-                            <MenuItem key={idx} onClick={()=>setActive(link.name)}>
-                                <NavLink onClick={()=>setActive(link.name)}
+                            <MenuItem key={idx} onClick={() => setActive(link.name)}>
+                                <NavLink onClick={() => setActive(link.name)}
                                     to={link.link}
                                     className="group flex w-full items-center gap-2 rounded-lg py-1.5 px-3 data-[focus]:bg-white/10"
                                 >
@@ -100,8 +95,8 @@ export default function SgMenu() {
 
                     {
                         sideLinks.map((link, idx) => (
-                            <MenuItem key={idx} onClick={()=>setActive(link.name)}>
-                                <NavLink onClick={()=>setActive(link.name)}
+                            <MenuItem key={idx} onClick={() => setActive(link.name)}>
+                                <NavLink onClick={() => setActive(link.name)}
                                     to={link.link}
                                     className="group flex w-full items-center gap-2 rounded-lg py-1.5 px-3 data-[focus]:bg-white/10"
                                 >
