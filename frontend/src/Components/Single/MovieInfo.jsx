@@ -70,7 +70,9 @@ const MovieInfo = ({ movie }) => {
                             <TrailerVideo movie={movie} trailer={trailer} />
                         </div> :
                         <div className="xl:col-span-2 w-full h-header bg-dry border border-gray-800 rounded-lg overflow-hidden">
-                            <LazyLoadImage src={movie.poster} className='max-h-96 object-cover mx-auto' alt={movie.title} title={movie.title} />
+                            <LazyLoadImage effect="blur" wrapperProps={{
+                                style: { transitionDelay: "0.6s" },
+                            }} src={movie.poster} alt={movie.title} title={movie.title} className='max-h-96 object-cover mx-auto' />
                         </div>}
 
                     <div className="col-span-2 md:grid grid-cols-5 gap-4 items-center">

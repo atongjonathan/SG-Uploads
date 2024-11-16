@@ -13,6 +13,19 @@ const MovieProvider = ({ children }) => {
     const [isLoading, setIsLoading] = useState(true);
     const [isError, setIsError] = useState(false);
 
+    async function fetchDBMovies() {
+        axios.get(Backend().BACKEND_URL + '/movies')
+            .then((response) => {
+                setMovies(response.data);
+                setIsLoading(false);
+            })
+            .catch((error) => {
+                setIsError(true);
+                setIsLoading(false);
+                console.error('Error fetching movies:', error);
+            });
+    }
+
 
 
 
@@ -49,7 +62,7 @@ const MovieProvider = ({ children }) => {
     }
 
     useEffect(() => {
-        fetchMovies()
+        fetchDBMovies()
     }, []);
 
     // const { movies, isLoading } = useMovies()

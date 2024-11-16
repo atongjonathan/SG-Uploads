@@ -162,7 +162,7 @@ const Backend = () => {
         let response = await axios.request(reqOptions);
         let access_token = response.data.access_token
         return access_token
-    }
+    }    
 
     return { signUp, loginUser, like, unlike, updateProfile, addMovie, BACKEND_URL, refreshAccessToken, sendCaptions, changePassword, searchCaptions,
         getMongoToken
