@@ -65,7 +65,7 @@ const Table2 = ({ data, users }) => {
 
 
     return (
-        <div className='overflow-x-scroll overflow-hidden relative w-full'>
+        <div className='overflow-x-scroll lg:overflow-x-hidden overflow-hidden relative w-full'>
             <table className='w-full table-auto border border-border divide-y divide-border'>
                 <thead>
                     <tr className='bg-dryGray'>

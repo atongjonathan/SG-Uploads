@@ -32,7 +32,7 @@ const Rows = (movie, idx, admin, setMovie = null, open = null) =>
                         }} className='border border-border bg-dry flex-rows gap-2 text-border rounded py-1 px-2'>
                             Edit <FaEdit className='text-green-500'></FaEdit>
                         </Button>
-                        <Button className='bg-subMain text-white rounded flex-colo w-6 h-6'> <MdDelete></MdDelete></Button>
+                        {/* <Button className='bg-subMain text-white rounded flex-colo w-6 h-6'> <MdDelete></MdDelete></Button> */}
                     </>
                 ) : (
                     <>
@@ -69,7 +69,7 @@ const Table = ({ data, admin }) => {
 
 
     return (
-        <div className='overflow-x-scroll overflow-hidden relative w-full'>
+        <div className='overflow-x-scroll lg:overflow-x-hidden overflow-hidden relative w-full'>
             <EditMovie close={close} isOpen={isOpen} movie={movie}></EditMovie>
             <table className='w-full table-auto border border-border divide-y divide-border'>
                 <thead>
