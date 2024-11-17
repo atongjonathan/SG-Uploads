@@ -14,7 +14,7 @@ import { RiLockPasswordLine } from 'react-icons/ri'
 const PopMenu = ({ user }) => {
 
     const active = 'bg-subMain text-main'
-    const inActive = 'transitions text-2xl flex-colo hover:bg-white hover:text-main text-white rounded-md px-4 py-3'
+    const inActive = 'transitions text-2xl flex-colo hover:bg-white hover:text-main text-white rounded-md px-4 py-3 bg-dry mt-2'
     const Hover = useCallback(({ isActive }) =>
         isActive ? `${active} ${inActive}` : inActive,
         []
@@ -99,9 +99,9 @@ const PopMenu = ({ user }) => {
             <PopoverButton className={Hover} ref={popButton}>
                 <HiViewGridAdd></HiViewGridAdd><p className='text-xs'>Menu</p>
             </PopoverButton>
-            <PopoverBackdrop className="fixed inset-0 bg-main/10" />
+            <PopoverBackdrop className="fixed inset-0 bg-main/50" />
             {!scroll && (
-                <PopoverPanel anchor="bottom" className="grid grid-cols-4 bg-dry z-50">
+                <PopoverPanel anchor="bottom" className={`grid ${user?'grid-cols-4':'grid-cols-2'}  gap-2 bg-main z-50`}>
                     {
                         !user &&
                         <NavLink title="About Us" className={Hover} to="/about-us">
@@ -125,7 +125,7 @@ const PopMenu = ({ user }) => {
                     }
 
                     {
-                        sideLinks.map((link, idx) => (
+                        user && sideLinks.map((link, idx) => (
                             <NavLink title={link.name} className={Hover} key={idx} to={link.link}>
                                 <link.icon className='w-7 h-7'></link.icon><p className='text-sm'> {link.name}</p>
                             </NavLink>

@@ -145,7 +145,7 @@ const Navbar = () => {
           </form>
 
           <Dialog open={showModal} onClose={() => setShowModal(false)} className="relative z-50">
-            <DialogBackdrop className="fixed inset-0 bg-main/10"></DialogBackdrop>
+            <DialogBackdrop className="fixed inset-0 bg-main/50"></DialogBackdrop>
 
             <div className="fixed inset-0 flex w-full items-start justify-center p-4">
               <DialogPanel className="relative max-w-lg space-y-4 border bg-dry p-6 lg:p-10 text-text rounded-lg w-full">
@@ -225,16 +225,7 @@ const Navbar = () => {
             Browse
           </NavLink>
           <SgMenu></SgMenu>
-          {!user && (
-            <>
-              <NavLink title="About Us" className={Hover} to="/about-us">
-                About
-              </NavLink>
-              <NavLink title="Contact Us" className={Hover} to="/contact-us">
-                Contact
-              </NavLink>
-            </>
-          )}
+         
           {user && (
             <NavLink title={user.is_superuser ? "Dashboard" : "Profile"} className={Hover} to={user.is_superuser ? "/dashboard" : "/profile"}>
               {user.is_superuser ? "Dashboard" : "Profile"}
@@ -281,7 +272,7 @@ const Navbar = () => {
             </>
           )}
           <Dialog open={isLoginOpen} onClose={() => setIsLoginOpen(false)} className="relative z-50">
-            <DialogBackdrop className="fixed inset-0 bg-main/10"></DialogBackdrop>
+            <DialogBackdrop className="fixed inset-0 bg-main/50"></DialogBackdrop>
 
             <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
 
@@ -296,7 +287,7 @@ const Navbar = () => {
           </Dialog>
 
           <Dialog open={isSignUpOpen} onClose={() => setIsSignUpOpen(false)} className="relative z-50">
-            <DialogBackdrop className="fixed inset-0 bg-main/10"></DialogBackdrop>
+            <DialogBackdrop className="fixed inset-0 bg-main/50"></DialogBackdrop>
 
             <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
 

@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { Button } from '@headlessui/react'
 import EditMovie from '../Screens/Dashboard/Admin/EditMovie'
+import SGFaHeart from './SGFaHeart'
 
 const Head = "text-xs text-left text-main font-semibold px-6 py-2 uppercase"
 const Text = 'text-sm text-left leading-6 whitespace-nowrap px-5 py-3'
@@ -40,7 +41,7 @@ const Rows = (movie, idx, admin, setMovie = null, open = null) =>
                             Download <FaCloudDownloadAlt className='text-green-500'></FaCloudDownloadAlt>
                         </Link>
                         <Link to={`/movie/${movie.title}`} className='bg-subMain text-white rounded flex-colo w-6 h-6'> <GoEye></GoEye></Link>
-                        <FaHeart></FaHeart>
+                        <SGFaHeart movie={movie}></SGFaHeart>
 
                     </>)
             }

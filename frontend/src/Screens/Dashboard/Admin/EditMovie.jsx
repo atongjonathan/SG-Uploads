@@ -1,4 +1,4 @@
-import { Button, Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
+import { Button, Dialog, DialogPanel, DialogTitle, DialogBackdrop } from '@headlessui/react'
 import { useEffect, useState, useContext } from 'react'
 import { Input } from '../../../Components/UserInputs'
 import Backend from '../../../utils/Backend'
@@ -21,8 +21,9 @@ export default function EditMovie({ close, isOpen, movie }) {
         const formData = new FormData(e.target)
         const formObject = Object.fromEntries(formData.entries())
 
+
         formObject.stream = formObject.stream.replace("dl", "video").replace("watch", "video")
-        if (formObject.caption !== '[]') {
+        if (formObject.caption !== '[]' && formObject.caption !== '') {
             formObject.captions = [
                 {
                     "label": "English",
@@ -31,9 +32,14 @@ export default function EditMovie({ close, isOpen, movie }) {
                 }
             ]
         }
+        for (const [key, value] of Object.entries(formObject)) {
+
+            if (!value) {
+                delete formObject[key]
+            }
+        }
+
         const response = await Backend().editMovie(auth, formObject, currentMovie.id)
-
-
         if (response.status == 200) {
             toast(movie.title + ' updated successfully')
         }
@@ -41,6 +47,10 @@ export default function EditMovie({ close, isOpen, movie }) {
             toast(movie.title + ' addition failed')
 
         }
+
+
+
+
         close()
 
     }
@@ -50,11 +60,13 @@ export default function EditMovie({ close, isOpen, movie }) {
 
 
             <Dialog open={isOpen} as="div" className="relative z-20 focus:outline-none" onClose={close}>
+                <DialogBackdrop className="fixed inset-0 bg-main/50"></DialogBackdrop>
+
                 <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
                     <div className="flex min-h-full items-center justify-center p-4">
                         <DialogPanel
                             transition
-                            className="relative w-3/5 space-y-4 border bg-main lg:p-5 text-text rounded-lg p-6 backdrop-blur-2xl duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0"
+                            className="relative w-full lg:w-3/5  space-y-4 border bg-main lg:p-5 text-text rounded-lg p-6 backdrop-blur-2xl duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0"
                         >
                             <DialogTitle as="h3" className="text-base/7 font-medium text-white">
                                 Edit "{currentMovie?.title}"

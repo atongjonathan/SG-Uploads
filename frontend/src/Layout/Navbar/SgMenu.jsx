@@ -17,6 +17,21 @@ export default function SgMenu() {
     let [active, setActive] = useState('Menu')
 
 
+    const common = [
+        {
+            name: 'About',
+            link: '/about-us',
+            icon: FaListAlt,
+
+        },
+        {
+            name: 'Contact',
+            link: '/contact-us',
+            icon: FaFilm,
+
+        },
+    ]
+
 
     const adminLinks = [
         {
@@ -64,7 +79,7 @@ export default function SgMenu() {
     })
 
     return (
-        <div className="text-right w-52 ">
+        <div className="text-right">
             <Menu>
                 <MenuButton className={`inline-flex items-center gap-2 text-sm/6 font-semibold text-white shadow-inner focus:outline-none data-[hover]:text-subMain data-[open]:text-subMain data-[focus]:outline-1 data-[focus]:outline-white data-[active]:text-subMain} transitions`}>
                     <span className={`${active ? 'text-subMain' : ''}`}>{active ? active : 'Menu'}</span>
@@ -75,7 +90,7 @@ export default function SgMenu() {
                 <MenuItems
                     transition
                     anchor="bottom end"
-                    className="w-52 z-50 origin-top-right rounded-xl border border-white/5 bg-main p-1 text-sm/6 text-white transition duration-100 ease-out [--anchor-gap:var(--spacing-1)] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0"
+                    className="w-36 z-50 origin-top-right rounded-xl border border-white/5 bg-main p-1 text-sm/6 text-white transition duration-100 ease-out [--anchor-gap:var(--spacing-1)] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0"
                 >
 
 
@@ -86,7 +101,7 @@ export default function SgMenu() {
                                     to={link.link}
                                     className="group flex w-full items-center gap-2 rounded-lg py-1.5 px-3 data-[focus]:bg-white/10"
                                 >
-                                    <link.icon className="text-lg size-4 fill-white/30" />
+                                    <link.icon className="text-lg size-4" />
                                     {link.name}
                                 </NavLink>
                             </MenuItem>
@@ -94,7 +109,20 @@ export default function SgMenu() {
                     }
 
                     {
-                        sideLinks.map((link, idx) => (
+                        user && sideLinks.map((link, idx) => (
+                            <MenuItem key={idx} onClick={() => setActive(link.name)}>
+                                <NavLink onClick={() => setActive(link.name)}
+                                    to={link.link}
+                                    className="group flex w-full items-center gap-2 rounded-lg py-1.5 px-3 data-[focus]:bg-white/10"
+                                >
+                                    <link.icon className="text-lg size-4" />
+                                    {link.name}
+                                </NavLink>
+                            </MenuItem>
+                        ))
+                    }
+                     {
+                        !user && common.map((link, idx) => (
                             <MenuItem key={idx} onClick={() => setActive(link.name)}>
                                 <NavLink onClick={() => setActive(link.name)}
                                     to={link.link}
@@ -106,7 +134,6 @@ export default function SgMenu() {
                             </MenuItem>
                         ))
                     }
-
 
 
                 </MenuItems>

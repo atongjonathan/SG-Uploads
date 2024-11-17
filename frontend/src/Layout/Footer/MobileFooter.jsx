@@ -97,7 +97,7 @@ const MobileFooter = () => {
 
                 </div>
                 <Dialog open={isLoginOpen} onClose={() => setisLoginOpen(false)} className="relative z-50">
-                    <DialogBackdrop className="fixed inset-0 bg-main/10"></DialogBackdrop>
+                    <DialogBackdrop className="fixed inset-0 bg-main/50"></DialogBackdrop>
                     <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
 
 
@@ -110,7 +110,7 @@ const MobileFooter = () => {
                 </Dialog>
 
                 <Dialog open={isSignUpOpen} onClose={() => setisSignUpOpen(false)} className="relative z-50">
-                    <DialogBackdrop className="fixed inset-0 bg-main"></DialogBackdrop>
+                    <DialogBackdrop className="fixed inset-0 bg-main/50"></DialogBackdrop>
 
                     <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
 
