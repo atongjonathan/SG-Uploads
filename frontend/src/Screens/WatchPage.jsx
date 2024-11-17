@@ -21,6 +21,12 @@ import EditMovie from './Dashboard/Admin/EditMovie'
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/solid'
 import TrailerModal from './TrailerModal'
+import axios from 'axios'
+import movieTrailer from 'movie-trailer';
+import { useLocation } from 'react-router-dom'
+import Backend from "../utils/Backend";
+
+
 const WatchPage = () => {
     let { id } = useParams()
     const [movie, setMovie] = useState(null)
@@ -50,7 +56,7 @@ const WatchPage = () => {
     useEffect(() => {
         setMovie(movies?.find((movie) => movie.title == id))
 
-    }, [isLoading])
+    }, [isLoading, id])
 
 
 
@@ -69,6 +75,49 @@ const WatchPage = () => {
 
     document.title = movie ? title : 'SG Uplaods | Watch'
 
+
+    const { pathname } = useLocation()
+    const [trailer, setTrailer] = useState(null)
+
+
+
+    async function getTrailer() {
+        let url = `${Backend().BACKEND_URL}/itunes?search=${movie.title}`
+        let headersList = {
+            "Accept": "*/*",
+            "Content-Type": 'application/json'
+        }
+
+        let reqOptions = {
+            url: url,
+            method: "GET",
+            headers: headersList,
+        }
+
+        let response = await axios.request(reqOptions);
+        if (response?.data?.results.length > 0) {
+            let result = response.data.results.find((item) => item.trackName == movie.title && item.releaseDate.split("T")[0] == movie.releaseDetailed.date.split("T")[0])
+            if (result) {
+                setTrailer(result.previewUrl)
+            }
+
+        }
+        else {
+            movieTrailer(movie.title, { multi: true, year: movie.year }).then((res) => {
+                setTrailer(res)
+            });
+        }
+
+    }
+
+    useEffect(() => {
+        if (movie) {
+            getTrailer(movie)
+
+        }
+
+    }, [pathname, movie])
+
     return (
         <Layout>
 
@@ -83,19 +132,6 @@ const WatchPage = () => {
 
 
 
-                    <div className="flex-btn flex-row mb-2 gap-4bg-main rounded border border-gray-800 py-4 px-2 lg:hidden">
-                        <Link to={window.location.pathname.replace("watch", "movie")} className='md:text-lg text-sm  flex gap-3 items-center font-bold text-dryGray'>
-                            {
-                                movie ?
-                                    <><BiArrowBack></BiArrowBack> <p className=''>{`${movie?.title} (${movie.year})`}</p></>
-                                    : <Skeleton baseColor="rgb(22 28 63)" className='animate-pulse' containerClassName="animate-pulse"></Skeleton>
-                            }
-
-                        </Link>
-
-
-
-                    </div>
 
 
                     <div className="grid grid-cols-4 gap-2">
@@ -115,9 +151,12 @@ const WatchPage = () => {
                                     }
 
                                 </div>
-                                <div className="col-span-2 flex justify-end items-center gap-2">
-                                    <TrailerModal movie={movie}></TrailerModal>
 
+                                <div className="col-span-2 flex justify-end items-center gap-2">
+                                    {
+                                        trailer && <TrailerModal movie={movie} trailer={trailer}></TrailerModal>
+
+                                    }
                                     <Button onClick={() => setisModalOpen(true)} className="w-10 h-10 flex-colo rounded-lg bg-white bg-opacity-20"><FaShareAlt /></Button>
 
 

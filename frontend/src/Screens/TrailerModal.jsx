@@ -4,7 +4,7 @@ import { TrailerVideo } from './MyPlyrVideo'
 import { PiFilmReel } from "react-icons/pi";
 import { FaCloud } from 'react-icons/fa'
 
-export default function TrailerModal({ movie }) {
+export default function TrailerModal({ movie, trailer }) {
     let [isOpen, setIsOpen] = useState(false)
 
     function open() {
@@ -32,7 +32,7 @@ export default function TrailerModal({ movie }) {
                             transition
                             className="w-full max-w-md rounded-xl bg-main/5 p-6 backdrop-blur-3xl duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0"
                         >
-                            <TrailerVideo movie={movie}></TrailerVideo>
+                            <TrailerVideo movie={movie} trailer={trailer}></TrailerVideo>
                         </DialogPanel>
                     </div>
                 </div>
