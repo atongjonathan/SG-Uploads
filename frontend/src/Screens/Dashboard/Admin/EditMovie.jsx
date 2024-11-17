@@ -23,14 +23,17 @@ export default function EditMovie({ close, isOpen, movie }) {
 
 
         formObject.stream = formObject.stream.replace("dl", "video").replace("watch", "video")
-        if (formObject.caption !== '[]' && formObject.caption !== '') {
+        if (formObject.captions !== '[]' && formObject.captions !== '') {
             formObject.captions = [
                 {
                     "label": "English",
                     "srclang": "en",
-                    "src": formObject.caption.replace("video", "dl").replace("watch", "dl")
+                    "src": formObject.captions.replace("video", "dl").replace("watch", "dl")
                 }
             ]
+        }
+        else if (formObject.captions == '[]') {
+            formObject.captions = []
         }
         for (const [key, value] of Object.entries(formObject)) {
 
@@ -41,6 +44,7 @@ export default function EditMovie({ close, isOpen, movie }) {
 
         const response = await Backend().editMovie(auth, formObject, currentMovie.id)
         if (response.status == 200) {
+            console.log(response.data)
             toast(movie.title + ' updated successfully')
         }
         else {
@@ -74,7 +78,7 @@ export default function EditMovie({ close, isOpen, movie }) {
                             <form className='flex flex-col gap-2 w-full' method='post' onSubmit={(e) => handleSubmit(e)}>
                                 <Input label='Poster' name='poster' type='text' placeholder='Poster' required={false}></Input>
                                 <Input label='Stream link' name='stream' type='text' placeholder='Stream Link' required={false}></Input>
-                                <Input label='Caption' name='caption' type='text' placeholder='English Caption link' required={false}></Input>
+                                <Input label='Caption' name='captions' type='text' placeholder='English Caption link' required={false}></Input>
                                 <div className="flex gap-2 flex-wrap flex-col-reverse sm:flex-row justify-between items-center my-4">
                                     <Button type='submit' className="bg-main font-medium transitions hover:bg-subMain border border-subMain text-white py-3 px-6 rounded w-full sm:w-auto">Save</Button>
                                 </div>
