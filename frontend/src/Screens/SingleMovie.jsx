@@ -1,6 +1,6 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import Layout from '../Layout/Layout'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import MovieInfo from '../Components/Single/MovieInfo'
 import LoadingIcons from 'react-loading-icons'
 import { MovieContext } from '../context/MovieContext'
@@ -14,6 +14,11 @@ const SingleMovie = () => {
     ? movies.find((movie) => movie.title === id)
     : null;  // Fallback if movies is not an array
 
+  const navigate = useNavigate()
+  useEffect(() => {
+    navigate("/watch/" + id)
+
+  })
 
   return (
     <Layout>

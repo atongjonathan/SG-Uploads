@@ -71,7 +71,7 @@ const Navbar = () => {
   };
 
   const handleResultClick = (title) => {
-    navigate(`/movie/${title}`);
+    navigate(`/watch/${title}`);
     setResults([]);
   };
 

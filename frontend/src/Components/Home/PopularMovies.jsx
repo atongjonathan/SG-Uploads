@@ -47,7 +47,7 @@ const PopularMovies = ({ movies }) => {
 
         {popular?.slice(0, 8).sort(() => .5 - Math.random()).map((movie, idx) => (
           <SwiperSlide key={idx}>
-            <Link to={`/movie/${movie.title}`} className="w-full truncate p-3 text-text flex-colo bg-dry border border-gray-800 hover:scale-95 transitions relative rounded overflow-hidden">
+            <Link to={`/watch/${movie.title}`} className="w-full truncate p-3 text-text flex-colo bg-dry border border-gray-800 hover:scale-95 transitions relative rounded overflow-hidden">
               <LazyLoadImage effect="blur" wrapperProps={{
                 style: { transitionDelay: "0.6s" },
               }}  src={movie.poster} alt={movie.title} title={movie.title} className='w-full h-rate object-cover rounded mb-4' />

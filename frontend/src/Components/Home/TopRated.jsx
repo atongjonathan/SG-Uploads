@@ -72,7 +72,7 @@ const TopRated = ({ movies }) => {
           }
         >
           {topRated?.slice(0, 6).sort(() => .5 - Math.random()).map((movie, idx) => (
-            <SwiperSlide className="cursor-pointer" key={idx} onClick={() => navigate(`/movie/${movie.title}`)}>
+            <SwiperSlide className="cursor-pointer" key={idx} onClick={() => navigate(`/watch/${movie.title}`)}>
               <div className="relative group p-4 h-rate border border-border bg-dry rounded-lg overflow-hidden">
                 {/* Movie Poster */}
                 <LazyLoadImage

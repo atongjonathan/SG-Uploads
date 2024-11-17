@@ -8,7 +8,7 @@ const Movie = ({ movie, scrollPosition  }) => {
   return (
     <>
       <div className="border border-border p-1 hover:scale-95 transitions relative rounded overflow-hidden">
-        <Link to={`/movie/${movie.title}`} className="w-full">
+        <Link to={`/watch/${movie.title}`} className="w-full">
           <LazyLoadImage  scrollPosition={scrollPosition} effect="blur" wrapperProps={{
                 style: { transitionDelay: "0.6s" },
               }}  src={movie.poster} alt={movie.title} title={movie.title} className="w-full h-h-rate object-cover" />

@@ -77,7 +77,7 @@ const SgSlider = ({ movies, title, Icon }) => {
           }
         >
           {movies?.slice(0, 6).sort(() => .5 - Math.random()).map((movie, idx) => (
-            <SwiperSlide className="cursor-pointer" key={idx} onClick={() => navigate(`/movie/${movie.title}`)}>
+            <SwiperSlide className="cursor-pointer" key={idx} onClick={() => navigate(`/watch/${movie.title}`)}>
 
               {
                 isLoading ? <Skeleton baseColor="rgb(11 15 41)" containerClassName="animate-pulse" height={270}></Skeleton> :
@@ -85,7 +85,7 @@ const SgSlider = ({ movies, title, Icon }) => {
                     {/* Movie Poster */}
 
                     <div className="hover:scale-95 transitions relative rounded overflow-hidden">
-                      <Link to={`/movie/${movie.title}`} className="w-full">
+                      <Link to={`/watch/${movie.title}`} className="w-full">
 
                         <LazyLoadImage effect="blur" wrapperProps={{
                           style: { transitionDelay: "0.6s" },

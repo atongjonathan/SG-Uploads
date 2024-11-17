@@ -19,7 +19,7 @@ const MovieInfo = ({ movie }) => {
 
 
     async function getTrailer() {
-        if (pathname.includes("/movie") && movie) {
+        if (movie) {
             let url = `${Backend().BACKEND_URL}/itunes?search=${movie.title}`
             let headersList = {
                 "Accept": "*/*",

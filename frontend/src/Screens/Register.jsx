@@ -16,7 +16,6 @@ const backend = Backend()
 
 const Register = ({ openLogin, closeSignUp }) => {
   const [loading, setLoading] = useState(false)
-  const navigate = useNavigate()
 
 
   async function handleSubmit(e) {

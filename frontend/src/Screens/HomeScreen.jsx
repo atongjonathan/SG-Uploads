@@ -39,7 +39,7 @@ const HomeScreen = () => {
           <>
             <Banner movies={latest} />
             <SgSlider movies={trending} title='Trending' Icon={BsCollectionFill} />
-            <SgSlider movies={movies} title='Popular Movies' Icon={BsCollectionFill} />
+            <SgSlider movies={popular} title='Popular Movies' Icon={BsCollectionFill} />
             <SgSlider movies={topRated} title='Top Rated' Icon={BsBookmarkStarFill} />
             <Promos />
           </>
