@@ -9,7 +9,7 @@ import MovieRates from '../Components/Single/MovieRates'
 import { BsCollectionFill } from 'react-icons/bs'
 import AuthContext from '../context/AuthContext'
 import { Button } from '@headlessui/react'
-import { FaShareAlt } from 'react-icons/fa'
+import { FaShareAlt, FaEdit } from 'react-icons/fa'
 import ShareMovieModal from '../Components/Modals/ShareMovieModal'
 import { toast } from 'sonner'
 import { LazyLoadImage } from 'react-lazy-load-image-component';
@@ -17,6 +17,7 @@ import { MovieContext } from '../context/MovieContext'
 import SGFaHeart from '../Components/SGFaHeart'
 import SgSlider from '../Components/Home/SgSlider'
 import Skeleton from 'react-loading-skeleton'
+import EditMovie from './Dashboard/Admin/EditMovie'
 
 const WatchPage = () => {
     let { id } = useParams()
@@ -28,6 +29,21 @@ const WatchPage = () => {
 
 
     const { movies, isLoading } = useContext(MovieContext)
+
+
+    let [isOpen, setIsOpen] = useState(false)
+
+
+    const open = useCallback(function open() {
+        setIsOpen(true)
+    })
+
+
+    const close = useCallback(
+        function close() {
+            setIsOpen(false)
+        }
+    )
 
     useEffect(() => {
         setMovie(movies?.find((movie) => movie.title == id))
@@ -57,6 +73,7 @@ const WatchPage = () => {
 
             <>
                 <div className="container mx-auto bg-dry px-4 py-2 mb-2">
+                    <EditMovie close={close} isOpen={isOpen} movie={movie}></EditMovie>
 
                     {
                         movie && <ShareMovieModal movie={movie} isModalOpen={isModalOpen} setisModalOpen={setModal}></ShareMovieModal>
@@ -103,6 +120,16 @@ const WatchPage = () => {
                                         </Link> : <Button onClick={() => toast("Only logged in users can download", { closeButton: true })} className="bg-subMain flex-rows gap-2 hover:text-main transitions text-white rounded px-3 font-medium py-3 text-sm">
                                             <FaCloud></FaCloud> Download
                                         </Button>
+                                    }
+                                    {
+                                        user?.is_superuser && (
+                                            <Button onClick={() => {
+                                                setMovie(movie)
+                                                open()
+                                            }} className='border border-border bg-dry flex-rows gap-2 text-border rounded py-1 px-2'>
+                                                Edit <FaEdit className='text-green-500'></FaEdit>
+                                            </Button>
+                                        )
                                     }
                                 </div>
 
