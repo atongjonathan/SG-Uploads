@@ -44,7 +44,6 @@ export default function EditMovie({ close, isOpen, movie }) {
 
         const response = await Backend().editMovie(auth, formObject, currentMovie.id)
         if (response.status == 200) {
-            console.log(response.data)
             toast(movie.title + ' updated successfully')
         }
         else {

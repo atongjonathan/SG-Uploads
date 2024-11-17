@@ -81,7 +81,7 @@ const WatchPage = () => {
 
 
 
-                    <div className="flex-btn flex-row mb-2 gap-4bg-main rounded border border-gray-800 py-4 px-2 lg:px-6">
+                    <div className="flex-btn flex-row mb-2 gap-4bg-main rounded border border-gray-800 py-4 px-2 lg:hidden">
                         <Link to={window.location.pathname.replace("watch", "movie")} className='md:text-lg text-sm  flex gap-3 items-center font-bold text-dryGray'>
                             {
                                 movie ?
@@ -116,9 +116,9 @@ const WatchPage = () => {
 
                                     {
                                         user ? <Link to={movie?.stream.replace("video", "dl")} className="bg-subMain flex-rows gap-2 hover:text-main transitions text-white rounded px-3 font-medium py-3 text-sm">
-                                            <FaCloud></FaCloud> Download
+                                            <FaCloud></FaCloud>
                                         </Link> : <Button onClick={() => toast("Only logged in users can download", { closeButton: true })} className="bg-subMain flex-rows gap-2 hover:text-main transitions text-white rounded px-3 font-medium py-3 text-sm">
-                                            <FaCloud></FaCloud> Download
+                                            <FaCloud></FaCloud>
                                         </Button>
                                     }
                                     {
@@ -127,7 +127,7 @@ const WatchPage = () => {
                                                 setMovie(movie)
                                                 open()
                                             }} className='border border-border bg-dry flex-rows gap-2 text-border rounded py-1 px-2'>
-                                                Edit <FaEdit className='text-green-500'></FaEdit>
+                                                <FaEdit className='text-green-500'></FaEdit>
                                             </Button>
                                         )
                                     }
