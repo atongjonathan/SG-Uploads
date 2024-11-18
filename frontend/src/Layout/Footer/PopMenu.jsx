@@ -1,15 +1,13 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useCallback } from 'react'
 import { HiViewGridAdd } from 'react-icons/hi';
-import { CloseButton, Popover, PopoverBackdrop, PopoverButton, PopoverPanel } from '@headlessui/react'
+import {  Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { NavLink } from 'react-router-dom';
 import { MdOutlineContactMail, MdOutlineInfo } from 'react-icons/md';
-import { BsCollectionPlay, BsHouseAddFill, BsHouseExclamationFill } from 'react-icons/bs'
-import { FiHeart } from 'react-icons/fi'
 import { RxDashboard } from "react-icons/rx";
-import Backend from '../../utils/Backend';
-import { FaFilm, FaHeart, FaListAlt, FaUsers, FaAngleDown } from 'react-icons/fa'
+import { FaFilm, FaHeart, FaListAlt, FaUsers } from 'react-icons/fa'
 import { FiSettings } from 'react-icons/fi'
 import { RiLockPasswordLine } from 'react-icons/ri'
+
 
 const PopMenu = ({ user }) => {
 
@@ -19,8 +17,6 @@ const PopMenu = ({ user }) => {
         isActive ? `${active} ${inActive}` : inActive,
         []
     );
-    const [scroll, setIsScrolling] = useState(false)
-    const popButton = useRef()
 
     const adminLinks = [
         {
@@ -73,72 +69,61 @@ const PopMenu = ({ user }) => {
         },
     ]
 
-
-    useEffect(() => {
-        let timeoutId; const handleScroll = () => {
-            setIsScrolling(true);
-            clearTimeout(timeoutId);
-            timeoutId = setTimeout(() => {
-                setIsScrolling(false);
-            }, 1000);
-        }
-            ; window.addEventListener('scroll', handleScroll);
-        return () => { window.removeEventListener('scroll', handleScroll); clearTimeout(timeoutId); };
-    }, []);
-
-    useEffect(() => {
-        const handleScroll = () => {
-            setIsScrolling(true)
-        }
-        window.addEventListener('scroll', handleScroll)
-
-        return () => window.removeEventListener('scroll', handleScroll)
-    }, [])
     return (
-        <Popover className={Hover + ' relative'}>
-            <PopoverButton className={Hover} ref={popButton}>
+        <Menu>
+            <MenuButton className={Hover}>
                 <HiViewGridAdd></HiViewGridAdd><p className='text-xs'>Menu</p>
-            </PopoverButton>
-            <PopoverBackdrop className="fixed inset-0 bg-main/50" />
-            {!scroll && (
-                <PopoverPanel anchor="bottom" className={`grid ${user?'grid-cols-4':'grid-cols-2'}  gap-2 bg-main z-50`}>
-                    {
-                        !user &&
+            </MenuButton>
+            <MenuItems
+                transition
+                anchor="bottom end"
+                className={`grid ${user ? 'grid-cols-4' : 'grid-cols-2'}  gap-2 bg-main z-50`}            >
+                {
+                    !user &&
+                    <MenuItem>
                         <NavLink title="About Us" className={Hover} to="/about-us">
                             <MdOutlineInfo className='w-7 h-7'></MdOutlineInfo ><p className='text-sm'>About</p>
 
                         </NavLink>
-                    }
-                    {
-                        !user &&
+                    </MenuItem>
+
+                }
+                {
+                    !user &&
+                    <MenuItem>
                         <NavLink title="About Us" className={Hover} to="/contact-us">
                             <MdOutlineContactMail className='w-7 h-7'></MdOutlineContactMail><p className='text-sm'>Contact</p>
                         </NavLink>
-                    }
+                    </MenuItem>
 
-                    {
-                        user?.is_superuser && adminLinks.map((link, idx) => (
+                }
+
+                {
+                    user?.is_superuser && adminLinks.map((link, idx) => (
+                        <MenuItem>
                             <NavLink title={link.name} className={Hover} key={idx} to={link.link}>
                                 <link.icon className='w-7 h-7'></link.icon><p className='text-sm'> {link.name}</p>
                             </NavLink>
-                        ))
-                    }
+                        </MenuItem>
 
-                    {
-                        user && sideLinks.map((link, idx) => (
+                    ))
+                }
+
+                {
+                    user && sideLinks.map((link, idx) => (
+                        <MenuItem>
                             <NavLink title={link.name} className={Hover} key={idx} to={link.link}>
                                 <link.icon className='w-7 h-7'></link.icon><p className='text-sm'> {link.name}</p>
                             </NavLink>
-                        ))
-                    }
+                        </MenuItem>
 
+                    ))
+                }
+            </MenuItems>
 
-
-                </PopoverPanel>
-            )}
-
-        </Popover>
+        </Menu>
     )
 }
 
 export default PopMenu
+
