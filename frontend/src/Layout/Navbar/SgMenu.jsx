@@ -4,7 +4,6 @@ import { FiSettings } from 'react-icons/fi'
 import { RiLockPasswordLine } from 'react-icons/ri'
 import AuthContext from '../../context/AuthContext'
 import { useContext, useEffect, useState } from 'react'
-import { BsFillGridFill } from 'react-icons/bs'
 import { NavLink, useLocation } from 'react-router-dom'
 
 export default function SgMenu() {

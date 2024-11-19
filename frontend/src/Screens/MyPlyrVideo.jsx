@@ -1,6 +1,3 @@
-import Plyr from "plyr-react"
-import "plyr-react/plyr.css"
-import { useEffect, useState } from "react";
 import '@vidstack/react/player/styles/default/theme.css';
 import '@vidstack/react/player/styles/default/layouts/video.css';
 import { MediaPlayer, MediaProvider, Poster, Track, isYouTubeProvider } from '@vidstack/react';
@@ -11,9 +8,7 @@ function MyPlyrVideo({ movie }) {
 
 
     return (<div>
-        {/* <Plyr source={videoSrc} options={options}></Plyr> */}
-        <MediaPlayer title={movie.title} src={{ src: movie.stream, type: "video/mp4" }}
-            autoPlay={movie.stream.includes("itunes")}
+        <MediaPlayer title={movie.title} src={{ src: movie.stream, type: "video/mp4" }}            
             viewType='video'
             logLevel='warn'
             crossOrigin
@@ -21,7 +16,7 @@ function MyPlyrVideo({ movie }) {
             aspectRatio="16x9"
             poster={movie?.poster} artist="SG Uploads">
             <MediaProvider>
-                {(movie.captions?.length > 0 && !movie.stream.includes("itunes")) && <Track kind="captions" lang="en-US" src={movie.captions[0].src} label="English" default />}
+                {(movie.captions?.length > 0 ) && <Track kind="captions" lang="en-US" src={movie.captions[0].src} label="English" default />}
                 <Poster className="vds-poster" />
             </MediaProvider>
             <DefaultVideoLayout
