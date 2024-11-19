@@ -76,7 +76,7 @@ const PopMenu = ({ user }) => {
             </MenuButton>
             <MenuItems
                 transition
-                anchor="bottom end"
+                anchor="top"
                 className={`grid ${user ? 'grid-cols-4' : 'grid-cols-2'}  gap-2 bg-main z-50`}            >
                 {
                     !user &&

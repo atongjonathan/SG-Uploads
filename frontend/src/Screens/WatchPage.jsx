@@ -139,16 +139,21 @@ const WatchPage = () => {
                             {
                                 movie ?
                                     <MyPlyrVideo play={play} movie={movie}></MyPlyrVideo>
-                                    : <Skeleton baseColor="rgb(22 28 63)" containerClassName="animate-pulse" className='animate-pulse' height={300}></Skeleton>
+                                    : <Skeleton baseColor="rgb(22 28 63)" containerClassName="animate-pulse" className='animate-pulse' height={260}></Skeleton>
                             }
                             <div className="grid grid-cols-4 place-content-center justify-between gap-2 my-4">
 
                                 <div className="col-span-2 p-2 flex gap-2">
+
                                     {
-                                        movie?.genre.slice(0, 2).map((item, idx) => (
-                                            <Button key={idx} className=" p-1 bg-white/10 hover:bg-white/10 active:bg-white/10 smoothie bubbly rounded text-sm lg:text-lg"> {item}</Button>
-                                        ))
+                                        movie ?
+                                            movie.genre.slice(0, 2).map((item, idx) => (
+                                                <Button key={idx} className=" p-1 bg-white/10 hover:bg-white/10 active:bg-white/10 smoothie bubbly rounded text-sm lg:text-lg"> {item}</Button>
+                                            ))
+
+                                            : <Skeleton baseColor="rgb(22 28 63)" height={30} width={100} containerClassName="animate-pulse"></Skeleton>
                                     }
+
 
                                 </div>
 
@@ -192,76 +197,100 @@ const WatchPage = () => {
                                                 <LazyLoadImage effect="blur" wrapperProps={{
                                                     style: { transitionDelay: "0.6s" },
                                                 }} src={movie.poster} alt={movie.title} title={movie.title} className="object-cover lg:h-64 mx-auto" />
-                                                : <Skeleton baseColor="rgb(22 28 63)" height={250} containerClassName="animate-pulse"></Skeleton>
+                                                : <Skeleton baseColor="rgb(22 28 63)" height={220} width={150} containerClassName="animate-pulse"></Skeleton>
                                         }
 
-                                        <div className="absolute flex-btn gap-2 bottom-0 right-0 left-0 bg-main bg-opacity-60 text-white px-4 py-3">
-                                            <h6 className="font-semibold truncate">{movie?.title}</h6>
-                                        </div>
+                                        {
+                                            movie ? <div className="absolute flex-btn gap-2 bottom-0 right-0 left-0 bg-main bg-opacity-60 text-white px-4 py-3">
+                                                <h6 className="font-semibold truncate">{movie?.title}</h6>
+                                            </div>
+                                                : <Skeleton baseColor="rgb(22 28 63)" height={30} containerClassName="animate-pulse"></Skeleton>
+                                        }
+
                                     </div>
                                 </div>
 
 
                                 <div className="lg:col-span-2 flex flex-col gap-4 flex-grow pl-4 py-3 text-white shrink-0 text-sm 2xl:text-base !tracking-wider w-full">
-                                    {
-                                        movie ?
-                                            <>
 
-                                                <div className="flex gap-1 flex-col tracking-wider">
-                                                    <Disclosure >
-                                                        <DisclosureButton className="group w-full items-center justify-between hidden lg:flex">
-                                                            <span className="text-sm/6 font-medium text-white group-data-[hover]:text-white/80">
-                                                                Plot
-                                                            </span>
-                                                            <ChevronDownIcon className="size-5 fill-white/60 group-data-[hover]:fill-white/50 group-data-[open]:rotate-180" />
-                                                        </DisclosureButton>
 
-                                                        <DisclosurePanel className="bg-white/10 hover:bg-white/10 p-2">
-                                                            {movie?.plot}
-                                                        </DisclosurePanel>
-                                                    </Disclosure>
+                                    <div className="hidden lg:flex gap-1 flex-col tracking-wider">
+                                        <Disclosure defaultOpen={true}>
+                                            <DisclosureButton className="group w-full items-center justify-between hidden lg:flex">
+                                                <span className="text-sm/6 font-medium text-white group-data-[hover]:text-white/80">
+                                                    Plot
+                                                </span>
+                                                <ChevronDownIcon className="size-5 fill-white/60 group-data-[hover]:fill-white/50 group-data-[open]:rotate-180" />
+                                            </DisclosureButton>
 
-                                                </div>
-                                                <div className="flex gap-2 flex-col tracking-wider font-light">
-                                                    <Disclosure >
-                                                        <DisclosureButton className="group w-full flex items-center justify-between">
-                                                            <span className="text-sm/6 font-medium text-white group-data-[hover]:text-white/80">
-                                                                Cast
-                                                            </span>
-                                                            <ChevronDownIcon className="size-5 fill-white/60 group-data-[hover]:fill-white/50 group-data-[open]:rotate-180" />
-                                                        </DisclosureButton>
+                                            <DisclosurePanel className="bg-white/10 hover:bg-white/10 p-2">
+                                                {
+                                                    movie ? <p>{movie?.plot}</p>
+                                                        : <Skeleton baseColor="rgb(22 28 63)" height={30} containerClassName="animate-pulse"></Skeleton>
+                                                }
 
-                                                        <DisclosurePanel className=" p-2">
-                                                            {movie?.actors.join(", ")}                                                            </DisclosurePanel>
-                                                    </Disclosure>
-                                                </div>
-                                                <div className="flex gap-2 flex-col tracking-wider font-light">
-                                                    <span className="font-medium text-gray-200 !shrink-0 tracking-wider">Language(s)</span>
-                                                    <button className=" smoothie bubbly rounded flex-grow-0 size-fit">{movie?.spokenLanguages.slice(0, 2).map((l) => l.language).join(", ")}</button>
-                                                </div>
-                                                <div className="flex flex-col gap-1 tracking-wider font-light">
-                                                    <span className="font-medium text-gray-200 !shrink-0 tracking-wider">Aired</span>
-                                                    <span>{`${movie?.releaseDetailed.day}/${movie?.releaseDetailed.month}/${movie?.releaseDetailed.year}`}</span>
-                                                </div>
-                                            </>
-                                            : <Skeleton baseColor="rgb(22 28 63)" height={200} containerClassName="animate-pulse"></Skeleton>
-                                    }
+                                            </DisclosurePanel>
+                                        </Disclosure>
+
+                                    </div>
+                                    <div className="flex gap-2 flex-col tracking-wider font-light">
+                                        <Disclosure defaultOpen={true}>
+                                            <DisclosureButton className="group w-full flex items-center justify-between">
+                                                <span className="text-sm/6 font-medium text-white group-data-[hover]:text-white/80">
+                                                    Cast
+                                                </span>
+                                                <ChevronDownIcon className="size-5 fill-white/60 group-data-[hover]:fill-white/50 group-data-[open]:rotate-180" />
+                                            </DisclosureButton>
+
+                                            <DisclosurePanel>
+                                                {
+                                                    movie ? <p>{movie.actors.join(", ")}  </p>
+                                                        : <Skeleton baseColor="rgb(22 28 63)" containerClassName="animate-pulse"></Skeleton>
+                                                }
+                                            </DisclosurePanel>
+                                        </Disclosure>
+                                    </div>
+                                    <div className="flex gap-2 flex-col tracking-wider font-light">
+                                        <span className="font-medium text-gray-200 !shrink-0 tracking-wider">Language(s)</span>
+
+                                        {
+                                            movie ? <span>
+                                                {movie?.spokenLanguages.slice(0, 2).map((l) => l.language).join(", ")}</span>
+                                                : <Skeleton baseColor="rgb(22 28 63)" containerClassName="animate-pulse"></Skeleton>
+                                        }
+
+                                    </div>
+                                    <div className="flex flex-col gap-1 tracking-wider font-light">
+                                        <span className="font-medium text-gray-200 !shrink-0 tracking-wider">Aired</span>
+                                        {
+                                            movie ? <span>{`${movie?.releaseDetailed.day}/${movie?.releaseDetailed.month}/${movie?.releaseDetailed.year}`}</span>
+
+                                                : <Skeleton baseColor="rgb(22 28 63)" containerClassName="animate-pulse"></Skeleton>
+                                        }
+                                    </div>
+
+
+
 
 
                                 </div>
 
                             </div>
                             <div className="lg:hidden ">
-                                <h6 className="font-semibold bg-dry truncate py-2 mt-2">{movie?.title}</h6>
+                                <h6 className="font-semibold bg-dry truncate py-2 mt-2 text-center">{movie?.title}</h6>
 
-                                <Disclosure >
+                                <Disclosure>
                                     {({ open }) => (
                                         <div className='bg-white/10 hover:bg-white/10'>
                                             <DisclosureButton className={`groupl items-center justify-between text-sm/6 w-full text-white ${open ? 'cursor-default' : 'truncate'} `}>
-                                                <span className="text-sm/6 font-medium text-white group-data-[hover]:text-white/80 flex p-2">
+                                                {
+                                                    movie ? <span className="text-sm/6 font-medium text-white group-data-[hover]:text-white/80 flex p-2">
 
-                                                    {movie?.plot}
-                                                </span>
+                                                        {movie?.plot}
+                                                    </span>
+                                                        : <Skeleton baseColor="rgb(22 28 63)" height={30} containerClassName="animate-pulse"></Skeleton>
+                                                }
+
                                                 {
                                                     !open && <div className="flex flex-col items-center w-full">
                                                         <ChevronDownIcon className={`size-5 fill-white/60 group-data-[hover]:fill-white/50 {${open ? 'rotate-180' : ''}}`} />

@@ -89,7 +89,7 @@ export default function SgMenu() {
 
                 <MenuItems
                     transition
-                    anchor="bottom end"
+                    anchor="bottom"
                     className="w-36 z-50 origin-top-right rounded-xl border border-white/5 bg-main p-1 text-sm/6 text-white transition duration-100 ease-out [--anchor-gap:var(--spacing-1)] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0"
                 >
 
