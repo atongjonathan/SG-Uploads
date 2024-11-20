@@ -8,6 +8,7 @@ import LoadingIcons from 'react-loading-icons'
 import SgSlider from "../Components/Home/SgSlider";
 import { BsCollectionFill, BsBookmarkStarFill } from "react-icons/bs";
 import { MovieContext } from "../context/MovieContext";
+import SiteDown from '../Screens/SiteDown'
 
 const HomeScreen = () => {
   document.title = `SG Uploads | Home`;
@@ -48,10 +49,7 @@ const HomeScreen = () => {
 
       {
         (!movies && !isLoading) &&
-        <div className="container mx-auto min-h-screen px-2 mb-6 flex flex-col justify-center items-center bg-ma">
-          <h3>Site down for planned maintenance...</h3>
-          <p>We'll be back soon!</p>
-        </div>
+      <SiteDown></SiteDown>
 
       }
     </Layout>

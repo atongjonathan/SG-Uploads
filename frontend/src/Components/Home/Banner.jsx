@@ -19,7 +19,7 @@ const Banner = ({ movies }) => {
   }
     , [movies])
   let { isLoading } = useContext(MovieContext)
-  if (!movies) { movies = [0] }
+  if (!movies) { movies = [{}] }
 
   return (
     <div className="relative w-full">

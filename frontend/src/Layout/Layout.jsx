@@ -7,6 +7,7 @@ import { MovieContext } from "../context/MovieContext";
 import LoadingIcons from "react-loading-icons";
 import ScrollToTop from "react-scroll-to-top";
 import { BiArrowToTop } from "react-icons/bi";
+import SiteDown from '../Screens/SiteDown'
 
 const Layout = ({ children }) => {
   const { isLoading, movies } = useContext(MovieContext)
@@ -14,10 +15,7 @@ const Layout = ({ children }) => {
   return (
     <>
       {
-        (!isLoading && !movies) ? <div className="h-96 flex flex-col justify-center items-center">
-          <h3>Site down for planned maintenance...</h3>
-          <p>We'll be back soon!</p>
-        </div>
+        (!isLoading && !movies) ? <SiteDown></SiteDown>
           :
           (
             <div className="bg-main text-white relative">

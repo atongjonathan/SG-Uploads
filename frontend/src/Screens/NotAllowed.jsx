@@ -6,7 +6,7 @@ const NotAllowed = () => {
   document.title = `Forbidden`
 
   return (
-    <div className='flex-colo gap-8 w-full min-h-screen text-white bg-main lg:py-20 py-10 px-6'>
+    <div className='flex-colo gap-8 w-full min-h-screen text-white bg-main px-6'>
       <img className="w-full h-96 object-contain" src={notfound} alt="notfound" />
       <h1 className="lg:text-4xl font-bold"> 403 Not Allowed</h1>
       <p className="font-medium text-border italic leading-6">You do not have permission to view this page</p>
