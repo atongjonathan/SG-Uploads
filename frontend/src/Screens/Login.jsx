@@ -17,7 +17,6 @@ const Login = ({ openSignUp, closeLogin }) => {
   const [loading, setLoading] = useState(false)
   const [passwordError, setPasswordError] = useState(null)
   const [usernameError, setusernameError] = useState(null)
-  const [invalid, setInvalid] = useState(null)
 
 
 
@@ -45,7 +44,7 @@ const Login = ({ openSignUp, closeLogin }) => {
 
       }
       else if (response?.status == 401) {
-        setInvalid('Invalid Credentials')
+        toast.error('Invalid account credentials')
       }
       else {
         setInvalid("Something went wrong");
@@ -67,16 +66,11 @@ const Login = ({ openSignUp, closeLogin }) => {
   return (
     <form action="" method='post' onSubmit={(e) => handleSubmit(e)}>
       <div className='container mx-auto flex-colo gap-2'>
-        {
-          invalid && <div className="text-oldMain w-full mt-2 text-sm font-medium text-center pt-4">
-            <p>{invalid}</p>
-          </div>
-        }
 
         <Input label="Username" placeholder='johndoe' type='text' bg name="username" error={usernameError}></Input>
         {/* <div> */}
-          <Input label="Password" placeholder='*******' type='password' name="password" bg error={passwordError}></Input>
-          {/* <Link to='/password'onClick={closeLogin} className='w-full'><p className='text-xs text-right mt-3 text-subMain'>Forgot password?</p></Link> */}
+        <Input label="Password" placeholder='*******' type='password' name="password" bg error={passwordError}></Input>
+        {/* <Link to='/password'onClick={closeLogin} className='w-full'><p className='text-xs text-right mt-3 text-subMain'>Forgot password?</p></Link> */}
         {/* </div> */}
 
         <button type="submit" className='bg-subMain transitions hover:bg-main flex-rows gap-4 text-white p-4 rounded-lg w-full my-4'><FiLogIn></FiLogIn>Sign In

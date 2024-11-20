@@ -19,7 +19,7 @@ const Layout = ({ children }) => {
           :
           (
             <div className="bg-main text-white relative">
-              <Toaster position="top-right" toastOptions={{
+              <Toaster position="top-right" theme="dark" closeButton toastOptions={{
                 classNames: {
                   toast: 'bg-subMain',
                   title: 'text-white',

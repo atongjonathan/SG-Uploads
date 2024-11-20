@@ -25,7 +25,6 @@ const Register = ({ openLogin, closeSignUp }) => {
     const formObject = Object.fromEntries(formData.entries())
     const response = await backend.signUp(formObject)
     if (response.status == 201) {
-      closeSignUp()
       openLogin()
     }
     else if (response.data) {
@@ -33,6 +32,8 @@ const Register = ({ openLogin, closeSignUp }) => {
       toast(data.email ? data.email : data.username ? data.username : 'An error occured try again later')
     }
     setLoading(false)
+    closeSignUp()
+
 
   }
 
@@ -43,7 +44,7 @@ const Register = ({ openLogin, closeSignUp }) => {
       <Input name='email' label="Email" placeholder='johndoe@gmail.com' type='email' bg></Input>
       <Input name='password' label="Password" placeholder='*******' type='password' bg></Input>
       <Button type='submit' className='bg-subMain transitions hover:bg-main flex-rows gap-4 text-white p-4 rounded-lg w-full my-3'>
-        <FiLogIn></FiLogIn>Sign Up</Button> {loading && <CgSpinner className='animate-spin'></CgSpinner>}
+        <FiLogIn></FiLogIn>Sign Up {loading && <CgSpinner className='animate-spin text-white'></CgSpinner>}</Button> 
       <p className="text-center text-border">
         Already have an account? {" "}
         <Button onClick={openLogin} className='text-dryGray font-semibold ml-2'> Sign in</Button>
