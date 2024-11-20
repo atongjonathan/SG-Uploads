@@ -255,7 +255,7 @@ const WatchPage = () => {
 
                                         {
                                             movie ? <span>
-                                                {movie?.spokenLanguages.slice(0, 2).map((l) => l.language).join(", ")}</span>
+                                                {movie?.spokenLanguages.map((l) => l.language).join(", ")}</span>
                                                 : <Skeleton baseColor="rgb(22 28 63)" containerClassName="animate-pulse"></Skeleton>
                                         }
 
