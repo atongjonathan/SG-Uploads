@@ -34,8 +34,8 @@ const ShareMovieModal = ({ movie, isModalOpen, setisModalOpen }) => {
 
                 <DialogPanel className="relative max-w-lg space-y-4 border bg-main p-6 lg:p-10 text-text rounded-lg">
                     <Button onClick={() => setisModalOpen(false)} className='absolute top-5 right-5 text-text hover:text-subMain transitions'><IoClose className="h-5 w-5"></IoClose></Button>
-                    <DialogTitle className="font-bold pt-3 text-center">Share "{movie.title}"</DialogTitle>
-                    <form className='flex flex-rows flex-wrap gap-6 mt-6'>
+                    <DialogTitle className="font-bold pt-2 text-center">Share "{movie.title}"</DialogTitle>
+                    <form className='grid grid-cols-4 gap-6 mt-6'>
                         {
                             shareData.map((data, idx) => (
                                 <data.shareButton key={idx} url={url} quote='SG Uploads'>

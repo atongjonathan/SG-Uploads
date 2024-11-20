@@ -30,7 +30,6 @@ import NotFound from "../Screens/NotFound"
 const WatchPage = () => {
     let { id } = useParams()
     const [movie, setMovie] = useState(null)
-    const [play, setPlay] = useState(false)
     let [present, setPresent] = useState(true)
 
     const { user } = useContext(AuthContext)
@@ -55,11 +54,14 @@ const WatchPage = () => {
     )
 
     useEffect(() => {
-        if (movies?.find((movie) => movie.title == id)) {
+        if (!movies && !isLoading) {
+            setPresent(false)
+        }
+
+        else if (movies?.find((movie) => movie.title == id)) {
             setMovie(movies?.find((movie) => movie.title == id))
         }
-        else
-            setPresent(false)
+
 
 
     }, [isLoading, id])
@@ -147,7 +149,7 @@ const WatchPage = () => {
                                     <div className="col-span-4 lg:col-span-3">
                                         {
                                             movie ?
-                                                <MyPlyrVideo play={play} movie={movie}></MyPlyrVideo>
+                                                <MyPlyrVideo movie={movie}></MyPlyrVideo>
                                                 : <Skeleton baseColor="rgb(22 28 63)" containerClassName="animate-pulse" className='animate-pulse' height={260}></Skeleton>
                                         }
                                         <div className="grid grid-cols-4 place-content-center justify-between gap-2 my-4">
@@ -335,7 +337,7 @@ const WatchPage = () => {
 
                             <div className="container mx-auto min-h-screen px-2 my-6">
 
-                                <MovieRates movie={movie} play={play}></MovieRates>
+                                <MovieRates movie={movie}></MovieRates>
                                 <div className="my-14">
                                     <SgSlider movies={RelatesMovies} title="Related Movies" Icon={BsCollectionFill}></SgSlider>
 

@@ -6,6 +6,7 @@ from telebot.types import InlineKeyboardButton, InlineKeyboardMarkup
 
 
 bot = TeleBot(os.environ.get("TELEGRAM_BOT_TOKEN"))
+caption_bot = TeleBot(os.environ.get("TELEGRAM_BOT_TOKEN2"))
 
 API_KEY = os.environ.get("API_KEY")
 GROUP_CHAT_ID = os.environ.get("GROUP_CHAT_ID")
@@ -62,7 +63,7 @@ class Captions():
         try:
             # Send the file to Telegram
             with open(file_path, 'rb') as file:
-                message = bot.send_document(telegram_id, file)
+                message = caption_bot.send_document(telegram_id, file)
             os.remove(file_path)
             return message.id
         except Exception as e:
@@ -86,23 +87,23 @@ class Captions():
 
         # Format the movie details text
         movie_text = f"""
-        📹 <b>Title:</b> <a href="{movie.get('link', '#')}"> {movie.get('title', 'N/A')}</a>
-        🕰 <b>Duration:</b> {movie.get('runtime', 'N/A')}
-        📉 <b>Rating:</b> {movie.get('rating', {}).get('star', 'N/A')}⭐️ from {movie.get('rating', {}).get('count', 0)} users
-        🗓️ <b>Release Date:</b> {release_date}
-        📟 <b>Genre:</b> {', '.join(movie.get('genre', ['N/A']))}
-        🌎 <b>Country:</b> {', '.join([loc.get('country', 'Unknown') for loc in movie.get('releaseDetailed', {}).get('originLocations', [])])}
-        🗣 <b>Language:</b> {', '.join([lang.get('language', 'Unknown') for lang in movie.get('spokenLanguages', [])])}
+📹<b>Title:</b> <a href="{movie.get('link', '#')}"> {movie.get('title', 'N/A')}</a>
+🕰 <b>Duration:</b> {movie.get('runtime', 'N/A')}
+📉 <b>Rating:</b> {movie.get('rating', {}).get('star', 'N/A')}⭐️ from {movie.get('rating', {}).get('count', 0)} users
+🗓️ <b>Release Date:</b> {release_date}
+📟 <b>Genre:</b> {', '.join(movie.get('genre', ['N/A']))}
+🌎 <b>Country:</b> {', '.join([loc.get('country', 'Unknown') for loc in movie.get('releaseDetailed', {}).get('originLocations', [])])}
+🗣 <b>Language:</b> {', '.join([lang.get('language', 'Unknown') for lang in movie.get('spokenLanguages', [])])}
 
-        🙎 <b>Cast Info:</b>
-        👉 <b>Director:</b> {', '.join([director for director in movie.get('directors', ['N/A'])])}
-        🎎 <b>Stars:</b> {', '.join([actor for actor in movie.get('actors', ['N/A'])])}
+🙎 <b>Cast Info:</b>
+👉 <b>Director:</b> {', '.join([director for director in movie.get('directors', ['N/A'])])}
+🎎 <b>Stars:</b> {', '.join([actor for actor in movie.get('actors', ['N/A'])])}
 
-        🏆 <b>Awards:</b> {movie.get('award', {}).get('wins', 0)} wins & {movie.get('award', {}).get('nominations', 0)} nominations
+🏆 <b>Awards:</b> {movie.get('award', {}).get('wins', 0)} wins & {movie.get('award', {}).get('nominations', 0)} nominations
 
-        📜 <b>Summary:</b> {movie.get('plot', 'No plot available.')}
+📜 <b>Summary:</b> {movie.get('plot', 'No plot available.')}
 
-        ©️ IMDb by <a href="https://t.me/sgbot3_bot">SG</a>
+©️ IMDb by <a href="https://t.me/sgbot3_bot">SG</a>
             """
 
         # Sending the movie details as a photo with the caption and keyboard
