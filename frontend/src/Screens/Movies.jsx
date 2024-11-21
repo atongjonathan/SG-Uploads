@@ -83,6 +83,7 @@ const MoviesPage = () => {
             dataLength={filteredMovies.slice(0, page).length}
             next={handleLoadingMore}
             hasMore={hasMore}
+            loader={<Skeleton baseColor="rgb(22 28 63)" height={270} containerClassName='w-full animate-pulse'></Skeleton>}
         
           >
             {filteredMovies.slice(0, page).map((movie, idx) => (
