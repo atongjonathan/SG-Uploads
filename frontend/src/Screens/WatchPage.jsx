@@ -88,7 +88,7 @@ const WatchPage = () => {
 
 
     const { pathname } = useLocation()
-    const [trailer, setTrailer] = useState(null)
+    const [trailer, setTrailer] = useState([])
 
 
 
@@ -135,9 +135,15 @@ const WatchPage = () => {
                     .then((data) => {
                         setTrailer(data.results)
                     })
-                    .catch((err) => console.log(err))
+                    .catch((err) => {
+                        setTrailer(null)
+                        console.log(err)
+                    })
             })
-            .catch((err) => console.log(err));
+            .catch((err) => {
+                setTrailer(null)
+                console.log(err)
+            });
         // }
 
     }
@@ -218,6 +224,7 @@ const WatchPage = () => {
                                             </div>
 
                                         </div>
+                                        <TrailerSlider movie={movie} trailers={trailer} />
                                     </div>
                                     <div className="col-span-4 lg:col-span-1">
                                         <div className="grid grid-cols-2 gap-3">
@@ -360,7 +367,7 @@ const WatchPage = () => {
                             <div className="container mx-auto min-h-screen px-2 my-6">
 
                                 <MovieRates movie={movie}></MovieRates>
-                                <TrailerSlider movie={movie} trailers={trailer} />
+
                                 <div className="my-14">
                                     <SgSlider movies={RelatesMovies} title="Related Movies" Icon={BsCollectionFill}></SgSlider>
 
