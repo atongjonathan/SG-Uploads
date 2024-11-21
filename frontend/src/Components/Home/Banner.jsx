@@ -14,6 +14,7 @@ import { MovieContext } from "../../context/MovieContext";
 const Banner = ({ movies }) => {
 
   let { isLoading } = useContext(MovieContext)
+  isLoading = true
 
   return (
     <>
