@@ -22,7 +22,7 @@ const SGFaHeart = ({ movie }) => {
 
   const handleResponse = useCallback((response, successMessage, isFav) => {
     if (response.data) {
-      toast(successMessage, {
+      toast.success(successMessage, {
         classNames: {
           toast: 'bg-subMain',
           title: 'text-white',
@@ -32,7 +32,7 @@ const SGFaHeart = ({ movie }) => {
       });
       setIsFavourite(isFav);
     } else {
-      toast('Action failed. Please try again.', {
+      toast.error('Action failed. Please try again.', {
         classNames: {
           toast: 'bg-red-500',
           title: 'text-white',
@@ -61,7 +61,7 @@ const SGFaHeart = ({ movie }) => {
       {!user ? (
         <Button
           onClick={() =>
-            toast('Login to be able to save favourites', {
+            toast.info('Login to be able to save favourites', {
               classNames: {
                 toast: 'bg-subMain',
                 title: 'text-white',

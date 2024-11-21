@@ -26,6 +26,9 @@ import movieTrailer from 'movie-trailer';
 import { useLocation } from 'react-router-dom'
 import Backend from "../utils/Backend";
 import NotFound from "../Screens/NotFound"
+import TrailerSlider from '../Components/Home/TrailerSlider'
+
+const TMDB_API_KEY = import.meta.env.VITE_TMDB_API_KEY
 
 const WatchPage = () => {
     let { id } = useParams()
@@ -90,31 +93,52 @@ const WatchPage = () => {
 
 
     async function getTrailer() {
-        let url = `${Backend().BACKEND_URL}/itunes?search=${movie.title}`
-        let headersList = {
-            "Accept": "*/*",
-            "Content-Type": 'application/json'
-        }
+        // let url = `${Backend().BACKEND_URL}/itunes?search=${movie.title}`
+        // let headersList = {
+        //     "Accept": "*/*",
+        //     "Content-Type": 'application/json'
+        // }
 
-        let reqOptions = {
-            url: url,
-            method: "GET",
-            headers: headersList,
-        }
+        // let reqOptions = {
+        //     url: url,
+        //     method: "GET",
+        //     headers: headersList,
+        // }
 
-        let response = await axios.request(reqOptions);
-        if (response?.data?.results.length > 0) {
-            let result = response.data.results.find((item) => item.trackName == movie.title && item.releaseDate.split("T")[0] == movie.releaseDetailed.date.split("T")[0])
-            if (result) {
-                setTrailer(result.previewUrl)
-            }
+        // let response = await axios.request(reqOptions);
+        // if (response?.data?.results.length > 0) {
+        //     let results = response.data.results.filter((item) => item.trackName == movie.title && item.releaseDate.split("T")[0] == movie.releaseDetailed.date.split("T")[0])
+        //     if (results.length > 0) {
+        //         setTrailer(results.map((result) => result.previewUrl))
+        //     }
 
-        }
-        else {
-            movieTrailer(movie.title, { multi: true, year: movie.year }).then((res) => {
-                setTrailer(res)
-            });
-        }
+        // }
+        // else {
+        fetch(`https://api.themoviedb.org/3/search/movie?api_key=${TMDB_API_KEY}&query=${movie.title}&year=${movie.year}`, {
+            "headers": {
+                "accept": "*/*",
+                "accept-language": "en-US,en;q=0.9",
+            },
+            "method": "GET",
+            "mode": "cors",
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                let tmdb_id = data.results[0].id
+                fetch(`https://api.themoviedb.org/3/movie/${tmdb_id}/videos?api_key=${TMDB_API_KEY}`, {
+
+                    "method": "GET",
+                    "mode": "cors",
+                    "credentials": "omit"
+                })
+                    .then((res) => res.json())
+                    .then((data) => {
+                        setTrailer(data.results)
+                    })
+                    .catch((err) => console.log(err))
+            })
+            .catch((err) => console.log(err));
+        // }
 
     }
 
@@ -169,10 +193,8 @@ const WatchPage = () => {
                                             </div>
 
                                             <div className="col-span-2 flex justify-end items-center gap-2">
-                                                {
-                                                    trailer && <TrailerModal movie={movie} trailer={trailer}></TrailerModal>
 
-                                                }
+
                                                 <Button onClick={() => setisModalOpen(true)} className="w-10 h-10 flex-colo rounded-lg bg-white bg-opacity-20"><FaShareAlt /></Button>
 
 
@@ -338,6 +360,7 @@ const WatchPage = () => {
                             <div className="container mx-auto min-h-screen px-2 my-6">
 
                                 <MovieRates movie={movie}></MovieRates>
+                                <TrailerSlider movie={movie} trailers={trailer} />
                                 <div className="my-14">
                                     <SgSlider movies={RelatesMovies} title="Related Movies" Icon={BsCollectionFill}></SgSlider>
 

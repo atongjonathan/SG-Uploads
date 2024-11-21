@@ -3,6 +3,7 @@ import '@vidstack/react/player/styles/default/layouts/video.css';
 import { MediaPlayer, MediaProvider, Poster, Track, isYouTubeProvider } from '@vidstack/react';
 import { defaultLayoutIcons, DefaultVideoLayout } from '@vidstack/react/player/layouts/default';
 import { useEffect, useRef, useState } from 'react';
+import YouTube from '@u-wave/react-youtube';
 
 
 function MyPlyrVideo({ movie }) {
@@ -39,31 +40,14 @@ function MyPlyrVideo({ movie }) {
 }
 export default MyPlyrVideo
 
-export function TrailerVideo({ movie, trailer }) {
+export function TrailerVideo({ trailer }) {
 
-
-
-
-    function onProviderChange(provider) {
-        if (isYouTubeProvider(provider)) {
-            provider.cookies = true;
-        }
-    }
     return trailer && (
-        <MediaPlayer title={'Preview ' + movie?.title} src={trailer}
-            viewType='video'
-            logLevel='warn'
-            crossOrigin
-            playsInline
-            aspectRatio="16x9"
-            poster={movie?.poster} artist="SG Uploads" onProviderChange={onProviderChange}>
-            <MediaProvider>
-                <Poster className="vds-poster" />
-            </MediaProvider>
-            <DefaultVideoLayout
-                icons={defaultLayoutIcons}
-            />
-        </MediaPlayer>
+
+        <YouTube
+          video={trailer.key}
+          autoplay
+        />
     )
 }
 
