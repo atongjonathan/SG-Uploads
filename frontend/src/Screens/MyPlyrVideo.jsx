@@ -12,11 +12,6 @@ function MyPlyrVideo({ movie }) {
     const [initialTime, setInitialTime] = useState(null)
     const ref = useRef()
 
-    useEffect(() => {
-        console.log(initialTime)
-
-    }, [initialTime])
-
     return (<div>
         <MediaPlayer title={movie.title} src={{ src: movie.stream, type: "video/mp4" }}
             viewType='video'

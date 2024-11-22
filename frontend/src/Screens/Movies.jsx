@@ -15,9 +15,9 @@ function toTitleCase(str) {
 }
 
 const MoviesPage = () => {
-  const { movies: allMovies, isLoading } = useContext(MovieContext); // Destructure from SWR hook
+  const { movies: allMovies, isLoading } = useContext(MovieContext); 
   const [searchParams] = useSearchParams();
-  const [page, setPage] = useState(4); // This is the number of movies to load
+  const [page, setPage] = useState(4); 
 
   // Extract genres as a unique tuple from all movies
   const genresTuple = useMemo(() => {
@@ -69,10 +69,12 @@ const MoviesPage = () => {
 
   return (
     <Layout>
+      <Filters categories={genresTuple} />
       {
+
         (filteredMovies && genresTuple.length > 0) &&
         (<div className="min-height-screen container mx-auto px-2 my-3">
-          <Filters categories={genresTuple} />
+
 
           {/* <p className='text-lg font-medium my-6'>
             Total <span className='font-bold text-subMain'>{filteredMovies.length}</span>
@@ -84,7 +86,7 @@ const MoviesPage = () => {
             next={handleLoadingMore}
             hasMore={hasMore}
             loader={<Skeleton baseColor="rgb(22 28 63)" height={270} containerClassName='w-full animate-pulse'></Skeleton>}
-        
+
           >
             {filteredMovies.slice(0, page).map((movie, idx) => (
               <Movie key={idx} movie={movie} />

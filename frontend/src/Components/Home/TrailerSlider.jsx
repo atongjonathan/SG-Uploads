@@ -13,7 +13,8 @@ const TrailerSlider = ({ trailers, movie }) => {
 
 
     const { isLoading } = useContext(MovieContext)
-
+    const [nextEl, setNextEl] = useState(null);
+    const [prevEl, setPrevEl] = useState(null);
 
 
     const classNames = 'hover:bg-dry transitions text-sm rounded w-7 h-7 flex-colo bg-subMain text-white';
@@ -27,8 +28,16 @@ const TrailerSlider = ({ trailers, movie }) => {
                             trailers.length > 0 && <span> ({trailers.length})</span>
                         }   </h2>
                 </div>
+                <div className="px-2 flex justify-center gap-2">
+                    <button className={classNames} ref={(node) => setPrevEl(node)}>
+                        <FaArrowLeft />
+                    </button>
+                    <button className={classNames} ref={(node) => setNextEl(node)}>
+                        <FaArrowRight />
+                    </button>
+                </div>
 
-           
+
 
             </div>
             {
@@ -39,9 +48,9 @@ const TrailerSlider = ({ trailers, movie }) => {
                             slidesPerView={3}
                             spaceBetween={40}
                             autoPlay={true}
-                            speed={1000}
-                            loop={true}
+                            speed={500}
                             modules={[Navigation, Autoplay]}
+                            navigation={{ nextEl, prevEl }}
                             breakpoints={
                                 {
                                     0: {

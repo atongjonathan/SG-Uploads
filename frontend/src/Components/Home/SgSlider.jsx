@@ -1,17 +1,15 @@
 import React, { useContext, useState } from "react";
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { BsBookmarkStarFill, BsCaretLeftFill, BsCaretRightFill } from "react-icons/bs";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Navigation } from "swiper/modules";
+import { EffectFade, Navigation } from "swiper/modules";
 import { Link, useNavigate } from "react-router-dom";
 import Rating from "../Star";
-import { FaArrowRight, FaHeart } from "react-icons/fa";
+import { FaArrowRight } from "react-icons/fa";
 import { FaArrowLeft } from "react-icons/fa";
-import Movie from '../Movie'
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import { MovieContext } from "../../context/MovieContext";
-
+import { Button } from "@headlessui/react";
 
 const SgSlider = ({ movies, title, Icon }) => {
 
@@ -20,30 +18,34 @@ const SgSlider = ({ movies, title, Icon }) => {
   const { isLoading } = useContext(MovieContext)
   const [nextEl, setNextEl] = useState(null);
   const [prevEl, setPrevEl] = useState(null);
+  const [endDisabled, setEndDisabled] = useState(null)
+  const [startDisabled, setStartDisabled] = useState(null)
   const navigate = useNavigate()
 
   if (isLoading) {
     movies = dummy
   }
 
-  const classNames = 'hover:bg-dry transitions text-sm rounded w-7 h-7 flex-colo bg-subMain text-white';
+
+  const classNames = 'transitions text-sm rounded w-7 h-7 flex-colo bg-subMain text-white';
+
 
   return movies && (
     <div className="my-16">
       <div className='w-full flex justify-between'>
         <div className="flex sm:gap-8 gap-4 items-center truncate">
-          <Icon className="sm:w-6 sm:h-6 w-4 h-4 text-subMain"></Icon>
+          <Icon className="sm:w-6 sm:h-6 w-4 h-4  text-subMain"></Icon>
           <h2 className="sm:text-xl text-lg font-semibold truncate">{title}</h2>
         </div>
 
 
         <div className="px-2 flex justify-center gap-2">
-          <button className={classNames} ref={(node) => setPrevEl(node)}>
+          <Button className={classNames} ref={(node) => setPrevEl(node)} disabled={startDisabled}>
             <FaArrowLeft />
-          </button>
-          <button className={classNames} ref={(node) => setNextEl(node)}>
+          </Button>
+          <Button className={classNames} ref={(node) => setNextEl(node)} disabled={endDisabled}>
             <FaArrowRight />
-          </button>
+          </Button>
         </div>
       </div>
       <div className="mt-10">
@@ -51,10 +53,10 @@ const SgSlider = ({ movies, title, Icon }) => {
           navigation={{ nextEl, prevEl }}
           slidesPerView={3}
           spaceBetween={40}
-          autoPlay={true}
-          speed={1000}
-          loop={true}
-          modules={[Navigation, Autoplay]}
+          speed={500}
+          modules={[Navigation]}
+          onReachEnd={()=>setEndDisabled(true)}
+          onReachBeginning={()=>setStartDisabled(true)}
           breakpoints={
             {
               0: {
@@ -76,7 +78,7 @@ const SgSlider = ({ movies, title, Icon }) => {
             }
           }
         >
-          {movies?.slice(0, 6).sort(() => .5 - Math.random()).map((movie, idx) => (
+          {movies?.slice(0, 11).sort(() => .5 - Math.random()).map((movie, idx) => (
             <SwiperSlide className="cursor-pointer" key={idx} onClick={() => navigate(`/watch/${movie.title}`)}>
 
               {

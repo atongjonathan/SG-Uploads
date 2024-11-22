@@ -1,15 +1,14 @@
-import React, { useCallback, useContext, useEffect, useState } from "react";
-import { Autoplay, FreeMode, Pagination } from "swiper/modules";
+import React, { useContext, useEffect, useState } from "react";
+import { Autoplay, EffectFade } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import FlexMovieItems from "../FlexMovieItems";
 import { Link } from "react-router-dom";
-import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { FaHeart } from "react-icons/fa";
 import SGFaHeart from '../SGFaHeart'
 import { BiPlay } from "react-icons/bi";
 import Skeleton from 'react-loading-skeleton'
 import { MovieContext } from "../../context/MovieContext";
-
+import 'swiper/css';
+import 'swiper/css/effect-fade';
 
 const Banner = ({ movies }) => {
 
@@ -57,12 +56,12 @@ const Banner = ({ movies }) => {
               loop={true}
               direction="horizontal"
               speed={1000}
-              modules={[Autoplay]}
+              modules={[Autoplay, EffectFade]}
               autoplay={{
                 delay: 5000,
                 disableOnInteraction: false,
               }}
-
+              effect="fade"
             >
 
               {
@@ -98,7 +97,7 @@ const Banner = ({ movies }) => {
 
                       </div>
 
-                      <p className='text-text text-sm text-left'>{movie.plot}</p>
+                      <p className='text-white/90 text-sm text-left bg-main/10 py-3 px-1'>{movie.plot}</p>
 
 
                       <div className="flex gap-5 items-center">
