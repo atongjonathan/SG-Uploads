@@ -15,9 +15,9 @@ function toTitleCase(str) {
 }
 
 const MoviesPage = () => {
-  const { movies: allMovies, isLoading } = useContext(MovieContext); 
+  const { movies: allMovies, isLoading } = useContext(MovieContext);
   const [searchParams] = useSearchParams();
-  const [page, setPage] = useState(4); 
+  const [page, setPage] = useState(4);
 
   // Extract genres as a unique tuple from all movies
   const genresTuple = useMemo(() => {
@@ -69,16 +69,11 @@ const MoviesPage = () => {
 
   return (
     <Layout>
-      <Filters categories={genresTuple} />
-      {
+      <div className="min-height-screen container mx-auto px-2 my-3">
+        <Filters categories={genresTuple} />
+        {
 
-        (filteredMovies && genresTuple.length > 0) &&
-        (<div className="min-height-screen container mx-auto px-2 my-3">
-
-
-          {/* <p className='text-lg font-medium my-6'>
-            Total <span className='font-bold text-subMain'>{filteredMovies.length}</span>
-          </p> */}
+          (filteredMovies && genresTuple.length > 0) &&
 
           <InfiniteScroll
             className="grid sm:mt-10 mt-6 xl:grid-cols-4 2xl:grid-cols-5 grid-cols-2 gap-6 overflow-hidden"
@@ -93,22 +88,21 @@ const MoviesPage = () => {
             ))}
           </InfiniteScroll>
 
-          {hasMore ? null : (
-            <div className="w-full flex-colo md:my-20 my-10">
-              <p>No more movies to load!</p>
-            </div>
-          )}
-        </div>)
-      }
+        }
+        {!hasMore && (
+          <div className="w-full flex-colo md:my-20 my-10">
+            <p>No more movies to load!</p>
+          </div>
+        )}
 
-      {
-        (!allMovies && !isLoading) && <SiteDown></SiteDown>
-      }
+        {
+          (!allMovies && !isLoading) && <SiteDown></SiteDown>
+        }
 
-      {
-        isLoading && <Skeleton baseColor="rgb(22 28 63)" className='animate-pulse' containerClassName="animate-pulse" height={250}></Skeleton>
-      }
-
+        {
+          isLoading && <Skeleton baseColor="rgb(22 28 63)" className='animate-pulse' containerClassName="animate-pulse" height={250}></Skeleton>
+        }
+      </div>
     </Layout>
   );
 };

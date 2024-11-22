@@ -39,7 +39,7 @@ class Captions():
             self.subtitles.login(USER, PASSWORD)
 
             # Search for subtitles
-            response = self.subtitles.search(imdb_id=imdb_id, languages="en")
+            response = self.subtitles.search(imdb_id=imdb_id, languages="en", trusted_sources=True)
             response_dict = response.to_dict()
             # Ensure 'data' is a list
             response_data = response_dict.get("data", [])

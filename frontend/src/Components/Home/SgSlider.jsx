@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { Swiper, SwiperSlide } from "swiper/react";
 import { EffectFade, Navigation } from "swiper/modules";
@@ -14,20 +14,37 @@ import { Button } from "@headlessui/react";
 const SgSlider = ({ movies, title, Icon }) => {
 
 
+  useEffect(() =>
+    handleSliderChange(false, false), [])
+
   const dummy = [1, 2, 3, 4, 5, 6]
   const { isLoading } = useContext(MovieContext)
   const [nextEl, setNextEl] = useState(null);
   const [prevEl, setPrevEl] = useState(null);
-  const [endDisabled, setEndDisabled] = useState(null)
-  const [startDisabled, setStartDisabled] = useState(null)
+  const [endDisabled, setEndDisabled] = useState(false)
+  const [startDisabled, setStartDisabled] = useState(true)
   const navigate = useNavigate()
 
   if (isLoading) {
     movies = dummy
   }
 
+  function handleSliderChange(start, end) {
+    if (end) {
+      setEndDisabled(true)
+    }
+    else {
+      setEndDisabled(false)
+    }
+    if (start) {
+      setStartDisabled(true)
+    }
+    else {
+      setStartDisabled(false)
+    }
+  }
 
-  const classNames = 'transitions text-sm rounded w-7 h-7 flex-colo bg-subMain text-white';
+
 
 
   return movies && (
@@ -40,10 +57,10 @@ const SgSlider = ({ movies, title, Icon }) => {
 
 
         <div className="px-2 flex justify-center gap-2">
-          <Button className={classNames} ref={(node) => setPrevEl(node)} disabled={startDisabled}>
+          <Button className={`transitions text-sm rounded w-7 h-7 flex-colo text-white ${startDisabled ? 'bg-dry' : 'bg-subMain hover:bg-dry'}`} ref={(node) => setPrevEl(node)} disabled={startDisabled}>
             <FaArrowLeft />
           </Button>
-          <Button className={classNames} ref={(node) => setNextEl(node)} disabled={endDisabled}>
+          <Button className={`transitions text-sm rounded w-7 h-7 flex-colo text-white ${endDisabled ? 'bg-dry' : 'bg-subMain hover:bg-dry'}`} ref={(node) => setNextEl(node)} disabled={endDisabled}>
             <FaArrowRight />
           </Button>
         </div>
@@ -55,8 +72,8 @@ const SgSlider = ({ movies, title, Icon }) => {
           spaceBetween={40}
           speed={500}
           modules={[Navigation]}
-          onReachEnd={()=>setEndDisabled(true)}
-          onReachBeginning={()=>setStartDisabled(true)}
+          onReachEnd={() => handleSliderChange(false, true)}
+          onReachBeginning={() => handleSliderChange(true, false)}
           breakpoints={
             {
               0: {

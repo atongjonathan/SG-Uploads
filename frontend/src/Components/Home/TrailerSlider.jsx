@@ -7,6 +7,7 @@ import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import { MovieContext } from "../../context/MovieContext";
 import TrailerModal from "../../Screens/TrailerModal";
+import { Button } from "@headlessui/react";
 
 
 const TrailerSlider = ({ trailers, movie }) => {
@@ -16,8 +17,23 @@ const TrailerSlider = ({ trailers, movie }) => {
     const [nextEl, setNextEl] = useState(null);
     const [prevEl, setPrevEl] = useState(null);
 
+    const [endDisabled, setEndDisabled] = useState(false)
+    const [startDisabled, setStartDisabled] = useState(true)
 
-    const classNames = 'hover:bg-dry transitions text-sm rounded w-7 h-7 flex-colo bg-subMain text-white';
+    function handleSliderChange(start, end) {
+        if (end) {
+          setEndDisabled(true)
+        }
+        else {
+          setEndDisabled(false)
+        }
+        if (start) {
+          setStartDisabled(true)
+        }
+        else {
+          setStartDisabled(false)
+        }
+      }
 
     return trailers && (
         <div className="mt-5">
@@ -29,12 +45,12 @@ const TrailerSlider = ({ trailers, movie }) => {
                         }   </h2>
                 </div>
                 <div className="px-2 flex justify-center gap-2">
-                    <button className={classNames} ref={(node) => setPrevEl(node)}>
+                    <Button className={`transitions text-sm rounded w-7 h-7 flex-colo text-white ${startDisabled ? 'bg-dry' : 'bg-subMain hover:bg-dry'}`} ref={(node) => setPrevEl(node)} disabled={startDisabled}>
                         <FaArrowLeft />
-                    </button>
-                    <button className={classNames} ref={(node) => setNextEl(node)}>
+                    </Button>
+                    <Button className={`transitions text-sm rounded w-7 h-7 flex-colo text-white ${endDisabled ? 'bg-dry' : 'bg-subMain hover:bg-dry'}`} ref={(node) => setNextEl(node)} disabled={endDisabled}>
                         <FaArrowRight />
-                    </button>
+                    </Button>
                 </div>
 
 
@@ -51,6 +67,8 @@ const TrailerSlider = ({ trailers, movie }) => {
                             speed={500}
                             modules={[Navigation, Autoplay]}
                             navigation={{ nextEl, prevEl }}
+                            onReachEnd={() => handleSliderChange(false, true)}
+                            onReachBeginning={() => handleSliderChange(true, false)}
                             breakpoints={
                                 {
                                     0: {

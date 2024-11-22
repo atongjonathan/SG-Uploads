@@ -110,7 +110,7 @@ const Filters = ({ categories }) => {
                     Clear
                 </button>
             </div>
-            <div className='my-2 bg-dry border text-dryGray border-gray-800 grid md:grid-cols-4 grid-cols-2 lg:gap-12 gap-2 rounded p-6'>
+            <div className='my-4 bg-dry border text-dryGray border-gray-800 grid md:grid-cols-4 grid-cols-2 lg:gap-12 gap-2 rounded p-6'>
                 {Filter.map((item, idx) => (
                     <Listbox key={idx} value={item.value} onChange={item.onChange}>
                         <div className="relative">
