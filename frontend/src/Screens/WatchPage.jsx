@@ -1,10 +1,8 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react'
 import Layout from '../Layout/Layout'
 import { Link, useParams } from 'react-router-dom'
-import { BiArrowBack } from 'react-icons/bi'
 import { FaCloud } from 'react-icons/fa'
 import MyPlyrVideo from './MyPlyrVideo'
-import MovieCasts from '../Components/Single/MovieCasts'
 import MovieRates from '../Components/Single/MovieRates'
 import { BsCollectionFill } from 'react-icons/bs'
 import AuthContext from '../context/AuthContext'
@@ -12,21 +10,14 @@ import { Button } from '@headlessui/react'
 import { FaShareAlt, FaEdit } from 'react-icons/fa'
 import ShareMovieModal from '../Components/Modals/ShareMovieModal'
 import { toast } from 'sonner'
-import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { MovieContext } from '../context/MovieContext'
-import SGFaHeart from '../Components/SGFaHeart'
 import SgSlider from '../Components/Home/SgSlider'
 import Skeleton from 'react-loading-skeleton'
 import EditMovie from './Dashboard/Admin/EditMovie'
-import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react'
-import { ChevronDownIcon } from '@heroicons/react/solid'
-import TrailerModal from './TrailerModal'
-import axios from 'axios'
-import movieTrailer from 'movie-trailer';
 import { useLocation } from 'react-router-dom'
-import Backend from "../utils/Backend";
 import NotFound from "../Screens/NotFound"
 import TrailerSlider from '../Components/Home/TrailerSlider'
+import MovieInfo from '../Components/Single/MovieInfo'
 
 const TMDB_API_KEY = import.meta.env.VITE_TMDB_API_KEY
 
@@ -93,27 +84,7 @@ const WatchPage = () => {
 
 
     async function getTrailer() {
-        // let url = `${Backend().BACKEND_URL}/itunes?search=${movie.title}`
-        // let headersList = {
-        //     "Accept": "*/*",
-        //     "Content-Type": 'application/json'
-        // }
 
-        // let reqOptions = {
-        //     url: url,
-        //     method: "GET",
-        //     headers: headersList,
-        // }
-
-        // let response = await axios.request(reqOptions);
-        // if (response?.data?.results.length > 0) {
-        //     let results = response.data.results.filter((item) => item.trackName == movie.title && item.releaseDate.split("T")[0] == movie.releaseDetailed.date.split("T")[0])
-        //     if (results.length > 0) {
-        //         setTrailer(results.map((result) => result.previewUrl))
-        //     }
-
-        // }
-        // else {
         fetch(`https://api.themoviedb.org/3/search/movie?api_key=${TMDB_API_KEY}&query=${movie.title}&year=${movie.year}`, {
             "headers": {
                 "accept": "*/*",
@@ -144,7 +115,6 @@ const WatchPage = () => {
                 setTrailer(null)
                 console.log(err)
             });
-        // }
 
     }
 
@@ -161,19 +131,12 @@ const WatchPage = () => {
             {
                 present ?
                     <Layout>
-
-
-                        <>
                             <div className="container mx-auto bg-dry px-4 py-2 mb-2">
                                 <EditMovie close={close} isOpen={isOpen} movie={movie}></EditMovie>
 
                                 {
                                     movie && <ShareMovieModal movie={movie} isModalOpen={isModalOpen} setisModalOpen={setModal}></ShareMovieModal>
                                 }
-
-
-
-
 
                                 <div className="grid grid-cols-4 gap-2">
                                     <div className="col-span-4 lg:col-span-3">
@@ -226,144 +189,11 @@ const WatchPage = () => {
                                         </div>
                                         <TrailerSlider movie={movie} trailers={trailer} />
                                     </div>
-                                    <div className="col-span-4 lg:col-span-1">
-                                        <div className="grid grid-cols-2 gap-3">
-                                            <div className="lg:col-span-2 flex flex-col items-center justify-center w-full gap-3">
-
-                                                <div className="border border-border p-1 transitions relative rounded overflow-hidden lg:col-span-2 h-fit">
-
-                                                    {
-                                                        movie ?
-                                                            <LazyLoadImage effect="blur" wrapperProps={{
-                                                                style: { transitionDelay: "0.6s" },
-                                                            }} src={movie.poster} alt={movie.title} title={movie.title} className="object-cover lg:h-64 mx-auto" />
-                                                            : <Skeleton baseColor="rgb(22 28 63)" height={220} width={150} containerClassName="animate-pulse"></Skeleton>
-                                                    }
-
-                                                    {
-                                                        movie ? <div className="absolute flex-btn gap-2 bottom-0 right-0 left-0 bg-main bg-opacity-60 text-white px-4 py-3">
-                                                            <h6 className="font-semibold truncate">{movie?.title}</h6>
-                                                        </div>
-                                                            : <Skeleton baseColor="rgb(22 28 63)" height={30} containerClassName="animate-pulse"></Skeleton>
-                                                    }
-
-                                                </div>
-                                            </div>
-
-
-                                            <div className="lg:col-span-2 flex flex-col gap-4 flex-grow pl-4 py-3 text-white shrink-0 text-sm 2xl:text-base !tracking-wider w-full">
-
-
-                                                <div className="hidden lg:flex gap-1 flex-col tracking-wider">
-                                                    <Disclosure defaultOpen={true}>
-                                                        <DisclosureButton className="group w-full items-center justify-between hidden lg:flex">
-                                                            <span className="text-sm/6 font-medium text-white group-data-[hover]:text-white/80">
-                                                                Plot
-                                                            </span>
-                                                            <ChevronDownIcon className="size-5 fill-white/60 group-data-[hover]:fill-white/50 group-data-[open]:rotate-180" />
-                                                        </DisclosureButton>
-
-                                                        <DisclosurePanel className="bg-white/10 hover:bg-white/10 p-2">
-                                                            {
-                                                                movie ? <p>{movie?.plot}</p>
-                                                                    : <Skeleton baseColor="rgb(22 28 63)" height={30} containerClassName="animate-pulse"></Skeleton>
-                                                            }
-
-                                                        </DisclosurePanel>
-                                                    </Disclosure>
-
-                                                </div>
-                                                <div className="flex gap-2 flex-col tracking-wider font-light">
-                                                    <Disclosure defaultOpen={true}>
-                                                        <DisclosureButton className="group w-full flex items-center justify-between">
-                                                            <span className="text-sm/6 font-medium text-white group-data-[hover]:text-white/80">
-                                                                Cast
-                                                            </span>
-                                                            <ChevronDownIcon className="size-5 fill-white/60 group-data-[hover]:fill-white/50 group-data-[open]:rotate-180" />
-                                                        </DisclosureButton>
-
-                                                        <DisclosurePanel>
-                                                            {
-                                                                movie ? <p>{movie.actors.join(", ")}  </p>
-                                                                    : <Skeleton baseColor="rgb(22 28 63)" containerClassName="animate-pulse"></Skeleton>
-                                                            }
-                                                        </DisclosurePanel>
-                                                    </Disclosure>
-                                                </div>
-                                                <div className="flex gap-2 flex-col tracking-wider font-light">
-                                                    <span className="font-medium text-gray-200 !shrink-0 tracking-wider">Language(s)</span>
-
-                                                    {
-                                                        movie ? <span>
-                                                            {movie?.spokenLanguages.map((l) => l.language).join(", ")}</span>
-                                                            : <Skeleton baseColor="rgb(22 28 63)" containerClassName="animate-pulse"></Skeleton>
-                                                    }
-
-                                                </div>
-                                                <div className="flex flex-col gap-1 tracking-wider font-light">
-                                                    <span className="font-medium text-gray-200 !shrink-0 tracking-wider">Aired</span>
-                                                    {
-                                                        movie ? <span>{`${movie?.releaseDetailed.day}/${movie?.releaseDetailed.month}/${movie?.releaseDetailed.year}`}</span>
-
-                                                            : <Skeleton baseColor="rgb(22 28 63)" containerClassName="animate-pulse"></Skeleton>
-                                                    }
-                                                </div>
-
-
-
-
-
-                                            </div>
-
-                                        </div>
-                                        <div className="lg:hidden ">
-                                            <h6 className="font-semibold bg-dry truncate py-2 mt-2 text-center">{movie?.title}</h6>
-
-                                            <Disclosure>
-                                                {({ open }) => (
-                                                    <div className='bg-white/10 hover:bg-white/10'>
-                                                        <DisclosureButton className={`groupl items-center justify-between text-sm/6 w-full text-white ${open ? 'cursor-default' : 'truncate'} `}>
-                                                            {
-                                                                movie ? <span className="text-sm/6 font-medium text-white group-data-[hover]:text-white/80 flex p-2">
-
-                                                                    {movie?.plot}
-                                                                </span>
-                                                                    : <Skeleton baseColor="rgb(22 28 63)" height={30} containerClassName="animate-pulse"></Skeleton>
-                                                            }
-
-                                                            {
-                                                                !open && <div className="flex flex-col items-center w-full">
-                                                                    <ChevronDownIcon className={`size-5 fill-white/60 group-data-[hover]:fill-white/50 {${open ? 'rotate-180' : ''}}`} />
-                                                                </div>
-                                                            }
-
-
-
-
-                                                        </DisclosureButton>
-
-
-                                                    </div>
-                                                )}
-
-                                            </Disclosure>
-                                        </div>
-
-
-
-
-                                    </div>
+                                    <MovieInfo movie={movie}></MovieInfo>
 
                                 </div>
 
-
-
-
-
-
                             </div>
-                            {/* <MovieCasts movie={movie} /> */}
-
                             <div className="container mx-auto min-h-screen px-2 my-6">
 
                                 <MovieRates movie={movie}></MovieRates>
@@ -371,23 +201,13 @@ const WatchPage = () => {
                                 <div className="my-14">
                                     <SgSlider movies={RelatesMovies} title="Related Movies" Icon={BsCollectionFill}></SgSlider>
 
-                                    {/* </div> */}
                                 </div>
                             </div>
-                        </>
-
-
-
-
                     </Layout>
 
                     : <NotFound></NotFound>
             }
         </>
-
-
-
-
 
     )
 }
