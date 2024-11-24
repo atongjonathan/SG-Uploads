@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useState } from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { FaSearch, FaHeart } from "react-icons/fa";
 import logo from "../../images/4x3.jpg";
@@ -6,8 +6,8 @@ import { Button, Input } from "@headlessui/react";
 import AuthContext from "../../context/AuthContext";
 import { DialogBackdrop, Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
 import { IoClose } from "react-icons/io5";
-import Login from "../../Screens/Login";
-import Register from "../../Screens/Register";
+import Login from "../../Screens/Auth/Login";
+import Register from "../../Screens/Auth/Register";
 import { toast } from "sonner";
 import { MovieContext } from "../../context/MovieContext";
 import SgMenu from "./SgMenu";
@@ -226,11 +226,6 @@ const Navbar = () => {
           </NavLink>
           <SgMenu></SgMenu>
          
-          {user && (
-            <NavLink title={user.is_superuser ? "Dashboard" : "Profile"} className={Hover} to={user.is_superuser ? "/dashboard" : "/profile"}>
-              {user.is_superuser ? "Dashboard" : "Profile"}
-            </NavLink>
-          )}
           {user && (
             <NavLink className={`${Hover} relative`} to="/favourites" title="Favourites">
               <FaHeart className="w-5 h-5" />

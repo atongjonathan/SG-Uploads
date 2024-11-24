@@ -6,7 +6,7 @@ import { FaArrowLeft } from "react-icons/fa";
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import { MovieContext } from "../../context/MovieContext";
-import TrailerModal from "../../Screens/TrailerModal";
+import TrailerModal from "../Modals/TrailerModal";
 import { Button } from "@headlessui/react";
 
 

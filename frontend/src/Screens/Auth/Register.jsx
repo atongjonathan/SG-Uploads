@@ -1,18 +1,12 @@
-import React, { useEffect, useState } from 'react'
-import Layout from '../Layout/Layout'
-import { Input } from '../Components/UserInputs'
-import { Link, useNavigate } from 'react-router-dom'
-import { FiLogIn } from 'react-icons/fi'
-import logo from "../images/4x3.jpg"
-import { Button } from '@headlessui/react'
-import Backend from '../utils/Backend'
+import React, {  useState } from 'react'
+import Backend from '../../utils/Backend'
 import { CgSpinner } from 'react-icons/cg'
 import { toast } from 'sonner'
+import { Input } from '../../Components/UserInputs'
+import { Button } from '@headlessui/react'
+import { FiLogIn } from 'react-icons/fi'
 
 const backend = Backend()
-
-
-
 
 const Register = ({ openLogin, closeSignUp }) => {
   const [loading, setLoading] = useState(false)

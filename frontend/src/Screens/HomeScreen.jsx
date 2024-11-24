@@ -1,13 +1,11 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import Layout from "../Layout/Layout";
 import Banner from "../Components/Home/Banner";
-import PopularMovies from "../Components/Home/PopularMovies";
 import Promos from "../Components/Home/Promos";
-import LoadingIcons from 'react-loading-icons'
 import SgSlider from "../Components/Home/SgSlider";
 import { BsCollectionFill, BsBookmarkStarFill } from "react-icons/bs";
 import { MovieContext } from "../context/MovieContext";
-import SiteDown from '../Screens/SiteDown'
+import SiteDown from '../Screens/Error/SiteDown'
 
 const HomeScreen = () => {
   document.title = `SG Uploads | Home`;

@@ -6,7 +6,7 @@ from telebot.types import InlineKeyboardButton, InlineKeyboardMarkup
 
 
 bot = TeleBot(os.environ.get("TELEGRAM_BOT_TOKEN"))
-caption_bot = TeleBot(os.environ.get("TELEGRAM_BOT_TOKEN2"))
+caption_bot = TeleBot(os.environ.get("TELEGRAM_BOT_TOKEN"))
 
 API_KEY = os.environ.get("API_KEY")
 GROUP_CHAT_ID = os.environ.get("GROUP_CHAT_ID")

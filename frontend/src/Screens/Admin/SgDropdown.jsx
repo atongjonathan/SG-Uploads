@@ -5,9 +5,9 @@ import { useState } from 'react'
 
 
 export default function SgDropdown({ subs, sendSubs }) {
-    const [selected, setSelected] = useState({
+    const selected = {
         release: '- Choose a suitable subtitle -'
-    })
+    }
 
     return (
         <Field className='flex flex-col gap-2'>

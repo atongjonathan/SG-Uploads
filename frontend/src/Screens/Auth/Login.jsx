@@ -1,14 +1,10 @@
-import React, { useContext, useEffect, useState } from 'react'
-import Layout from '../Layout/Layout'
-import { Input } from '../Components/UserInputs'
-import { Link, useNavigate } from 'react-router-dom'
+import React, { useContext, useState } from 'react'
 import { FiLogIn } from 'react-icons/fi'
-import logo from "../images/4x3.jpg"
-import Backend from '../utils/Backend'
-import { CgSpinner } from 'react-icons/cg'
-import AuthContext from '../context/AuthContext'
+import Backend from '../../utils/Backend'
+import AuthContext from '../../context/AuthContext'
 import { Button } from '@headlessui/react'
 import { toast } from 'sonner'
+import { Input } from '../../Components/UserInputs'
 
 
 const backend = Backend()

@@ -1,7 +1,7 @@
 import React from 'react'
 import { BiHomeAlt } from 'react-icons/bi'
 import { Link } from 'react-router-dom'
-import notfound from '../images/404.svg'
+import notfound from '../../images/404.svg'
 
 
 const NotFound = () => {

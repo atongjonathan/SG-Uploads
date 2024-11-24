@@ -1,8 +1,8 @@
 import { Button, Dialog, DialogPanel, DialogTitle, DialogBackdrop } from '@headlessui/react'
 import { useEffect, useState, useContext } from 'react'
-import { Input } from '../../../Components/UserInputs'
-import Backend from '../../../utils/Backend'
-import AuthContext from '../../../context/AuthContext'
+import { Input } from '../UserInputs'
+import Backend from '../../utils/Backend'
+import AuthContext from '../../context/AuthContext'
 import { toast } from 'sonner'
 
 export default function EditMovie({ close, isOpen, movie }) {

@@ -1,11 +1,10 @@
 import React, { useCallback, useState } from 'react'
 import { FaCloudDownloadAlt, FaEdit, FaHeart } from 'react-icons/fa'
 import { GoEye } from 'react-icons/go'
-import { MdDelete } from 'react-icons/md'
 import { Link } from 'react-router-dom'
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { Button } from '@headlessui/react'
-import EditMovie from '../Screens/Dashboard/Admin/EditMovie'
+import EditMovie from './Modals/EditMovie'
 import SGFaHeart from './SGFaHeart'
 
 const Head = "text-xs text-left text-main font-semibold px-6 py-2 uppercase"

@@ -1,21 +1,17 @@
 import React, { useCallback, useContext, useState } from 'react'
-import { BsCollectionPlay, BsHouseAddFill, BsHouseExclamationFill } from 'react-icons/bs'
-import { FiHeart } from 'react-icons/fi'
-import { RxDashboard } from "react-icons/rx";
-import { MdLogout, MdOutlineContactMail, MdLogin, MdOutlineInfo } from "react-icons/md";
+import {  BsHouseAddFill } from 'react-icons/bs'
+import { MdLogout, MdLogin } from "react-icons/md";
 import { NavLink } from 'react-router-dom'
-import { FaHeart, FaPersonBooth, } from 'react-icons/fa'
-import { Button, Popover, PopoverButton, PopoverPanel } from '@headlessui/react'
+import { Button } from '@headlessui/react'
 import AuthContext from '../../context/AuthContext';
 import { Dialog, DialogPanel, DialogTitle, DialogBackdrop } from '@headlessui/react'
-import Login from '../../Screens/Login';
-import Register from '../../Screens/Register';
+import Login from '../../Screens/Auth/Login';
+import Register from '../../Screens/Auth/Register';
 import { IoClose } from 'react-icons/io5';
 import { toast } from 'sonner';
 import PopMenu from './PopMenu';
 import Backend from '../../utils/Backend';
 
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
 
 const MobileFooter = () => {
     const active = 'bg-subMain text-main'

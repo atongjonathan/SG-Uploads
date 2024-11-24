@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo, useState, useCallback } from 'react';
+import React, { useContext, useMemo, useState } from 'react';
 import Layout from '../Layout/Layout';
 import Filters from '../Components/Filters';
 import Movie from '../Components/Movie';
@@ -6,7 +6,7 @@ import { useSearchParams } from 'react-router-dom';
 import { MovieContext } from '../context/MovieContext';
 import InfiniteScroll from "react-infinite-scroll-component";
 import Skeleton from 'react-loading-skeleton';
-import SiteDown from '../Screens/SiteDown'
+import SiteDown from '../Screens/Error/SiteDown'
 
 function toTitleCase(str) {
   return str.toLowerCase().split(' ').map(word =>

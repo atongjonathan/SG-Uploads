@@ -1,5 +1,5 @@
 import React from 'react'
-import notfound from '../images/404.svg'
+import notfound from '../../images/404.svg'
 
 
 const SiteDown = () => {

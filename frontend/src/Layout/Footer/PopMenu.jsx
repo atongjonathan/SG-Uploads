@@ -4,7 +4,7 @@ import {  Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { NavLink } from 'react-router-dom';
 import { MdOutlineContactMail, MdOutlineInfo } from 'react-icons/md';
 import { RxDashboard } from "react-icons/rx";
-import { FaFilm, FaHeart, FaListAlt, FaUsers } from 'react-icons/fa'
+import { FaFilm, FaHeart, FaListAlt } from 'react-icons/fa'
 import { FiSettings } from 'react-icons/fi'
 import { RiLockPasswordLine } from 'react-icons/ri'
 
@@ -36,12 +36,6 @@ const PopMenu = ({ user }) => {
         //     link: '/categories',
         //     icon: HiViewGridAdd
         // },
-        {
-            name: 'Users',
-            link: '/users',
-            icon: FaUsers,
-
-        },
         {
             name: 'Dashboard',
             link: '/dashboard',
@@ -100,7 +94,7 @@ const PopMenu = ({ user }) => {
 
                 {
                     user?.is_superuser && adminLinks.map((link, idx) => (
-                        <MenuItem>
+                        <MenuItem key={idx}>
                             <NavLink title={link.name} className={Hover} key={idx} to={link.link}>
                                 <link.icon className='w-7 h-7'></link.icon><p className='text-sm'> {link.name}</p>
                             </NavLink>
@@ -111,7 +105,7 @@ const PopMenu = ({ user }) => {
 
                 {
                     user && sideLinks.map((link, idx) => (
-                        <MenuItem>
+                        <MenuItem key={idx}>
                             <NavLink title={link.name} className={Hover} key={idx} to={link.link}>
                                 <link.icon className='w-7 h-7'></link.icon><p className='text-sm'> {link.name}</p>
                             </NavLink>

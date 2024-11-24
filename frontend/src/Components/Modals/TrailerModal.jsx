@@ -1,7 +1,6 @@
 import { Dialog, DialogPanel, DialogBackdrop } from '@headlessui/react'
 import { useState } from 'react'
-import { TrailerVideo } from './MyPlyrVideo'
-import { LazyLoadImage } from 'react-lazy-load-image-component';
+import { TrailerVideo } from '../Single/MyPlyrVideo'
 
 export default function TrailerModal({ movie, trailer }) {
     let [isOpen, setIsOpen] = useState(false)

@@ -2,7 +2,6 @@ import React from 'react'
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/solid'
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { BiArrowBack } from 'react-icons/bi'
 
 
 const MovieInfo = ({ movie }) => {

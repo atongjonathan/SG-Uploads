@@ -7,7 +7,7 @@ import { MovieContext } from "../context/MovieContext";
 import LoadingIcons from "react-loading-icons";
 import ScrollToTop from "react-scroll-to-top";
 import { BiArrowToTop } from "react-icons/bi";
-import SiteDown from '../Screens/SiteDown'
+import SiteDown from '../Screens/Error/SiteDown'
 
 const Layout = ({ children }) => {
   const { isLoading, movies } = useContext(MovieContext)

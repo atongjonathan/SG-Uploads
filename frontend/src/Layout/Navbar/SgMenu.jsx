@@ -45,17 +45,7 @@ export default function SgMenu() {
             icon: FaFilm,
 
         },
-        // {
-        //     name: 'Categories',
-        //     link: '/categories',
-        //     icon: HiViewGridAdd
-        // },
-        {
-            name: 'Users',
-            link: '/users',
-            icon: FaUsers,
-
-        },
+    
     ]
 
     const sideLinks = [
