@@ -20,7 +20,7 @@ export default function EditMovie({ close, isOpen, movie }) {
         e.preventDefault()
         const formData = new FormData(e.target)
         const formObject = Object.fromEntries(formData.entries())
-
+        close()
 
         formObject.stream = formObject.stream.replace("dl", "video").replace("watch", "video")
         if (formObject.captions !== '[]' && formObject.captions !== '') {
@@ -54,7 +54,7 @@ export default function EditMovie({ close, isOpen, movie }) {
 
 
 
-        close()
+       
 
     }
 
