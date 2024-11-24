@@ -10,7 +10,6 @@ import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import { MovieContext } from "../../context/MovieContext";
 import { Button } from "@headlessui/react";
-
 const SgSlider = ({ movies, title, Icon }) => {
 
 
@@ -95,7 +94,7 @@ const SgSlider = ({ movies, title, Icon }) => {
             }
           }
         >
-          {movies?.slice(0, 11).sort(() => .5 - Math.random()).map((movie, idx) => (
+          {movies?.slice(0, 11).map((movie, idx) => (
             <SwiperSlide className="cursor-pointer" key={idx} onClick={() => navigate(`/watch/${movie.title}`)}>
 
               {
