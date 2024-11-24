@@ -1,7 +1,7 @@
 import React from "react";
 import Layout from "../Layout/Layout";
 import Head from "../Components/Head";
-
+import about2 from '../images/about2.jpg'
 const AboutUs = () => {
 
   document.title = `About Us`
@@ -37,7 +37,7 @@ const AboutUs = () => {
               </div>
             </div>
           </div>
-          <img src="https://netflixo.vercel.app/images/about2.jpg" className="w-full xl:block h-header rounded-lg object-cover" alt="about us" />
+          <img src={about2} className="w-full xl:block h-header rounded-lg object-cover" alt="about us" />
 
         </div>
       </div>

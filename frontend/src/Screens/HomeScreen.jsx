@@ -12,22 +12,8 @@ import SiteDown from '../Screens/SiteDown'
 const HomeScreen = () => {
   document.title = `SG Uploads | Home`;
 
-  const { movies, isLoading, error } = useContext(MovieContext);
+  const { movies, isLoading } = useContext(MovieContext);
 
-  let trending = []
-  let topRated = []
-  let popular = []
-  let latest = []
-  if (movies) {
-    trending = movies.sort((a, b) => new Date(b.releaseDetailed.date) - new Date(a.releaseDetailed.date))
-    topRated = movies.sort((a, b) => b.rating.star - a.rating.star)
-    popular = movies.sort((a, b) => b.rating.count - a.rating.count)
-    latest = movies.sort((a, b) => new Date(b.releaseDetailed.date) - new Date(a.releaseDetailed.date))
-
-
-
-
-  }
 
 
 
@@ -37,10 +23,10 @@ const HomeScreen = () => {
       <div className="container mx-auto min-h-screen px-2 mb-6">
 
           <>
-            <Banner movies={latest} />
-            <SgSlider movies={trending} title='Trending' Icon={BsCollectionFill} />
-            <SgSlider movies={popular} title='Popular Movies' Icon={BsCollectionFill} />
-            <SgSlider movies={topRated} title='Top Rated' Icon={BsBookmarkStarFill} />
+            <Banner movies={movies?.toSorted((a, b) => new Date(b.releaseDetailed.date) - new Date(a.releaseDetailed.date))} />
+            <SgSlider movies={movies?.toSorted((a, b) => new Date(b.releaseDetailed.date) - new Date(a.releaseDetailed.date))} title='Trending' Icon={BsCollectionFill} />
+            <SgSlider movies={movies?.toSorted((a, b) => b.rating.count - a.rating.count)} title='Popular Movies' Icon={BsCollectionFill} />
+            <SgSlider movies={movies?.toSorted((a, b) => b.rating.star - a.rating.star)} title='Top Rated' Icon={BsBookmarkStarFill} />
             <Promos />
           </>
 
@@ -48,7 +34,7 @@ const HomeScreen = () => {
 
       {
         (!movies && !isLoading) &&
-      <SiteDown></SiteDown>
+        <SiteDown></SiteDown>
 
       }
     </Layout>

@@ -1,5 +1,6 @@
 import React from "react";
 import { FiUser } from "react-icons/fi";
+import mobile from  '../../images/mobile.png'
 
 const Promos = () => {
   return (
@@ -28,7 +29,7 @@ const Promos = () => {
           </div>
         </div>
         <div>
-          <img src="https://netflixo.vercel.app/images/mobile.png" alt="Mobile app" className="w-full object-contain" />
+          <img src={mobile} alt="Mobile app" className="w-full object-contain" />
         </div>
       </div>
     </div>
