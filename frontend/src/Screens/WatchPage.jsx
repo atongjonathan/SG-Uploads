@@ -194,7 +194,7 @@ const WatchPage = () => {
                                 </div>
 
                             </div>
-                            <div className="container mx-auto min-h-screen px-2 my-6">
+                            <div className="container mx-auto px-2 my-6">
 
                                 <MovieRates movie={movie}></MovieRates>
 

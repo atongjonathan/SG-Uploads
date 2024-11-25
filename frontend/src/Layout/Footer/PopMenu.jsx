@@ -1,11 +1,10 @@
-import React, { useCallback,useState } from 'react'
+import React, { useCallback } from 'react'
 import { HiViewGridAdd } from 'react-icons/hi';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { NavLink } from 'react-router-dom';
 import { MdOutlineContactMail, MdOutlineInfo } from 'react-icons/md';
 import { FaFilm, FaHeart, FaListAlt } from 'react-icons/fa'
 import { FiSettings } from 'react-icons/fi';
-import { Transition } from '@headlessui/react'
 
 
 const PopMenu = ({ user }) => {
@@ -16,7 +15,6 @@ const PopMenu = ({ user }) => {
         isActive ? `${active} ${inActive}` : inActive,
         []
     );
-    const [open, setOpen] = useState(false)
 
     const adminLinks = [
         {

@@ -25,7 +25,7 @@ const ShareMovieModal = ({ movie, isModalOpen, setisModalOpen }) => {
         },
 
     ]
-    const url = `${window.location.protocol}//${window.location.host}/watch/${movie.title}`
+    const url = `${window.location.protocol}//${window.location.host}${window.location.pathname}`
     return (
         <Dialog open={isModalOpen} onClose={() => setisModalOpen(false)} className="relative z-50">
             <DialogBackdrop className="fixed inset-0 bg-main/50"></DialogBackdrop>
