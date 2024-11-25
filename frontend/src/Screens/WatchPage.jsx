@@ -199,7 +199,7 @@ const WatchPage = () => {
                                 <MovieRates movie={movie}></MovieRates>
 
                                 <div className="my-14">
-                                    <SgSlider movies={RelatesMovies} title="Related Movies" Icon={BsCollectionFill}></SgSlider>
+                                    <SgSlider movies={RelatesMovies} title="Recommended" Icon={BsCollectionFill}></SgSlider>
 
                                 </div>
                             </div>

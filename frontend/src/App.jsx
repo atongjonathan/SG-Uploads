@@ -18,6 +18,7 @@ import PrivateRoute from './context/PrivateRoute'
 import { SuperRoute } from './context/PrivateRoute'
 import ScrollToTop from './ScrollToTop';
 import 'react-loading-skeleton/dist/skeleton.css'
+import SingleMovie from './Screens/SingleMovie';
 
 const App = () => {
   Aos.init();
@@ -40,6 +41,7 @@ const App = () => {
         <Route path='/contact-us' element={<ContactUs />}></Route>
         <Route path='/movies' element={<MoviesPage />}></Route>
         <Route path='/watch/:id' element={<WatchPage />}></Route>
+        <Route path='/movie/:id' element={<SingleMovie />}></Route>
         <Route path='/403' element={<NotAllowed />}></Route>
 
         {/* Catch-all for not found */}

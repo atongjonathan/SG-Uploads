@@ -74,7 +74,7 @@ class Captions():
         keyboard = InlineKeyboardMarkup()
         # Use `movie.get('stream', '#')` to prevent errors
         button = InlineKeyboardButton(
-            "🎬 Watch now",  url=f"https://sg-uploads.vercel.app/movie/{movie.get('title')}")
+            "🎬 Watch now",  url=f"https://sg-uploads.vercel.app/watch/{movie.get('title')}")
         keyboard.add(button)
 
         try:
