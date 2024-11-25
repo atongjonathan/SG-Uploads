@@ -1,13 +1,13 @@
-import { Combobox, ComboboxButton, ComboboxInput, ComboboxOption, ComboboxOptions, Field, Label } from '@headlessui/react'
+import { Combobox, ComboboxButton, ComboboxInput, ComboboxOption, ComboboxOptions } from '@headlessui/react'
 import clsx from 'clsx'
-import { useEffect, useState } from 'react'
-import { FaAngleDown, FaCheck, FaSearch } from 'react-icons/fa'
+import { useState } from 'react'
+import { FaAngleDown, } from 'react-icons/fa'
 
 
 
 export default function SgCombo({ searchMovie, movies, findMovie }) {
     const [query, setQuery] = useState('')
-    const [selected, setSelected] = useState(null)
+    const [selected, setSelected] = useState('')
 
 
 
@@ -20,13 +20,7 @@ export default function SgCombo({ searchMovie, movies, findMovie }) {
 
     return (
         <form className="relative w-full text-sm bg-dryGray rounded flex-btn gap-4">
-            {/* <button
-                type="submit"
-                className="bg-subMain w-12 flex-colo h-12 rounded text-white"
-            >
-                <FaSearch></FaSearch>
-            </button> */}
-            <Combobox value={selected} onChange={(value) => findMovie(value)} onClose={() => setQuery('')}>
+            <Combobox value={selected} onChange={(value) => value != '' && findMovie(value)} onClose={() => setQuery('')}>
                 <ComboboxInput
                     className={clsx(
                         'rounded-lg  py-1.5 pr-8 pl-3 font-medium placeholder:text-border text-sm w-full h-12 bg-transparent border-none px-2 text-black',

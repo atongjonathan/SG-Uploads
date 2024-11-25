@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { FaFile } from 'react-icons/fa';
 import { FiUploadCloud } from 'react-icons/fi';
-import { Toaster, toast } from 'sonner';
+import {  toast } from 'sonner';
 
 const Uploader = ({ updateParentFile }) => {
   const [file, setFile] = useState(null);
@@ -19,11 +19,11 @@ const Uploader = ({ updateParentFile }) => {
         const selectedFile = acceptedFiles[0];
         updateParentFile(selectedFile);
         setFile(selectedFile.name);
-        toast(`${selectedFile.name} uploaded!`);
+        toast.success(`${selectedFile.name} uploaded!`);
       }
     },
     onDropRejected: () => {
-      toast('File too large or invalid format!');
+      toast.error('File too large or invalid format!');
     },
   });
 
@@ -40,7 +40,7 @@ const Uploader = ({ updateParentFile }) => {
         <p className="text-sm mt-2">Drag your image here</p>
         <em className="text-xs text-border">(Only .jpg, .jpeg, .png files will be accepted)</em>
         {file && (
-          <span className="mx-auto flex flex-rows gap-2 mt-3 text-sm">
+          <span className="mx-auto flex flex-rows gap-2 mt-3 text-sm text-white">
             <FaFile /> {file}
           </span>
         )}

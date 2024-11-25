@@ -8,7 +8,6 @@ import MoviesPage from './Screens/Movies';
 import WatchPage from './Screens/WatchPage';
 import Profile from './Screens/User/Profile';
 import Aos from 'aos';
-import Password from './Screens/User/Password';
 import FavouriteMovies from './Screens/User/FavouriteMovies';
 import MoviesList from './Screens/Admin/MoviesList';
 import "aos";
@@ -32,7 +31,6 @@ const App = () => {
 
         {/* Protected routes for authenticated users */}
 
-        <Route path='/password' element={<PrivateRoute><Password /></PrivateRoute>}></Route>
         <Route path='/favourites' element={<PrivateRoute><FavouriteMovies /></PrivateRoute>}></Route>
         <Route path='/profile' element={<PrivateRoute><Profile /></PrivateRoute>}></Route>
 

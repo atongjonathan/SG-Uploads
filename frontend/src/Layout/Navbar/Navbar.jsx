@@ -2,7 +2,7 @@ import React, { useCallback, useContext, useState } from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { FaSearch, FaHeart } from "react-icons/fa";
 import logo from "../../images/4x3.jpg";
-import { Button, Input } from "@headlessui/react";
+import { Button } from "@headlessui/react";
 import AuthContext from "../../context/AuthContext";
 import { DialogBackdrop, Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
 import { IoClose } from "react-icons/io5";
@@ -19,13 +19,11 @@ const Navbar = () => {
   const hover = 'hover:text-subMain transitions text-white';
   const Hover = ({ isActive }) => (isActive ? 'text-subMain' : hover);
   const navigate = useNavigate();
-  const [SGUSer, setSGUser] = useState(null)
 
 
-  const { authTokens, logoutUser, user } = useContext(AuthContext);
+  const { logoutUser, user } = useContext(AuthContext);
   const movies = useContext(MovieContext)?.movies || [];
   const [isResults, setResults] = useState([]);
-  const [showModal, setShowModal] = useState(false)
 
   const location = useLocation(); // Get the current path
   const { pathname, search } = location; // Extract pathname and search
@@ -85,46 +83,60 @@ const Navbar = () => {
       <div className="container mx-auto py-3 px-2 lg:py-6 lg:grid gap-10 grid-cols-7 justify-between items-center min-h-7">
         {/* Logo */}
         <div className="col-span-1 lg:block hidden">
-          <Link to="/">
+          <NavLink to="/">
             <img
               src={logo}
               alt="logo"
               style={{ scale: '1.2' }}
               className="w-full h-12 object-contain"
             />
-          </Link>
+          </NavLink>
         </div>
 
 
         <div className="col-span-3 lg:hidden flex-rows text-text text-sm gap-3">
-          <button type="button" onClick={() => setShowModal(true)} className="bg-subMain w-12 flex-colo h-12 rounded text-white">
-            <FaSearch className="w-6" />
-          </button>
-          <Link
+
+          <NavLink
             to="/movies"
             className={`${isActive("/movies") ? "bg-subMain" : "bg-dry"
               } p-3 cursor-pointer rounded-2xl border border-gray-800`}
           >
             Browse
-          </Link>
+          </NavLink>
 
-          {/* Action Movies Link */}
-          <Link
+
+          {/* Action Movies NavLink */}
+          <NavLink
             to="/movies?category=Action"
             className={`${isActive("/movies?category=Action") ? "bg-subMain" : "bg-dry"
               } p-3 cursor-pointer rounded-2xl border border-gray-800`}
           >
             Action
-          </Link>
+          </NavLink>
 
-          {/* Horror Movies Link */}
-          <Link
+          {/* Horror Movies NavLink */}
+          <NavLink
             to="/movies?category=Horror"
             className={`${isActive("/movies?category=Horror") ? "bg-subMain" : "bg-dry"
               } p-3 cursor-pointer rounded-2xl border border-gray-800`}
           >
             Horror
-          </Link>
+          </NavLink>
+
+          {
+            user == undefined ? <Button className={`${Hover} relative`} onClick={openLogin} title="Profile">
+              <div className="relative inline-flex items-center justify-center w-9 h-9 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
+                <img src={`https://ui-avatars.com/api/?name=ME&rounded=true&background=14759f&size=35&color=fff`} alt={`${user?.username} avatar`} className="absolute w-10 h-10 rounded-full" />
+              </div>
+            </Button> :
+              <NavLink to={`/profile`} className={`${Hover} relative`} title="Profile">
+                <div className="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
+                  <img src={userAvatar} alt={`${user?.username} avatar`} className="absolute w-10 h-10 rounded-full" />
+                </div>
+              </NavLink>
+          }
+
+
         </div>
 
 
@@ -144,51 +156,7 @@ const Navbar = () => {
             />
           </form>
 
-          <Dialog open={showModal} onClose={() => setShowModal(false)} className="relative z-50">
-            <DialogBackdrop className="fixed inset-0 bg-main/50"></DialogBackdrop>
 
-            <div className="fixed inset-0 flex w-full items-start justify-center p-4">
-              <DialogPanel className="relative max-w-lg space-y-4 border bg-dry p-6 lg:p-10 text-text rounded-lg w-full">
-                <DialogTitle className="font-bold">Find a Movie</DialogTitle>
-                <Button onClick={() => setShowModal(false)} className='absolute top-0 right-3 text-text hover:text-subMain transitions'><IoClose className="h-5 w-5"></IoClose></Button>
-                <Input
-                  type="text"
-                  placeholder="Search Movie Name from here"
-                  className={"font-medium placeholder:text-text text-sm w-full h-12 bg-transparent border-none px-2 text-black bg-white mt-10" + { Hover }}
-                  onInput={handleSearch}
-                />
-                {(isResults.length > 0 && showModal) && (
-                  <div className="w-full bg-dry border border-gray-800 p-1 rounded-md absolute left-0">
-                    <table className="w-full table-auto border border-border divide-y divide-border">
-                      <tbody className="bg-main divide-y divide-gray-800">
-                        {isResults.slice(0, 3).map((movie, idx) => (
-                          <tr
-                            key={idx}
-                            className="hover:text-main text-center hover:bg-dryGray hover:cursor-pointer"
-                            title={movie.title}
-                            onClick={() => {
-                              handleResultClick(movie.title)
-                              setShowModal(false)
-                            }}
-                          >
-                            <td className="w-12 p-1 bg-dry border border-border h-12 rounded overflow-hidden">
-                              <img
-                                src={movie.poster}
-                                alt={movie.title} title={movie.title}
-                                className="h-full w-full object-cover"
-                              />
-                            </td>
-                            <td>{movie.title}</td>
-                            <td>{movie.year}</td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                )}
-              </DialogPanel>
-            </div>
-          </Dialog>
 
           {/* Search Results */}
           {isResults.length > 0 && (
@@ -225,7 +193,7 @@ const Navbar = () => {
             Browse
           </NavLink>
           <SgMenu></SgMenu>
-         
+
           {user && (
             <NavLink className={`${Hover} relative`} to="/favourites" title="Favourites">
               <FaHeart className="w-5 h-5" />
@@ -237,25 +205,11 @@ const Navbar = () => {
           {user && (
             <NavLink className={`${Hover} relative`} to="/profile" title="Profile">
               <div className="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
-                <img src={userAvatar} alt={`${user?.username} avatar`} className="absolute w-12 h-12 rounded-full" />
+                <img src={userAvatar} alt={`${user?.username} avatar`} className="absolute w-10 h-10 rounded-full" />
               </div>
             </NavLink>
           )}
-          {user ? (
-            <Button title="Log Out" className={Hover} onClick={() => {
-              logoutUser()
-              toast.info("Logged Out", {
-                classNames: {
-                  toast: 'bg-subMain',
-                  title: 'text-white',
-                  closeButton: 'bg-subMain text-white hover:text-subMain',
-                },
-                closeButton: true,
-              })
-            }}>
-              Logout
-            </Button>
-          ) : (
+          {!user && (
             <>
               <Button className={Hover} onClick={() => setIsLoginOpen(true)}>
                 Log In
@@ -272,7 +226,7 @@ const Navbar = () => {
             <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
 
 
-              <DialogPanel className="relative max-w-lg space-y-4 border bg-main p-6 lg:p-10 text-text rounded-lg  backdrop-blur-2xl duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0">
+              <DialogPanel transition className="relative max-w-lg space-y-4 border bg-main p-6 lg:p-10 text-text rounded-lg  backdrop-blur-2xl duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0">
                 <Button onClick={() => setIsLoginOpen(false)} className='absolute top-5 right-5 text-text hover:text-subMain transitions'><IoClose className="h-5 w-5"></IoClose></Button>
                 <DialogTitle className="font-bold">Log In</DialogTitle>
                 <Login openSignUp={openSignUp} closeLogin={closeLogin} />
@@ -287,7 +241,7 @@ const Navbar = () => {
             <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
 
 
-              <DialogPanel className="relative max-w-lg space-y-4 border bg-main p-6 lg:p-10 text-text rounded-lg  backdrop-blur-2xl duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0">
+              <DialogPanel transition className="relative max-w-lg space-y-4 border bg-main p-6 lg:p-10 text-text rounded-lg  backdrop-blur-2xl duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0">
                 <Button onClick={() => setIsSignUpOpen(false)} className='absolute top-5 right-5 text-text hover:text-subMain transitions'><IoClose className="h-5 w-5"></IoClose></Button>
                 <DialogTitle className="font-bold">Sign Up</DialogTitle>
                 <Register openLogin={openLogin} closeModal={closeSignUp}></Register>

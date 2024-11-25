@@ -1,22 +1,22 @@
-import React, { useCallback } from 'react'
+import React, { useCallback,useState } from 'react'
 import { HiViewGridAdd } from 'react-icons/hi';
-import {  Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
+import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { NavLink } from 'react-router-dom';
 import { MdOutlineContactMail, MdOutlineInfo } from 'react-icons/md';
-import { RxDashboard } from "react-icons/rx";
 import { FaFilm, FaHeart, FaListAlt } from 'react-icons/fa'
-import { FiSettings } from 'react-icons/fi'
-import { RiLockPasswordLine } from 'react-icons/ri'
+import { FiSettings } from 'react-icons/fi';
+import { Transition } from '@headlessui/react'
 
 
 const PopMenu = ({ user }) => {
 
-    const active = 'bg-subMain text-main'
-    const inActive = 'transitions text-2xl flex-colo hover:bg-white hover:text-main text-white rounded-md px-4 py-3 bg-dry mt-2'
+    const active = 'text-main'
+    const inActive = 'transitions text-2xl flex-colo hover:bg-white hover:text-main text-white rounded-md p-3'
     const Hover = useCallback(({ isActive }) =>
         isActive ? `${active} ${inActive}` : inActive,
         []
     );
+    const [open, setOpen] = useState(false)
 
     const adminLinks = [
         {
@@ -30,36 +30,20 @@ const PopMenu = ({ user }) => {
             link: '/addmovie',
             icon: FaFilm,
 
-        },
-        // {
-        //     name: 'Categories',
-        //     link: '/categories',
-        //     icon: HiViewGridAdd
-        // },
-        {
-            name: 'Dashboard',
-            link: '/dashboard',
-            icon: RxDashboard,
-
-        },
+        }
     ]
 
     const sideLinks = [
 
         {
-            name: 'Profile',
-            link: '/profile',
-            icon: FiSettings
-        },
-        {
-            name: 'Favourites',
+            name: 'Favs',
             link: '/favourites',
             icon: FaHeart
         },
         {
-            name: 'Password',
-            link: '/password',
-            icon: RiLockPasswordLine
+            name: 'Settings',
+            link: '/profile',
+            icon: FiSettings
         },
     ]
 
@@ -70,8 +54,8 @@ const PopMenu = ({ user }) => {
             </MenuButton>
             <MenuItems
                 transition
-                anchor="top"
-                className={`grid ${user ? 'grid-cols-4' : 'grid-cols-2'}  gap-2 bg-main z-50`}            >
+                anchor="top start"
+                className={`flex justify-center gap-2 bg-dry/80 z-50 transition duration-100 ease-out [--anchor-gap:var(--spacing-1)] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0`}            >
                 {
                     !user &&
                     <MenuItem>
