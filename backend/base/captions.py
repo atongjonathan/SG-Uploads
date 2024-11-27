@@ -23,7 +23,7 @@ class Captions():
         try:
             # Download the subtitle in WebVTT format
             srt_content = self.subtitles.download(
-                file_id=first_subtitle["id"], sub_format="webvtt")
+                file_id=first_subtitle["files"][0]["file_id"], sub_format="webvtt")
 
             filename = f"{first_subtitle.get('release')[:51]}.webvtt"
             with open(filename, 'wb') as file:
