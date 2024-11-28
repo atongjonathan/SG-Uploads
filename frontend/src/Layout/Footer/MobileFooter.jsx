@@ -4,12 +4,13 @@ import { NavLink, useNavigate } from 'react-router-dom'
 import { Button } from '@headlessui/react'
 import AuthContext from '../../context/AuthContext';
 import { Dialog, DialogPanel, DialogTitle, DialogBackdrop } from '@headlessui/react'
-import Login from '../../Screens/Auth/Login';
-import Register from '../../Screens/Auth/Register';
-import { IoClose } from 'react-icons/io5';
 import PopMenu from './PopMenu';
 import { FaSearch } from 'react-icons/fa';
 import { MovieContext } from '../../context/MovieContext';
+import SignUpModal from '../../Components/Modals/SignUpModal';
+import LoginModal from '../../Components/Modals/LoginModal';
+import { IoClose } from 'react-icons/io5'
+import Results from '../../Components/Home/Results';
 
 const MobileFooter = () => {
     const Hover = 'transitions text-2xl flex-colo hover:bg-white hover:text-main text-white rounded-md px-4 py-3'
@@ -51,10 +52,6 @@ const MobileFooter = () => {
     const openSignUp = useCallback(() => {
         setisLoginOpen(false)
         setIsSignUpOpen(true)
-
-    })
-    const isOpen = useCallback(() => {
-        setisLoginOpen(false)
 
     })
     const openLogin = useCallback(() => {
@@ -107,63 +104,16 @@ const MobileFooter = () => {
                                 onInput={handleSearch}
                             />
                             {(isResults.length > 0 && showModal) && (
-                                <div className="w-full bg-dry border border-gray-800 p-1 rounded-md absolute left-0">
-                                    <table className="w-full table-auto border border-border divide-y divide-border">
-                                        <tbody className="bg-main divide-y divide-gray-800">
-                                            {isResults.slice(0, 3).map((movie, idx) => (
-                                                <tr
-                                                    key={idx}
-                                                    className="hover:text-main text-center hover:bg-dryGray hover:cursor-pointer"
-                                                    title={movie.title}
-                                                    onClick={() => {
-                                                        handleResultClick(movie.title)
-                                                        setShowModal(false)
-                                                    }}
-                                                >
-                                                    <td className="w-12 p-1 bg-dry border border-border h-12 rounded overflow-hidden">
-                                                        <img
-                                                            src={movie.poster}
-                                                            alt={movie.title} title={movie.title}
-                                                            className="h-full w-full object-cover"
-                                                        />
-                                                    </td>
-                                                    <td>{movie.title}</td>
-                                                    <td>{movie.year}</td>
-                                                </tr>
-                                            ))}
-                                        </tbody>
-                                    </table>
-                                </div>
+                                <Results isResults={isResults}></Results>
                             )}
                         </DialogPanel>
                     </div>
                 </Dialog>
-                <Dialog open={isLoginOpen} onClose={() => setisLoginOpen(false)} className="relative z-50">
-                    <DialogBackdrop className="fixed inset-0 bg-main/50"></DialogBackdrop>
-                    <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
+                <SignUpModal isSignUpOpen={isSignUpOpen} setIsSignUpOpen={setIsSignUpOpen} openLogin={openLogin} closeSignUp={closeSignUp} ></SignUpModal>
+
+                <LoginModal isLoginOpen={isLoginOpen} setIsLoginOpen={setisLoginOpen} openSignUp={openSignUp} closeLogin={closeLogin} ></LoginModal>
 
 
-                        <DialogPanel className="relative max-w-lg space-y-4 border bg-main p-6 lg:p-10 text-text rounded-lg">
-                            <Button onClick={() => setisLoginOpen(false)} className='absolute top-5 right-5 text-text hover:text-subMain transitions'><IoClose className="h-5 w-5"></IoClose></Button>
-                            <DialogTitle className="font-bold">Log In</DialogTitle>
-                            <Login openSignUp={openSignUp} closeLogin={closeLogin}></Login>
-                        </DialogPanel>
-                    </div>
-                </Dialog>
-
-                <Dialog open={isSignUpOpen} onClose={() => setisSignUpOpen(false)} className="relative z-50">
-                    <DialogBackdrop className="fixed inset-0 bg-main/50"></DialogBackdrop>
-
-                    <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
-
-
-                        <DialogPanel className="relative max-w-lg space-y-4 border bg-main p-6 lg:p-10 text-text rounded-lg">
-                            <Button onClick={() => setIsSignUpOpen(false)} className='absolute top-5 right-5 text-text hover:text-subMain transitions'><IoClose className="h-5 w-5"></IoClose></Button>
-                            <DialogTitle className="font-bold">Sign Up</DialogTitle>
-                            <Register openLogin={openLogin} closeSignUp={closeSignUp}></Register>
-                        </DialogPanel>
-                    </div>
-                </Dialog>
             </footer>
         </>
 

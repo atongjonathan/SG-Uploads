@@ -1,12 +1,15 @@
 import React, { useContext, useState } from 'react'
 import { DialogBackdrop, Dialog, DialogPanel, DialogTitle, Button } from '@headlessui/react'
-import { IoClose } from "react-icons/io5";
 import { toast } from 'sonner'
 import { Input } from '../../Components/UserInputs'
 import { CgSpinner } from 'react-icons/cg'
 import { FiLogIn } from 'react-icons/fi'
 import AuthContext from '../../context/AuthContext';
+import Backend from '../../utils/Backend';
+import { IoClose } from 'react-icons/io5'
 
+
+const backend = Backend()
 const LoginModal = ({ isLoginOpen, setIsLoginOpen, openSignUp, closeLogin }) => {
 
     const [loading, setLoading] = useState(false)
@@ -59,22 +62,22 @@ const LoginModal = ({ isLoginOpen, setIsLoginOpen, openSignUp, closeLogin }) => 
         <Dialog open={isLoginOpen} onClose={() => setIsLoginOpen(false)} className="relative z-50">
             <DialogBackdrop className="fixed inset-0 bg-main/50"></DialogBackdrop>
 
-            <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
+            <div className="fixed inset-0 flex w-screen items-center justify-center p-3">
 
 
-                <DialogPanel transition className="relative max-w-lg space-y-4 border bg-main p-6 lg:p-10 text-text rounded-lg  backdrop-blur-2xl duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0">
+                <DialogPanel transition className="relative max-w-lg space-y-4 border bg-main px-8 py-5  text-text rounded-lg  backdrop-blur-2xl duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0">
                     <Button onClick={() => setIsLoginOpen(false)} className='absolute top-5 right-5 text-text hover:text-subMain transitions'><IoClose className="h-5 w-5"></IoClose></Button>
-                    <DialogTitle className="font-bold">Log In</DialogTitle>
+                    <DialogTitle className="font-bold text-center">Welcome Back</DialogTitle>
                     <form action="" method='post' onSubmit={(e) => handleSubmit(e)}>
                         <div className='container mx-auto flex-colo gap-2'>
 
-                            <Input label="Username" placeholder='johndoe' type='text' bg name="username" error={usernameError}></Input>
+                            <Input label="Username" placeholder='example' type='text' bg name="username" error={usernameError}></Input>
                             <Input label="Password" placeholder='*******' type='password' name="password" bg error={passwordError}></Input>
-                            <button type="submit" className='bg-subMain transitions hover:bg-main flex-rows gap-4 text-white p-4 rounded-lg w-full my-4'><FiLogIn></FiLogIn>Sign In
+                            <Button type="submit" className='bg-subMain transitions hover:bg-main flex-rows gap-4 text-white py-2 rounded-lg w-full my-2'><FiLogIn></FiLogIn>Sign In
                                 {
                                     loading && <CgSpinner className='animate-spin'></CgSpinner>
                                 }
-                            </button>
+                            </Button>
                             <p className="text-center text-border">
                                 Don't have an account? {" "}
                                 <Button onClick={openSignUp} className='text-dryGray font-semibold ml-2'> Sign Up</Button>

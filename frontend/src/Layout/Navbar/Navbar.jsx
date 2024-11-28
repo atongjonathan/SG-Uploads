@@ -8,6 +8,7 @@ import { MovieContext } from "../../context/MovieContext";
 import SgMenu from "./SgMenu";
 import LoginModal from '../../Components/Modals/LoginModal'
 import SignUpModal from '../../Components/Modals/SignUpModal'
+import Results from "../../Components/Home/Results";
 
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
@@ -15,7 +16,6 @@ const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 const Navbar = () => {
   const hover = 'hover:text-subMain transitions text-white';
   const Hover = ({ isActive }) => (isActive ? 'text-subMain' : hover);
-  const navigate = useNavigate();
 
 
   const {  user } = useContext(AuthContext);
@@ -65,10 +65,7 @@ const Navbar = () => {
 
   };
 
-  const handleResultClick = (title) => {
-    navigate(`/watch/${title}`);
-    setResults([]);
-  };
+
 
 
   const userAvatar = user?.image
@@ -157,30 +154,7 @@ const Navbar = () => {
 
           {/* Search Results */}
           {isResults.length > 0 && (
-            <div className="w-full bg-dry border border-gray-800 p-1 rounded-md absolute left-0">
-              <table className="w-full table-auto border border-border divide-y divide-border">
-                <tbody className="bg-main divide-y divide-gray-800">
-                  {isResults.slice(0, 3).map((movie, idx) => (
-                    <tr
-                      key={idx}
-                      className="hover:text-main text-center hover:bg-dryGray hover:cursor-pointer"
-                      title={movie.title}
-                      onClick={() => handleResultClick(movie.title)}
-                    >
-                      <td className="w-12 p-1 bg-dry border border-border h-12 rounded overflow-hidden">
-                        <img
-                          src={movie.poster}
-                          alt={movie.title} title={movie.title}
-                          className="h-full w-full object-cover"
-                        />
-                      </td>
-                      <td>{movie.title}</td>
-                      <td>{movie.year}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+            <Results isResults={isResults}></Results>
           )}
         </div>
 

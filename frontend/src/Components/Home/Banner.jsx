@@ -19,10 +19,10 @@ const Banner = ({ movies }) => {
       {
         isLoading ?
           <div className="relative w-full">
-            <div className="relative rounded-xl h-72 py-10 overflow-hidden bg-dry z-10">
+            <div className="relative h-72 py-10 overflow-hidden bg-dry z-10">
               <div className="h-96"></div>
 
-              <div className="lg:w-7/12 absolute linear-bg xl:pl-32 sm:pl-32 px-3 top-0 bottom-0 right-0 left-0 flex flex-col lg:pt-2 pt-10  lg:gap-7 md:gap-5 gap-4 z-20 md:h-96 min-h-80 max-h-96  rounded-xl">
+              <div className="lg:w-7/12 absolute linear-bg xl:pl-32 sm:pl-32 px-3 top-0 bottom-0 right-0 left-0 flex flex-col lg:pt-2 pt-10  lg:gap-7 md:gap-5 gap-4 z-20 md:h-96 min-h-80 max-h-96 ">
                 <Skeleton baseColor="rgb(22 28 63)" height={30} containerClassName="animate-pulse"></Skeleton>
 
 
@@ -67,15 +67,15 @@ const Banner = ({ movies }) => {
 
               {
                 movies?.slice(0, 6).sort(() => .5 - Math.random()).map((movie, idx) => (
-                  <SwiperSlide key={idx} className="relative rounded-xl overflow-hidden">
-                    <img
-                      src={movie.poster}
-                      alt={movie.title} title={movie.title}
-                      className="w-full md:hidden h-100 object-contain"
-                    />
+                  <SwiperSlide key={idx} className="relative overflow-hidden">
+                      <img
+                        src={movie.poster}
+                        alt={movie.title} title={movie.title}
+                        className="w-full md:hidden max-h-100 object-cover"
+                      />
                     <div style={{
                       background: `url('${movie?.poster}'`
-                    }} className={`w-full md:inline-block hidden h-full object-cover blur-lg relative rounded-xl`}>
+                    }} className={`w-full md:inline-block hidden h-full object-cover blur-lg relative`}>
 
                     </div>
 
@@ -88,7 +88,7 @@ const Banner = ({ movies }) => {
                       alt={movie.title} title={movie.title}
                       className="absolute right-28 z-10 object-contain w-100 rotate-12 hidden md:inline-block "
                     />
-                    <div className="lg:w-7/12 absolute linear-bg xl:pl-32 sm:pl-32 pl-8 top-0 bottom-0 right-0 left-0 flex flex-col justify-center lg:gap-8 md:gap-5 gap-4 z-20 md:h-96 min-h-80 max-h-96  rounded-xl">
+                    <div className="lg:w-7/12 absolute linear-bg xl:pl-32 sm:pl-32 pl-8 top-0 bottom-0 right-0 left-0 flex flex-col justify-center lg:gap-8 md:gap-5 gap-4 z-20 md:h-96 min-h-80 max-h-96">
                       <h1 className="xl:text-4xl truncate capitalize font-sans sm:text-2xl text-xl font-bold">{movie.title}</h1>
 
 
