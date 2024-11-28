@@ -53,15 +53,16 @@ const Banner = ({ movies }) => {
             <Swiper
               className="w-full md:h-96 min-h-80 max-h-96 bg-dry"
               slidesPerView={1}
-              loop={true}
+              loop
               direction="horizontal"
               speed={1000}
+              grabCursor
+              keyboard
               modules={[Autoplay, EffectFade]}
               autoplay={{
                 delay: 5000,
                 disableOnInteraction: false,
               }}
-              effect="fade"
             >
 
               {

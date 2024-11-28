@@ -1,16 +1,13 @@
 import React, { useCallback, useContext, useState } from "react";
-import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
+import {  NavLink, useLocation, useNavigate } from "react-router-dom";
 import { FaSearch, FaHeart } from "react-icons/fa";
 import logo from "../../images/4x3.jpg";
 import { Button } from "@headlessui/react";
 import AuthContext from "../../context/AuthContext";
-import { DialogBackdrop, Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
-import { IoClose } from "react-icons/io5";
-import Login from "../../Screens/Auth/Login";
-import Register from "../../Screens/Auth/Register";
-import { toast } from "sonner";
 import { MovieContext } from "../../context/MovieContext";
 import SgMenu from "./SgMenu";
+import LoginModal from '../../Components/Modals/LoginModal'
+import SignUpModal from '../../Components/Modals/SignUpModal'
 
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
@@ -21,7 +18,7 @@ const Navbar = () => {
   const navigate = useNavigate();
 
 
-  const { logoutUser, user } = useContext(AuthContext);
+  const {  user } = useContext(AuthContext);
   const movies = useContext(MovieContext)?.movies || [];
   const [isResults, setResults] = useState([]);
 
@@ -220,34 +217,9 @@ const Navbar = () => {
               </Button>
             </>
           )}
-          <Dialog open={isLoginOpen} onClose={() => setIsLoginOpen(false)} className="relative z-50">
-            <DialogBackdrop className="fixed inset-0 bg-main/50"></DialogBackdrop>
+          <SignUpModal isSignUpOpen={isSignUpOpen} setIsSignUpOpen={setIsSignUpOpen} openLogin={openLogin} closeSignUp={closeSignUp} ></SignUpModal>
 
-            <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
-
-
-              <DialogPanel transition className="relative max-w-lg space-y-4 border bg-main p-6 lg:p-10 text-text rounded-lg  backdrop-blur-2xl duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0">
-                <Button onClick={() => setIsLoginOpen(false)} className='absolute top-5 right-5 text-text hover:text-subMain transitions'><IoClose className="h-5 w-5"></IoClose></Button>
-                <DialogTitle className="font-bold">Log In</DialogTitle>
-                <Login openSignUp={openSignUp} closeLogin={closeLogin} />
-
-              </DialogPanel>
-            </div>
-          </Dialog>
-
-          <Dialog open={isSignUpOpen} onClose={() => setIsSignUpOpen(false)} className="relative z-50">
-            <DialogBackdrop className="fixed inset-0 bg-main/50"></DialogBackdrop>
-
-            <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
-
-
-              <DialogPanel transition className="relative max-w-lg space-y-4 border bg-main p-6 lg:p-10 text-text rounded-lg  backdrop-blur-2xl duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0">
-                <Button onClick={() => setIsSignUpOpen(false)} className='absolute top-5 right-5 text-text hover:text-subMain transitions'><IoClose className="h-5 w-5"></IoClose></Button>
-                <DialogTitle className="font-bold">Sign Up</DialogTitle>
-                <Register openLogin={openLogin} closeModal={closeSignUp}></Register>
-              </DialogPanel>
-            </div>
-          </Dialog>
+          <LoginModal isLoginOpen={isLoginOpen} setIsLoginOpen={setIsLoginOpen} openSignUp={openSignUp} closeLogin={closeLogin} ></LoginModal>
         </div>
       </div>
     </div>
