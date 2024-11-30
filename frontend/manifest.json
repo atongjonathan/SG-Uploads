@@ -1,16 +1,32 @@
 {
-    "short_name": "SG uploads",
-    "name": "SG uploads",
+    "short_name": "SG Uploads",
+    "name": "SG Uploads",
+    "description":"Your free movie website search is over. With SG Uploads you can watch free movies online and TV shows without any account.",
     "icons": [
-    {
-     "src": "./src/images/4x3.jpg",
-     "sizes": "64x64",
-     "type": "image\/jpg"
-    }
+      {
+        "src": "https://im.gurl.eu.org/file/60e7e616b94ec19f9da35-00d682d0b0fa81aeb3.png",
+        "sizes": "192x192",
+        "type": "image/png"
+      },
+      {
+        "src": "https://im.gurl.eu.org/file/d142ba6f064079a5e57c2-45a320ddbe0db5eb77.png",
+        "sizes": "512x512",
+        "type": "image/png"
+      }
    ],
     "start_url": ".",
     "display": "standalone",
     "theme_color": "#ffffff",
-    "background_color": "#000000"
+    "background_color": "#000000",
+    "screenshots": [    
+   {
+
+     "src": "https://im.gurl.eu.org/file/8b04a8dddab518efe24e1-fa7ef64aa652d55d3a.jpg",
+      "sizes": "640x320",
+      "type": "image/jpg",
+      "form_factor": "wide",
+      "label": "Application"
+    }
+ ]
   }
   
