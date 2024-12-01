@@ -1,6 +1,7 @@
 import { Dialog, DialogPanel, DialogBackdrop } from '@headlessui/react'
 import { useState } from 'react'
 import { TrailerVideo } from '../Single/MyPlyrVideo'
+import { IoPlay } from "react-icons/io5";
 
 export default function TrailerModal({ movie, trailer }) {
     let [isOpen, setIsOpen] = useState(false)
@@ -23,7 +24,13 @@ export default function TrailerModal({ movie, trailer }) {
                     backgroundPosition: 'center',
                     backgroundRepeat: 'no-repeat'
 
-                }} onClick={open} className='w-100 h-full relative group p-4 h-rate border border-border bg-dry rounded-lg overflow-hidden'>
+                }} onClick={open} className='w-100 h-full relative group p-4 h-rate border border-border bg-dry rounded-lg overflow-hidden grid items-center justify-center'>
+                    {
+                        !isOpen &&
+                        <div className="rounded-full p-2 flex justify-center items-center bg-white">
+                            <IoPlay className='text-2xl text-subMain ml-1 mt-1'></IoPlay>
+                        </div>
+                    }
 
 
                 </div>
