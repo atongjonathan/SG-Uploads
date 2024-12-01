@@ -124,7 +124,7 @@ const WatchPage = () => {
 
         }
 
-    }, [pathname, movie])
+    }, [pathname, movie, id])
 
     return (
         <>
