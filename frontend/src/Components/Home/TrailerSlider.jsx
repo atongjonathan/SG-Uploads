@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation } from "swiper/modules";
-import { FaArrowRight, FaHeart } from "react-icons/fa";
+import { FaArrowRight } from "react-icons/fa";
 import { FaArrowLeft } from "react-icons/fa";
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
@@ -19,21 +19,32 @@ const TrailerSlider = ({ trailers, movie }) => {
 
     const [endDisabled, setEndDisabled] = useState(false)
     const [startDisabled, setStartDisabled] = useState(true)
-
-    function handleSliderChange(start, end) {
+    const handleSliderChange = (start, end) => {
         if (end) {
-          setEndDisabled(true)
+          setEndDisabled(true);
+          setStartDisabled(false); // Reset startDisabled when reaching the end
+        } else if (start) {
+          setStartDisabled(true);
+          setEndDisabled(false); // Reset endDisabled when reaching the start
+        } else {
+          setStartDisabled(false);
+          setEndDisabled(false); // Neither start nor end
         }
-        else {
-          setEndDisabled(false)
+      };
+    
+      // Handle slide change to reset button states
+      const onSlideChange = (swiper) => {
+        const isAtStart = swiper.isBeginning;
+        const isAtEnd = swiper.isEnd;
+    
+        if (isAtStart && !isAtEnd) {
+          handleSliderChange(true, false); // At the beginning
+        } else if (isAtEnd && !isAtStart) {
+          handleSliderChange(false, true); // At the end
+        } else {
+          handleSliderChange(false, false); // Neither at start nor end
         }
-        if (start) {
-          setStartDisabled(true)
-        }
-        else {
-          setStartDisabled(false)
-        }
-      }
+      };
 
     return trailers && (
         <div className="mt-5">
@@ -45,10 +56,10 @@ const TrailerSlider = ({ trailers, movie }) => {
                         }   </h2>
                 </div>
                 <div className="px-2 flex justify-center gap-2">
-                    <Button className={`transitions text-sm rounded w-7 h-7 flex-colo text-white ${startDisabled ? 'bg-dry' : 'bg-subMain hover:bg-dry'}`} ref={(node) => setPrevEl(node)} disabled={startDisabled}>
+                    <Button className={`transitions text-sm rounded w-7 h-7 flex-colo text-white ${startDisabled ? 'bg-dry' : 'bg-subMain active:bg-dry'}`} ref={(node) => setPrevEl(node)} disabled={startDisabled}>
                         <FaArrowLeft />
                     </Button>
-                    <Button className={`transitions text-sm rounded w-7 h-7 flex-colo text-white ${endDisabled ? 'bg-dry' : 'bg-subMain hover:bg-dry'}`} ref={(node) => setNextEl(node)} disabled={endDisabled}>
+                    <Button className={`transitions text-sm rounded w-7 h-7 flex-colo text-white ${endDisabled ? 'bg-dry' : 'bg-subMain active:bg-dry'}`} ref={(node) => setNextEl(node)} disabled={endDisabled}>
                         <FaArrowRight />
                     </Button>
                 </div>
@@ -67,8 +78,9 @@ const TrailerSlider = ({ trailers, movie }) => {
                             speed={500}
                             modules={[Navigation, Autoplay]}
                             navigation={{ nextEl, prevEl }}
-                            onReachEnd={() => handleSliderChange(false, true)}
-                            onReachBeginning={() => handleSliderChange(true, false)}
+                            onSlideChange={onSlideChange} 
+                            onReachEnd={() => handleSliderChange(false, true)} 
+                            onReachBeginning={() => handleSliderChange(true, false)} 
                             breakpoints={
                                 {
                                     0: {
