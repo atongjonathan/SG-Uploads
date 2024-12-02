@@ -7,8 +7,6 @@ import SGFaHeart from '../SGFaHeart'
 import { BiPlay } from "react-icons/bi";
 import Skeleton from 'react-loading-skeleton'
 import { MovieContext } from "../../context/MovieContext";
-import 'swiper/css';
-import 'swiper/css/effect-fade';
 
 const Banner = ({ movies }) => {
 

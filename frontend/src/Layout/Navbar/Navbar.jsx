@@ -16,6 +16,7 @@ const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 const Navbar = () => {
   const hover = 'hover:text-subMain transitions text-white';
   const Hover = ({ isActive }) => (isActive ? 'text-subMain' : hover);
+  const navigate = useNavigate()
 
 
   const {  user } = useContext(AuthContext);
@@ -64,6 +65,11 @@ const Navbar = () => {
     }
 
   };
+
+  const handleResultClick = useCallback((title) => {
+    navigate(`/watch/${title}`);
+    setResults([]);
+})
 
 
 
@@ -154,7 +160,7 @@ const Navbar = () => {
 
           {/* Search Results */}
           {isResults.length > 0 && (
-            <Results isResults={isResults}></Results>
+            <Results isResults={isResults} handleResultClick={handleResultClick}></Results>
           )}
         </div>
 

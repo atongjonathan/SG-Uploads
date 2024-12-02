@@ -60,10 +60,12 @@ const MobileFooter = () => {
 
     })
 
-    const handleResultClick = (title) => {
+
+    const handleResultClick = useCallback((title) => {
         navigate(`/watch/${title}`);
+        setShowModal(false)
         setResults([]);
-    };
+    })
 
 
 
@@ -104,7 +106,7 @@ const MobileFooter = () => {
                                 onInput={handleSearch}
                             />
                             {(isResults.length > 0 && showModal) && (
-                                <Results isResults={isResults}></Results>
+                                <Results isResults={isResults} handleResultClick={handleResultClick}></Results>
                             )}
                         </DialogPanel>
                     </div>

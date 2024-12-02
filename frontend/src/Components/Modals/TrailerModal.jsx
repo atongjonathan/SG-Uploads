@@ -1,7 +1,6 @@
 import { Dialog, DialogPanel, DialogBackdrop } from '@headlessui/react'
 import { useState } from 'react'
 import { TrailerVideo } from '../Single/MyPlyrVideo'
-import { IoPlay } from "react-icons/io5";
 import { MdOutlinePlayCircleFilled, MdOutlinePauseCircleFilled } from "react-icons/md";
 
 export default function TrailerModal({ movie, trailer }) {
