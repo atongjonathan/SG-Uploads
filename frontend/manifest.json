@@ -89,14 +89,14 @@
   ],
   "screenshots": [
     {
-      "src": "https://raw.githubusercontent.com/atongjonathan/SG-Uploads/refs/heads/main/frontend/images/screenshots/screenshot.png?raw=true",
+      "src": "https://raw.githubusercontent.com/atongjonathan/SG-Uploads/refs/heads/main/frontend/images/screenshots/screenshot.png",
       "sizes": "955x555",
       "type": "image/jpg",
       "label": "Application",
       "form_factor": "wide"
     },
     {
-      "src": "https://raw.githubusercontent.com/atongjonathan/SG-Uploads/refs/heads/main/frontend/images/screenshots/screenshot1.png?raw=true",
+      "src": "https://raw.githubusercontent.com/atongjonathan/SG-Uploads/refs/heads/main/frontend/images/screenshots/screenshot1.png",
       "sizes": "955x555",
       "type": "image/jpg",
       "label": "Application"
