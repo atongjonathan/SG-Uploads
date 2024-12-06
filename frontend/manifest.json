@@ -32,7 +32,7 @@
   "categories": ["entertainment"],
   "screenshots": [
     {
-      "src": "https://github.com/atongjonathan/SG-Uploads/blob/243e0d2d54cc0d8b0e18fa6c7a6bfd9d3e9ee76f/frontend/src/images/screenshot.png?raw=true",
+      "src": "https://github.com/atongjonathan/SG-Uploads/blob/main/frontend/src/images/screenshot.png?raw=true",
       "sizes": "640x320",
       "type": "image/jpg",
       "form_factor": "wide",
