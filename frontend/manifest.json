@@ -15,12 +15,12 @@
   "description": "Your free movie website search is over. With SG Uploads you can watch free movies online and TV shows without any account.",
   "icons": [
     {
-      "src": "https://im.gurl.eu.org/file/60e7e616b94ec19f9da35-00d682d0b0fa81aeb3.png",
+      "src": "https://github.com/atongjonathan/SG-Uploads/blob/243e0d2d54cc0d8b0e18fa6c7a6bfd9d3e9ee76f/frontend/src/images/192x192.png?raw=true",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "https://im.gurl.eu.org/file/d142ba6f064079a5e57c2-45a320ddbe0db5eb77.png",
+      "src": "https://github.com/atongjonathan/SG-Uploads/blob/243e0d2d54cc0d8b0e18fa6c7a6bfd9d3e9ee76f/frontend/src/images/512x512.png?raw=true",
       "sizes": "512x512",
       "type": "image/png"
     }
@@ -32,7 +32,7 @@
   "categories": ["entertainment"],
   "screenshots": [
     {
-      "src": "https://im.gurl.eu.org/file/8b04a8dddab518efe24e1-fa7ef64aa652d55d3a.jpg",
+      "src": "https://github.com/atongjonathan/SG-Uploads/blob/243e0d2d54cc0d8b0e18fa6c7a6bfd9d3e9ee76f/frontend/src/images/screenshot.png?raw=true",
       "sizes": "640x320",
       "type": "image/jpg",
       "form_factor": "wide",
