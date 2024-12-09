@@ -45,10 +45,10 @@ export default function EditMovie({ close, isOpen, movie }) {
 
         const response = await Backend().editMovie(auth, formObject, currentMovie.id)
         if (response.status == 200) {
-            toast(movie.title + ' updated successfully')
+            toast.success(movie.title + ' updated successfully')
         }
         else {
-            toast(movie.title + ' addition failed')
+            toast.error(movie.title + ' addition failed')
 
         }
 

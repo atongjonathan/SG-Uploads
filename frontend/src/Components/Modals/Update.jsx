@@ -48,13 +48,13 @@ const Update = ({ isUpdateOpen, updateClose }) => {
         try {
             const response = await backend.updateProfile(authTokens.access, formObject);
             if (response.data) {
-                toast("Profile Updated", toastOptions)
+                toast.success("Profile Updated", toastOptions)
                 window.location.assign("/")
             }
             else {
 
                 toastOptions.classNames.toast = 'bg-oldMain'
-                toast("Profile update failed, Try again later", toastOptions)
+                toast.error("Profile update failed, Try again later", toastOptions)
 
             }
 

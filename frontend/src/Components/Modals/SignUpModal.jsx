@@ -22,7 +22,7 @@ const SignUpModal = ({ isSignUpOpen, setIsSignUpOpen, openLogin, closeSignUp }) 
         }
         else if (response.data) {
             let data = response.data
-            toast(data.email ? data.email : data.username ? data.username : 'An error occured try again later')
+            toast.error(data.email ? data.email : data.username ? data.username : 'An error occured try again later')
         }
         setLoading(false)
         closeSignUp()

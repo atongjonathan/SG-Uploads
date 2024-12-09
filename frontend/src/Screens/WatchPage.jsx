@@ -177,7 +177,7 @@ const WatchPage = () => {
                                             {
                                                 user ? <Link to={movie?.stream.replace("video", "dl")} className="bg-subMain flex-rows gap-2 hover:text-main transitions text-white rounded px-3 font-medium py-3 text-sm">
                                                     <FaCloud></FaCloud>
-                                                </Link> : <Button onClick={() => toast("Only logged in users can download", { closeButton: true })} className="bg-subMain flex-rows gap-2 hover:text-main transitions text-white rounded px-3 font-medium py-3 text-sm">
+                                                </Link> : <Button onClick={() => toast.info("Only logged in users can download", { closeButton: true })} className="bg-subMain flex-rows gap-2 hover:text-main transitions text-white rounded px-3 font-medium py-3 text-sm">
                                                     <FaCloud></FaCloud>
                                                 </Button>
                                             }

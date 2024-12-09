@@ -142,7 +142,7 @@ const SgSlider = ({ movies, title, Icon }) => {
                           src={movie.poster}
                           alt={movie.title}
                           title={movie.title}
-                          className="w-full h-h-rate object-cover"
+                          className="w-full h-full object-cover"
                         />
                       </Link>
                       <div className="absolute flex flex-col gap-2 bottom-0 right-0 left-0 bg-main bg-opacity-60 text-white px-4 py-3">
