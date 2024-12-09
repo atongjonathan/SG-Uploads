@@ -9,6 +9,7 @@ import axios from 'axios'
 import Layout from '../../Layout/Layout'
 import Skeleton from 'react-loading-skeleton'
 import { Button } from '@headlessui/react'
+import { CgSpinner } from 'react-icons/cg'
 
 const backend = Backend()
 const VITE_IMDB_API = import.meta.env.VITE_IMDB_API
@@ -21,7 +22,8 @@ const AddMovie = () => {
     const [caption, setCaption] = useState(null)
 
 
-    const [isloading, setLoading] = useState(false)
+    const [isloading, setIsLoading] = useState(false)
+    const [loading, setLoading] = useState(false)
     const [isresults, setResults] = useState([])
     const [query, setQuery] = useState('')
     const { authTokens } = useContext(AuthContext)
@@ -63,7 +65,7 @@ const AddMovie = () => {
             console.error(error);
         }
         finally {
-            setLoading(false)
+            setIsLoading(false)
         }
     }
     )
@@ -102,7 +104,7 @@ const AddMovie = () => {
     const findMovie = useCallback(function findMovie(link) {
 
         if (link) {
-            setLoading(true)
+            setIsLoading(true)
             let split = link?.split("/")
             const title = split[split.length - 1]
 
@@ -150,6 +152,7 @@ const AddMovie = () => {
     }
 
     async function handleSubmit(e) {
+        setLoading(true)
         e.preventDefault()
         const formData = new FormData(e.target)
         const formObject = Object.fromEntries(formData.entries())
@@ -167,18 +170,31 @@ const AddMovie = () => {
 
         const reqOptions = await makeOptions(movieData)
 
-        const responses = await Promise.all([backend.addMovie(auth, movieData), axios.request(reqOptions)])
+        try {
+            const responses = await Promise.all([backend.addMovie(auth, movieData), axios.request(reqOptions)])
 
-        if (responses[0].status == 201 || responses[1].status == 201) {
-            toast(movie.title + ' added successfully')
-            setMovie(null)
-            setCaption(null)
-            setSubs(null)
-        }
-        else {
-            toast(movie.title + ' addition failed')
+
+            if (responses[0].status == 201 || responses[1].status == 201) {
+                toast.success(movie.title + ' added successfully')
+                setMovie(null)
+                setCaption(null)
+                setSubs(null)
+            }
+            else {
+                toast.error(movie.title + ' addition failed')
+
+            }
+        } catch (error) {
+            toast.error(movie.title + ' addition failed')
+
 
         }
+        finally {
+            setLoading(false)
+        }
+
+
+
 
     }
     document.title = `Add Movie`
@@ -235,7 +251,7 @@ const AddMovie = () => {
                                 {
                                     caption && (
                                         <p className='flex gap-2 text-md'> Chosen subtitles:
-                                            <div className="text-sm/6 text-white">{caption.release} ({caption.year})</div>
+                                            <span className="text-sm/6 text-white">{caption.release} ({caption.year})</span>
                                             <kbd className="ml-auto font-sans text-xs text-white/50">{caption.download_count}</kbd></p>
                                     )
                                 }
@@ -248,7 +264,9 @@ const AddMovie = () => {
                                             <Input name='caption' type='text' placeholder='English Caption link'></Input>
                                             <div className="flex gap-2 flex-wrap flex-col-reverse sm:flex-row justify-between items-center my-4">
                                                 {/* <button className="bg-subMain font-medium transitions hover:bg-main border border-subMain text-white py-3 px-6 rounded w-full sm:w-auto">Delete Account</button> */}
-                                                <button className="bg-main font-medium transitions hover:bg-subMain border border-subMain text-white py-3 px-6 rounded w-full sm:w-auto">Add Movie</button>
+                                                <Button type='submit' className="bg-main font-medium transitions hover:bg-subMain border border-subMain text-white py-3 px-6 rounded w-full sm:w-auto flex gap-2 justify-center">Add Movie
+                                                    {loading && <CgSpinner className='animate-spin'></CgSpinner>}
+                                                </Button>
                                             </div>
                                         </form>
                                         : subs && !caption && !isloading ?
