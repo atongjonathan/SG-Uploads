@@ -58,7 +58,7 @@ function MyPlyrVideo({ movie }) {
                     )}
                     <Poster className="vds-poster" />
                 </MediaProvider>
-                <DefaultVideoLayout icons={defaultLayoutIcons} />
+                <DefaultVideoLayout icons={defaultLayoutIcons}  smallLayoutWhen={false} />
             </MediaPlayer>
         </div>
     );

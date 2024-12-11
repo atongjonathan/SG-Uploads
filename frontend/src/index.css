@@ -7,7 +7,9 @@
     --plyr-color-main: #14759f;
     /* --plyr-captions-text-color:#14759f; */
     --plyr-progress-loading-background:#14759f;
-
+    --media-buffering-size: 56px;
+    --video-bg: #080A1A;
+    --media-buffering-track-width: 12;
 
 }
 
