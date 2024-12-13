@@ -58,7 +58,7 @@ const SgSlider = ({ movies, title, Icon }) => {
   };
 
   return (
-    <div className="my-16">
+    <div className="lg:my-16 my-7">
       <div className="w-full flex justify-between">
         <div className="flex sm:gap-8 gap-4 items-center truncate">
           <Icon className="sm:w-6 sm:h-6 w-4 h-4 text-subMain" />
@@ -85,7 +85,7 @@ const SgSlider = ({ movies, title, Icon }) => {
         </div>
       </div>
 
-      <div className="mt-10">
+      <div className="lg:mt-10 mt-7">
         <Swiper
           navigation={{ nextEl, prevEl }}
           slidesPerView={3}
@@ -100,18 +100,23 @@ const SgSlider = ({ movies, title, Icon }) => {
               slidesPerView: 2,
               spaceBetween: 10,
             },
-            768: {
-              slidesPerView: 2,
+            576: {
+              slidesPerView: 3,
               spaceBetween: 20,
             },
-            1024: {
-              slidesPerView: 3,
-              spaceBetween: 30,
+            768: {
+              slidesPerView: 4,
+              spaceBetween: 20,
             },
-            1280: {
+            992: {
               slidesPerView: 5,
-              spaceBetween: 30,
+              spaceBetween: 20,
             },
+            1400: {
+              slidesPerView: 6,
+              spaceBetween: 20,
+            },
+
           }}
         >
           {movies?.slice(0, 11).map((movie, idx) => (

@@ -18,7 +18,7 @@ const HomeScreen = () => {
   return (
     <Layout>
 
-      <div className="container mx-auto min-h-screen px-2 mb-6">
+      <div className="min-h-screen mb-6 lg:px-10 px-6">
 
           <>
             <Banner movies={movies?.toSorted((a, b) => new Date(b.releaseDetailed.date) - new Date(a.releaseDetailed.date))} />
