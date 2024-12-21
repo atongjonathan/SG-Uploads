@@ -82,7 +82,21 @@
     },
     {
       "src": "https://raw.githubusercontent.com/atongjonathan/SG-Uploads/refs/heads/main/frontend/images/screenshots/screenshot1.png",
-      "sizes": "657x408",
+      "sizes": "320x581",
+      "type": "image/jpg",
+      "label": "Application"
+    }
+    ,
+    {
+      "src": "https://raw.githubusercontent.com/atongjonathan/SG-Uploads/refs/heads/main/frontend/images/screenshots/screenshot3.png",
+      "sizes": "320x593",
+      "type": "image/jpg",
+      "label": "Application"
+    }
+    ,
+    {
+      "src": "https://raw.githubusercontent.com/atongjonathan/SG-Uploads/refs/heads/main/frontend/images/screenshots/screenshot2.png",
+      "sizes": "320x652",
       "type": "image/jpg",
       "label": "Application"
     }
