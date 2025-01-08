@@ -5,7 +5,9 @@ import { toast } from 'sonner'
 import { Input } from '../../Components/UserInputs'
 import { CgSpinner } from 'react-icons/cg'
 import { FiLogIn } from 'react-icons/fi'
+import Backend from '../../utils/Backend';
 
+const backend = Backend()
 const SignUpModal = ({ isSignUpOpen, setIsSignUpOpen, openLogin, closeSignUp }) => {
 
     const [loading, setLoading] = useState(false)
