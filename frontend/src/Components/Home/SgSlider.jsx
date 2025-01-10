@@ -140,9 +140,9 @@ const SgSlider = ({ movies, title, Icon }) => {
                         style: { transitionDelay: "0.6s" },
                       }} src={movie.poster} alt={movie.title} title={movie.title} className="w-full aspect-[216/319]" />
                     </Link>
-                    <div className="absolute flex flex-col gap-2 bottom-0 right-0 left-0 bg-main bg-opacity-60 text-white px-4 py-3">
-                      <h6 className="font-semibold truncate">{movie.title}</h6>
-                      <div className="flex gap-2 text-star">
+                    <div className="absolute flex flex-col gap-2 bottom-0 right-0 left-0 bg-main bg-opacity-60 text-white py-3 items-center">
+                      <h6 className="font-semibold line-clamp-1">{movie.title}</h6>
+                      <div className="flex gap-2 text-star line-clamp-1">
                         <Rating value={movie.rating.star / 2} />
                       </div>
                     </div>
