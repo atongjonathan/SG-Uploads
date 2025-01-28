@@ -1,7 +1,7 @@
 import React, { useCallback, useContext, useState } from "react";
 import {  NavLink, useLocation, useNavigate } from "react-router-dom";
 import { FaSearch, FaHeart } from "react-icons/fa";
-import logo from "../../images/4x3.jpg";
+import logo from "../../images/4x3.png";
 import { Button } from "@headlessui/react";
 import AuthContext from "../../context/AuthContext";
 import { MovieContext } from "../../context/MovieContext";
@@ -83,11 +83,11 @@ const Navbar = () => {
       <div className="container mx-auto py-3 px-2 lg:py-6 lg:grid gap-10 grid-cols-7 justify-between items-center min-h-7">
         {/* Logo */}
         <div className="col-span-1 lg:block hidden">
-          <NavLink to="/">
+          <NavLink to="/" className="flex items-center justify-center bg-red">
             <img
               src={logo}
               alt="logo"
-              style={{ scale: '1.2' }}
+              style={{ scale: '0.7' }}
               className="w-full h-12 object-contain"
             />
           </NavLink>
