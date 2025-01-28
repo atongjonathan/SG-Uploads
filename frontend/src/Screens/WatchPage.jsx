@@ -67,8 +67,7 @@ const WatchPage = () => {
     })
 
     const RelatesMovies = movies?.filter((m) => {
-        // Ensure we're not comparing the current movie with itself (m.id !== movie.id)
-        return m.id !== movie?.id && m.genre.some(genre => movie?.genre.includes(genre));
+        return m.id !== movie?.id && m.genre.includes(movie?.genre[0]) ;
     });
 
 

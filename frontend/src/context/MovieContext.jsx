@@ -16,7 +16,9 @@ const MovieProvider = ({ children }) => {
     async function fetchDBMovies() {
         axios.get(Backend().BACKEND_URL + '/movies')
             .then((response) => {
-                setMovies(response.data);
+                let movies = response.data  
+                const sortedByRatingStar = movies ? [...movies].sort((a, b) => b.rating.star - a.rating.star) : [];
+                setMovies(sortedByRatingStar);
                 setIsLoading(false);
             })
             .catch((error) => {
