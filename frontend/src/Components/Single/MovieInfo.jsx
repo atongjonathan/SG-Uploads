@@ -15,9 +15,7 @@ const MovieInfo = ({ movie }) => {
 
                         {
                             movie ?
-                                <LazyLoadImage effect="blur" wrapperProps={{
-                                    style: { transitionDelay: "0.6s" },
-                                }} src={movie.poster} alt={movie.title} title={movie.title} className="object-cover lg:h-64 mx-auto" />
+                                <LazyLoadImage effect="blur" src={movie.poster} alt={movie.title} title={movie.title} className="object-cover lg:h-64 mx-auto" />
                                 : <Skeleton baseColor="rgb(22 28 63)" height={220} width={150} containerClassName="animate-pulse"></Skeleton>
                         }
 
