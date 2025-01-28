@@ -10,16 +10,20 @@ import 'swiper/css/pagination';
 import { AuthProvider } from "./context/AuthContext.jsx";
 import MovieProvider from "./context/MovieContext.jsx";
 import 'react-lazy-load-image-component/src/effects/blur.css';
+import ErrorBoundary from "./Screens/Error/ErrorBoundary.jsx";
 
 
 
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <AuthProvider >
-      <MovieProvider>
-        <App />
-      </MovieProvider>
-    </AuthProvider>
+    <ErrorBoundary>
+      <AuthProvider >
+        <MovieProvider>
+          <App />
+        </MovieProvider>
+      </AuthProvider>
+    </ErrorBoundary>
+
   </StrictMode>
 );
