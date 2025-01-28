@@ -12,28 +12,26 @@ const HomeScreen = () => {
 
   const { movies, isLoading } = useContext(MovieContext);
 
-
-
+  // Create sorted arrays
+  const sortedByDate = movies ? [...movies].sort((a, b) => new Date(b.releaseDetailed.date) - new Date(a.releaseDetailed.date)) : [];
+  const sortedByRatingCount = movies ? [...movies].sort((a, b) => b.rating.count - a.rating.count) : [];
+  const sortedByRatingStar = movies ? [...movies].sort((a, b) => b.rating.star - a.rating.star) : [];
 
   return (
     <Layout>
-
       <div className="min-h-screen mb-6 lg:px-10 px-6">
-
-          <>
-            <Banner movies={movies?.toSorted((a, b) => new Date(b.releaseDetailed.date) - new Date(a.releaseDetailed.date))} />
-            <SgSlider movies={movies?.toSorted((a, b) => new Date(b.releaseDetailed.date) - new Date(a.releaseDetailed.date))} title='Trending' Icon={BsCollectionFill} />
-            <SgSlider movies={movies?.toSorted((a, b) => b.rating.count - a.rating.count)} title='Popular Movies' Icon={BsCollectionFill} />
-            <SgSlider movies={movies?.toSorted((a, b) => b.rating.star - a.rating.star)} title='Top Rated' Icon={BsBookmarkStarFill} />
-            <Promos />
-          </>
-
+        <>
+          <Banner movies={sortedByDate} />
+          <SgSlider movies={sortedByDate} title='Trending' Icon={BsCollectionFill} />
+          <SgSlider movies={sortedByRatingCount} title='Popular Movies' Icon={BsCollectionFill} />
+          <SgSlider movies={sortedByRatingStar} title='Top Rated' Icon={BsBookmarkStarFill} />
+          <Promos />
+        </>
       </div>
 
       {
         (!movies && !isLoading) &&
         <SiteDown></SiteDown>
-
       }
     </Layout>
   );
