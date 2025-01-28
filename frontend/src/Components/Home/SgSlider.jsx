@@ -4,12 +4,13 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import { Link, useNavigate } from "react-router-dom";
 import Rating from "../Star";
-import { FaArrowRight } from "react-icons/fa";
+import { FaArrowRight, FaHeart } from "react-icons/fa";
 import { FaArrowLeft } from "react-icons/fa";
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import { MovieContext } from "../../context/MovieContext";
 import { Button } from "@headlessui/react";
+import loader from '../../../images/loading_image.gif'
 
 
 const SgSlider = ({ movies, title, Icon }) => {
@@ -136,7 +137,7 @@ const SgSlider = ({ movies, title, Icon }) => {
                   {/* Movie Poster */}
                   <div className="hover:scale-95 transitions relative rounded overflow-hidden">
                     <Link to={`/watch/${movie.title}`} className="w-full">
-                      <LazyLoadImage effect="blur" src={movie.poster} alt={movie.title} title={movie.title} className="w-full aspect-[216/319]" />
+                      <LazyLoadImage placeholderSrc={loader} effect="blur" src={movie.poster} alt={movie.title} title={movie.title} className="w-full aspect-[216/319]" />
                     </Link>
                     <div className="absolute flex flex-col gap-2 bottom-0 right-0 left-0 bg-main bg-opacity-60 text-white py-3 items-center">
                       <h6 className="font-semibold line-clamp-1">{movie.title}</h6>

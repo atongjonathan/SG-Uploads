@@ -83,13 +83,16 @@ const MoviesPage = () => {
             next={handleLoadingMore}
             hasMore={hasMore}
             loader={
-            <div className="border border-border p-1 hover:scale-95 transitions relative rounded overflow-hidden">
-              <img src={loader} className="w-full h-h-rate object-cover aspect-[216/319]"  />
-              <div className="absolute flex-btn gap-2 bottom-0 right-0 left-0 bg-main bg-opacity-60 text-white px-4 py-3">
-                <h6 className="font-semibold truncate"><Skeleton /></h6>
-                <FaHeart></FaHeart>
-              </div>
-            </div>}
+              Array.from({ length: 6 }, (x, i) => i).map((item) => (
+                <div key={item} className="border border-border p-1 hover:scale-95 transitions relative rounded overflow-hidden">
+                  <img src={loader} className="w-full h-h-rate object-cover aspect-[216/319]" />
+                  <div className="absolute flex-btn gap-2 bottom-0 right-0 left-0 bg-main bg-opacity-60 text-white px-4 py-3">
+                    <h6 className="font-semibold truncate"><Skeleton /></h6>
+                    <FaHeart></FaHeart>
+                  </div>
+                </div>
+              ))
+            }
 
           >
             {filteredMovies.slice(0, page).map((movie, idx) => (
