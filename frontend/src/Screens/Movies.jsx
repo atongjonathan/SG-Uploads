@@ -19,7 +19,7 @@ function toTitleCase(str) {
 const MoviesPage = () => {
   const { movies: allMovies, isLoading } = useContext(MovieContext);
   const [searchParams] = useSearchParams();
-  const [page, setPage] = useState(4);
+  const [page, setPage] = useState(5);
 
   // Extract genres as a unique tuple from all movies
   const genresTuple = useMemo(() => {
@@ -60,7 +60,7 @@ const MoviesPage = () => {
   const handleLoadingMore = () => {
     // Simulating an API call to load more data
     setTimeout(() => {
-      setPage(prevPage => prevPage + 4); // Increase the page count by 4 movies per load
+      setPage(prevPage => prevPage + 5); // Increase the page count by 4 movies per load
     }, 1500);
   };
 
