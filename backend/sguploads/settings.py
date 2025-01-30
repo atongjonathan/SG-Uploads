@@ -94,7 +94,6 @@ SIMPLE_JWT = {
     "SLIDING_TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainSlidingSerializer",
     "SLIDING_TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSlidingSerializer",
 }
-CORS_ALLOW_ALL_ORIGINS = True
 
 
 MIDDLEWARE = [
@@ -220,6 +219,13 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
+
+CORS_ALLOWED_ORIGINS = [   
+    "https://movies.atongjona.com",
+]
+CSRF_TRUSTED_ORIGINS = [
+    "https://movies.atongjona.com"
+]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
