@@ -60,7 +60,7 @@ const MoviesPage = () => {
   const handleLoadingMore = () => {
     // Simulating an API call to load more data
     setTimeout(() => {
-      setPage(prevPage => prevPage + 5); // Increase the page count by 4 movies per load
+      setPage(prevPage => prevPage + 6); // Increase the page count by 4 movies per load
     }, 1500);
   };
 

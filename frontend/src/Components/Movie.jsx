@@ -12,10 +12,10 @@ const Movie = ({ movie, scrollPosition  }) => {
         <Link to={`/watch/${movie.title}`} className="w-full">
           <LazyLoadImage placeholderSrc={loader} effect="blur" src={movie.poster} alt={movie.title} title={movie.title} className="w-full h-h-rate object-cover" />
         </Link>
-        <div className="absolute flex-btn gap-2 bottom-0 right-0 left-0 bg-main bg-opacity-60 text-white px-4 py-3">
+        {/* <div className="absolute flex-btn gap-2 bottom-0 right-0 left-0 bg-main bg-opacity-60 text-white px-4 py-3">
           <h6 className="font-semibold truncate">{movie.title}</h6>
           <FaHeart movie={movie}></FaHeart>
-        </div>
+        </div> */}
       </div>
     </>
   );
