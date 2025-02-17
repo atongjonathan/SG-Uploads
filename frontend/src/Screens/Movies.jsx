@@ -19,7 +19,7 @@ function toTitleCase(str) {
 const MoviesPage = () => {
   const { movies: allMovies, isLoading } = useContext(MovieContext);
   const [searchParams] = useSearchParams();
-  const [page, setPage] = useState(5);
+  const [page, setPage] = useState(6);
 
   // Extract genres as a unique tuple from all movies
   const genresTuple = useMemo(() => {
@@ -65,7 +65,7 @@ const MoviesPage = () => {
   };
 
   // Dynamically check if there are more movies to load
-  const hasMore = filteredMovies.length > page;
+  const hasMore = filteredMovies?.length > page ?? true;
 
   document.title = 'All Movies';
 
