@@ -32,98 +32,98 @@ function MyPlyrVideo({ movie }) {
         const movieData = localStorage.getItem(movieKey);
         if (movieData) {
             const { time } = JSON.parse(movieData);
-            if (time && time !== 'null' && !isNaN(time) && time >= movie?.runtimeSeconds) {
-        if (time > 60) {
-            setTime(time)
-            setOpen(true)
-        }
-    }
-}
-    }, []);
-
-
-function secondsToHHMMSS(seconds) {
-    let hours = Math.floor(seconds / 3600);
-    let minutes = Math.floor((seconds % 3600) / 60);
-    let remainingSeconds = seconds % 60;
-
-    // Ensure 2 digits for minutes and seconds
-    hours = String(hours).padStart(2, '0');
-    minutes = String(minutes).padStart(2, '0');
-    remainingSeconds = String(parseInt(remainingSeconds)).padStart(2, '0');
-
-    return `${hours}:${minutes}:${remainingSeconds}`;
-}
-
-
-useEffect(() => {
-    if (time !== null) {
-        localStorage.setItem(movieKey, JSON.stringify({ time: time.toString() }));
-    }
-}, [time, movieKey]);
-
-useEffect(() => {
-    const mediaInstance = ref.current;
-    if (mediaInstance && initialTime > 0) {
-        mediaInstance.currentTime = initialTime;
-    }
-}, [initialTime]);
-
-return (
-    <div>
-        <MediaPlayer
-            title={movie.title}
-            src={{ src: movie.stream, type: "video/mp4" }}
-            viewType="video"
-            logLevel="warn"
-            crossOrigin
-            playsInline
-            aspectRatio="16x9"
-            ref={ref}
-            poster={movie?.poster}
-            artist="SG Uploads"
-            onTimeUpdate={() => {
-                // Update playback time on every time update event
-                if (!open) {
-                    setTime(ref.current?.currentTime);
-
+            if (time && time !== 'null' && !isNaN(time)) {
+                if (time > 0) {
+                    setTime(time)
+                    setOpen(true)
                 }
-            }}
-        >
-            <MediaProvider>
-                {movie.captions?.length > 0 && (
-                    <Track kind="captions" lang="en-US" src={movie.captions[0].src} label="English" default />
-                )}
-                <Poster className="vds-poster" />
-            </MediaProvider>
-            <DefaultVideoLayout icons={defaultLayoutIcons} smallLayoutWhen={false} />
-        </MediaPlayer>
-        <Dialog open={open} as="div" className="relative z-20 focus:outline-none" onClose={close}>
-            <DialogBackdrop className="fixed inset-0 bg-main/50"></DialogBackdrop>
+            }
+        }
+    }, [movieKey]);
 
-            <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
-                <div className="flex min-h-full items-center justify-center p-4">
-                    <DialogPanel
-                        transition
-                        className="relative max-w-lg space-y-4 border bg-main lg:p-5 text-text rounded-lg p-6 backdrop-blur-2xl duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0"
-                    >
-                        <Button onClick={() => handleResponse(false)} className='absolute top-3 right-5 text-text hover:text-subMain transitions'><IoClose className="h-5 w-5"></IoClose></Button>
 
-                        <DialogTitle as="h3" className="text-base/7 font-medium text-white">
-                            Continue watching from {secondsToHHMMSS(time)}?
-                        </DialogTitle>
-                        <div className="flex gap-2 flex-wrap flex-col-reverse sm:flex-row justify-between items-center my-4">
-                            <Button onClick={() => handleResponse(true)} type='button' className="bg-subMain font-medium transitions hover:bg-main border border-main text-white py-3 px-6 rounded w-full sm:w-auto">Yes</Button>
-                            <Button onClick={() => handleResponse(false)} type='button' className="bg-main font-medium transitions hover:bg-subMain border border-subMain text-white py-3 px-6 rounded w-full sm:w-auto">Start Over</Button>
-                        </div>
+    function secondsToHHMMSS(seconds) {
+        let hours = Math.floor(seconds / 3600);
+        let minutes = Math.floor((seconds % 3600) / 60);
+        let remainingSeconds = seconds % 60;
 
-                    </DialogPanel>
+        // Ensure 2 digits for minutes and seconds
+        hours = String(hours).padStart(2, '0');
+        minutes = String(minutes).padStart(2, '0');
+        remainingSeconds = String(parseInt(remainingSeconds)).padStart(2, '0');
+
+        return `${hours}:${minutes}:${remainingSeconds}`;
+    }
+
+
+    useEffect(() => {
+        if (time !== null) {
+            localStorage.setItem(movieKey, JSON.stringify({ time: time.toString() }));
+        }
+    }, [time, movieKey]);
+
+    useEffect(() => {
+        const mediaInstance = ref.current;
+        if (mediaInstance && initialTime > 0) {
+            mediaInstance.currentTime = initialTime;
+        }
+    }, [initialTime]);
+
+    return (
+        <div>
+            <MediaPlayer
+                title={movie.title}
+                src={{ src: movie.stream, type: "video/mp4" }}
+                viewType="video"
+                logLevel="warn"
+                crossOrigin
+                playsInline
+                aspectRatio="16x9"
+                ref={ref}
+                poster={movie?.poster}
+                artist="SG Uploads"
+                onTimeUpdate={() => {
+                    // Update playback time on every time update event
+                    if (!open) {
+                        setTime(ref.current?.currentTime);
+
+                    }
+                }}
+            >
+                <MediaProvider>
+                    {movie.captions?.length > 0 && (
+                        <Track kind="captions" lang="en-US" src={movie.captions[0].src} label="English" default />
+                    )}
+                    <Poster className="vds-poster" />
+                </MediaProvider>
+                <DefaultVideoLayout icons={defaultLayoutIcons} smallLayoutWhen={false} />
+            </MediaPlayer>
+            <Dialog open={open} as="div" className="relative z-20 focus:outline-none" onClose={close}>
+                <DialogBackdrop className="fixed inset-0 bg-main/50"></DialogBackdrop>
+
+                <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+                    <div className="flex min-h-full items-center justify-center p-4">
+                        <DialogPanel
+                            transition
+                            className="relative max-w-lg space-y-4 border bg-main lg:p-5 text-text rounded-lg p-6 backdrop-blur-2xl duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0"
+                        >
+                            <Button onClick={() => handleResponse(false)} className='absolute top-3 right-5 text-text hover:text-subMain transitions'><IoClose className="h-5 w-5"></IoClose></Button>
+
+                            <DialogTitle as="h3" className="text-base/7 font-medium text-white">
+                                Continue watching from {secondsToHHMMSS(time)}?
+                            </DialogTitle>
+                            <div className="flex gap-2 flex-wrap flex-col-reverse sm:flex-row justify-between items-center my-4">
+                                <Button onClick={() => handleResponse(true)} type='button' className="bg-subMain font-medium transitions hover:bg-main border border-main text-white py-3 px-6 rounded w-full sm:w-auto">Yes</Button>
+                                <Button onClick={() => handleResponse(false)} type='button' className="bg-main font-medium transitions hover:bg-subMain border border-subMain text-white py-3 px-6 rounded w-full sm:w-auto">Start Over</Button>
+                            </div>
+
+                        </DialogPanel>
+                    </div>
                 </div>
-            </div>
-        </Dialog>
+            </Dialog>
 
-    </div>
-);
+        </div>
+    );
 }
 
 export default MyPlyrVideo;
