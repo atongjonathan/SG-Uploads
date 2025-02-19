@@ -27,9 +27,9 @@ const HomeScreen = () => {
     <Layout>
       <div className="min-h-screen mb-6 lg:px-10 px-6">
         <>
-          <Banner movies={shuffle(sortedByDate)} />
-          <SgSlider movies={shuffle(sortedByDate)} title='Trending' Icon={BsCollectionFill} />
-          <SgSlider movies={shuffle(sortedByRatingStar)} title='Top Rated' Icon={BsBookmarkStarFill} />
+          <Banner movies={sortedByDate} />
+          <SgSlider movies={sortedByDate} title='Trending' Icon={BsCollectionFill} />
+          <SgSlider movies={sortedByRatingStar} title='Top Rated' Icon={BsBookmarkStarFill} />
           <SgSlider movies={shuffle(actionMovies)} title='Action' Icon={PiFilmReelFill} />
           {/* <Promos /> */}
         </>
