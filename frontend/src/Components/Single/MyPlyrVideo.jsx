@@ -110,8 +110,8 @@ function MyPlyrVideo({ movie }) {
                         >
                             <Button onClick={() => handleResponse(false)} className='absolute top-3 right-5 text-text hover:text-subMain transitions'><IoClose className="h-5 w-5"></IoClose></Button>
 
-                            <DialogTitle as="h3" className="text-base/7 font-medium text-white p-2 flex items-center justify-center">
-                                Continue watching at <pre> {secondsToHHMMSS(time)} ?</pre>
+                            <DialogTitle as="h3" className="text-base/7 font-medium text-white p-2 items-center justify-center">
+                                Continue watching at {secondsToHHMMSS(time)} ?
                             </DialogTitle>
                             <div className="flex gap-2 mt-1 flex-wrap flex-col-reverse sm:flex-row justify-end items-center p-3 pt-0">
                             <Button onClick={() => handleResponse(false)} type='button' className="bg-main font-medium transitions hover:bg-subMain border border-subMain text-white py-1 px-3 rounded w-full sm:w-auto">No</Button>
