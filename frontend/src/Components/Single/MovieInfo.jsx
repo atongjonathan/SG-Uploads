@@ -99,7 +99,7 @@ const MovieInfo = ({ movie }) => {
 
             </div>
             <div className="lg:hidden ">
-                <h6 className="font-semibold bg-dry truncate py-2 mt-2 text-center md:text-lg text-sm">{movie?.title}</h6>
+                <h6 className="font-semibold bg-dry truncate py-2 mt-2 text-center md:text-lg text-sm">Plot</h6>
 
                 <Disclosure>
                     {({ open }) => (
