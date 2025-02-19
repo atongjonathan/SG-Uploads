@@ -21,7 +21,7 @@ const Footer = () => {
   ]
   return (
     <div className='bg-dry py-4 bprder=t-2 border-black'>
-      <div className="container mx-auto px-2 mb-10">     
+      <div className="container mx-auto px-2 my-10">     
         <p className='text-border text-center'>This site does not store any files on the server, we only linked to the media which is hosted on 3rd party services.</p>
 
       </div>
