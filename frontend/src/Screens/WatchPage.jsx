@@ -18,6 +18,7 @@ import { useLocation } from 'react-router-dom'
 import NotFound from "./Error/NotFound"
 import TrailerSlider from '../Components/Home/TrailerSlider'
 import MovieInfo from '../Components/Single/MovieInfo'
+import { IoMdCloudDownload } from "react-icons/io";
 
 const TMDB_API_KEY = import.meta.env.VITE_TMDB_API_KEY
 
@@ -175,9 +176,9 @@ const WatchPage = () => {
 
                                             {
                                                 user ? <Link to={movie?.stream.replace("video", "dl")} className="bg-subMain flex-rows gap-2 hover:text-main transitions text-white rounded px-3 font-medium py-3 text-sm">
-                                                    <FaCloud></FaCloud>
+                                                    <IoMdCloudDownload></IoMdCloudDownload>
                                                 </Link> : <Button onClick={() => toast.info("Only logged in users can download", { closeButton: true })} className="bg-subMain flex-rows gap-2 hover:text-main transitions text-white rounded px-3 font-medium py-3 text-sm">
-                                                    <FaCloud></FaCloud>
+                                                    <IoMdCloudDownload></IoMdCloudDownload>
                                                 </Button>
                                             }
                                             {
