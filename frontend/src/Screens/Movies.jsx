@@ -16,6 +16,20 @@ function toTitleCase(str) {
   ).join(' ');
 }
 
+const Loader = () => {
+  return (
+    Array.from({ length: 6 }, (x, i) => i).map((item) => (
+      <div key={item} className="border border-border p-1 hover:scale-95 transitions relative rounded overflow-hidden">
+        <img src={loader} className="w-full h-h-rate object-cover aspect-[216/319]" />
+        <div className="absolute flex-btn gap-2 bottom-0 right-0 left-0 bg-main bg-opacity-60 text-white px-4 py-3">
+          <h6 className="font-semibold truncate"><Skeleton /></h6>
+          <FaHeart></FaHeart>
+        </div>
+      </div>
+    ))
+  )
+}
+
 const MoviesPage = () => {
   const { movies: allMovies, isLoading } = useContext(MovieContext);
   const [searchParams] = useSearchParams();
@@ -23,8 +37,8 @@ const MoviesPage = () => {
 
   // Extract genres as a unique tuple from all movies
   const genresTuple = useMemo(() => {
-    if (!allMovies) return [];
-    const genresList = allMovies.flatMap(movie => movie.genre);
+    // if (!allMovies) return [];
+    const genresList = allMovies?.flatMap(movie => movie.genre);
     return [...new Set(genresList)];
   }, [allMovies]);
 
@@ -83,15 +97,7 @@ const MoviesPage = () => {
             next={handleLoadingMore}
             hasMore={hasMore}
             loader={
-              Array.from({ length: 5 }, (x, i) => i).map((item) => (
-                <div key={item} className="border border-border p-1 hover:scale-95 transitions relative rounded overflow-hidden">
-                  <img src={loader} className="w-full h-h-rate object-cover aspect-[216/319]" />
-                  <div className="absolute flex-btn gap-2 bottom-0 right-0 left-0 bg-main bg-opacity-60 text-white px-4 py-3">
-                    <h6 className="font-semibold truncate"><Skeleton /></h6>
-                    <FaHeart></FaHeart>
-                  </div>
-                </div>
-              ))
+              <Loader />
             }
 
           >
@@ -101,19 +107,21 @@ const MoviesPage = () => {
           </InfiniteScroll>
 
         }
-        {!hasMore && (
-          <div className="w-full flex-colo md:my-20 my-10">
-            <p>No more movies to load!</p>
-          </div>
-        )}
+
 
         {
           (!allMovies && !isLoading) && <SiteDown></SiteDown>
         }
 
         {
-          isLoading && <Skeleton baseColor="rgb(22 28 63)" className='animate-pulse' containerClassName="animate-pulse" height={250}></Skeleton>
+          !allMovies && <div className='grid sm:mt-10 mt-6 xl:grid-cols-6 2xl:grid-cols-5 grid-cols-3 gap-6 overflow-hidden'>
+            <Loader /></div>
         }
+        {!hasMore && allMovies?.length > 0 && (
+          <div className="w-full flex-colo md:my-20 my-10">
+            <p>No more movies to load!</p>
+          </div>
+        )}
       </div>
     </Layout>
   );
