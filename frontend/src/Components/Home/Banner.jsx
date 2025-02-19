@@ -63,7 +63,7 @@ const Banner = ({ movies }) => {
             >
 
               {
-                movies?.slice(0, 6).sort(() => .5 - Math.random()).map((movie, idx) => (
+                movies?.slice(0, 6).map((movie, idx) => (
                   <SwiperSlide key={idx} className="relative overflow-hidden">
                       <img
                         src={movie.poster}
