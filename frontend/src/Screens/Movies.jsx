@@ -23,7 +23,6 @@ const Loader = () => {
         <img src={loader} className="w-full h-h-rate object-cover aspect-[216/319]" />
         <div className="absolute flex-btn gap-2 bottom-0 right-0 left-0 bg-main bg-opacity-60 text-white px-4 py-3">
           <h6 className="font-semibold truncate"><Skeleton /></h6>
-          <FaHeart></FaHeart>
         </div>
       </div>
     ))
