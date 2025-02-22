@@ -29,7 +29,7 @@ const Results = ({ isResults, handleResultClick }) => {
                             isResults.slice(0, 3).map((movie, idx) => (
                                 <tr
                                     key={idx}
-                                    className={`results-row text-center hover:bg-dryGray hover:cursor-pointer ${visibleRows[idx] ? 'visible' : ''}`}
+                                    className={`results-row text-center transitions hover:bg-subMain hover:cursor-pointer ${visibleRows[idx] ? 'visible' : ''}`}
                                     title={movie.title}
                                     onClick={() => handleResultClick(movie.title)}
                                 >
