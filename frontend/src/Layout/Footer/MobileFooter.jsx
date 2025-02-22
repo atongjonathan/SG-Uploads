@@ -18,7 +18,7 @@ const MobileFooter = () => {
     let [isLoginOpen, setisLoginOpen] = useState(false)
     let [isSignUpOpen, setIsSignUpOpen] = useState(false)
     const [showModal, setShowModal] = useState(false)
-    const [isResults, setResults] = useState([]);
+    const [isResults, setResults] = useState(null);
     const movies = useContext(MovieContext)?.movies || [];
     const navigate = useNavigate()
 
@@ -35,7 +35,7 @@ const MobileFooter = () => {
     const handleSearch = (e) => {
         const query = e.target.value.toLowerCase();
         if (query == '') {
-            setResults([])
+            setResults(null)
         }
         else {
             const filtered = movies.filter(movie =>
@@ -92,7 +92,7 @@ const MobileFooter = () => {
 
 
                 </div>
-                <Dialog open={showModal} onClose={() => setShowModal(false)} className="relative z-50">
+                <Dialog open={showModal} onClose={() => setShowModal(false) && setResults(null)} className="relative z-50">
                     <DialogBackdrop className="fixed inset-0 bg-main/50"></DialogBackdrop>
 
                     <div className="fixed inset-0 flex w-full items-start justify-center p-4">
@@ -104,8 +104,9 @@ const MobileFooter = () => {
                                 placeholder="Search Movie Name from here"
                                 className={"font-medium placeholder:text-text text-sm w-full h-12 bg-transparent border-none px-2 text-black bg-white mt-10" + { Hover }}
                                 onInput={handleSearch}
+                                onBlur={() => isResults.length > 0 && setResults(null)}
                             />
-                            {(isResults.length > 0 && showModal) && (
+                            {(isResults && showModal) && (
                                 <Results isResults={isResults} handleResultClick={handleResultClick}></Results>
                             )}
                         </DialogPanel>

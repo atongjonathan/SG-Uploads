@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useState } from "react";
-import {  NavLink, useLocation, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { FaSearch, FaHeart } from "react-icons/fa";
 import logo from "../../images/4x3.png";
 import { Button } from "@headlessui/react";
@@ -19,9 +19,9 @@ const Navbar = () => {
   const navigate = useNavigate()
 
 
-  const {  user } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const movies = useContext(MovieContext)?.movies || [];
-  const [isResults, setResults] = useState([]);
+  const [isResults, setResults] = useState(null);
 
   const location = useLocation(); // Get the current path
   const { pathname, search } = location; // Extract pathname and search
@@ -53,8 +53,8 @@ const Navbar = () => {
 
   const handleSearch = (e) => {
     const query = e.target.value.toLowerCase();
-    if (query == '') {
-      setResults([])
+    if (!query) {
+      setResults(null)
     }
     else {
       const filtered = movies.filter(movie =>
@@ -69,7 +69,7 @@ const Navbar = () => {
   const handleResultClick = useCallback((title) => {
     navigate(`/watch/${title}`);
     setResults([]);
-})
+  })
 
 
 
@@ -153,13 +153,14 @@ const Navbar = () => {
               placeholder="Search Movie Name from here"
               className="font-medium placeholder:text-border text-sm w-full h-12 bg-transparent border-none px-2 text-black"
               onInput={handleSearch}
+              onBlur={() => isResults.length > 0 && setResults(null)}
             />
           </form>
 
 
 
           {/* Search Results */}
-          {isResults.length > 0 && (
+          {isResults && (
             <Results isResults={isResults} handleResultClick={handleResultClick}></Results>
           )}
         </div>
