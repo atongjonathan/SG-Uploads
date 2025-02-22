@@ -97,7 +97,7 @@ function MyPlyrVideo({ movie }) {
                     )}
                     <Poster className="vds-poster" />
                 </MediaProvider>
-                <DefaultVideoLayout icons={defaultLayoutIcons} smallLayoutWhen={false} />
+                <DefaultVideoLayout icons={defaultLayoutIcons} />
             </MediaPlayer>
             <Dialog open={open} as="div" className="relative z-20 focus:outline-none" onClose={close}>
                 <DialogBackdrop className="fixed inset-0 bg-main/50"></DialogBackdrop>
