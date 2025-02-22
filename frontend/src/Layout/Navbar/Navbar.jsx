@@ -68,8 +68,8 @@ const Navbar = () => {
 
   const handleResultClick = useCallback((title) => {
     navigate(`/watch/${title}`);
-    setResults([]);
-  })
+    setResults(null);
+  }, [isResults])
 
 
 
