@@ -64,7 +64,7 @@ const MobileFooter = () => {
     const handleResultClick = useCallback((title) => {
         navigate(`/watch/${title}`);
         setShowModal(false)
-        setResults([]);
+        setResults(null);
     })
 
 
@@ -104,7 +104,6 @@ const MobileFooter = () => {
                                 placeholder="Search Movie Name from here"
                                 className={"font-medium placeholder:text-text text-sm w-full h-12 bg-transparent border-none px-2 text-black bg-white mt-10" + { Hover }}
                                 onInput={handleSearch}
-                                onBlur={() => isResults.length > 0 && setResults(null)}
                             />
                             {(isResults && showModal) && (
                                 <Results isResults={isResults} handleResultClick={handleResultClick}></Results>

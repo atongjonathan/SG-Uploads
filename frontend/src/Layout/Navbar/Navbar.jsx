@@ -153,7 +153,6 @@ const Navbar = () => {
               placeholder="Search Movie Name from here"
               className="font-medium placeholder:text-border text-sm w-full h-12 bg-transparent border-none px-2 text-black"
               onInput={handleSearch}
-              onBlur={() => isResults.length > 0 && setResults(null)}
             />
           </form>
 
