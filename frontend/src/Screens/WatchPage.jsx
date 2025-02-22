@@ -75,7 +75,7 @@ const WatchPage = () => {
 
     let title = `${movie?.title} (${movie?.year})`
 
-    document.title = movie ? title : 'SG Uplaods | Watch'
+    document.title = movie ? title : 'SG Uploads | Watch'
 
 
     const { pathname } = useLocation()
