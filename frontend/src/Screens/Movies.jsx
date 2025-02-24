@@ -78,7 +78,7 @@ const MoviesPage = () => {
   };
 
   // Dynamically check if there are more movies to load
-  const hasMore = filteredMovies?.length > page ?? true;
+  const hasMore = filteredMovies?.length > page
 
   document.title = 'All Movies';
 
