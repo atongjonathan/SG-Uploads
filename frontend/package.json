@@ -18,6 +18,7 @@
     "@vidstack/react": "^1.12.12",
     "aos": "^2.3.4",
     "axios": "^1.7.7",
+    "devtools-detect": "^4.0.2",
     "jwt-decode": "^4.0.0",
     "media-icons": "^1.1.5",
     "movie-trailer": "^3.2.1",

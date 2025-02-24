@@ -1,6 +1,7 @@
 import React, { createContext, useCallback, useEffect, useState } from 'react'
 import axios from 'axios';
 import Backend from '../utils/Backend';
+import { useDevToolsStatus } from '../utils/useDevToolsStatus';
 
 // import { useMovies } from '../utils/SWR'
 
@@ -12,11 +13,15 @@ const MovieProvider = ({ children }) => {
     const [movies, setMovies] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [isError, setIsError] = useState(false);
+    const isDevToolsOpen = useDevToolsStatus();
+
+
+
 
     async function fetchDBMovies() {
         axios.get(Backend().BACKEND_URL + '/movies')
             .then((response) => {
-                let movies = response.data  
+                let movies = response.data
                 const sortedByRatingStar = movies ? [...movies].sort((a, b) => b.rating.star - a.rating.star) : [];
                 setMovies(sortedByRatingStar);
                 setIsLoading(false);
@@ -64,8 +69,13 @@ const MovieProvider = ({ children }) => {
     }
 
     useEffect(() => {
-        fetchDBMovies()
-    }, []);
+        if (!isDevToolsOpen) {
+            fetchDBMovies()
+        }
+        else {
+            console.clear()
+        }
+    }, [isDevToolsOpen]);
 
     // const { movies, isLoading } = useMovies()
 

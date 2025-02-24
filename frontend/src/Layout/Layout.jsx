@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import Navbar from "./Navbar/Navbar";
 import Footer from "./Footer/Footer";
 import { Toaster } from "sonner";
@@ -8,14 +8,16 @@ import LoadingIcons from "react-loading-icons";
 import ScrollToTop from "react-scroll-to-top";
 import { BiArrowToTop } from "react-icons/bi";
 import SiteDown from '../Screens/Error/SiteDown'
+import { useDevToolsStatus } from "../utils/useDevToolsStatus";
 
 const Layout = ({ children }) => {
   const { isLoading, movies } = useContext(MovieContext)
+  const isDevToolsOpen = useDevToolsStatus();
 
   return (
     <>
       {
-        (!isLoading && !movies) ? <SiteDown></SiteDown>
+        (!isLoading && !movies) || isDevToolsOpen ? <SiteDown></SiteDown>
           :
           (
             <div className="bg-main text-white relative">
