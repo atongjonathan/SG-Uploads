@@ -51,7 +51,7 @@ const MovieRates = ({ movie }) => {
                         <>
                           {
                             review.content ? (
-                              <div key={idx} className="lg:col-span-1 col-span-2 flex flex-col gap-1 bg-dry p-4 border border-gray-800 rounded-lg align-middle text-center h-fit">
+                              <div key={idx} className="lg:col-span-2 col-span-4 flex flex-col gap-1 bg-dry p-4 border border-gray-800 rounded-lg align-middle text-center h-fit">
                                 <div className="flex flex-col">
                                   <Disclosure>
                                     <DisclosureButton className="py-2 group  flex flex-col w-full items-center gap-1"> {review.heading}
