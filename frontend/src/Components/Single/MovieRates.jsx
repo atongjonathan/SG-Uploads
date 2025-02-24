@@ -49,38 +49,36 @@ const MovieRates = ({ movie }) => {
                     {
                       review.heading && (
                         <>
-                          {
-                            review.content ? (
-                              <div key={idx} className="lg:col-span-2 col-span-4 flex flex-col gap-1 bg-dry p-4 border border-gray-800 rounded-lg align-middle text-center h-fit">
-                                <div className="flex flex-col">
+
+                          <div key={idx} className="lg:col-span-2 col-span-4 flex flex-col gap-1 bg-dry p-4 border border-gray-800 rounded-lg align-middle text-center h-fit">
+                            <div className="flex flex-col">
+                              <h2 className='text-sm lg:text-md truncate text-text'>~ {review.author} ~</h2>
+                              {
+                                review.content ? (
                                   <Disclosure>
                                     <DisclosureButton className="py-2 group  flex flex-col w-full items-center gap-1"> {review.heading}
 
-                                <ChevronDownIcon className="size-5 fill-white/60 group-data-[hover]:fill-white/50 group-data-[open]:rotate-180" />
+                                      <ChevronDownIcon className="size-5 fill-white/60 group-data-[hover]:fill-white/50 group-data-[open]:rotate-180" />
 
                                     </DisclosureButton>
                                     <DisclosurePanel className="text-xs leading-6 font-medium text-text">
                                       {review.content ?? review.heading}
                                     </DisclosurePanel>
                                   </Disclosure>
-                                </div>
-                                <div className="flex flex-rows  mt-2 text-xs gap-1 text-star">
-                                  <Rating value={review.stars / 2}></Rating>
-                                </div>
-                              </div>
-                            ) : (
-                              <div key={idx} className="lg:col-span-1 col-span-2 flex flex-col gap-1 bg-dry p-4 border border-gray-800 rounded-lg align-middle text-center  h-fit">
-                                <div className="flex flex-col gap-2">
-                                  <h2 className='text-sm lg:text-md truncate'>{review.author}</h2>
+                                ) : (
                                   <p className="text-xs leading-6 font-medium text-text">{review.heading}</p>
-                                </div>
-                                <div className="flex flex-rows  mt-2 text-xs gap-1 text-star">
-                                  <Rating value={review.stars / 2}></Rating>
-                                </div>
-                              </div>
-                            )
 
-                          }</>
+                                )
+                              }
+
+                            </div>
+                            <div className="flex flex-rows  mt-2 text-xs gap-1 text-star">
+                              <Rating value={review.stars / 2}></Rating>
+                            </div>
+                          </div>
+                        
+
+                          </>
                       )
                     }
                   </>
