@@ -1,6 +1,5 @@
 import json
 import logging
-from re import I
 import requests
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.decorators import api_view, permission_classes, parser_classes
@@ -13,12 +12,9 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from ..captions import Captions
 from ..models import Movie, SGUser
 from .serializers import MovieSerializer, SGUserSerializer,  ChangePasswordSerializer, SubtitleSerializer
-from django.shortcuts import get_object_or_404
 from rest_framework import status
-from rest_framework import serializers
 from rest_framework.parsers import MultiPartParser, FormParser
 import os
-from opensubtitlescom.responses import Subtitle
 
 
 cc = Captions()
