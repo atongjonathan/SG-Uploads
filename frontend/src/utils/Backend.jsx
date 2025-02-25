@@ -3,6 +3,8 @@ import axios from "axios";
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 const MONGO_USERNAME = import.meta.env.VITE_MONGO_USERNAME;
 const MONGO_PASSWORD = import.meta.env.VITE_MONGO_PASSWORD;
+const IMDB_API = import.meta.env.VITE_IMDB_API
+
 const Backend = () => {
 
     const createRequestOptions = (url, method, data = null, authHeader = null) => {
@@ -176,9 +178,24 @@ const Backend = () => {
         }
     };
 
+    const updateReviews = async (accessToken, title, id) => {
+
+        try {
+            const response = await axios.get(`${IMDB_API}/reviews/${title}`)
+            if (response.status === 200) {
+                let reviewsData = response.data.reviews
+                const updateResponse = await editMovie(accessToken, { reviews: reviewsData }, id)
+                return updateResponse
+            }
+        } catch (error) {
+            console.log(error);
+            return error;
+        }
+    };
+
     return {
         signUp, loginUser, like, unlike, updateProfile, addMovie, BACKEND_URL, refreshAccessToken, sendCaptions, changePassword, searchCaptions,
-        getMongoToken, editMovie
+        getMongoToken, editMovie, updateReviews
     };
 };
 
