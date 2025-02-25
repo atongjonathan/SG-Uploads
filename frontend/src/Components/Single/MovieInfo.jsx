@@ -104,9 +104,9 @@ const MovieInfo = ({ movie }) => {
                 <Disclosure>
                     {({ open }) => (
                         <div className='bg-white/10 hover:bg-white/10'>
-                            <DisclosureButton className={`groupl items-center justify-between text-sm/6 w-full text-white ${open ? 'cursor-default' : 'truncate'} `}>
+                            <DisclosureButton className={`groupl items-center justify-between text-sm/6 w-[100%] text-white ${open ? 'cursor-default' : 'truncate'} `}>
                                 {
-                                    movie ? <span className="text-sm/6 font-medium text-white group-data-[hover]:text-white/80 flex p-2">
+                                    movie ? <span className="text-sm/6 w-full font-medium text-white group-data-[hover]:text-white/80 flex p-2">
 
                                         {movie?.plot}
                                     </span>
