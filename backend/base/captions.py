@@ -103,7 +103,7 @@ class Captions():
 
 📜 <b>Summary:</b> {movie.get('plot', 'No plot available.')}
 
-©️ IMDb by <a href="https://t.me/sgbot3_bot">SG</a>
+©️ IMDb by <a href="https://t.me/SG_Billboard_Bot">SG</a>
             """
 
         # Sending the movie details as a photo with the caption and keyboard
