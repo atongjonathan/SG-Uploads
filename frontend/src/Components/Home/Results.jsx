@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FaStar } from 'react-icons/fa';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Results = ({ isResults, handleResultClick }) => {
     const [visibleRows, setVisibleRows] = useState([]);
@@ -21,10 +21,11 @@ const Results = ({ isResults, handleResultClick }) => {
                 <tbody className="bg-main divide-y divide-gray-800">
                     {
                         isResults.length === 0 ? (
-                            <p className='p-3 bg-dry border border-border h-12 rounded overflow-hidden flex items-center justify-between text-sm'>
-                                <p>No movies found</p>
-                                <Link className='mr-3 underline' to="https://t.me/dont_be_soy2" target='_blank'>Request?</Link>
-                            </p>
+                            <tr className='p-3 bg-dry border border-border h-12 rounded overflow-hidden flex items-center justify-between text-sm'>
+                                <td>No movies found</td>
+                                <td>                                <Link className='mr-3 underline' to="https://t.me/dont_be_soy2" target='_blank'>Request ?</Link>
+                                </td>
+                            </tr>
                         ) :
                             isResults.slice(0, 3).map((movie, idx) => (
                                 <tr
