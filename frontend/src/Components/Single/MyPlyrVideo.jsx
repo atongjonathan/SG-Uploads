@@ -34,7 +34,6 @@ function MyPlyrVideo({ movie }) {
         const movieData = localStorage.getItem(movieKey);
         if (movieData) {
             const { time } = JSON.parse(movieData);
-            console.log(time);
             if (time && time !== 'null' && !isNaN(time)) {
                 if (time > 60 && time < movie?.runtimeSeconds - 300) {
                     setTime(time)
