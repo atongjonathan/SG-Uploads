@@ -97,7 +97,7 @@ const Filters = ({ categories }) => {
 
     return (
         <>
-            <div className="grid grid-cols-5 gap-7 pt-3">
+            <div className="grid grid-cols-5 gap-3 pt-3">
                 <div className='my-4 bg-dry border text-dryGray border-gray-800 grid md:grid-cols-4 grid-cols-2 lg:gap-12 gap-2 rounded p-3 col-span-4'>
                     {Filter.map((item, idx) => (
                         <Listbox key={idx} value={item.value} onChange={item.onChange}>
@@ -146,7 +146,7 @@ const Filters = ({ categories }) => {
                         setTimes(TimesData[0])
                         setRates(RatesData[0])
                     }}
-                    className="h-10 my-auto flex-rows col-span-1 gap-3 text-white p-3 rounded border-2 border-subMain mr-2 hover:bg-subMain hover:border-main transitions"
+                    className="h-10 my-auto flex-rows grid-cols-1 gap-3 text-white px-4 py-3 rounded border-2 border-subMain mr-2 hover:bg-subMain hover:border-main transitions text-sm"
                 >
                     Clear
                 </button>
