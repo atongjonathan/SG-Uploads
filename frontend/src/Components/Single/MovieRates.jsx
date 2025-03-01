@@ -69,17 +69,17 @@ const MovieRates = ({ movie }) => {
                           {
                             review.content ? (
                               <Disclosure>
-                                <DisclosureButton className="py-2 group flex flex-col w-full items-center gap-1"> {review.heading}
+                                <DisclosureButton className="py-2 group flex flex-col w-full items-center gap-1 text-sm"> {review.heading}
 
                                   <ChevronDownIcon className="size-5 transition duration-300 ease-out fill-white/60 group-data-[hover]:fill-white/50 group-data-[open]:rotate-180" />
 
                                 </DisclosureButton>
-                                <DisclosurePanel transition className="text-xs transitions leading-6 font-medium text-text origin-top transition duration-200 ease-out data-[closed]:-translate-y-6 data-[closed]:opacity-0 ">
+                                <DisclosurePanel transition className="text-xs transitions leading-6 text-text origin-top transition duration-200 ease-out data-[closed]:-translate-y-6 data-[closed]:opacity-0 ">
                                   {review.content ?? review.heading}
                                 </DisclosurePanel>
                               </Disclosure>
                             ) : (
-                              <p className="text-xs leading-6 font-medium text-text">{review.heading}</p>
+                              <p className="text-xs leading-6 text-text">{review.heading}</p>
 
                             )
                           }
@@ -97,7 +97,7 @@ const MovieRates = ({ movie }) => {
               reviewItems < reviews.length && <div className='px-10 flex justify-center w-full'>
                 <Button onClick={() => {
                   setReviewItems((items) => items + 6)
-                }} className=" flex justify-center flex-col bg-main gap-6  h-header p-3 cursor-pointer rounded-2xl border border-gray-800">More Reviews</Button>
+                }} className=" flex justify-center flex-col bg-main gap-6  h-header p-3 cursor-pointer rounded-2xl border border-gray-800 hover:bg-subMain transitions">More Reviews</Button>
               </div>
             }
           </div>)
