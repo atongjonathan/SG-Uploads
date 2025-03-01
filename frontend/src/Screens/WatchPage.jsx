@@ -17,6 +17,7 @@ import EditMovie from '../Components/Modals/EditMovie'
 import { useLocation } from 'react-router-dom'
 import NotFound from "./Error/NotFound"
 import TrailerSlider from '../Components/Home/TrailerSlider'
+import Characters from '../Components/Home/Characters'
 import MovieInfo from '../Components/Single/MovieInfo'
 import { IoMdCloudDownload } from "react-icons/io";
 
@@ -68,7 +69,7 @@ const WatchPage = () => {
     })
 
     const RelatesMovies = movies?.filter((m) => {
-        return m.id !== movie?.id && m.genre.includes(movie?.genre[0]) ;
+        return m.id !== movie?.id && m.genre.includes(movie?.genre[0]);
     });
 
 
@@ -80,6 +81,7 @@ const WatchPage = () => {
 
     const { pathname } = useLocation()
     const [trailer, setTrailer] = useState([])
+    const [casts, setCast] = useState([])
 
 
 
@@ -117,10 +119,31 @@ const WatchPage = () => {
             });
 
     }
+    async function getCast() {
+        let tmdb_id = movie?.link?.split("/").reverse()[0]
+        fetch(`https://api.themoviedb.org/3/movie/${tmdb_id}/credits?api_key=${TMDB_API_KEY}`, {
+
+            "method": "GET",
+            "mode": "cors",
+            "credentials": "omit"
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                setCast(data.cast)
+            })
+            .catch((err) => {
+                setCast(null)
+                console.log(err)
+            })
+
+
+
+    }
 
     useEffect(() => {
         if (movie) {
             getTrailer(movie)
+            getCast()
 
         }
 
@@ -139,7 +162,7 @@ const WatchPage = () => {
                             }
                             {
                                 movie && <div className="p-4 flex gap-2 ml-3 text-center">
-                                    
+
                                     <h2 className="md:text-lg text-sm font-semibold">{movie.title}</h2>
 
                                 </div>
@@ -194,6 +217,8 @@ const WatchPage = () => {
                                         </div>
 
                                     </div>
+
+                                    <Characters casts={casts} />
                                     <TrailerSlider movie={movie} trailers={trailer} />
                                 </div>
                                 <MovieInfo movie={movie}></MovieInfo>
