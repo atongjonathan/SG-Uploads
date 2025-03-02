@@ -6,7 +6,7 @@
   "display": "standalone",
   "orientation": "portrait",
   "scope": "/",
-  "start_url": "/",
+  "start_url": "https://movies.atongjona.com/",
   "icons": [
     {
       "src": "https://raw.githubusercontent.com/atongjonathan/SG-Uploads/refs/heads/main/frontend/images/icons/icon-72x72.png",
@@ -66,7 +66,6 @@
         }
       ]
     }
-
   ],
   "description": "Your free movie website search is over. With SG Uploads you can watch free movies online and TV shows without any account.",
   "categories": [
@@ -85,20 +84,24 @@
       "sizes": "320x581",
       "type": "image/jpg",
       "label": "Application"
-    }
-    ,
+    },
     {
       "src": "https://raw.githubusercontent.com/atongjonathan/SG-Uploads/refs/heads/main/frontend/images/screenshots/screenshot3.png",
       "sizes": "320x593",
       "type": "image/jpg",
       "label": "Application"
-    }
-    ,
+    },
     {
       "src": "https://raw.githubusercontent.com/atongjonathan/SG-Uploads/refs/heads/main/frontend/images/screenshots/screenshot2.png",
       "sizes": "320x652",
       "type": "image/jpg",
       "label": "Application"
     }
+  ],
+  "id": "SG Uploads",
+  "display_override": [
+    "standalone",
+    "fullscreen",
+    "window-controls-overlay"
   ]
 }
