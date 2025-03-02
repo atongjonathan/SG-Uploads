@@ -16,5 +16,5 @@ export function useDevToolsStatus() {
 		};
 	}, []);
 
-	return isDevToolsOpen;
+	return false;
 }
