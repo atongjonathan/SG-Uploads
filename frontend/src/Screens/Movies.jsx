@@ -32,7 +32,8 @@ const Loader = () => {
 const MoviesPage = () => {
   const { movies: allMovies, isLoading } = useContext(MovieContext);
   const [searchParams] = useSearchParams();
-  const [page, setPage] = useState(6);
+  const moviesNo = 8
+  const [page, setPage] = useState(moviesNo);
 
   // Extract genres as a unique tuple from all movies
   const genresTuple = useMemo(() => {

@@ -37,7 +37,7 @@ const MovieInfo = ({ movie }) => {
 
 
                     <div className="hidden lg:flex gap-1 flex-col tracking-wider">
-                        <Disclosure defaultOpen={true}>
+                        <Disclosure>
                             <DisclosureButton className="group w-full items-center justify-between hidden lg:flex">
                                 <span className="text-sm/6 font-medium text-white group-data-[hover]:text-white/80">
                                     Plot
