@@ -32,13 +32,26 @@ const AddMovie = () => {
 
 
     const searchMovie = useCallback(function searchMovie(e) {
-        if (e.target.value) {
-            setQuery(query)
-            fetch(`${VITE_IMDB_API}/search?query=${e.target.value}`)
+        let value = e.target.value
+        if (value) {
+            if (value.startsWith("tt")){
+                fetch(`${VITE_IMDB_API}/title/${value}`)
                 .then((res) => res.json())
                 .then((data) => {
-                    setResults(data.results)
+                    if(data.id){
+                        setResults([data])
+                    }
                 })
+
+            }else {
+                setQuery(query)
+                fetch(`${VITE_IMDB_API}/search?query=${e.target.value}`)
+                    .then((res) => res.json())
+                    .then((data) => {
+                        setResults(data.results)
+                    })
+            }
+         
         }
 
 
