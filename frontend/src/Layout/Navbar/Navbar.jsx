@@ -166,7 +166,7 @@ const Navbar = () => {
 
         {/* Menus for larger screens */}
         <div className="col-span-3 font-medium text-sm hidden xl:gap-10 2xl:gap-20 justify-between lg:flex xl:justify-end items-center">
-          <NavLink title="Movies" className={Hover} to="/movies">
+          <NavLink title="Movies" className={`bg-subMain border-b-subMain py-2 px-3 rounded-lg hover:bg-main hover:border-b-subMain transitions`} to="/movies">
             Browse
           </NavLink>
           <SgMenu></SgMenu>
