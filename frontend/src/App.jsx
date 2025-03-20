@@ -19,11 +19,16 @@ import { SuperRoute } from './context/PrivateRoute'
 import ScrollToTop from './ScrollToTop';
 import 'react-loading-skeleton/dist/skeleton.css'
 import SingleMovie from './Screens/SingleMovie';
+import {Helmet} from "react-helmet";
+
 
 const App = () => {
   Aos.init();
   return (
     <BrowserRouter>
+    <Helmet>
+        <title>SG Uploads | Watch Movies for Free</title>
+      </Helmet>
     <ScrollToTop></ScrollToTop>
       <Routes>
         {/* Protected routes for superusers */}

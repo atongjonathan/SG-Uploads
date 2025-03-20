@@ -20,6 +20,7 @@ import TrailerSlider from '../Components/Home/TrailerSlider'
 import Characters from '../Components/Home/Characters'
 import MovieInfo from '../Components/Single/MovieInfo'
 import { IoMdCloudDownload } from "react-icons/io";
+import { Helmet } from "react-helmet";
 
 const TMDB_API_KEY = import.meta.env.VITE_TMDB_API_KEY
 
@@ -76,7 +77,6 @@ const WatchPage = () => {
 
     let title = `${movie?.title} (${movie?.year})`
 
-    document.title = movie ? title : 'SG Uploads | Watch'
 
 
     const { pathname } = useLocation()
@@ -154,6 +154,16 @@ const WatchPage = () => {
             {
                 present ?
                     <Layout>
+                        {
+                            movie &&
+                            <Helmet>
+                                <title>{`${movie?.title} (${movie?.year})`}</title>
+                                <meta property="og:image" content={movie.poster} />
+                                <meta property="og:description" content={`${movie.title} (${movie?.year}) ⭐️ ${movie.rating.star}| ${movie.genre.join(",")} ${movie.runtime}| ${movie.contentRating}`} />
+                                <meta property="twitter:description" content={`${movie.title} (${movie?.year}) ⭐️ ${movie.rating.star}| ${movie.genre.join(",")} ${movie.runtime}| ${movie.contentRating}`} />
+                                <meta property="twitter:image" content={movie.poster} />
+                            </Helmet>
+                        }
                         <div className="container mx-auto bg-dry px-4 py-2 mb-2">
                             <EditMovie close={close} isOpen={isOpen} movie={movie}></EditMovie>
 
