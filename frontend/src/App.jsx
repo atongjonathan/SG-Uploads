@@ -34,6 +34,7 @@ const App = () => {
     <meta property="og:image" content="https://raw.githubusercontent.com/atongjonathan/SG-Uploads/refs/heads/main/frontend/src/images/4x3.jpg"/>
     <meta property="og:description" content="Your free movie website search is over. With SG Uploads you can watch free movies online and TV shows without any account." />
     <meta property="og:url" content="https://movies.atongjona.com/"/>
+    <meta property="og:type" content="video"/>
     <meta property="twitter:image" content="https://raw.githubusercontent.com/atongjonathan/SG-Uploads/refs/heads/main/frontend/src/images/4x3.jpg"/>
     <meta property="twitter:card" content="summary_large_image"/>
     <meta property="twitter:title" content="SG Uploads"/>
