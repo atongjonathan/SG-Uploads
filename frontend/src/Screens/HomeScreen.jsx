@@ -22,6 +22,8 @@ const HomeScreen = () => {
   const sortedByRatingCount = movies ? [...movies].sort((a, b) => b.rating.count - a.rating.count) : [];
   const sortedByRatingStar = movies ? [...movies].sort((a, b) => b.rating.star - a.rating.star) : [];
   const actionMovies = movies ? movies.filter((movie) => movie.genre.includes("Action")) : []
+  const animation = movies ? movies.filter((movie) => movie.genre.includes("Animation")) : []
+  const horror = movies ? movies.filter((movie) => movie.genre.includes("Horror")) : []
 
   return (
     <Layout>
@@ -31,7 +33,9 @@ const HomeScreen = () => {
           <SgSlider movies={sortedByDate} title='Trending' Icon={BsCollectionFill} />
           <SgSlider movies={sortedByRatingStar} title='Top Rated' Icon={BsBookmarkStarFill} />
           <SgSlider movies={shuffle(actionMovies)} title='Action' Icon={PiFilmReelFill} />
-          {/* <Promos /> */}
+          <SgSlider movies={shuffle(animation)} title='Animation' Icon={PiFilmReelFill} />
+          <SgSlider movies={shuffle(horror)} title='Horror' Icon={PiFilmReelFill} />
+          <Promos />
         </>
       </div>
 
