@@ -163,7 +163,7 @@ const WatchPage = () => {
                             {
                                 movie && <div className="p-4 flex gap-2 ml-3 text-center">
 
-                                    <h2 className="md:text-lg text-sm font-semibold">{movie.title}</h2>
+                                    <h2 className="md:text-lg text-sm font-semibold">{movie.title} ({movie.year})</h2>
 
                                 </div>
                             }
