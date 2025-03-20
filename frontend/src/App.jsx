@@ -31,7 +31,6 @@ const App = () => {
     <meta name="theme-color" content="#080A1A"/>
     <meta property="og:site_name" content="SG Uploads"/>
     <meta property="og:title" content="SG Uploads"/>
-    <meta property="og:image" content="https://raw.githubusercontent.com/atongjonathan/SG-Uploads/refs/heads/main/frontend/src/images/4x3.jpg"/>
     <meta property="og:description" content="Your free movie website search is over. With SG Uploads you can watch free movies online and TV shows without any account." />
     <meta property="og:url" content="https://movies.atongjona.com/"/>
     <meta property="og:type" content="video"/>
@@ -39,7 +38,6 @@ const App = () => {
     <meta property="twitter:card" content="summary_large_image"/>
     <meta property="twitter:title" content="SG Uploads"/>
     <meta property="twitter:description" content="Your free movie website search is over. With SG Uploads you can watch free movies online and TV shows without any account."/>
-    <meta property="og:image" content="https://raw.githubusercontent.com/atongjonathan/SG-Uploads/refs/heads/main/frontend/src/images/4x3.jpg"/>
     <meta property="fb:app_id" content="1401813654536816"/>
     <meta name="keywords" content="movie, download, stream, video phone, free, upload"/> 
          </Helmet>
