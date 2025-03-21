@@ -919,26 +919,26 @@
   ],
   "screenshots": [
     {
-      "src": "https://raw.githubusercontent.com/atongjonathan/SG-Uploads/refs/heads/main/frontend/images/screenshots/screenshot.png",
+      "src": "screenshots/screenshot.png",
       "sizes": "955x555",
       "type": "image/jpg",
       "label": "Application",
       "form_factor": "wide"
     },
     {
-      "src": "https://raw.githubusercontent.com/atongjonathan/SG-Uploads/refs/heads/main/frontend/images/screenshots/screenshot1.png",
+      "src": "screenshots/screenshot1.png",
       "sizes": "320x581",
       "type": "image/jpg",
       "label": "Application"
     },
     {
-      "src": "https://raw.githubusercontent.com/atongjonathan/SG-Uploads/refs/heads/main/frontend/images/screenshots/screenshot3.png",
+      "src": "screenshots/screenshot3.png",
       "sizes": "320x593",
       "type": "image/jpg",
       "label": "Application"
     },
     {
-      "src": "https://raw.githubusercontent.com/atongjonathan/SG-Uploads/refs/heads/main/frontend/images/screenshots/screenshot2.png",
+      "src": "screenshots/screenshot2.png",
       "sizes": "320x652",
       "type": "image/jpg",
       "label": "Application"

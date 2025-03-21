@@ -34,7 +34,7 @@ const App = () => {
     <meta property="og:description" content="Your free movie website search is over. With StreamGrid you can watch free movies online and TV shows without any account." />
     <meta property="og:url" content="https://movies.atongjona.com/"/>
     <meta property="og:type" content="video"/>
-    <meta property="twitter:image" content="https://raw.githubusercontent.com/atongjonathan/SG-Uploads/refs/heads/main/frontend/src/images/4x3.jpg"/>
+    <meta property="twitter:image" content="logo.png"/>
     <meta property="twitter:card" content="summary_large_image"/>
     <meta property="twitter:title" content="StreamGrid"/>
     <meta property="twitter:description" content="Your free movie website search is over. With StreamGrid you can watch free movies online and TV shows without any account."/>
