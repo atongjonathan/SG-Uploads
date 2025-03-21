@@ -83,7 +83,7 @@ function MyPlyrVideo({ movie }) {
                 aspectRatio="16x9"
                 ref={ref}
                 poster={movie?.poster}
-                artist="SG Uploads"
+                artist="StreamGrid"
                 onTimeUpdate={() => {
                     // Update playback time on every time update event
                     if (!open) {

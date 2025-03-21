@@ -13,7 +13,7 @@ const shuffle = (list) =>  list.sort(() => .5 - Math.random())
 
 
 const HomeScreen = () => {
-  document.title = `SG Uploads | Home`;
+  document.title = `StreamGrid | Home`;
 
   const { movies, isLoading } = useContext(MovieContext);
 

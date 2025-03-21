@@ -11,7 +11,7 @@ const Promos = () => {
             Download Your Movies Watch Offline. <br /> Enjoy on Your Mobile
           </h1>
           <p className="text-text text-sm xl:text-base leading-6 xl:leading-8">
-          Welcome to SG Uploads! We’re thrilled to have you here. At SG Uploads, we bring you the latest and greatest in film, from blockbuster hits to indie gems. Whether you’re a casual viewer or a die-hard cinephile, there’s something for everyone. Explore our features to stay updated with the newest movies,  and join the conversation in our community discussions. Grab your popcorn, sit back, and enjoy the show! 
+          Welcome to StreamGrid! We’re thrilled to have you here. At StreamGrid, we bring you the latest and greatest in film, from blockbuster hits to indie gems. Whether you’re a casual viewer or a die-hard cinephile, there’s something for everyone. Explore our features to stay updated with the newest movies,  and join the conversation in our community discussions. Grab your popcorn, sit back, and enjoy the show! 
           </p>
           <div className="flex gap-4 md:text-lg text-sm">
             <div className="flex-colo bg-black text-subMain px-6 py-3 rounded font-bold">

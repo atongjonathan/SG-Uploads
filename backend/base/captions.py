@@ -110,7 +110,7 @@ class Captions():
         try:
             message = bot.send_photo(GROUP_CHAT_ID, movie.get(
                 "poster", ""), caption=movie_text, reply_markup=keyboard, parse_mode='HTML')
-            bot.pin_chat_message(GROUP_CHAT_ID, message.message_id, True)
+                
             return {"success": message.id}
         except Exception as e:
             print(f"Error: {e}")

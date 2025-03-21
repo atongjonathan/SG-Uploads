@@ -1,6 +1,6 @@
 {
-  "name": "SG Uploads",
-  "short_name": "SG Uploads",
+  "name": "StreamGrid",
+  "short_name": "StreamGrid",
   "theme_color": "#080A1A",
   "background_color": "#080A1A",
   "display": "standalone",
@@ -67,7 +67,7 @@
       ]
     }
   ],
-  "description": "Your free movie website search is over. With SG Uploads you can watch free movies online and TV shows without any account.",
+  "description": "Your free movie website search is over. With StreamGrid you can watch free movies online and TV shows without any account.",
   "categories": [
     "entertainment"
   ],
@@ -98,7 +98,7 @@
       "label": "Application"
     }
   ],
-  "id": "SG Uploads",
+  "id": "StreamGrid",
   "display_override": [
     "standalone",
     "fullscreen",

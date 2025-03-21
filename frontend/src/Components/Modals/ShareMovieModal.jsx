@@ -38,7 +38,7 @@ const ShareMovieModal = ({ movie, isModalOpen, setisModalOpen }) => {
                     <form className='grid grid-cols-4 gap-6 mt-6'>
                         {
                             shareData.map((data, idx) => (
-                                <data.shareButton key={idx} url={url} title={`Watch ${movie.title} (${movie.year})`} separator='\n' quote='SG Uploads'>
+                                <data.shareButton key={idx} url={url} title={`Watch ${movie.title} (${movie.year})`} separator='\n' quote='StreamGrid'>
                                     <div className="transitions hover:bg-subMain text-lg bg-white bg-opacity-30 text-white rounded p-4">
                                         <data.icon className='h-6 w-6 mx-auto text-white'></data.icon>
                                     </div>

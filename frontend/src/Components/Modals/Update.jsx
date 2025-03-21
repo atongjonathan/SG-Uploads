@@ -79,7 +79,7 @@ const Update = ({ isUpdateOpen, updateClose }) => {
                             <form onSubmit={(e) => handleSubmit(e)} className="flex flex-col gap-6" action='' method='post' encType='multipart/form-data'>
 
                                 <Uploader updateParentFile={handleDataFromChild}></Uploader>
-                                <Input label="Full Name" placeholder='SG Uploads' type='text' bg name='name' required={false}></Input>
+                                <Input label="Full Name" placeholder='StreamGrid' type='text' bg name='name' required={false}></Input>
                                 <div className="flex gap-2 flex-wrap flex-col-reverse sm:flex-row justify-between items-center my-4"                                >
                                     <Button type='submit'
                                         className="bg-subMain inline-flex items-center gap-2 rounded-md  py-3 px-6 text-sm/6 font-semibold text-white shadow-inner shadow-subMain/30 focus:outline-none data-[hover]:bg-main data-[focus]:outline-1 data-[focus]:outline-white data-[open]:bg-main transitions"

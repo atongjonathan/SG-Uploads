@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 const Footer = () => {
   const Links = [
     {
-      title: 'SG Uploads',
+      title: 'StreamGrid',
       links: [
         {
           name: 'Home',

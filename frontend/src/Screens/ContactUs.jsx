@@ -42,7 +42,7 @@ const ContactUs = () => {
             </span>
             <h5 className="text-xl font-semibold mb-2">{contact.title}</h5>
             <p className="mb-0 text-sm text-text leading-7">
-              <a href={`${contact.contact}`} className='text-blue-600'>SG Uploads   </a>{contact.info}
+              <a href={`${contact.contact}`} className='text-blue-600'>StreamGrid   </a>{contact.info}
             </p>
           </div>
         ))}
