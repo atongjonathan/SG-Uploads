@@ -39,13 +39,13 @@ const Rows = (movie, idx, admin, setMovie = null, open = null) =>
                         <Link to={movie?.stream?.replace('video', 'dl')} className='border border-border bg-dry flex-rows gap-2 text-border rounded py-1 px-2'>
                             Download <FaCloudDownloadAlt className='text-green-500'></FaCloudDownloadAlt>
                         </Link>
-                        <Link to={`/watch/${movie.title}`} className='bg-subMain text-white rounded flex-colo w-6 h-6'> <GoEye></GoEye></Link>
+                        <Link to={`/watch/${movie.id}`} className='bg-subMain text-white rounded flex-colo w-6 h-6'> <GoEye></GoEye></Link>
                         <SGFaHeart movie={movie}></SGFaHeart>
 
                     </>)
             }
 
-            <Link to={`/watch/${movie.title}`}></Link>
+            <Link to={`/watch/${movie.id}`}></Link>
         </td>
     </tr>
 )

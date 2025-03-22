@@ -124,7 +124,7 @@ const SgSlider = ({ movies, title, Icon }) => {
             <SwiperSlide
               className="cursor-pointer"
               key={idx}
-              onClick={() => navigate(`/watch/${movie.title}`)}
+              onClick={() => navigate(`/watch/${movie.id}`)}
             >
               {isLoading ? (
                 <Skeleton
@@ -136,7 +136,7 @@ const SgSlider = ({ movies, title, Icon }) => {
                 <div className="relative group p-4 border border-border bg-dry rounded-lg overflow-hidden">
                   {/* Movie Poster */}
                   <div className="hover:scale-95 transitions relative rounded overflow-hidden">
-                    <Link to={`/watch/${movie.title}`} className="w-full">
+                    <Link to={`/watch/${movie.id}`} className="w-full">
                       <LazyLoadImage placeholderSrc={loader} effect="blur" src={movie.poster} alt={movie.title} title={movie.title} className="w-full aspect-[216/319]" />
                     </Link>
                     <div className="absolute flex flex-col gap-2 bottom-0 right-0 left-0 bg-main bg-opacity-60 text-white py-3 items-center">

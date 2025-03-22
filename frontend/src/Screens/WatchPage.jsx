@@ -51,17 +51,16 @@ const WatchPage = () => {
     )
 
     useEffect(() => {
+        if (movies) setMovie(movies?.find((movie) => movie.title == id || movie.id == id))
         if (!movies && !isLoading) {
             setPresent(false)
         }
 
-        else if (movies?.find((movie) => movie.title == id)) {
-            setMovie(movies?.find((movie) => movie.title == id))
-        }
 
 
 
-    }, [isLoading, id])
+
+    }, [isLoading, id, movies])
 
 
 
