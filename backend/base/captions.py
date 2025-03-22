@@ -1,19 +1,27 @@
 import os
-from django.conf import Settings, settings
+from urllib.parse import quote
 from opensubtitlescom import OpenSubtitles
 import requests
 from telebot import TeleBot
 from datetime import datetime
 from telebot.types import InlineKeyboardButton, InlineKeyboardMarkup
-
+import logging
+import json
 
 bot = TeleBot(os.environ.get("TELEGRAM_BOT_TOKEN"))
 caption_bot = TeleBot(os.environ.get("TELEGRAM_BOT_TOKEN"))
 
-API_KEY = os.environ.get("API_KEY")
-GROUP_CHAT_ID = os.environ.get("GROUP_CHAT_ID")
-USER = os.environ.get("USER")
-PASSWORD = os.environ.get("PASSWORD")
+API_KEY = 'cfFSE7qyg28tIEDztRg6j3oqxLvnS0oK'
+USER = 'atongjona'
+PASSWORD = 'selisrare'
+GROUP_CHAT_ID = -1001803549934
+TELEGRAM_BOT_TOKEN = '6726476385:AAFCpAcbxZ-RLuUYIWhaW75TD22Tpl5teRo'
+bot = TeleBot(TELEGRAM_BOT_TOKEN)
+caption_bot = TeleBot('6453092959:AAH65NtLGOXgR3F6Ak30FXCN1tguOnxQpZA')
+
+PHONE_NUMBER_ID = "379940855196731"
+ACCESS_TOKEN = "EAAOaHvjwayUBO1ygAsZAwOzWEL6i7NsJeXxInyFZC0f145YZAgir8eqALUSU5t7EMUhVkN3hn216UlnV9WLUQj6hOaZBoLe2d5KZAWvGFoK49RYeYYth8Xus0ZCLjL0A1ZBmGq4kHwv3ZALl4P0o8V5PS2CdJYFLDetaOCBjuqeLgmc9cpbzyo0966F7eO5la4gFTxhoNcZArhFl3vFne"
+recipients = "254708683896"
 
 
 class Captions():
@@ -114,26 +122,46 @@ class Captions():
             message = bot.send_photo(GROUP_CHAT_ID, movie.get(
                 "poster", ""), caption=movie_text, reply_markup=keyboard, parse_mode='HTML')
             responses = []
-            RECIPIENTS = settings.RECIPIENTS.split(",")
+            RECIPIENTS = recipients.split(",")
             headers = {
                 "Content-type": "application/json",
-                "Authorization": f"Bearer {settings.ACCESS_TOKEN}",
+                "Authorization": f"Bearer {ACCESS_TOKEN}",
             }
-            url = f"https://movies.atongjona.com/watch/{movie.get('id')}"
+            url = f"https://movies.atongjona.com/watch/{quote(movie.get('title'))}"
+            movie_text = f"""
+📹 *Title:* {movie.get('title', 'N/A')}
+🎬 *Watch:* {url}
+🕰 *Duration:* {movie.get('runtime', 'N/A')}
+📉 *Rating:* {movie.get('rating', {}).get('star', 'N/A')}⭐️ from {movie.get('rating', {}).get('count', 0)} users
+🗓️ *Release Date:* {release_date}
+📟 *Genre:* {', '.join(movie.get('genre', ['N/A']))}
+🌎 *Country:* {', '.join([loc.get('country', 'Unknown') for loc in movie.get('releaseDetailed', {}).get('originLocations', [])])}
+🗣 *Language:* {', '.join([lang.get('language', 'Unknown') for lang in movie.get('spokenLanguages', [])])}
+
+🙎 *Cast Info:*
+👉 *Director:* {', '.join([director for director in movie.get('directors', ['N/A'])])}
+🎎 *Stars:* {', '.join([actor for actor in movie.get('actors', ['N/A'])])}
+
+🏆 *Awards:* {movie.get('award', {}).get('wins', 0)} wins & {movie.get('award', {}).get('nominations', 0)} nominations
+
+📜 *Summary:* {movie.get('plot', 'No plot available.')}
+
+"""
+
             for RECIPIENT in RECIPIENTS:
                 message_body = {
                     "messaging_product": "whatsapp",
                     "to": RECIPIENT,
                     "type": "image",
-                    "context": {
-                        "message_id": "wamid.HBgMMjU0NzA4NjgzODk2FQIAERgSNjU3OTE3NjNFNjQ2NjUzNjgwAA=="
-                    },
                     "image": {
-                        "link": "https://images.pexels.com/photos/12661193/pexels-photo-12661193.jpeg?auto=compress&cs=tinysrgb&w=400&lazy=load"},
-                    "caption": movie_text + f"\n\n Watch Now: {url}"
+                        "link": movie.get("poster"),
+                        "caption": movie_text
+                        }                    
                 }
+                logging.info(json.dumps(message_body))
                 response = requests.post(
-                    f"https://graph.facebook.com/v20.0/{settings.PHONE_NUMBER_ID}/messages", data=message_body, headers=headers)
+                    f"https://graph.facebook.com/v20.0/{PHONE_NUMBER_ID}/messages", json=message_body, headers=headers)
+                logging.info(str(response.json()))
                 responses.append(response.status_code)
 
             return {"success": message.id, "wa_statuused": str(responses)}
