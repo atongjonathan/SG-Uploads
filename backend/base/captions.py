@@ -1,5 +1,7 @@
 import os
+from django.conf import Settings, settings
 from opensubtitlescom import OpenSubtitles
+import requests
 from telebot import TeleBot
 from datetime import datetime
 from telebot.types import InlineKeyboardButton, InlineKeyboardMarkup
@@ -39,7 +41,8 @@ class Captions():
             self.subtitles.login(USER, PASSWORD)
 
             # Search for subtitles
-            response = self.subtitles.search(imdb_id=imdb_id, languages="en", trusted_sources=True)
+            response = self.subtitles.search(
+                imdb_id=imdb_id, languages="en", trusted_sources=True)
             response_dict = response.to_dict()
             # Ensure 'data' is a list
             response_data = response_dict.get("data", [])
@@ -74,7 +77,7 @@ class Captions():
         keyboard = InlineKeyboardMarkup()
         # Use `movie.get('stream', '#')` to prevent errors
         button = InlineKeyboardButton(
-            "🎬 Watch now",  url=f"https://movies.atongjona.com/watch/{movie.get('title')}")
+            "🎬 Watch now",  url=f"https://movies.atongjona.com/watch/{movie.get('id')}")
         keyboard.add(button)
 
         try:
@@ -110,8 +113,30 @@ class Captions():
         try:
             message = bot.send_photo(GROUP_CHAT_ID, movie.get(
                 "poster", ""), caption=movie_text, reply_markup=keyboard, parse_mode='HTML')
-                
-            return {"success": message.id}
+            responses = []
+            RECIPIENTS = settings.RECIPIENTS.split(",")
+            headers = {
+                "Content-type": "application/json",
+                "Authorization": f"Bearer {settings.ACCESS_TOKEN}",
+            }
+            url = f"https://movies.atongjona.com/watch/{movie.get('id')}"
+            for RECIPIENT in RECIPIENTS:
+                message_body = {
+                    "messaging_product": "whatsapp",
+                    "to": RECIPIENT,
+                    "type": "image",
+                    "context": {
+                        "message_id": "wamid.HBgMMjU0NzA4NjgzODk2FQIAERgSNjU3OTE3NjNFNjQ2NjUzNjgwAA=="
+                    },
+                    "image": {
+                        "link": "https://images.pexels.com/photos/12661193/pexels-photo-12661193.jpeg?auto=compress&cs=tinysrgb&w=400&lazy=load"},
+                    "caption": movie_text + f"\n\n Watch Now: {url}"
+                }
+                response = requests.post(
+                    f"https://graph.facebook.com/v20.0/{settings.PHONE_NUMBER_ID}/messages", data=message_body, headers=headers)
+                responses.append(response.status_code)
+
+            return {"success": message.id, "wa_statuused": str(responses)}
         except Exception as e:
             print(f"Error: {e}")
             return {"error": str(e)}

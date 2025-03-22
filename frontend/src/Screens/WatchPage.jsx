@@ -58,8 +58,6 @@ const WatchPage = () => {
 
 
 
-
-
     }, [isLoading, id, movies])
 
 

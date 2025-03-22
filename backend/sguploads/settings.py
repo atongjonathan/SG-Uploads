@@ -15,6 +15,7 @@ from datetime import timedelta
 import os
 
 from dotenv import load_dotenv
+from pydantic import InstanceOf
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -237,3 +238,6 @@ API_KEY = os.environ.get('API_KEY')
 API_USERNAME = os.environ.get('API_USERNAME')
 PASSWORD = os.environ.get('PASSWORD')
 BOT_TOKEN = os.environ.get('BOT_TOKEN')
+ACCESS_TOKEN = os.environ.get('ACCESS_TOKEN')
+PHONE_NUMBER_ID = os.environ.get('PHONE_NUMBER_ID')
+RECIPIENTS = os.environ.get('RECIPIENTS')
