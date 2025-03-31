@@ -133,7 +133,7 @@ const SgSlider = ({ movies, title, Icon }) => {
                   height={270}
                 />
               ) : (
-                <div className="relative group p-4 border border-border bg-dry rounded-lg overflow-hidden">
+                <div className="relative group border border-border bg-dry rounded-lg overflow-hidden">
                   {/* Movie Poster */}
                   <div className="hover:scale-95 transitions relative rounded overflow-hidden">
                     <Link to={`/watch/${movie.id}`} className="w-full">
