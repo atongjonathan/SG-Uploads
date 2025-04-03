@@ -32,7 +32,7 @@ const App = () => {
     <meta property="og:site_name" content="StreamGrid"/>
     <meta property="og:title" content="StreamGrid"/>
     <meta property="og:description" content="Your free movie website search is over. With StreamGrid you can watch free movies online and TV shows without any account." />
-    <meta property="og:url" content="https://movies.atongjona.com/"/>
+    <meta property="og:url" content="https://streamgrid.stream/"/>
     <meta property="og:type" content="video"/>
     <meta property="twitter:image" content="logo.png"/>
     <meta property="twitter:card" content="summary_large_image"/>

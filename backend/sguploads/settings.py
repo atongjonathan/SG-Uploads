@@ -15,7 +15,6 @@ from datetime import timedelta
 import os
 
 from dotenv import load_dotenv
-from pydantic import InstanceOf
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -223,11 +222,13 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 CORS_ALLOWED_ORIGINS = [
     "https://movies.atongjona.com",
-    "http://localhost:5173"
+    "http://localhost:5173",
+    "https://streamgrid.stream/"
 ]
 CSRF_TRUSTED_ORIGINS = [
     "https://movies.atongjona.com",
-    "http://localhost:5173"
+    "http://localhost:5173",
+    "https://streamgrid.stream/"
 ]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
