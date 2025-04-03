@@ -70,7 +70,7 @@ const MovieProvider = ({ children }) => {
 
     useEffect(() => {
         if (!isDevToolsOpen) {
-            fetchMovies()
+            fetchDBMovies()
         }
         else {
             console.clear()
