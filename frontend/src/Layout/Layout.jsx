@@ -3,21 +3,19 @@ import Navbar from "./Navbar/Navbar";
 import Footer from "./Footer/Footer";
 import { Toaster } from "sonner";
 import MobileFooter from "./Footer/MobileFooter";
-import { MovieContext } from "../context/MovieContext";
-import LoadingIcons from "react-loading-icons";
+import { MovieContext, useMovies } from "../context/MovieContext";
 import ScrollToTop from "react-scroll-to-top";
 import { BiArrowToTop } from "react-icons/bi";
 import SiteDown from '../Screens/Error/SiteDown'
-import { useDevToolsStatus } from "../utils/useDevToolsStatus";
 
 const Layout = ({ children }) => {
-  const { isLoading, movies } = useContext(MovieContext)
-  const isDevToolsOpen = useDevToolsStatus();
+  const { isError } = useMovies()
+
 
   return (
     <>
       {
-        (!isLoading && !movies) || isDevToolsOpen ? <SiteDown></SiteDown>
+        isError ? <SiteDown></SiteDown>
           :
           (
             <div className="bg-main text-white relative">

@@ -5,17 +5,16 @@ import { Input } from '../../Components/UserInputs'
 import { CgSpinner } from 'react-icons/cg'
 import { FiLogIn } from 'react-icons/fi'
 import AuthContext from '../../context/AuthContext';
-import Backend from '../../utils/Backend';
 import { IoClose } from 'react-icons/io5'
+import { loginUser } from '../../utils/Backend'
 
 
-const backend = Backend()
 const LoginModal = ({ isLoginOpen, setIsLoginOpen, openSignUp, closeLogin }) => {
 
     const [loading, setLoading] = useState(false)
     const [passwordError, setPasswordError] = useState(null)
     const [usernameError, setusernameError] = useState(null)
-    const { saveAuthTokens } = useContext(AuthContext)
+    const {  saveAuthTokens } = useContext(AuthContext)
 
     async function handleSubmit(e) {
         setLoading(true)
@@ -23,7 +22,7 @@ const LoginModal = ({ isLoginOpen, setIsLoginOpen, openSignUp, closeLogin }) => 
         const formData = new FormData(e.target)
         const formObject = Object.fromEntries(formData.entries())
         if (formData.username != '' || formData.password != '') {
-            const response = await backend.loginUser(formObject.username, formObject.password);
+            const response = await loginUser(formObject.username, formObject.password);
             if (response.data) {
                 const tokens = response.data;
                 saveAuthTokens(tokens)

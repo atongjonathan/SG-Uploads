@@ -11,6 +11,7 @@ import SignUpModal from '../../Components/Modals/SignUpModal';
 import LoginModal from '../../Components/Modals/LoginModal';
 import { IoClose } from 'react-icons/io5'
 import Results from '../../Components/Home/Results';
+import { useQuery } from '@tanstack/react-query';
 
 const MobileFooter = () => {
     const Hover = 'transitions text-2xl flex-colo hover:bg-white hover:text-main text-white rounded-md px-4 py-3'

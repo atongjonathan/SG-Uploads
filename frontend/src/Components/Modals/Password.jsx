@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import Backend from '../../utils/Backend'
+import { changePassword } from '../../utils/Backend'
 import { Input } from '../../Components/UserInputs'
 import { Button, Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
 import AuthContext from '../../context/AuthContext'
@@ -7,13 +7,11 @@ import { toast } from 'sonner'
 import { useNavigate } from 'react-router-dom'
 import { IoClose } from 'react-icons/io5'
 
-const backend = Backend()
 
 
 const Password = ({ isPasswordOpen, passwordClose }) => {
     const [error, setError] = useState(null)
     const navigate = useNavigate()
-    const backend = Backend()
 
 
     const { authTokens } = useContext(AuthContext)
@@ -31,7 +29,7 @@ const Password = ({ isPasswordOpen, passwordClose }) => {
             setError("Passwords do not match")
         }
         else {
-            const response = await backend.changePassword(authTokens.access, { old_password, new_password })
+            const response = await changePassword(authTokens.access, { old_password, new_password })
             if (response.detail) {
                 toast.success(response.detail)
                 setTimeout(() => {

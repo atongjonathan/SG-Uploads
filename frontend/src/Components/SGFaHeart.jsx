@@ -1,11 +1,9 @@
 import React, { useState, useEffect, useContext, useCallback } from 'react';
 import { FaHeart } from 'react-icons/fa';
-import Backend from '../utils/Backend';
 import { toast } from 'sonner';
 import AuthContext from '../context/AuthContext';
 import { Button } from '@headlessui/react';
 
-const backend = Backend();
 
 const SGFaHeart = ({ movie }) => {
   const { authTokens, user } = useContext(AuthContext);
@@ -46,13 +44,13 @@ const SGFaHeart = ({ movie }) => {
 
   const like = useCallback(async () => {
     setIsLoading(true);
-    const response = await backend.like(authTokens?.access, movie?.id);
+    const response = await like(authTokens?.access, movie?.id);
     handleResponse(response, `Added '${movie?.title}' to favourites`, true);
   }, [authTokens, movie, handleResponse]);
 
   const unlike = useCallback(async () => {
     setIsLoading(true);
-    const response = await backend.unlike(authTokens?.access, movie?.id);
+    const response = await unlike(authTokens?.access, movie?.id);
     handleResponse(response, `Removed '${movie?.title}' from favourites`, false);
   }, [authTokens, movie, handleResponse]);
 

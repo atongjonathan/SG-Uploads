@@ -7,15 +7,32 @@ import SGFaHeart from '../SGFaHeart'
 import { BiPlay } from "react-icons/bi";
 import Skeleton from 'react-loading-skeleton'
 import { MovieContext } from "../../context/MovieContext";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import { getMovies } from "../../utils/Backend";
 
-const Banner = ({ movies }) => {
+const Banner = () => {
 
-  let { isLoading } = useContext(MovieContext)
+  const { isFetching, data } = useQuery({
+    queryKey: ["bannerQuery"],
+    queryFn: () => {
+      const config = {
+        params: {
+          ordering: "-releaseDate",
+          limit: 6
+        }
+      }
+      return getMovies(config)
+    }
+  })
+  let movies = data?.results
+
+
 
   return (
     <>
       {
-        isLoading ?
+        isFetching ?
           <div className="relative w-full">
             <div className="relative h-72 py-10 overflow-hidden bg-dry z-10">
 
@@ -65,11 +82,11 @@ const Banner = ({ movies }) => {
               {
                 movies?.slice(0, 6).map((movie, idx) => (
                   <SwiperSlide key={idx} className="relative overflow-hidden">
-                      <img
-                        src={movie.poster}
-                        alt={movie.title} title={movie.title}
-                        className="w-full md:hidden max-h-100 object-cover"
-                      />
+                    <img
+                      src={movie.poster}
+                      alt={movie.title} title={movie.title}
+                      className="w-full md:hidden max-h-100 object-cover"
+                    />
                     <div style={{
                       background: `url('${movie?.poster}'`
                     }} className={`w-full md:inline-block hidden h-full object-cover blur-lg relative`}>

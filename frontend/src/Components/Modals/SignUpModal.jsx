@@ -5,9 +5,8 @@ import { toast } from 'sonner'
 import { Input } from '../../Components/UserInputs'
 import { CgSpinner } from 'react-icons/cg'
 import { FiLogIn } from 'react-icons/fi'
-import Backend from '../../utils/Backend';
+import { signUp } from '../../utils/Backend';
 
-const backend = Backend()
 const SignUpModal = ({ isSignUpOpen, setIsSignUpOpen, openLogin, closeSignUp }) => {
 
     const [loading, setLoading] = useState(false)
@@ -18,7 +17,7 @@ const SignUpModal = ({ isSignUpOpen, setIsSignUpOpen, openLogin, closeSignUp }) 
         e.preventDefault()
         const formData = new FormData(e.target)
         const formObject = Object.fromEntries(formData.entries())
-        const response = await backend.signUp(formObject)
+        const response =  await signUp(formObject)
         if (response.status == 201) {
             openLogin()
         }
