@@ -75,15 +75,21 @@ class MovieList(generics.ListAPIView):
     serializer_class = MovieSerializer
     queryset = Movie.objects.all()
     filter_backends = [filters.SearchFilter]
-    search_fields = ['title']
+    search_fields = ['title', 'id']
     filter_backends = [filters.OrderingFilter]
     ordering_fields = '__all__'
 
     def get_queryset(self):
         queryset = Movie.objects.all()
         genre = self.request.query_params.get('genre')
+        title = self.request.query_params.get('title')
+        id = self.request.query_params.get('id')
         if genre:
             queryset = queryset.filter(genre__icontains=genre)
+        if title:
+            queryset = queryset.filter(title__icontains=title)
+        if id:
+            queryset = queryset.filter(id=id)
         return queryset
 
 

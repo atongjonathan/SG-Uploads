@@ -13,8 +13,9 @@ const MovieRates = ({ movie }) => {
 
   const [reviews, setReviews] = useState(null)
   const [reviewItems, setReviewItems] = useState(6);
-  const { authTokens } = useContext(AuthContext)
+  const { authTokens, user} = useContext(AuthContext)
   const auth = authTokens?.access
+
 
 
   async function getReviews() {
@@ -39,7 +40,7 @@ const MovieRates = ({ movie }) => {
     if (movie?.reviews) {
       setReviews(movie?.reviews)
     }
-    else {
+    else if (user) {
       getReviews()
     }
 
@@ -103,7 +104,7 @@ const MovieRates = ({ movie }) => {
           </div>)
           :
 
-          !reviews && <div style={
+          !reviews && user && <div style={
             {
               alignItems: 'center'
             }

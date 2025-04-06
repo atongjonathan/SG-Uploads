@@ -21,12 +21,16 @@ import Characters from '../Components/Home/Characters'
 import MovieInfo from '../Components/Single/MovieInfo'
 import { IoMdCloudDownload } from "react-icons/io";
 import { Helmet } from "react-helmet";
+import { useQuery } from '@tanstack/react-query'
+import { getMovies } from '../utils/Backend'
 
 const TMDB_API_KEY = import.meta.env.VITE_TMDB_API_KEY
+function isIntegerString(str) {
+    return Number.isInteger(Number(str));
+}
 
 const WatchPage = () => {
     let { id } = useParams()
-    const [movie, setMovie] = useState(null)
     let [present, setPresent] = useState(true)
 
     const { user } = useContext(AuthContext)
@@ -39,6 +43,32 @@ const WatchPage = () => {
     let [isOpen, setIsOpen] = useState(false)
 
 
+    const { isError, data, isSuccess, isFetching } = useQuery({
+        queryKey: ["movieQuery", id],
+        queryFn: () => {
+            let config = {}
+            if (isIntegerString(id)) {
+                config = {
+                    params: {
+                        id
+                    }
+                }
+            }
+
+            else {
+                config = {
+                    params: {
+                        title: id,
+                    }
+                }
+            }
+
+            return getMovies(config)
+        },
+        enabled: Boolean(id)
+    })
+    const movie = data?.results.length > 0 ? data?.results[0] : null
+
     const open = useCallback(function open() {
         setIsOpen(true)
     })
@@ -50,21 +80,6 @@ const WatchPage = () => {
         }
     )
 
-    useEffect(() => {
-        
-        if (movies) {
-            let found_movie = movies?.find((movie) => movie.title == id || movie.id == id)
-            if (found_movie){
-                setMovie(found_movie)
-            }
-            else {
-                setPresent(false)
-            }
-        }
-
-
-
-    }, [isLoading, id, movies])
 
 
 
@@ -76,9 +91,6 @@ const WatchPage = () => {
         return m.id !== movie?.id && m.genre.includes(movie?.genre[0]);
     });
 
-
-
-    let title = `${movie?.title} (${movie?.year})`
 
 
 
@@ -155,104 +167,123 @@ const WatchPage = () => {
     return (
         <>
             {
-                present ?
-                    <Layout>
+                <Layout>
+                    {
+                        movie &&
+                        <Helmet>
+                            <meta name="description" content={`${movie.title} (${movie?.year}) ⭐️ ${movie.rating.star} | ${movie.genre.join(",")} ${movie.runtime} | ${movie.contentRating}`} />
+
+                            <title>{`${movie?.title} (${movie?.year})`}</title>
+                            <meta property="og:image" content={movie.poster} />
+                            <meta property="og:description" content={`${movie.title} (${movie?.year}) ⭐️ ${movie.rating.star}| ${movie.genre.join(",")} ${movie.runtime}| ${movie.contentRating}`} />
+                            <meta property="twitter:description" content={`${movie.title} (${movie?.year}) ⭐️ ${movie.rating.star}| ${movie.genre.join(",")} ${movie.runtime}| ${movie.contentRating}`} />
+                            <meta property="twitter:image" content={movie.poster} />
+                        </Helmet>
+                    }
+                    <div className="container mx-auto bg-dry px-4 py-2 mb-2">
                         {
-                            movie &&
-                            <Helmet>
-                                <meta name="description" content={`${movie.title} (${movie?.year}) ⭐️ ${movie.rating.star} | ${movie.genre.join(",")} ${movie.runtime} | ${movie.contentRating}`} />
-
-                                <title>{`${movie?.title} (${movie?.year})`}</title>
-                                <meta property="og:image" content={movie.poster} />
-                                <meta property="og:description" content={`${movie.title} (${movie?.year}) ⭐️ ${movie.rating.star}| ${movie.genre.join(",")} ${movie.runtime}| ${movie.contentRating}`} />
-                                <meta property="twitter:description" content={`${movie.title} (${movie?.year}) ⭐️ ${movie.rating.star}| ${movie.genre.join(",")} ${movie.runtime}| ${movie.contentRating}`} />
-                                <meta property="twitter:image" content={movie.poster} />
-                            </Helmet>
+                            movie && <EditMovie close={close} isOpen={isOpen} movie={movie}></EditMovie>
                         }
-                        <div className="container mx-auto bg-dry px-4 py-2 mb-2">
-                            <EditMovie close={close} isOpen={isOpen} movie={movie}></EditMovie>
-
-                            {
-                                movie && <ShareMovieModal movie={movie} isModalOpen={isModalOpen} setisModalOpen={setModal}></ShareMovieModal>
-                            }
-                            {
-                                movie && <div className="p-4 flex gap-2 ml-3 text-center">
-
-                                    <h2 className="md:text-lg text-sm font-semibold">{movie.title} ({movie.year})</h2>
-
-                                </div>
-                            }
-
-                            <div className="grid grid-cols-4 gap-2">
-                                <div className="col-span-4 lg:col-span-3">
-                                    {
-                                        movie ?
-                                            <MyPlyrVideo movie={movie}></MyPlyrVideo>
-                                            : <Skeleton baseColor="rgb(22 28 63)" containerClassName="animate-pulse" className='animate-pulse' height={260}></Skeleton>
-                                    }
-                                    <div className="grid grid-cols-4 place-content-center justify-between gap-2 my-4">
-
-                                        <div className="col-span-2 p-2 flex gap-2">
-
-                                            {
-                                                movie ?
-                                                    movie.genre.slice(0, 2).map((item, idx) => (
-                                                        <Button key={idx} className=" p-1 bg-white/10 hover:bg-white/10 active:bg-white/10 smoothie bubbly rounded text-sm lg:text-lg"> {item}</Button>
-                                                    ))
-
-                                                    : <Skeleton baseColor="rgb(22 28 63)" height={30} width={100} containerClassName="animate-pulse"></Skeleton>
-                                            }
 
 
-                                        </div>
+                        {
+                            movie && <ShareMovieModal movie={movie} isModalOpen={isModalOpen} setisModalOpen={setModal}></ShareMovieModal>
+                        }
+                        {
+                            movie && <div className="p-4 flex gap-2 ml-3 text-center">
 
-                                        <div className="col-span-2 flex justify-end items-center gap-2">
+                                <h2 className="md:text-lg text-sm font-semibold">{movie.title} ({movie.year})</h2>
+
+                            </div>
+                        }
+
+                        <div className="grid grid-cols-4 gap-2">
+                            <div className="col-span-4 lg:col-span-3">
+                                {
+                                    isFetching ? <Skeleton baseColor="rgb(22 28 63)" containerClassName="animate-pulse" className='animate-pulse' height={260}></Skeleton>
+                                        : <> {
+
+                                            movie && <MyPlyrVideo movie={movie}></MyPlyrVideo>
+                                        } </>
+
+                                }
+                                <div className="grid grid-cols-4 place-content-center justify-between gap-2 my-4">
+
+                                    <div className="col-span-2 p-2 flex gap-2">
+
+                                        {
+                                            isFetching ?
 
 
-                                            <Button onClick={() => setisModalOpen(true)} className="w-10 h-10 flex-colo rounded-lg bg-white bg-opacity-20"><FaShareAlt /></Button>
+                                                <Skeleton baseColor="rgb(22 28 63)" height={30} width={100} containerClassName="animate-pulse"></Skeleton>
 
+                                                : <>
+                                                    {
+                                                        movie && movie.genre.slice(0, 2).map((item, idx) => (
+                                                            <Button key={idx} className=" p-1 bg-white/10 hover:bg-white/10 active:bg-white/10 smoothie bubbly rounded text-sm lg:text-lg"> {item}</Button>
+                                                        ))
+                                                    }
+                                                </>
+                                        }
 
-                                            {
-                                                user ? <Link to={movie?.stream.replace("video", "dl")} className="bg-subMain flex-rows gap-2 hover:text-main transitions text-white rounded px-3 font-medium py-3 text-sm">
-                                                    <IoMdCloudDownload></IoMdCloudDownload>
-                                                </Link> : <Button onClick={() => toast.info("Only logged in users can download", { closeButton: true })} className="bg-subMain flex-rows gap-2 hover:text-main transitions text-white rounded px-3 font-medium py-3 text-sm">
-                                                    <IoMdCloudDownload></IoMdCloudDownload>
-                                                </Button>
-                                            }
-                                            {
-                                                user?.is_superuser && (
-                                                    <Button onClick={() => {
-                                                        setMovie(movie)
-                                                        open()
-                                                    }} className='bg-subMain flex-rows gap-2 hover:text-main transitions text-white rounded px-3 font-medium py-3 text-sm'>
-                                                        <FaEdit className='text-green-500'></FaEdit>
-                                                    </Button>
-                                                )
-                                            }
-                                        </div>
 
                                     </div>
 
-                                    <Characters casts={casts} />
-                                    <TrailerSlider movie={movie} trailers={trailer} />
+                                    <div className="col-span-2 flex justify-end items-center gap-2">
+
+
+                                        <Button onClick={() => setisModalOpen(true)} className="w-10 h-10 flex-colo rounded-lg bg-white bg-opacity-20"><FaShareAlt /></Button>
+
+
+                                        {
+                                            user ? <Link to={movie?.stream.replace("video", "dl")} className="bg-subMain flex-rows gap-2 hover:text-main transitions text-white rounded px-3 font-medium py-3 text-sm">
+                                                <IoMdCloudDownload></IoMdCloudDownload>
+                                            </Link> : <Button onClick={() => toast.info("Only logged in users can download", { closeButton: true })} className="bg-subMain flex-rows gap-2 hover:text-main transitions text-white rounded px-3 font-medium py-3 text-sm">
+                                                <IoMdCloudDownload></IoMdCloudDownload>
+                                            </Button>
+                                        }
+                                        {
+                                            user?.is_superuser && (
+                                                <Button onClick={() => {
+                                                    setMovie(movie)
+                                                    open()
+                                                }} className='bg-subMain flex-rows gap-2 hover:text-main transitions text-white rounded px-3 font-medium py-3 text-sm'>
+                                                    <FaEdit className='text-green-500'></FaEdit>
+                                                </Button>
+                                            )
+                                        }
+                                    </div>
+
                                 </div>
-                                <MovieInfo movie={movie}></MovieInfo>
 
+                                <Characters casts={casts} />
+                                {
+                                    movie &&  <TrailerSlider movie={movie} trailers={trailer} />
+                                }
+                               
                             </div>
 
+                            <MovieInfo movie={movie}></MovieInfo>
+
                         </div>
-                        <div className="container mx-auto px-2 my-6">
 
-                            <MovieRates movie={movie}></MovieRates>
+                    </div>
+                    <div className="container mx-auto px-2 my-6">
 
-                            <div className="my-14">
-                                <SgSlider movies={RelatesMovies} title="Recommended" Icon={BsCollectionFill}></SgSlider>
+                        <MovieRates movie={movie}></MovieRates>
 
-                            </div>
+                        <div className="my-14">
+                            <SgSlider movies={RelatesMovies} title="Recommended" Icon={BsCollectionFill}></SgSlider>
+
                         </div>
-                    </Layout>
+                    </div>
 
-                    : <NotFound></NotFound>
+                </Layout>
+
+
+            }
+            {
+                isSuccess && data?.results.length == 0 && <NotFound />
             }
         </>
 
