@@ -53,7 +53,10 @@ INSTALLED_APPS = [
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-    )
+        
+    ),
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 100
 }
 
 
@@ -223,12 +226,12 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 CORS_ALLOWED_ORIGINS = [
     "https://movies.atongjona.com",
     "http://localhost:5173",
-    "https://streamgrid.stream/"
+    "https://streamgrid.stream"
 ]
 CSRF_TRUSTED_ORIGINS = [
     "https://movies.atongjona.com",
     "http://localhost:5173",
-    "https://streamgrid.stream/"
+    "https://streamgrid.stream"
 ]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
@@ -242,3 +245,4 @@ BOT_TOKEN = os.environ.get('BOT_TOKEN')
 ACCESS_TOKEN = os.environ.get('ACCESS_TOKEN')
 PHONE_NUMBER_ID = os.environ.get('PHONE_NUMBER_ID')
 RECIPIENTS = os.environ.get('RECIPIENTS')
+DEVELOPMENT = os.environ.get('DEVELOPMENT')

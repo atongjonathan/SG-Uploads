@@ -9,12 +9,15 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAuthenticated
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
+from datetime import datetime
 from ..captions import Captions
 from ..models import Movie, SGUser
 from .serializers import MovieSerializer, SGUserSerializer,  ChangePasswordSerializer, SubtitleSerializer
 from rest_framework import status
 from rest_framework.parsers import MultiPartParser, FormParser
 import os
+from rest_framework import generics, filters
+from django.conf import settings
 
 
 cc = Captions()
@@ -68,6 +71,22 @@ def users_list(request):
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 
+class MovieList(generics.ListAPIView):
+    serializer_class = MovieSerializer
+    queryset = Movie.objects.all()
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['title']
+    filter_backends = [filters.OrderingFilter]
+    ordering_fields = '__all__'
+
+    def get_queryset(self):
+        queryset = Movie.objects.all()
+        genre = self.request.query_params.get('genre')
+        if genre:
+            queryset = queryset.filter(genre__icontains=genre)
+        return queryset
+
+
 @api_view(['GET'])
 def movies_list(request):
     movies = Movie.objects.all()
@@ -93,11 +112,16 @@ def create_user(request):
 
 @api_view(['POST'])
 def create_movie(request):
-    serializer = MovieSerializer(data=request.data)
+    data = request.data
+    data["rating_star"] = data["rating"]["star"]
+    date = data["releaseDetailed"]["date"]
+    data["releaseDate"] = datetime.fromisoformat(date.replace("Z", "+00:00")).date()
+    serializer = MovieSerializer(data=data)
     if serializer.is_valid():
-        updated = cc.update_group(request.data)
-        if not updated.get("success"):
-            logging.info(json.dumps(updated, indent=4))
+        if settings.DEVELOPMENT != "True":
+            updated = cc.update_group(request.data)
+            if not updated.get("success"):
+                logging.info(json.dumps(updated, indent=4))
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -119,6 +143,7 @@ def update_user(request: HttpRequest):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])

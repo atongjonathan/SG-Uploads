@@ -18,6 +18,8 @@ class Movie(models.Model):
         validators=[MinValueValidator(1800), MaxValueValidator(2100)])
     productionStatus = models.CharField(max_length=100, blank=True, null=True)
 
+    created = models.DateField(blank=True, null=True, auto_now_add=True)
+
     # Content Details
     contentRating = models.CharField(max_length=10, blank=True, null=True)
     contentType = models.CharField(max_length=50, blank=True, null=True)
@@ -30,6 +32,8 @@ class Movie(models.Model):
 
     # Ratings and Reviews
     rating = models.JSONField(blank=True, null=True)
+
+    rating_star = models.FloatField(blank=True, null=True)
     # Could be JSON or plain text
     reviews = models.JSONField(blank=True, null=True)
 
