@@ -1,10 +1,10 @@
 import { Button, Dialog, DialogPanel, DialogTitle, DialogBackdrop } from '@headlessui/react'
 import { useEffect, useState, useContext } from 'react'
 import { Input } from '../UserInputs'
-import Backend from '../../utils/Backend'
 import AuthContext from '../../context/AuthContext'
 import { toast } from 'sonner'
 import { IoClose } from 'react-icons/io5'
+import { editMovie } from '../../utils/Backend'
 
 export default function EditMovie({ close, isOpen, movie }) {
 
@@ -43,7 +43,7 @@ export default function EditMovie({ close, isOpen, movie }) {
             }
         }
 
-        const response = await Backend().editMovie(auth, formObject, currentMovie.id)
+        const response = await editMovie(auth, formObject, currentMovie.id)
         if (response.status == 200) {
             toast.success(movie.title + ' updated successfully')
         }

@@ -1,11 +1,11 @@
 import React, { createContext, useEffect, useState, useRef, useCallback } from 'react';
 import { toast } from 'sonner';
 import { jwtDecode } from 'jwt-decode'; // Fixed import
-import Backend from '../utils/Backend';
 import axios from 'axios';
+import { BACKEND_URL } from './MovieContext';
+import { refreshAccessToken } from '../utils/Backend';
 
 const AuthContext = createContext({});
-const backend = Backend(); // Backend instance
 
 export default AuthContext;
 
@@ -33,7 +33,7 @@ export const AuthProvider = ({ children }) => {
   const fetchUser = useCallback(async (tokens) => {
     try {
       const headers = { Authorization: `Bearer ${tokens.access}` };
-      const response = await axios.get(`${backend.BACKEND_URL}/user`, { headers });
+      const response = await axios.get(`${BACKEND_URL}/user`, { headers });
       setUser(response.data);
     } catch (error) {
       console.error('Error fetching user:', error);
@@ -51,7 +51,7 @@ export const AuthProvider = ({ children }) => {
   const saveNewTokens = useCallback(
     async (tokens) => {
       try {
-        const response = await backend.refreshAccessToken(tokens);
+        const response = await refreshAccessToken(tokens);
         if (response.data) {
           saveAuthTokens(response.data); // Save new tokens and fetch user
           return true;
@@ -96,7 +96,8 @@ export const AuthProvider = ({ children }) => {
         logoutUser,
         saveAuthTokens,
         loading,
-        setLoading
+        setLoading,
+        fetchUser
       }}
     >
       {children}

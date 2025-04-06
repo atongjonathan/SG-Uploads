@@ -1,6 +1,6 @@
 import React, { useCallback, useContext, useState } from 'react'
 import { Input } from '../../Components/UserInputs'
-import Backend from '../../utils/Backend'
+import { addMovie, getMongoToken, searchCaptions, sendCaptions } from '../../utils/Backend'
 import { toast } from 'sonner'
 import AuthContext from '../../context/AuthContext'
 import SgCombo from './SgCombo'
@@ -11,7 +11,6 @@ import Skeleton from 'react-loading-skeleton'
 import { Button } from '@headlessui/react'
 import { CgSpinner } from 'react-icons/cg'
 
-const backend = Backend()
 const VITE_IMDB_API = import.meta.env.VITE_IMDB_API
 const AddMovie = () => {
 
@@ -60,7 +59,7 @@ const AddMovie = () => {
 
     const searchSubs = useCallback(async function searchSubs(id) {
         try {
-            const response = await backend.searchCaptions(auth, { imdb_id: id });
+            const response = await searchCaptions(auth, { imdb_id: id });
 
             if (response.data) {
                 setSubs(response.data.sort((a, b) => b.download_count - a.download_count))
@@ -86,7 +85,7 @@ const AddMovie = () => {
     const sendSubs = useCallback(async function sendSubs(caption) {
         setCaption(caption)
         try {
-            const response = await backend.sendCaptions(auth, caption);
+            const response = await sendCaptions(auth, caption);
 
             if (response.data.success) {
                 toast.success(`Captions sent to your Telegram`, {
@@ -140,7 +139,7 @@ const AddMovie = () => {
 
     async function makeOptions(movie) {
 
-        let token = await Backend().getMongoToken()
+        let token = await getMongoToken()
         let headersList = {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${token}`
@@ -184,7 +183,7 @@ const AddMovie = () => {
         const reqOptions = await makeOptions(movieData)
 
         try {
-            const responses = await Promise.all([backend.addMovie(auth, movieData), axios.request(reqOptions)])
+            const responses = await Promise.all([addMovie(auth, movieData), axios.request(reqOptions)])
 
 
             if (responses[0].status == 201 || responses[1].status == 201) {

@@ -1,89 +1,42 @@
-import React, { createContext, useCallback, useEffect, useState } from 'react'
+import React, { createContext, useContext } from 'react'
 import axios from 'axios';
-import Backend from '../utils/Backend';
 import { useDevToolsStatus } from '../utils/useDevToolsStatus';
-
+import {
+    useQuery,
+} from '@tanstack/react-query'
 // import { useMovies } from '../utils/SWR'
 
-
-export const MovieContext = createContext()
+export const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
+export const MovieContext = createContext(null)
 
 const MovieProvider = ({ children }) => {
 
-    const [movies, setMovies] = useState(null);
-    const [isLoading, setIsLoading] = useState(true);
-    const [isError, setIsError] = useState(false);
-    const isDevToolsOpen = useDevToolsStatus();
 
-
-
-
-    async function fetchDBMovies() {
-        axios.get(Backend().BACKEND_URL + '/movies')
-            .then((response) => {
-                let movies = response.data
-                const sortedByRatingStar = movies ? [...movies].sort((a, b) => b.rating.star - a.rating.star) : [];
-                setMovies(sortedByRatingStar);
-                setIsLoading(false);
-            })
-            .catch((error) => {
-                setIsError(true);
-                setIsLoading(false);
-                console.error('Error fetching movies:', error);
-            });
-    }
-
-
-
-
-    async function fetchMovies() {
-        let token = await Backend().getMongoToken()
-        let headersList = {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`
+    const moviesQuery = useQuery({
+        queryKey: ["moviesQuery"],
+        queryFn: () => {
+            return axios.get(BACKEND_URL + '/movies').then((res) => res.data)
         }
+    })
 
-        let bodyContent = JSON.stringify({
-            "collection": "movies",
-            "database": "F2LxBot",
-            "dataSource": "Cluster0",
-        });
 
-        let reqOptions = {
-            url: "https://eu-west-2.aws.data.mongodb-api.com/app/data-kmyiqtw/endpoint/data/v1/action/find",
-            method: "POST",
-            headers: headersList,
-            data: bodyContent,
-        }
 
-        axios.request(reqOptions)
-            .then((response) => {
-                setMovies(response.data.documents);
-                setIsLoading(false);
-            })
-            .catch((error) => {
-                setIsError(true);
-                setIsLoading(false);
-                console.error('Error fetching movies:', error);
-            });
-    }
-
-    useEffect(() => {
-        if (!isDevToolsOpen) {
-            fetchDBMovies()
-        }
-        else {
-            console.clear()
-        }
-    }, [isDevToolsOpen]);
-
-    // const { movies, isLoading } = useMovies()
 
     return (
-        <MovieContext.Provider value={{ movies, isLoading, setMovies, setIsLoading, setIsError }}>
+        <MovieContext.Provider value={{ ...moviesQuery, movies: moviesQuery.data?.results ?? [] }}>
             {children}
         </MovieContext.Provider>
     )
+}
+export const useMovies = () => {
+    const context = useContext(MovieContext);
+    if (!context) {
+        throw new Error(
+            "useMovies must be used within an MoviesProvider. Make sure you are rendering MoviesProvider at the top level of your application."
+        );
+    }
+
+    return context;
 }
 
 export default MovieProvider

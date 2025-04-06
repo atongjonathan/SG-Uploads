@@ -1,5 +1,4 @@
 import React, { useCallback, useContext, useState } from 'react'
-import Backend from '../../utils/Backend'
 import { toast } from 'sonner'
 import AuthContext from '../../context/AuthContext'
 import Uploader from '../../Components/Uploader'
@@ -7,11 +6,11 @@ import { Input } from '../../Components/UserInputs'
 import { CgSpinner } from 'react-icons/cg'
 import { Button, Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
 import { IoClose } from 'react-icons/io5'
+import { updateProfile } from '../../utils/Backend'
 
 
 const Update = ({ isUpdateOpen, updateClose }) => {
 
-    const backend = Backend()
     const [loading, setLoading] = useState(false)
 
 
@@ -46,7 +45,7 @@ const Update = ({ isUpdateOpen, updateClose }) => {
             },
         }
         try {
-            const response = await backend.updateProfile(authTokens.access, formObject);
+            const response = await updateProfile(authTokens.access, formObject);
             if (response.data) {
                 toast.success("Profile Updated", toastOptions)
                 window.location.assign("/")

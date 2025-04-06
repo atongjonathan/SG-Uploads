@@ -3,7 +3,7 @@ import { FaCloudDownloadAlt, FaEdit } from 'react-icons/fa'
 import { GoEye } from 'react-icons/go'
 import { MdDelete } from 'react-icons/md'
 import { Link } from 'react-router-dom'
-import Backend from '../utils/Backend'
+import { BACKEND_URL } from '../context/MovieContext'
 
 const Head = "text-xs text-left text-main font-semibold px-6 py-2 uppercase"
 
@@ -21,7 +21,6 @@ function convertTime(created) {
     });
 }
 
-const backend = Backend()
 const Rows = (data, idx, users) => {
     return users ? (
         <tr key={idx}>
@@ -30,7 +29,7 @@ const Rows = (data, idx, users) => {
             <td className={`${Text}`}>
                 <div className="w-12 p-1 bg-dry border border-border h-12 rounded overflow-hidden">
                     <img
-                        src={data.image ? backend.BACKEND_URL + data.image : 'https://images-na.ssl-images-amazon.com/images/M/MV5BMjQ4MTY5NzU2M15BMl5BanBnXkFtZTgwNDc5NTgwMTI@._V1_SY100_SX100_.jpg'}
+                        src={data.image ? BACKEND_URL + data.image : 'https://images-na.ssl-images-amazon.com/images/M/MV5BMjQ4MTY5NzU2M15BMl5BanBnXkFtZTgwNDc5NTgwMTI@._V1_SY100_SX100_.jpg'}
                         alt={data.fullName}
                         className="h-full w-full object-cover"
                     />

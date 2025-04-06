@@ -1,48 +1,60 @@
-import React, { useContext } from "react";
+import React from "react";
 import Layout from "../Layout/Layout";
-import Banner from "../Components/Home/Banner";
 import Promos from "../Components/Home/Promos";
 import SgSlider from "../Components/Home/SgSlider";
 import { BsCollectionFill, BsBookmarkStarFill } from "react-icons/bs";
-import { MovieContext } from "../context/MovieContext";
-import SiteDown from '../Screens/Error/SiteDown'
 import { PiFilmReelFill } from "react-icons/pi";
+import Banner from "../Components/Home/Banner";
 
-
-const shuffle = (list) =>  list.sort(() => .5 - Math.random())
 
 
 const HomeScreen = () => {
   document.title = `StreamGrid | Home`;
 
-  const { movies, isLoading } = useContext(MovieContext);
+  let limit = 10
 
-  // Create sorted arrays
-  const sortedByDate = movies ? [...movies].sort((a, b) => new Date(b.releaseDetailed.date) - new Date(a.releaseDetailed.date)) : [];
-  const sortedByRatingCount = movies ? [...movies].sort((a, b) => b.rating.count - a.rating.count) : [];
-  const sortedByRatingStar = movies ? [...movies].sort((a, b) => b.rating.star - a.rating.star) : [];
-  const actionMovies = movies ? movies.filter((movie) => movie.genre.includes("Action")) : []
-  const animation = movies ? movies.filter((movie) => movie.genre.includes("Animation")) : []
-  const horror = movies ? movies.filter((movie) => movie.genre.includes("Horror")) : []
+  const sortedByDate = {
+    ordering: "-releaseDate",
+    limit
+
+  }
+
+  const sortedByRatingStar = {
+    ordering: "-rating_star",
+    limit
+  }
+
+  const actionMovies = {
+    genre: "Action",
+    limit
+
+  }
+  const animation = {
+    genre: "Animation",
+    limit
+
+  }
+  const horror = {
+    genre: "Horror",
+    limit
+
+  }
+
 
   return (
     <Layout>
       <div className="min-h-screen mb-6 lg:px-10 px-6">
         <>
-          <Banner movies={sortedByDate} />
-          <SgSlider movies={sortedByDate} title='Trending' Icon={BsCollectionFill} />
-          <SgSlider movies={sortedByRatingStar} title='Top Rated' Icon={BsBookmarkStarFill} />
-          <SgSlider movies={shuffle(actionMovies)} title='Action' Icon={PiFilmReelFill} />
-          <SgSlider movies={shuffle(animation)} title='Animation' Icon={PiFilmReelFill} />
-          <SgSlider movies={shuffle(horror)} title='Horror' Icon={PiFilmReelFill} />
+          <Banner />
+          <SgSlider params={sortedByDate} title='Trending' Icon={BsCollectionFill} />
+          <SgSlider params={sortedByRatingStar} title='Top Rated' Icon={BsBookmarkStarFill} />
+          <SgSlider params={actionMovies} title='Action' Icon={PiFilmReelFill} />
+          <SgSlider params={animation} title='Animation' Icon={PiFilmReelFill} />
+          <SgSlider params={horror} title='Horror' Icon={PiFilmReelFill} />
           <Promos />
         </>
       </div>
 
-      {
-        (!movies && !isLoading) &&
-        <SiteDown></SiteDown>
-      }
     </Layout>
   );
 };

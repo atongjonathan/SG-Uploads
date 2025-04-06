@@ -11,24 +11,42 @@ import 'react-loading-skeleton/dist/skeleton.css'
 import { MovieContext } from "../../context/MovieContext";
 import { Button } from "@headlessui/react";
 import loader from '../../../images/loading_image.gif'
+import { useQuery } from "@tanstack/react-query";
+import { getMovies } from "../../utils/Backend";
 
 
-const SgSlider = ({ movies, title, Icon }) => {
+const shuffle = (list) =>  list.sort(() => .5 - Math.random())
+const SgSlider = ({ params, title, Icon }) => {
   useEffect(() => {
     handleSliderChange(true, false); // Initial setup, assuming we're not at the start
   }, []);
 
+
   const dummy = [1, 2, 3, 4, 5, 6];
-  const { isLoading } = useContext(MovieContext);
+
+  const { isFetching, data } = useQuery({
+    queryKey: ["sliderQuery", params],
+    queryFn: () => {
+      return getMovies({
+        params
+      })
+    }
+  })
   const [nextEl, setNextEl] = useState(null);
   const [prevEl, setPrevEl] = useState(null);
   const [endDisabled, setEndDisabled] = useState(false);
   const [startDisabled, setStartDisabled] = useState(true); // Initially at the start
   const navigate = useNavigate();
 
-  if (isLoading) {
+  let movies = []
+
+  if (isFetching) {
     movies = dummy;
   }
+  else if (data) {
+    movies = data?.results
+  }
+
 
   // Reset button states based on slider position
   const handleSliderChange = (start, end) => {
@@ -120,13 +138,13 @@ const SgSlider = ({ movies, title, Icon }) => {
 
           }}
         >
-          {movies?.slice(0, 11).map((movie, idx) => (
+          {shuffle(movies).map((movie, idx) => (
             <SwiperSlide
               className="cursor-pointer"
               key={idx}
               onClick={() => navigate(`/watch/${movie.id}`)}
             >
-              {isLoading ? (
+              {isFetching ? (
                 <Skeleton
                   baseColor="rgb(11 15 41)"
                   containerClassName="animate-pulse"

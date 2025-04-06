@@ -1,9 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react'
 import Table from '../../Components/Table'
 import AuthContext from '../../context/AuthContext'
-import Backend from '../../utils/Backend'
 import axios from 'axios'
-import { MovieContext } from '../../context/MovieContext'
+import { BACKEND_URL, MovieContext } from '../../context/MovieContext'
 import Layout from '../../Layout/Layout'
 
 const FavouriteMovies = () => {
@@ -18,7 +17,7 @@ const FavouriteMovies = () => {
 
     const headers = { Authorization: `Bearer ${authTokens.access}` };
 
-    const response = await axios.get(`${Backend().BACKEND_URL}/user`, { headers })
+    const response = await axios.get(`${BACKEND_URL}/user`, { headers })
     const user = response?.data
     if (movies) {
       const favs = movies?.filter((movie) => user?.favourites.includes(movie.id))

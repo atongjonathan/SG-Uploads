@@ -6,8 +6,8 @@ import Puff from "react-loading-icons/dist/esm/components/puff";
 import axios from 'axios'
 import { Disclosure, DisclosureButton, DisclosurePanel, Button } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/solid';
-import Backend from '../../utils/Backend'
 import AuthContext from '../../context/AuthContext';
+import { updateReviews } from '../../utils/Backend';
 
 const MovieRates = ({ movie }) => {
 
@@ -22,7 +22,7 @@ const MovieRates = ({ movie }) => {
     if (splitted?.length > 0) {
       const title = splitted[0]
       if (title.startsWith("t")) {
-        const response = await Backend().updateReviews(auth, title, movie.id)
+        const response = await updateReviews(auth, title, movie.id)
         if (response.status === 200) {
           let reviewsData = response.data
           setReviews(reviewsData)
