@@ -74,6 +74,7 @@ const AddMovie = () => {
             }
         } catch (error) {
             toast.error('Something went wrong. Please try again.');
+            setCaption({})
             console.error(error);
         }
         finally {
