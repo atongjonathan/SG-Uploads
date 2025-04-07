@@ -2,7 +2,7 @@ import React, { useCallback, useContext, useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { FaSearch, FaHeart } from "react-icons/fa";
 import logo from "../../images/4x3.png";
-import { Button } from "@headlessui/react";
+import { Button, Input } from "@headlessui/react";
 import AuthContext from "../../context/AuthContext";
 import { MovieContext } from "../../context/MovieContext";
 import SgMenu from "./SgMenu";
@@ -80,14 +80,14 @@ const Navbar = () => {
 
   return (
     <div className="bg-main shadow-md fixed top-0 z-20 w-full">
-      <div className="container mx-auto py-3 px-2 lg:py-6 lg:grid gap-10 grid-cols-7 justify-between items-center min-h-7">
+      <div className="w-full flex py-3 px-2 lg:py-6 lg:grid gap-10 grid-cols-7 justify-between items-center min-h-7">
         {/* Logo */}
         <div className="col-span-1 lg:block hidden">
           <NavLink to="/" className="flex items-center justify-center bg-red">
             <img
               src={logo}
               alt="logo"
-              style={{ scale: '0.7' }}
+              style={{ scale: '0.6' }}
               className="w-full h-12 object-contain"
             />
           </NavLink>
@@ -143,15 +143,15 @@ const Navbar = () => {
 
         {/* Search Form */}
 
-        <div className={`col-span-3 relative p-4 hidden lg:inline-block`}>
+        <div className={`col-span-3 relative hidden lg:inline-block`}>
           <form className="w-full text-sm bg-dryGray rounded flex-btn gap-4">
-            <button type="button" className="bg-subMain w-12 flex-colo h-12 rounded text-white">
+            <button type="button" className="bg-subMain w-12 flex-colo h-10 rounded text-white">
               <FaSearch />
             </button>
-            <input
+            <Input
               type="text"
               placeholder="Search Movie Name from here"
-              className="font-medium placeholder:text-border text-sm w-full h-12 bg-transparent border-none px-2 text-black"
+              className="font-medium placeholder:text-border text-sm w-full bg-transparent border-none px-2 text-black"
               onInput={handleSearch}
             />
           </form>
@@ -165,9 +165,9 @@ const Navbar = () => {
         </div>
 
         {/* Menus for larger screens */}
-        <div className="col-span-3 font-medium text-sm hidden xl:gap-10 2xl:gap-20 justify-between lg:flex xl:justify-end items-center">
+        <div className="col-span-3 font-medium text-sm hidden xl:gap-10 2xl:gap-20 justify-end lg:flex gap-10 items-center mr-10">
           <NavLink title="Movies" className={`bg-subMain border-b-subMain py-2 px-3 rounded-lg hover:bg-main hover:border-b-subMain transitions`} to="/movies">
-            Browse
+            Explore
           </NavLink>
           <SgMenu></SgMenu>
 
@@ -187,13 +187,9 @@ const Navbar = () => {
             </NavLink>
           )}
           {!user && (
-            <>
-              <Button className={Hover} onClick={() => setIsLoginOpen(true)}>
-                Log In
-              </Button>
-
-              <Button className={'bg-subMain border-b-subMain py-2 px-3 rounded-lg hover:bg-main transitions'} onClick={() => setIsSignUpOpen(true)}>
-                Sign Up
+            <>          
+              <Button className={'bg-subMain border-b-subMain py-2 px-3 rounded-lg hover:bg-main transitions'}  onClick={() => setIsLoginOpen(true)}>
+              Log In
               </Button>
             </>
           )}

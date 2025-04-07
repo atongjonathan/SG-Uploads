@@ -15,7 +15,6 @@ import { useQuery } from "@tanstack/react-query";
 import { getMovies } from "../../utils/Backend";
 
 
-const shuffle = (list) =>  list.sort(() => .5 - Math.random())
 const SgSlider = ({ params, title, Icon }) => {
   useEffect(() => {
     handleSliderChange(true, false); // Initial setup, assuming we're not at the start
@@ -30,7 +29,8 @@ const SgSlider = ({ params, title, Icon }) => {
       return getMovies({
         params
       })
-    }
+    },
+    staleTime: Infinity
   })
   const [nextEl, setNextEl] = useState(null);
   const [prevEl, setPrevEl] = useState(null);
@@ -76,12 +76,15 @@ const SgSlider = ({ params, title, Icon }) => {
     }
   };
 
+  const [loaded, setLoaded] = useState(false);
+
+
   return (
     <div className="lg:my-16 my-7">
       <div className="w-full flex justify-between">
-        <div className="flex sm:gap-8 gap-4 items-center truncate">
-          <Icon className="sm:w-6 sm:h-6 w-4 h-4 text-subMain" />
-          <h2 className="sm:text-xl text-lg font-semibold truncate">{title}</h2>
+        <div className="flex sm:gap-3 gap-2 items-center truncate">
+          <Icon className="sm:w-5 sm:h-6 w-4 h-4 text-subMain" />
+          <h2 className="text-lg font-semibold truncate">{title}</h2>
         </div>
 
         <div className="px-2 flex justify-center gap-2">
@@ -138,7 +141,7 @@ const SgSlider = ({ params, title, Icon }) => {
 
           }}
         >
-          {shuffle(movies).map((movie, idx) => (
+          {movies.map((movie, idx) => (
             <SwiperSlide
               className="cursor-pointer"
               key={idx}
@@ -151,18 +154,30 @@ const SgSlider = ({ params, title, Icon }) => {
                   height={270}
                 />
               ) : (
-                <div className="relative group border border-border bg-dry rounded-lg overflow-hidden">
+                <div className={`relative group  ${loaded && 'bg-dry'} rounded-lg overflow-hidden`}>
                   {/* Movie Poster */}
                   <div className="hover:scale-95 transitions relative rounded overflow-hidden">
                     <Link to={`/watch/${movie.id}`} className="w-full">
-                      <LazyLoadImage placeholderSrc={loader} effect="blur" src={movie.poster} alt={movie.title} title={movie.title} className="w-full aspect-[216/319]" />
+                      <LazyLoadImage onLoad={() => {
+                        setTimeout(() => {
+                          setLoaded(true)
+                        }, 1000);
+
+                      }} placeholder={<Skeleton
+                        baseColor="rgb(11 15 41)"
+                        containerClassName="animate-pulse"
+                        height={270}
+                      />} effect="blur" src={movie.poster} alt={movie.title} title={movie.title} className="w-full aspect-[216/319]" />
                     </Link>
-                    <div className="absolute flex flex-col gap-2 bottom-0 right-0 left-0 bg-main bg-opacity-60 text-white py-3 items-center">
-                      <h6 className="font-semibold line-clamp-1">{movie.title}</h6>
-                      <div className="flex gap-2 text-star line-clamp-1">
-                        <Rating value={movie.rating.star / 2} />
+                    {
+                      loaded && <div className="absolute flex flex-col gap-2 bottom-0 right-0 left-0 bg-main bg-opacity-60 text-white py-3 items-center">
+                        <h6 className="font-semibold line-clamp-1">{movie.title}</h6>
+                        {/* <div className="flex gap-2 text-star line-clamp-1">
+                          <Rating value={movie.rating.star / 2} />
+                        </div> */}
                       </div>
-                    </div>
+                    }
+
                   </div>
                   {/* Overlay Content */}
                 </div>

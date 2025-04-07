@@ -1,4 +1,5 @@
 import { Field, Label, Input as HInput } from "@headlessui/react"
+import { useState } from "react"
 
 export const Message = ({ label, placeholder }) => {
     return (
@@ -21,11 +22,18 @@ export const Select = ({ label, options, onChange }) => {
 
     )
 }
-export const Input = ({ label, name, placeholder, type, bg, error = null, regex=null, required=true }) => {
+export const Input = ({ label, name, placeholder, type, bg, error = null, regex = null, required = true, initialValue }) => {
+
+    const [value, setValue] = useState(initialValue);
+
     return (
         <Field className="text-sm w-full">
             <Label className="text-border font-semibold" htmlFor={label}>{label}</Label>
-            <HInput pattern={regex} id={label} name={name} type={type} placeholder={placeholder} className={`w-full text-sm mt-2 p-2 border border-border rounded text-white  focus:border-b-subMain focus: bg-${bg ? 'main' : 'dry'}`} required={required} />
+            <HInput pattern={regex} id={label} name={name} type={type} placeholder={placeholder} className={`w-full text-sm mt-2 p-2 border border-border rounded text-white  focus:border-b-subMain focus: bg-${bg ? 'main' : 'dry'}`} required={required} value={value} onInput={(e) => {
+                let input = e.target
+                console.log(input.value);
+                setValue(input.value)
+            }} />
             {
                 error && <div className="text-oldMain w-full mt-2 text-xs font-medium">
                     <p>Error</p>

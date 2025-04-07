@@ -27,7 +27,7 @@ const Layout = ({ children }) => {
                 },
               }} ></Toaster>
               <Navbar></Navbar>
-              <div className="lg:mt-32 mt-16">
+              <div className="lg:mt-24 mt-16">
                 {children}
               </div>
               <Footer></Footer>

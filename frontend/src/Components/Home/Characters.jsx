@@ -5,6 +5,7 @@ import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import { useQuery } from "@tanstack/react-query";
 import { getCast } from "../../utils/Backend";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 
 const Characters = ({ tmdb_id }) => {
@@ -70,7 +71,11 @@ const Characters = ({ tmdb_id }) => {
                                                     <div className="h-full flex rounded-xl overflow-hidden shrink-0">
                                                         <span className=" lazy-load-image-background opacity lazy-load-image-loaded" >
                                                             {
-                                                                cast.profile_path ? <img width="100%" height="100%" src={`https://image.tmdb.org/t/p/original/${cast.profile_path}`} className="size-full object-cover object-center !select-none shrink-0" />:
+                                                                cast.profile_path ? <LazyLoadImage width="100%" height="100%" src={`https://image.tmdb.org/t/p/original/${cast.profile_path}`} className="size-full object-cover object-center !select-none shrink-0" placeholder={ <Skeleton
+                                                                    baseColor="rgb(11 15 41)"
+                                                                    containerClassName="animate-pulse"
+                                                                    height={270}
+                                                                  />} />:
                                                                 <div className="size-full object-cover object-center !select-none shrink-0" />
                                                                 
                                                             }
