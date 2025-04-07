@@ -94,7 +94,7 @@ const Navbar = () => {
         </div>
 
 
-        <div className="col-span-3 lg:hidden flex-rows text-text text-sm gap-3">
+        <div className="col-span-3 lg:hidden flex-rows text-text text-sm gap-3 w-full">
 
           <NavLink
             to="/movies"
