@@ -1,7 +1,6 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react'
+import React, { useCallback, useContext, useState } from 'react'
 import Layout from '../Layout/Layout'
 import { Link, useParams } from 'react-router-dom'
-import { FaCloud } from 'react-icons/fa'
 import MyPlyrVideo from '../Components/Single/MyPlyrVideo'
 import MovieRates from '../Components/Single/MovieRates'
 import { BsCollectionFill } from 'react-icons/bs'
@@ -14,7 +13,6 @@ import { MovieContext } from '../context/MovieContext'
 import SgSlider from '../Components/Home/SgSlider'
 import Skeleton from 'react-loading-skeleton'
 import EditMovie from '../Components/Modals/EditMovie'
-import { useLocation } from 'react-router-dom'
 import NotFound from "./Error/NotFound"
 import TrailerSlider from '../Components/Home/TrailerSlider'
 import Characters from '../Components/Home/Characters'
@@ -24,14 +22,12 @@ import { Helmet } from "react-helmet";
 import { useQuery } from '@tanstack/react-query'
 import { getMovies } from '../utils/Backend'
 
-const TMDB_API_KEY = import.meta.env.VITE_TMDB_API_KEY
 function isIntegerString(str) {
     return Number.isInteger(Number(str));
 }
 
 const WatchPage = () => {
     let { id } = useParams()
-    let [present, setPresent] = useState(true)
 
     const { user } = useContext(AuthContext)
     const [isModalOpen, setisModalOpen] = useState(false)
@@ -41,6 +37,7 @@ const WatchPage = () => {
 
 
     let [isOpen, setIsOpen] = useState(false)
+
 
 
     const { isError, data, isSuccess, isFetching } = useQuery({
@@ -69,6 +66,8 @@ const WatchPage = () => {
     })
     const movie = data?.results.length > 0 ? data?.results[0] : null
 
+    const split = movie?.link?.split("/") || [];
+    const tmdb_id = split[split.length - 1];
     const open = useCallback(function open() {
         setIsOpen(true)
     })
@@ -87,82 +86,15 @@ const WatchPage = () => {
         setisModalOpen(data)
     })
 
-    const RelatesMovies = movies?.filter((m) => {
-        return m.id !== movie?.id && m.genre.includes(movie?.genre[0]);
-    });
 
 
-
-
-    const { pathname } = useLocation()
-    const [trailer, setTrailer] = useState([])
-    const [casts, setCast] = useState([])
-
-
-
-    async function getTrailer() {
-
-        fetch(`https://api.themoviedb.org/3/search/movie?api_key=${TMDB_API_KEY}&query=${movie.title}&year=${movie.year}`, {
-            "headers": {
-                "accept": "*/*",
-                "accept-language": "en-US,en;q=0.9",
-            },
-            "method": "GET",
-            "mode": "cors",
-        })
-            .then((res) => res.json())
-            .then((data) => {
-                let tmdb_id = data.results[0].id
-                fetch(`https://api.themoviedb.org/3/movie/${tmdb_id}/videos?api_key=${TMDB_API_KEY}`, {
-
-                    "method": "GET",
-                    "mode": "cors",
-                    "credentials": "omit"
-                })
-                    .then((res) => res.json())
-                    .then((data) => {
-                        setTrailer(data.results)
-                    })
-                    .catch((err) => {
-                        setTrailer(null)
-                        console.log(err)
-                    })
-            })
-            .catch((err) => {
-                setTrailer(null)
-                console.log(err)
-            });
-
-    }
-    async function getCast() {
-        let tmdb_id = movie?.link?.split("/").reverse()[0]
-        fetch(`https://api.themoviedb.org/3/movie/${tmdb_id}/credits?api_key=${TMDB_API_KEY}`, {
-
-            "method": "GET",
-            "mode": "cors",
-            "credentials": "omit"
-        })
-            .then((res) => res.json())
-            .then((data) => {
-                setCast(data.cast)
-            })
-            .catch((err) => {
-                setCast(null)
-                console.log(err)
-            })
-
-
-
+    const params = {
+        genre: movie?.genre[0],
+        ordering: "-rating_star",
+        limit: 10
     }
 
-    useEffect(() => {
-        if (movie) {
-            getTrailer(movie)
-            getCast()
 
-        }
-
-    }, [pathname, movie, id])
 
     return (
         <>
@@ -245,7 +177,6 @@ const WatchPage = () => {
                                         {
                                             user?.is_superuser && (
                                                 <Button onClick={() => {
-                                                    setMovie(movie)
                                                     open()
                                                 }} className='bg-subMain flex-rows gap-2 hover:text-main transitions text-white rounded px-3 font-medium py-3 text-sm'>
                                                     <FaEdit className='text-green-500'></FaEdit>
@@ -256,11 +187,13 @@ const WatchPage = () => {
 
                                 </div>
 
-                                <Characters casts={casts} />
                                 {
-                                    movie &&  <TrailerSlider movie={movie} trailers={trailer} />
+                                    tmdb_id && <Characters tmdb_id={tmdb_id} />
                                 }
-                               
+
+                                <TrailerSlider movie={movie} />
+
+
                             </div>
 
                             <MovieInfo movie={movie}></MovieInfo>
@@ -273,7 +206,7 @@ const WatchPage = () => {
                         <MovieRates movie={movie}></MovieRates>
 
                         <div className="my-14">
-                            <SgSlider movies={RelatesMovies} title="Recommended" Icon={BsCollectionFill}></SgSlider>
+                            <SgSlider params={params} title="Recommended" Icon={BsCollectionFill}></SgSlider>
 
                         </div>
                     </div>
@@ -283,7 +216,7 @@ const WatchPage = () => {
 
             }
             {
-                isSuccess && data?.results.length == 0 && <NotFound />
+                (isSuccess && data?.results.length == 0) | isError && <NotFound />
             }
         </>
 

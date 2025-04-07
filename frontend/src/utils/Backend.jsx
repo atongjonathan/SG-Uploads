@@ -4,13 +4,41 @@ const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 const MONGO_USERNAME = import.meta.env.VITE_MONGO_USERNAME;
 const MONGO_PASSWORD = import.meta.env.VITE_MONGO_PASSWORD;
 const IMDB_API = import.meta.env.VITE_IMDB_API
+const TMDB_API_KEY = import.meta.env.VITE_TMDB_API_KEY
 
 
-export async function getMovies(config){
+export async function getMovies(config) {
     return axios.get(BACKEND_URL + '/movies', config).then((res) => res.data)
 
 }
 
+const sortVideos = (videos = []) => {
+    return videos.sort((a, b) => {
+        const aScore = (a.type === "Trailer" ? 2 : 0) + (a.official ? 1 : 0);
+        const bScore = (b.type === "Trailer" ? 2 : 0) + (b.official ? 1 : 0);
+        return bScore - aScore;
+    });
+};
+export const getTrailers = async (tmdb_id) => {
+    const res = await fetch(`https://api.themoviedb.org/3/movie/${tmdb_id}/videos?api_key=${TMDB_API_KEY}`, {
+        "method": "GET",
+        "mode": "cors",
+        "credentials": "omit"
+    })
+    let data = await res.json()
+
+    return sortVideos(data.results)
+}
+export const getCast = async (tmdb_id) => {
+    const res = await fetch(`https://api.themoviedb.org/3/movie/${tmdb_id}/credits?api_key=${TMDB_API_KEY}`, {
+
+        "method": "GET",
+        "mode": "cors",
+        "credentials": "omit"
+    })
+    let data = await res.json()
+    return data.cast
+}
 const createRequestOptions = (url, method, data = null, authHeader = null) => {
     let headers = {
         'Content-Type': 'application/json',

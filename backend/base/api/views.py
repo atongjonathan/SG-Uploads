@@ -74,10 +74,11 @@ def users_list(request):
 class MovieList(generics.ListAPIView):
     serializer_class = MovieSerializer
     queryset = Movie.objects.all()
-    filter_backends = [filters.SearchFilter]
     search_fields = ['title', 'id']
     filter_backends = [filters.OrderingFilter]
     ordering_fields = '__all__'
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+
 
     def get_queryset(self):
         queryset = Movie.objects.all()
