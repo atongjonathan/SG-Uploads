@@ -20,19 +20,7 @@ const Characters = ({ tmdb_id }) => {
 
 
 
-    // Handle slide change to reset button states
-    const onSlideChange = (swiper) => {
-        const isAtStart = swiper.isBeginning;
-        const isAtEnd = swiper.isEnd;
 
-        if (isAtStart && !isAtEnd) {
-            handleSliderChange(true, false); // At the beginning
-        } else if (isAtEnd && !isAtStart) {
-            handleSliderChange(false, true); // At the end
-        } else {
-            handleSliderChange(false, false); // Neither at start nor end
-        }
-    };
 
     return data && (
         <div className="mt-5">
@@ -55,10 +43,6 @@ const Characters = ({ tmdb_id }) => {
                             spaceBetween={40}
                             autoPlay={true}
                             speed={500}
-                            modules={[Navigation, Autoplay]}
-                            onSlideChange={onSlideChange}
-                            onReachEnd={() => handleSliderChange(false, true)}
-                            onReachBeginning={() => handleSliderChange(true, false)}
                             breakpoints={
                                 {
                                     0: {

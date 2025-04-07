@@ -82,8 +82,8 @@ const TrailerSlider = ({ movie }) => {
             speed={500}
             navigation={{ nextEl, prevEl }}
             onSlideChange={onSlideChange}
-            onReachEnd={() => handleSliderChange(false, true)}
-            onReachBeginning={() => handleSliderChange(true, false)}
+            onReachEnd={() => handleSliderChange(true, false)}
+            onReachBeginning={() => handleSliderChange(false, true)}
             modules={[Navigation, Autoplay]}
             breakpoints={{
               0: { slidesPerView: 1, spaceBetween: 10 },
