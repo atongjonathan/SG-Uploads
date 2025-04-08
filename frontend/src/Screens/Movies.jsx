@@ -9,6 +9,7 @@ import Skeleton from 'react-loading-skeleton';
 import SiteDown from '../Screens/Error/SiteDown'
 import { FaHeart } from 'react-icons/fa';
 import loader from '../../images/loading_image.gif'
+import TanstackTable from '../Layout/TanstackTable';
 
 function toTitleCase(str) {
   return str.toLowerCase().split(' ').map(word =>
@@ -84,7 +85,7 @@ const MoviesPage = () => {
 
   return (
     <Layout>
-      <div className="min-height-screen container mx-auto px-2 my-3">
+      {/* <div className="min-height-screen container mx-auto px-2 my-3">
         <Filters categories={genresTuple} />
         {
 
@@ -112,16 +113,14 @@ const MoviesPage = () => {
           (!allMovies && !isLoading) && <SiteDown></SiteDown>
         }
 
-        {
-          !allMovies && <div className='grid sm:mt-10 mt-6 xl:grid-cols-6 2xl:grid-cols-5 grid-cols-3 gap-6 overflow-hidden'>
-            <Loader /></div>
-        }
+     
         {!hasMore && allMovies?.length > 0 && (
           <div className="w-full flex-colo md:my-20 my-10">
             <p>No more movies to load!</p>
           </div>
         )}
-      </div>
+      </div> */}
+      <TanstackTable/>
     </Layout>
   );
 };

@@ -79,18 +79,21 @@ class MovieList(generics.ListAPIView):
     ordering_fields = '__all__'
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
 
-
     def get_queryset(self):
         queryset = Movie.objects.all()
         genre = self.request.query_params.get('genre')
         title = self.request.query_params.get('title')
         id = self.request.query_params.get('id')
+        year = self.request.query_params.get('year')
+
         if genre:
             queryset = queryset.filter(genre__icontains=genre)
         if title:
             queryset = queryset.filter(title__icontains=title)
         if id:
             queryset = queryset.filter(id=id)
+        if year:
+            queryset = queryset.filter(year=year)
         return queryset
 
 
@@ -122,7 +125,8 @@ def create_movie(request):
     data = request.data
     data["rating_star"] = data["rating"]["star"]
     date = data["releaseDetailed"]["date"]
-    data["releaseDate"] = datetime.fromisoformat(date.replace("Z", "+00:00")).date()
+    data["releaseDate"] = datetime.fromisoformat(
+        date.replace("Z", "+00:00")).date()
     serializer = MovieSerializer(data=data)
     if serializer.is_valid():
         if settings.DEVELOPMENT != "True":

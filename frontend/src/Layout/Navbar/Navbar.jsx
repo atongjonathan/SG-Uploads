@@ -9,6 +9,8 @@ import SgMenu from "./SgMenu";
 import LoginModal from '../../Components/Modals/LoginModal'
 import SignUpModal from '../../Components/Modals/SignUpModal'
 import Results from "../../Components/Home/Results";
+import { useQuery } from "@tanstack/react-query";
+import { getMovies } from "../../utils/Backend";
 
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
@@ -51,24 +53,30 @@ const Navbar = () => {
 
   })
 
+
+  const [query, setQuery] = useState(null);
+
+  const { data, isFetching } = useQuery({
+    queryKey: ["searchQuery", query],
+    queryFn: async () => {
+      const config = {
+        params: {
+          title: query,
+          limit: 3
+        }
+      }
+      return await getMovies(config).then((res) => res.results)
+    }
+  })
+
+
   const handleSearch = (e) => {
-    const query = e.target.value.toLowerCase();
-    if (!query) {
-      setResults(null)
-    }
-    else {
-      const filtered = movies.filter(movie =>
-        movie.title.toLowerCase().includes(query)
-      );
-
-      setResults(filtered);
-    }
-
+    setQuery(e.target.value.toLowerCase())
   };
 
   const handleResultClick = useCallback((title) => {
     navigate(`/watch/${title}`);
-    setResults(null);
+    setQuery(null);
   }, [isResults])
 
 
@@ -144,7 +152,11 @@ const Navbar = () => {
         {/* Search Form */}
 
         <div className={`col-span-3 relative hidden lg:inline-block`}>
-          <form className="w-full text-sm bg-dryGray rounded flex-btn gap-4">
+          <form className="w-full text-sm bg-dryGray rounded flex-btn gap-4" onSubmit={(e) => {
+            e.preventDefault()
+            e.stopPropagation()
+            navigate("/movies?title=" + query)
+          }}>
             <button type="button" className="bg-subMain w-12 flex-colo h-10 rounded text-white">
               <FaSearch />
             </button>
@@ -159,8 +171,8 @@ const Navbar = () => {
 
 
           {/* Search Results */}
-          {isResults && (
-            <Results isResults={isResults} handleResultClick={handleResultClick}></Results>
+          {query && (
+            <Results isResults={data} handleResultClick={handleResultClick} isFetching={isFetching}></Results>
           )}
         </div>
 
@@ -187,9 +199,9 @@ const Navbar = () => {
             </NavLink>
           )}
           {!user && (
-            <>          
-              <Button className={'bg-subMain border-b-subMain py-2 px-3 rounded-lg hover:bg-main transitions'}  onClick={() => setIsLoginOpen(true)}>
-              Log In
+            <>
+              <Button className={'bg-subMain border-b-subMain py-2 px-3 rounded-lg hover:bg-main transitions'} onClick={() => setIsLoginOpen(true)}>
+                Log In
               </Button>
             </>
           )}

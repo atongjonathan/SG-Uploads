@@ -7,7 +7,7 @@ const IMDB_API = import.meta.env.VITE_IMDB_API
 const TMDB_API_KEY = import.meta.env.VITE_TMDB_API_KEY
 
 
-export async function getMovies(config) {
+export async function getMovies(config={}) {
     return axios.get(BACKEND_URL + '/movies', config).then((res) => res.data)
 
 }
