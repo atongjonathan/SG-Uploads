@@ -13,20 +13,21 @@ const Movie = ({ movie, scrollPosition }) => {
     <>
       <div className="p-1 hover:scale-95 transitions relative rounded overflow-hidden aspect-[216/319]">
         <Link to={`/watch/${movie.id}`} className="w-full">
-          <LazyLoadImage onLoad={() => {
-            // setTimeout(() => {
-              setLoaded(true)
-            // }, 300);
-
-          }} placeholder={<Skeleton
-            baseColor="rgb(20 117 159)"
-            containerClassName="animate-pulse"
-            height={270}
-          />} placeholderSrc={<Skeleton
-            baseColor="rgb(20 117 159)"
-            containerClassName="animate-pulse"
-            height={270}
-          />} effect="blur" src={movie.poster} alt={movie.title} title={movie.title} className="w-full h-h-rate object-cover rounded-lg " />
+        {!loaded && (
+        <Skeleton
+          baseColor="rgb(11 15 41)"
+          containerClassName="absolute top-0 left-0 w-full h-full animate-pulse rounded-lg "
+          height={200}
+        />
+      )}
+      <LazyLoadImage
+        onLoad={() => setLoaded(true)}
+        src={movie.poster}
+        alt={movie.title}
+        title={movie.title}
+        effect="blur"
+        className={`w-full object-cover rounded-lg transition-opacity duration-300 ${loaded ? 'opacity-100' : 'opacity-0'}`}
+      />
         </Link>
         {
           loaded && <div className="absolute flex-btn gap-2 bottom-0 right-0 left-0 bg-main bg-opacity-60 text-white px-4 py-3">

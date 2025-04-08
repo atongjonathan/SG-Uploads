@@ -19,12 +19,11 @@ function toTitleCase(str) {
 const Loader = () => {
   return (
     Array.from({ length: 6 }, (x, i) => i).map((item) => (
-      <div key={item} className="border border-border p-1 hover:scale-95 transitions relative rounded overflow-hidden">
-        <img src={loader} className="w-full h-h-rate object-cover aspect-[216/319]" />
-        <div className="absolute flex-btn gap-2 bottom-0 right-0 left-0 bg-main bg-opacity-60 text-white px-4 py-3">
-          <h6 className="font-semibold truncate"><Skeleton /></h6>
-        </div>
-      </div>
+       <Skeleton
+          baseColor="rgb(11 15 41)"
+          containerClassName="absolute top-0 left-0 w-full h-full animate-pulse rounded-lg "
+          height={200}
+        />
     ))
   )
 }
@@ -32,7 +31,7 @@ const Loader = () => {
 const MoviesPage = () => {
   const { movies: allMovies, isLoading } = useContext(MovieContext);
   const [searchParams] = useSearchParams();
-  const moviesNo = 8
+  const moviesNo = 6
   const [page, setPage] = useState(moviesNo);
 
   // Extract genres as a unique tuple from all movies
