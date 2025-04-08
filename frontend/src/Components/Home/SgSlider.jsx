@@ -13,6 +13,7 @@ import { Button } from "@headlessui/react";
 import loader from '../../../images/loading_image.gif'
 import { useQuery } from "@tanstack/react-query";
 import { getMovies } from "../../utils/Backend";
+import Movie from "../Movie";
 
 
 const SgSlider = ({ params, title, Icon }) => {
@@ -21,7 +22,7 @@ const SgSlider = ({ params, title, Icon }) => {
   }, []);
 
 
-  const dummy = [1, 2, 3, 4, 5, 6];
+  const dummy = [1, 2, 3, 4, 5, 6, 7];
 
   const { isFetching, data } = useQuery({
     queryKey: ["sliderQuery", params],
@@ -111,33 +112,28 @@ const SgSlider = ({ params, title, Icon }) => {
         <Swiper
           navigation={{ nextEl, prevEl }}
           slidesPerView={3}
-          spaceBetween={40}
+          spaceBetween={5}
           speed={500}
+          className="h-max"
           modules={[Navigation]}
           onSlideChange={onSlideChange} // Trigger this on every slide change
           onReachEnd={() => handleSliderChange(false, true)} // End reached
           onReachBeginning={() => handleSliderChange(true, false)} // Beginning reached
           breakpoints={{
             0: {
-              slidesPerView: 2,
+              slidesPerView: 3,
               spaceBetween: 10,
             },
-            576: {
-              slidesPerView: 3,
-              spaceBetween: 20,
-            },
+           
             768: {
-              slidesPerView: 4,
-              spaceBetween: 20,
+              slidesPerView: 5,
+              spaceBetween: 10,
             },
             992: {
-              slidesPerView: 5,
-              spaceBetween: 20,
-            },
-            1400: {
-              slidesPerView: 6,
-              spaceBetween: 20,
-            },
+              slidesPerView: 7,
+              spaceBetween: 10,
+            }
+        
 
           }}
         >
@@ -151,34 +147,12 @@ const SgSlider = ({ params, title, Icon }) => {
                 <Skeleton
                   baseColor="rgb(11 15 41)"
                   containerClassName="animate-pulse"
-                  height={270}
+                  height={180}
                 />
               ) : (
                 <div className={`relative group  ${loaded && 'bg-dry'} rounded-lg overflow-hidden`}>
                   {/* Movie Poster */}
-                  <div className="hover:scale-95 transitions relative rounded overflow-hidden">
-                    <Link to={`/watch/${movie.id}`} className="w-full">
-                      <LazyLoadImage onLoad={() => {
-                        setTimeout(() => {
-                          setLoaded(true)
-                        }, 1000);
-
-                      }} placeholder={<Skeleton
-                        baseColor="rgb(11 15 41)"
-                        containerClassName="animate-pulse"
-                        height={270}
-                      />} effect="blur" src={movie.poster} alt={movie.title} title={movie.title} className="w-full aspect-[216/319]" />
-                    </Link>
-                    {
-                      loaded && <div className="absolute flex flex-col gap-2 bottom-0 right-0 left-0 bg-main bg-opacity-60 text-white py-3 items-center">
-                        <h6 className="font-semibold line-clamp-1">{movie.title}</h6>
-                        {/* <div className="flex gap-2 text-star line-clamp-1">
-                          <Rating value={movie.rating.star / 2} />
-                        </div> */}
-                      </div>
-                    }
-
-                  </div>
+                 <Movie movie={movie}/>
                   {/* Overlay Content */}
                 </div>
               )}

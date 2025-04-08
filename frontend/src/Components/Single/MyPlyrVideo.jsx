@@ -7,6 +7,7 @@ import YouTube from '@u-wave/react-youtube';
 import { Button, Dialog, DialogPanel, DialogTitle, DialogBackdrop } from '@headlessui/react'
 import { IoClose } from 'react-icons/io5';
 import { useDevToolsStatus } from '../../utils/useDevToolsStatus';
+import { toast } from 'sonner';
 
 function MyPlyrVideo({ movie }) {
     const [time, setTime] = useState(null);
@@ -77,7 +78,7 @@ function MyPlyrVideo({ movie }) {
                 title={movie.title}
                 src={{ src: movie.stream, type: "video/mp4" }}
                 viewType="video"
-                logLevel="warn"
+                logLevel="info"
                 crossOrigin
                 playsInline
                 aspectRatio="16x9"
@@ -90,7 +91,14 @@ function MyPlyrVideo({ movie }) {
                         setTime(ref.current?.currentTime);
 
                     }
-                }}
+                }
+                }
+                onError={(err) => {
+                    toast.error(err.message)
+                }
+                }
+
+
             >
                 <MediaProvider>
                     {movie.captions?.length > 0 && (

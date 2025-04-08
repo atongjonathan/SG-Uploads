@@ -92,7 +92,7 @@ const MoviesPage = () => {
           (filteredMovies && genresTuple.length > 0) &&
 
           <InfiniteScroll
-            className="grid sm:mt-10 mt-6 xl:grid-cols-6 2xl:grid-cols-5 grid-cols-3 gap-6 overflow-hidden"
+            className="grid sm:mt-10 mt-6 xl:grid-cols-6 lg:grid-cols-6 md:grid-cols-5 grid-cols-3 gap-6 overflow-hidden"
             dataLength={filteredMovies.slice(0, page).length}
             next={handleLoadingMore}
             hasMore={hasMore}
