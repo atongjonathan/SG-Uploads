@@ -31,7 +31,7 @@ const Movie = ({ movie, scrollPosition }) => {
         </Link>
         {
           loaded && <div className="absolute flex-btn gap-2 bottom-0 right-0 left-0 bg-main bg-opacity-60 text-white px-4 py-3">
-            <h6 className="font-semibold truncate">{movie.title}</h6>
+            <h6 className="font-semibold text-xs truncate">{movie.title}</h6>
           </div>
         }
 

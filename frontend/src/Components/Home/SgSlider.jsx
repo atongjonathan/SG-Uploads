@@ -85,7 +85,7 @@ const SgSlider = ({ params, title, Icon }) => {
       <div className="w-full flex justify-between">
         <div className="flex sm:gap-3 gap-2 items-center truncate">
           <Icon className="sm:w-5 sm:h-6 w-4 h-4 text-subMain" />
-          <h2 className="text-lg font-semibold truncate">{title}</h2>
+          <h2 className="text-sm font-semibold truncate">{title}</h2>
         </div>
 
         <div className="px-2 flex justify-center gap-2">
