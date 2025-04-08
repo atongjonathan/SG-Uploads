@@ -81,7 +81,7 @@ const SgSlider = ({ params, title, Icon }) => {
 
 
   return (
-    <div className="lg:my-16 my-7">
+    <div className="lg:mt-8 mt-5">
       <div className="w-full flex justify-between">
         <div className="flex sm:gap-3 gap-2 items-center truncate">
           <Icon className="sm:w-5 sm:h-6 w-4 h-4 text-subMain" />
@@ -108,13 +108,13 @@ const SgSlider = ({ params, title, Icon }) => {
         </div>
       </div>
 
-      <div className="lg:mt-10 mt-7">
+      <div className="mt-3">
         <Swiper
           navigation={{ nextEl, prevEl }}
           slidesPerView={3}
           spaceBetween={5}
           speed={500}
-          className="h-max"
+          className=""
           modules={[Navigation]}
           onSlideChange={onSlideChange} // Trigger this on every slide change
           onReachEnd={() => handleSliderChange(false, true)} // End reached
@@ -142,6 +142,7 @@ const SgSlider = ({ params, title, Icon }) => {
               className="cursor-pointer"
               key={idx}
               onClick={() => navigate(`/watch/${movie.id}`)}
+              
             >
               {isFetching ? (
                 <Skeleton
@@ -150,11 +151,9 @@ const SgSlider = ({ params, title, Icon }) => {
                   height={180}
                 />
               ) : (
-                <div className={`relative group  ${loaded && 'bg-dry'} rounded-lg overflow-hidden`}>
-                  {/* Movie Poster */}
+             
                  <Movie movie={movie}/>
-                  {/* Overlay Content */}
-                </div>
+                 
               )}
             </SwiperSlide>
           ))}

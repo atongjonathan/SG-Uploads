@@ -11,7 +11,7 @@ const Movie = ({ movie, scrollPosition }) => {
 
   return (
     <>
-      <div className="p-1 hover:scale-95 transitions relative rounded overflow-hidden">
+      <div className="p-1 hover:scale-95 transitions relative rounded overflow-hidden aspect-[216/319]">
         <Link to={`/watch/${movie.id}`} className="w-full">
           <LazyLoadImage onLoad={() => {
             // setTimeout(() => {
@@ -26,7 +26,7 @@ const Movie = ({ movie, scrollPosition }) => {
             baseColor="rgb(20 117 159)"
             containerClassName="animate-pulse"
             height={270}
-          />} effect="blur" src={movie.poster} alt={movie.title} title={movie.title} className="w-full h-h-rate object-cover rounded-lg" />
+          />} effect="blur" src={movie.poster} alt={movie.title} title={movie.title} className="w-full h-h-rate object-cover rounded-lg " />
         </Link>
         {
           loaded && <div className="absolute flex-btn gap-2 bottom-0 right-0 left-0 bg-main bg-opacity-60 text-white px-4 py-3">
