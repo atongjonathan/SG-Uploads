@@ -27,7 +27,7 @@ const Characters = ({ tmdb_id }) => {
         <div className="mt-5">
             <div className='w-full flex justify-between'>
                 <div className="flex sm:gap-8 gap-4 items-center truncate">
-                    <h2 className="text-lg font-semibold truncate">Cast
+                    <h2 className="text-sm font-semibold truncate">Cast
                     </h2>
                 </div>
     

@@ -41,7 +41,7 @@ const TrailerSlider = ({ movie }) => {
       {
         data &&
         <div className="w-full flex justify-between items-center">
-          <h2 className="text-lg font-semibold truncate">
+          <h2 className="text-sm font-semibold truncate">
             More Videos
             <span> {(`(${data?.length})`)}</span>
           </h2>

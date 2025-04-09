@@ -6,10 +6,9 @@ import MovieRates from '../Components/Single/MovieRates'
 import { BsCollectionFill } from 'react-icons/bs'
 import AuthContext from '../context/AuthContext'
 import { Button } from '@headlessui/react'
-import { FaShareAlt, FaEdit, FaStar } from 'react-icons/fa'
+import { FaShareAlt, FaEdit } from 'react-icons/fa'
 import ShareMovieModal from '../Components/Modals/ShareMovieModal'
 import { toast } from 'sonner'
-import { MovieContext } from '../context/MovieContext'
 import SgSlider from '../Components/Home/SgSlider'
 import Skeleton from 'react-loading-skeleton'
 import EditMovie from '../Components/Modals/EditMovie'
@@ -213,7 +212,7 @@ const WatchPage = () => {
 
             }
             {
-                (isSuccess && data?.results.length == 0) | isError && <NotFound />
+                (isSuccess && data?.results.length == 0) && <NotFound />
             }
         </>
 
