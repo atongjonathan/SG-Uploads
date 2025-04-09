@@ -85,41 +85,6 @@ const MoviesPage = () => {
 
   return (
     <Layout>
-      {/* <div className="min-height-screen container mx-auto px-2 my-3">
-        <Filters categories={genresTuple} />
-        {
-
-          (filteredMovies && genresTuple.length > 0) &&
-
-          <InfiniteScroll
-            className="grid sm:mt-10 mt-6 xl:grid-cols-6 lg:grid-cols-6 md:grid-cols-5 grid-cols-3 gap-6 overflow-hidden"
-            dataLength={filteredMovies.slice(0, page).length}
-            next={handleLoadingMore}
-            hasMore={hasMore}
-            loader={
-              <Loader />
-            }
-
-          >
-            {filteredMovies.slice(0, page).map((movie, idx) => (
-              <Movie key={idx} movie={movie} />
-            ))}
-          </InfiniteScroll>
-
-        }
-
-
-        {
-          (!allMovies && !isLoading) && <SiteDown></SiteDown>
-        }
-
-     
-        {!hasMore && allMovies?.length > 0 && (
-          <div className="w-full flex-colo md:my-20 my-10">
-            <p>No more movies to load!</p>
-          </div>
-        )}
-      </div> */}
       <TanstackTable/>
     </Layout>
   );

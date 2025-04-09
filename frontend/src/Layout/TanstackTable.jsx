@@ -139,8 +139,8 @@ const TanstackTable = () => {
                 </div>
             </div>
 
-            <div className="grid grid-cols-5 gap-3 pt-3 items-end">
-                <div className='text-dryGray border-gray-800 grid grid-cols-2 lg:grid-cols-4 lg:gap-12 gap-2 rounded p-3 col-span-4'>
+            <div className="grid gap-3 pt-3 items-end">
+                <div className='text-dryGray border-gray-800 grid grid-cols-2 lg:grid-cols-4 lg:gap-12 gap-2 rounded p-3 '>
                     {filters.map((filter, i) => (
                         <Field key={i} className="flex flex-col gap-2">
                             <Label className="uppercase text-sm">{filter.label}</Label>
@@ -184,12 +184,7 @@ const TanstackTable = () => {
                     ))}
                 </div>
 
-                <Button
-                    onClick={() => setSearchParams({})}
-                    className="h-10 mb-3 flex-rows grid-cols-1 gap-3 text-white px-4 py-3 rounded border-2 border-subMain mr-2 hover:bg-subMain hover:border-main transitions text-sm"
-                >
-                    Reset
-                </Button>
+            
             </div>
 
             <div className="grid mt-3 xl:grid-cols-6 lg:grid-cols-6 md:grid-cols-5 grid-cols-3 gap-2 overflow-hidden">
