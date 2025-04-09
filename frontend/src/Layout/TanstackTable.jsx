@@ -117,9 +117,9 @@ const TanstackTable = () => {
     return (
         <div className="min-height-screen container flex flex-col mx-auto p-4 gap-2">
            
-            <div className={`col-span-3 relative lg:hidden xl:hidden md:inline-block mt-2`}>
+            <div className={`col-span-3 relative lg:hidden xl:hidden md:inline-block`}>
                 <form
-                    className="w-full text-sm bg-dryGray rounded flex-btn gap-4"
+                    className="w-full text-sm bg-dryGray rounded flex-btn gap-2"
                     onSubmit={(e) => {
                         e.preventDefault();
                         e.stopPropagation();
@@ -134,7 +134,7 @@ const TanstackTable = () => {
                     <Input
                         type="text"
                         // value={query || ''}
-                        placeholder="Search Movie Name from here"
+                        placeholder="Search Movies"
                         className="font-medium placeholder:text-border text-sm w-full bg-transparent border-none px-2 text-black"
                         onInput={(e) => {
                             let value = e.target.value
