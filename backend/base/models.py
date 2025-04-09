@@ -26,6 +26,7 @@ class Movie(models.Model):
     runtime = models.CharField(
         max_length=20, blank=True, null=True)  # e.g., "2h 30m"
     runtimeSeconds = models.PositiveIntegerField(blank=True, null=True)
+    releaseDetailed = models.JSONField(blank=True, null=True)
     # If different from releaseDetailed
     releaseDate = models.DateField(blank=True, null=True)
 
