@@ -127,7 +127,7 @@ const TanstackTable = () => {
                         // no need to navigate manually — already handled via searchParams
                     }}
                 >
-                    <button type="button" className="bg-subMain w-12 flex-colo h-10 rounded text-white">
+                    <button type="button" className="bg-subMain w-12 flex-colo h-8 rounded text-white">
                         <FaSearch />
                     </button>
 

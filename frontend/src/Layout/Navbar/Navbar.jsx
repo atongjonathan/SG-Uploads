@@ -29,7 +29,7 @@ const Navbar = () => {
   const { pathname, search } = location; // Extract pathname and search
 
   // Helper function to determine active state
-  const isActive = (linkPath) => pathname + search === linkPath;
+  const isActive = (linkPath) => (pathname + search).includes(linkPath);
 
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isSignUpOpen, setIsSignUpOpen] = useState(false);
@@ -118,28 +118,28 @@ const Navbar = () => {
 
         <div className="col-span-3 lg:hidden flex-rows text-text text-sm gap-3 w-full">
 
-          <NavLink
-            to="/movies"
-            className={`${isActive("/movies") ? "bg-subMain" : "bg-dry"
-              } p-3 cursor-pointer rounded-2xl border border-gray-800`}
-          >
-            Browse
-          </NavLink>
-
+    
 
           {/* Action Movies NavLink */}
           <NavLink
-            to="/movies?category=Action"
-            className={`${isActive("/movies?category=Action") ? "bg-subMain" : "bg-dry"
+            to="/movies?genre=Action"
+            className={`${isActive("/movies?genre=Action") ? "bg-subMain" : "bg-dry"
               } p-3 cursor-pointer rounded-2xl border border-gray-800`}
           >
             Action
           </NavLink>
+          <NavLink
+            to="/movies?genre=Thriller"
+            className={`${isActive("/movies?genre=Thriller") ? "bg-subMain" : "bg-dry"
+              } p-3 cursor-pointer rounded-2xl border border-gray-800`}
+          >
+            Thriller
+          </NavLink>
 
           {/* Horror Movies NavLink */}
           <NavLink
-            to="/movies?category=Horror"
-            className={`${isActive("/movies?category=Horror") ? "bg-subMain" : "bg-dry"
+            to="/movies?genre=Horror"
+            className={`${isActive("/movies?genre=Horror") ? "bg-subMain" : "bg-dry"
               } p-3 cursor-pointer rounded-2xl border border-gray-800`}
           >
             Horror
