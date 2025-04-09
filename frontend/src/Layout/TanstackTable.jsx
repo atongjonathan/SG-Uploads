@@ -7,13 +7,14 @@ import {
     ListboxOptions,
     Field,
     Label,
-    Button
+    Button,
+    Input
 } from '@headlessui/react';
 import { useQuery } from "@tanstack/react-query";
 import { getMovies } from '../utils/Backend';
 import { useSearchParams } from 'react-router-dom';
 import Movie from '../Components/Movie';
-import { FaAngleDown, FaArrowLeft, FaArrowRight, FaCheck } from 'react-icons/fa';
+import { FaAngleDown, FaArrowLeft, FaArrowRight, FaCheck, FaSearch } from 'react-icons/fa';
 import Skeleton from 'react-loading-skeleton';
 
 const TanstackTable = () => {
@@ -67,7 +68,7 @@ const TanstackTable = () => {
         queryFn: async () => await getMovies(config),
         keepPreviousData: true,
         staleTime: Infinity,
-    }); 
+    });
 
     const totalPages = data?.count ? Math.ceil(data.count / pageSize) : 0;
     const canPreviousPage = pageIndex > 0;
@@ -114,11 +115,12 @@ const TanstackTable = () => {
     ];
 
     return (
-        <div className="min-height-screen container mx-auto p-4 mt-3">
+        <div className="min-height-screen container flex flex-col mx-auto p-4 mt-3 gap-2">
             <div className="w-full flex justify-between">
                 <div className="flex sm:gap-3 gap-2 items-center truncate">
                     <h2 className="text-sm font-semibold truncate">Movies</h2>
                 </div>
+
 
                 <div className="px-2 flex justify-center gap-2 items-center">
                     <p className='text-xs'>Page {pageIndex + 1}</p>
@@ -137,6 +139,33 @@ const TanstackTable = () => {
                         <FaArrowRight />
                     </Button>
                 </div>
+            </div>
+            <div className={`col-span-3 relative lg:hidden xl:hidden md:inline-block mt-2`}>
+                <form
+                    className="w-full text-sm bg-dryGray rounded flex-btn gap-4"
+                    onSubmit={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        navigate("/movies?title=" + title)
+                        // no need to navigate manually — already handled via searchParams
+                    }}
+                >
+                    <button type="button" className="bg-subMain w-12 flex-colo h-10 rounded text-white">
+                        <FaSearch />
+                    </button>
+
+                    <Input
+                        type="text"
+                        // value={query || ''}
+                        placeholder="Search Movie Name from here"
+                        className="font-medium placeholder:text-border text-sm w-full bg-transparent border-none px-2 text-black"
+                        onInput={(e) => {
+                            let value = e.target.value
+                            updateParam("title", value ? value : "Any")
+                        }}
+                    />
+                </form>
+
             </div>
 
             <div className="grid gap-3 pt-3 items-end">
@@ -184,7 +213,7 @@ const TanstackTable = () => {
                     ))}
                 </div>
 
-            
+
             </div>
 
             <div className="grid mt-3 xl:grid-cols-6 lg:grid-cols-6 md:grid-cols-5 grid-cols-3 gap-2 overflow-hidden">
@@ -193,8 +222,7 @@ const TanstackTable = () => {
                         <Skeleton
                             key={i}
                             baseColor="rgb(11 15 41)"
-                            height={200}
-                            className="rounded-lg w-full"
+                            className="rounded-lg w-full aspect-[216/319]"
                         />
                     ))
                 ) : (
