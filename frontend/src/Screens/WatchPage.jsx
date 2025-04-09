@@ -33,9 +33,6 @@ const WatchPage = () => {
     const [isModalOpen, setisModalOpen] = useState(false)
 
 
-    const { movies, isLoading } = useContext(MovieContext)
-
-
     let [isOpen, setIsOpen] = useState(false)
 
 

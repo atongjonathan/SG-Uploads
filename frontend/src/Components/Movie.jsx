@@ -29,11 +29,7 @@ const Movie = ({ movie, scrollPosition }) => {
         className={`w-full object-cover rounded-lg transition-opacity duration-300 ${loaded ? 'opacity-100' : 'opacity-0'}`}
       />
         </Link>
-        {
-          loaded && <div className="absolute flex-btn gap-2 bottom-0 right-0 left-0 bg-main bg-opacity-60 text-white pl-1 py-3">
-            <h6 className="ml-2 font-semibold text-xs truncate">{movie.title}</h6>
-          </div>
-        }
+      
 
       </div>
     </>
