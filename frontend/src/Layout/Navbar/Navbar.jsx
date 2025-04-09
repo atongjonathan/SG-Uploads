@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useState } from "react";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { FaSearch, FaHeart } from "react-icons/fa";
 import logo from "../../images/4x3.png";
 import { Button, Input } from "@headlessui/react";
@@ -69,10 +69,24 @@ const Navbar = () => {
     }
   })
 
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const handleSearch = (e) => {
-    setQuery(e.target.value.toLowerCase())
+    const value = e.target.value.toLowerCase();
+    setQuery(value);
+    // console.log(pathname);
+
+
+    const params = new URLSearchParams(searchParams);
+    if (value) {
+      params.set("title", value);
+    } else {
+      params.delete("title");
+    }
+    params.set("page", "1"); // optional: reset page on search
+    setSearchParams(params);
   };
+
 
   const handleResultClick = useCallback((title) => {
     navigate(`/watch/${title}`);
@@ -152,16 +166,22 @@ const Navbar = () => {
         {/* Search Form */}
 
         <div className={`col-span-3 relative hidden lg:inline-block`}>
-          <form className="w-full text-sm bg-dryGray rounded flex-btn gap-4" onSubmit={(e) => {
-            e.preventDefault()
-            e.stopPropagation()
-            navigate("/movies?title=" + query)
-          }}>
+          <form
+            className="w-full text-sm bg-dryGray rounded flex-btn gap-4"
+            onSubmit={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              navigate("/movies?title=" + query)
+              // no need to navigate manually — already handled via searchParams
+            }}
+          >
             <button type="button" className="bg-subMain w-12 flex-colo h-10 rounded text-white">
               <FaSearch />
             </button>
+
             <Input
               type="text"
+              value={query || ''}
               placeholder="Search Movie Name from here"
               className="font-medium placeholder:text-border text-sm w-full bg-transparent border-none px-2 text-black"
               onInput={handleSearch}
@@ -170,8 +190,9 @@ const Navbar = () => {
 
 
 
+
           {/* Search Results */}
-          {query && (
+          {query && pathname !== "/movies" && (
             <Results isResults={data} handleResultClick={handleResultClick} isFetching={isFetching}></Results>
           )}
         </div>

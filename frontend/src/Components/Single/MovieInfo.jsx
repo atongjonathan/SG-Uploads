@@ -6,7 +6,13 @@ import { FaStar } from 'react-icons/fa';
 
 const MovieInfo = ({ movie }) => {
 
-    return movie && (
+    if (!movie) return
+
+    const date = new Date(movie.releaseDate)
+
+    const dateStr = `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`
+
+    return (
         <div className="col-span-4 lg:col-span-1">
             <div className="grid grid-cols-2 gap-3">
                 <div className="lg:col-span-2 flex flex-col items-center justify-center w-full gap-3">
@@ -23,7 +29,7 @@ const MovieInfo = ({ movie }) => {
                             movie ? <div className="absolute flex justify-center gap-2 bottom-0 right-0 left-0 bg-main bg-opacity-60 text-white px-4 py-3">
 
                                 <h6 className="font-semibold truncate flex flex-col gap-1">{movie?.title}
-                                    <div className="flex text-center justify-center gap-1 items-center"><FaStar className='w-3 h-3 text-star'></FaStar>{movie.rating.star}</div>
+                                    <div className="flex text-center justify-center gap-1 items-center"><FaStar className='w-3 h-3 text-star'></FaStar>{movie.rating_star}</div>
                                 </h6>
                             </div>
                                 : <Skeleton baseColor="rgb(22 28 63)" height={30} containerClassName="animate-pulse"></Skeleton>
@@ -85,7 +91,7 @@ const MovieInfo = ({ movie }) => {
                     <div className="flex flex-col gap-1 tracking-wider font-light">
                         <span className="font-medium text-gray-200 !shrink-0 tracking-wider">Aired</span>
                         {
-                            movie ? <span>{`${movie?.releaseDetailed.day}/${movie?.releaseDetailed.month}/${movie?.releaseDetailed.year}`}</span>
+                            movie ? <span>{dateStr}</span>
 
                                 : <Skeleton baseColor="rgb(22 28 63)" containerClassName="animate-pulse"></Skeleton>
                         }

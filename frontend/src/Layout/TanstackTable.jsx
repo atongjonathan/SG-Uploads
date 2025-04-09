@@ -1,135 +1,117 @@
-import React, { useState, Fragment, useEffect } from 'react';
-import { Listbox, Transition, ListboxButton, ListboxOption, ListboxOptions, Field, Label } from '@headlessui/react';
+import React, { Fragment, useEffect } from 'react';
+import {
+    Listbox,
+    Transition,
+    ListboxButton,
+    ListboxOption,
+    ListboxOptions,
+    Field,
+    Label,
+    Button
+} from '@headlessui/react';
 import { useQuery } from "@tanstack/react-query";
 import { getMovies } from '../utils/Backend';
-import { useLocation } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import Movie from '../Components/Movie';
 import { FaAngleDown, FaArrowLeft, FaArrowRight, FaCheck } from 'react-icons/fa';
-import { Button } from '@headlessui/react';
 import Skeleton from 'react-loading-skeleton';
-import { SelectorIcon } from '@heroicons/react/solid';
 
 const TanstackTable = () => {
-    const defaultState = {
-        pageIndex: 0,
-        pageSize: 12,
-    }
-    const [pagination, setPagination] = useState(defaultState);
-    const [category, setCategory] = useState(null);
-    const [selectedGenre, setSelectedGenre] = useState("Any");
-    const [selectedYear, setSelectedYear] = useState("Any");
-    const [selectedSort, setSelectedSort] = useState("Any");
-    const [ordering, setOrdering] = useState("-rating_star");
+    const [searchParams, setSearchParams] = useSearchParams();
 
+    const pageIndex = parseInt(searchParams.get("page") || "1", 10) - 1;
+    const pageSize = parseInt(searchParams.get("pageSize") || "12", 10);
+    const selectedGenre = searchParams.get("genre") || "Any";
+    const selectedYear = searchParams.get("year") || "Any";
+    const selectedSort = searchParams.get("sort") || "Highest Rated";
+    const country = searchParams.get("country") || "Any";
+    const title = searchParams.get("title") || "Any";
 
-
-    // Build config based on pagination
-    const config = {
-        params: {
-            limit: pagination.pageSize,
-            offset: pagination.pageIndex * pagination.pageSize,
-            genre: selectedGenre !== "Any" ? selectedGenre : null,
-            year: selectedYear !== "Any" ? selectedYear : null,
-            ordering
-        },
-    };
-
-    console.log(config);
-
-
-
-
-    const { data, isFetching } = useQuery({
-        queryKey: ['moviesQuery', config, ordering],
-
-        queryFn: async () => {
-            const res = await getMovies(config);
-            return res;
-        },
-        keepPreviousData: true,
-        staleTime: Infinity,
-    });
-
-    const totalPages = data?.count
-        ? Math.ceil(data.count / pagination.pageSize)
-        : 0;
-
-
-
-    const canPreviousPage = pagination.pageIndex > 0;
-    const canNextPage = pagination.pageIndex + 1 < totalPages;
     const startYear = 2000;
     const endYear = new Date().getFullYear();
+    const years = Array(endYear - startYear + 1).fill().map((_, i) => startYear + i).reverse();
 
-    const years = Array(endYear - startYear + 1).fill().map((_, i) => startYear + i);
-    years.reverse()
     const genres = [
         "Action", "Adventure", "Animation", "Biography", "Comedy", "Crime", "Documentary", "Drama", "Family",
         "Fantasy", "History", "Horror", "Musical", "Mystery", "Romance", "Sci-Fi", "Sport", "Thriller", "War", "Western", "Short"
     ];
-    const sort = [
-        {
-            label: "Latest Release",
-            value: "-releaseDate"
+
+    const country_list = ["Afghanistan", "Albania", "Algeria", "United States", "Canada", "India", "United Kingdom", "Nigeria", "France", "Germany", "China", "Japan", "South Korea", "Australia", "Brazil", "South Africa", "Mexico", "Italy", "Spain", "Russia", "Turkey", "Egypt", "Argentina", "Indonesia", "Vietnam", "Thailand", "Kenya", "Ghana", "Pakistan", "Bangladesh", "Philippines", "Others"];
+
+    const sortOptions = [
+        { label: "Latest Release", value: "-releaseDate" },
+        { label: "Old Release", value: "releaseDate" },
+        { label: "Highest Rated", value: "-rating_star" },
+        { label: "Lowest Rated", value: "rating_star" },
+        { label: "Title Asc", value: "title" },
+        { label: "Title Desc", value: "-title" }
+    ];
+
+    const ordering = sortOptions.find(opt => opt.label === selectedSort)?.value || "-rating_star";
+    const orderLabel = selectedSort;
+
+    const config = {
+        params: {
+            limit: pageSize,
+            offset: pageIndex * pageSize,
+            genre: selectedGenre !== "Any" ? selectedGenre : null,
+            year: selectedYear !== "Any" ? selectedYear : null,
+            releaseLocation: country !== "Any" ? country : null,
+            ordering,
+            title: title !== "Any" ? title : null,
         },
-        {
-            label: "Old Release",
-            value: "releaseDate"
-        },
-        {
-            label: "Highest Rated",
-            value: "-rating_star"
-        },
-        {
-            label: "Lowest Rated",
-            value: "rating_star"
-        },
-        {
-            label: "Title Asc",
-            value: "title"
-        },
-        {
-            label: "Title Desc",
-            value: "-title"
+    };
+
+    const { data, isFetching } = useQuery({
+        queryKey: ['moviesQuery', config],
+        queryFn: async () => await getMovies(config),
+        keepPreviousData: true,
+        staleTime: Infinity,
+    }); 
+
+    const totalPages = data?.count ? Math.ceil(data.count / pageSize) : 0;
+    const canPreviousPage = pageIndex > 0;
+    const canNextPage = pageIndex + 1 < totalPages;
+
+    const updateParam = (key, value) => {
+        const newParams = new URLSearchParams(searchParams);
+        if (value === "Any" || value === undefined) {
+            newParams.delete(key);
+        } else {
+            newParams.set(key, value);
         }
-    ]
-
-    const sortValues = sort.map((value) => value.value)
-
-    const orderIdx = sortValues.findIndex((value) => value == ordering)
-
-    const filterSortLabel = sort[orderIdx].label
-
-
-
+        if (key !== 'page') {
+            newParams.set('page', "1");
+        }
+        setSearchParams(newParams);
+    };
 
     const filters = [
         {
             value: selectedGenre,
             label: "Genre",
-            onChange: setSelectedGenre,
-
-            items: ["Any", ...genres]
+            onChange: (value) => updateParam("genre", value),
+            items: ["Any", ...genres],
         },
         {
             value: selectedYear,
             label: "Year",
-            onChange: setSelectedYear,
-            items: ["Any", ...years]
+            onChange: (value) => updateParam("year", value),
+            items: ["Any", ...years],
         },
         {
-            value: ordering,
+            value: orderLabel,
             label: "Sort By",
-            onChange: setOrdering, // Only need to set selectedSort
-            items: sort // Array of sorting options with value and label
-        }
-
-
-    ]
-    useEffect(() => {
-        const selected = sort.find(item => item.label === selectedSort);
-        setOrdering(selected?.value ?? "-rating_star");
-    }, [selectedSort]);
+            onChange: (value) => updateParam("sort", value),
+            items: sortOptions.map((s) => s.label),
+        },
+        {
+            value: country,
+            label: "Country",
+            onChange: (value) => updateParam("country", value),
+            items: ["Any", ...country_list],
+        },
+    ];
 
     return (
         <div className="min-height-screen container mx-auto p-4 mt-3">
@@ -138,116 +120,87 @@ const TanstackTable = () => {
                     <h2 className="text-sm font-semibold truncate">Movies</h2>
                 </div>
 
-
-                <div className="px-2 flex justify-center gap-2">
+                <div className="px-2 flex justify-center gap-2 items-center">
+                    <p className='text-xs'>Page {pageIndex + 1}</p>
                     <Button
-                        onClick={() => setPagination(prev => ({
-                            ...prev,
-                            pageIndex: Math.max(prev.pageIndex - 1, 0)
-                        }))}
+                        onClick={() => updateParam("page", pageIndex)}
                         disabled={!canPreviousPage}
-                        className={`transition duration-100 ease-in text-sm rounded w-7 h-7 flex-colo text-white ${!canPreviousPage ? "bg-dry" : "bg-subMain active:bg-dry"
-                            }`}
+                        className={`transition duration-100 ease-in text-sm rounded w-7 h-7 flex-colo text-white ${!canPreviousPage ? "bg-dry" : "bg-subMain active:bg-dry"}`}
                     >
                         <FaArrowLeft />
                     </Button>
                     <Button
-                        onClick={() => setPagination(prev => ({
-                            ...prev,
-                            pageIndex: prev.pageIndex + 1
-                        }))}
+                        onClick={() => updateParam("page", pageIndex + 2)}
                         disabled={!canNextPage}
-                        className={`transition duration-100 ease-in text-sm rounded w-7 h-7 flex-colo text-white ${!canNextPage ? "bg-dry" : "bg-subMain active:bg-dry"
-                            }`}
+                        className={`transition duration-100 ease-in text-sm rounded w-7 h-7 flex-colo text-white ${!canNextPage ? "bg-dry" : "bg-subMain active:bg-dry"}`}
                     >
                         <FaArrowRight />
                     </Button>
                 </div>
             </div>
+
             <div className="grid grid-cols-5 gap-3 pt-3 items-end">
-                <div className='text-dryGray border-gray-800 grid grid-cols-3 lg:gap-12 gap-2 rounded p-3 col-span-4'>
-                    {
-                        filters.map((filter, i) => (
-                            <Field key={i} className={"flex flex-col gap-2"}>
-                                <Label className={"uppercase text-sm"}>
-                                    {filter.label}</Label>
-                                <Listbox value={Object.keys(sort).find((item) => item === filter.value)} onChange={filter.onChange}>
-                                    <div className="relative">
-                                        <ListboxButton className='relative border border-gray-800 w-full text-white bg-dry rounded-lg cursor-default py-2 px-3 text-left text-xs'>
-                                            <span className='block truncate'>{filter.label === "Sort By" ? filterSortLabel : filter.value}</span>
-                                            <span className="absolute inset-y-0 right-0 flex items-center pointer-events-none pr-2">
-                                                <FaAngleDown className='h-4 w-4' aria-hidden='true' />
-                                            </span>
-                                        </ListboxButton>
-                                        <Transition as={Fragment} leave='transition ease-in duration-100' leaveFrom='opacity-100' leaveTo='opacity-0'>
-                                            <ListboxOptions className='absolute z-10 mt-1 w-full bg-dry border border-gray-800 text-white rounded-md shadow-lg max-h-60 py-1 ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none text-sm'>
-                                                {filter.items.map((item, idx) => {
-                                                    const isObject = typeof item === 'object' && item !== null;
-                                                    const value = isObject ? item.value : item;
-                                                    const label = isObject ? item.label : item;
-
-                                                    return (
-                                                        <ListboxOption
-                                                            key={idx}
-                                                            value={value}
-                                                            className={({ active }) =>
-                                                                `relative cursor-default select-none py-1 pl-8 pr-4 ${active ? "bg-subMain" : "bg-main"
-                                                                } text-white transitions rounded`
-                                                            }
-                                                        >
-                                                            {({ selected }) => (
-                                                                <>
-                                                                    <span className={`block truncate text-xs ${selected ? 'font-semibold' : 'font-normal'}`}>
-                                                                        {label}
-                                                                    </span>
-                                                                    {selected && (
-                                                                        <span className='absolute inset-y-0 left-0 flex items-center pl-3'>
-                                                                            <FaCheck className='h-3 w-3' aria-hidden='true' />
-                                                                        </span>
-                                                                    )}
-                                                                </>
+                <div className='text-dryGray border-gray-800 grid grid-cols-2 lg:grid-cols-4 lg:gap-12 gap-2 rounded p-3 col-span-4'>
+                    {filters.map((filter, i) => (
+                        <Field key={i} className="flex flex-col gap-2">
+                            <Label className="uppercase text-sm">{filter.label}</Label>
+                            <Listbox value={filter.value} onChange={filter.onChange}>
+                                <div className="relative">
+                                    <ListboxButton className='relative border border-gray-800 w-full text-white bg-dry rounded-lg cursor-default py-2 px-3 text-left text-xs'>
+                                        <span className='block truncate'>{filter.value}</span>
+                                        <span className="absolute inset-y-0 right-0 flex items-center pointer-events-none pr-2">
+                                            <FaAngleDown className='h-4 w-4' aria-hidden='true' />
+                                        </span>
+                                    </ListboxButton>
+                                    <Transition as={Fragment} leave="transition ease-in duration-100" leaveFrom="opacity-100" leaveTo="opacity-0">
+                                        <ListboxOptions className='absolute z-10 mt-1 w-full bg-dry border border-gray-800 text-white rounded-md shadow-lg max-h-60 py-1 ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none text-sm'>
+                                            {filter.items.map((item, idx) => (
+                                                <ListboxOption
+                                                    key={idx}
+                                                    value={item}
+                                                    className={({ active }) =>
+                                                        `relative cursor-default select-none py-1 pl-8 pr-4 ${active ? "bg-subMain" : "bg-main"} text-white transitions rounded`
+                                                    }
+                                                >
+                                                    {({ selected }) => (
+                                                        <>
+                                                            <span className={`block truncate text-xs ${selected ? 'font-semibold' : 'font-normal'}`}>
+                                                                {item}
+                                                            </span>
+                                                            {selected && (
+                                                                <span className='absolute inset-y-0 left-0 flex items-center pl-3'>
+                                                                    <FaCheck className='h-3 w-3' aria-hidden='true' />
+                                                                </span>
                                                             )}
-                                                        </ListboxOption>
-                                                    );
-                                                })}
-
-                                            </ListboxOptions>
-                                        </Transition>
-                                    </div>
-                                </Listbox>
-                            </Field>
-
-                        ))
-                    }
-
-
+                                                        </>
+                                                    )}
+                                                </ListboxOption>
+                                            ))}
+                                        </ListboxOptions>
+                                    </Transition>
+                                </div>
+                            </Listbox>
+                        </Field>
+                    ))}
                 </div>
+
                 <Button
-                    onClick={() => {
-                        setSelectedGenre("Any");
-                        setSelectedYear("Any");
-                        setSelectedSort("Any");
-                        setOrdering("-rating_star");
-                        setPagination(defaultState);
-                    }}
+                    onClick={() => setSearchParams({})}
                     className="h-10 mb-3 flex-rows grid-cols-1 gap-3 text-white px-4 py-3 rounded border-2 border-subMain mr-2 hover:bg-subMain hover:border-main transitions text-sm"
                 >
                     Reset
                 </Button>
-
             </div>
 
             <div className="grid mt-3 xl:grid-cols-6 lg:grid-cols-6 md:grid-cols-5 grid-cols-3 gap-2 overflow-hidden">
                 {isFetching ? (
-
-                    [...Array(pagination.pageSize)].map((_, i) => (
+                    [...Array(pageSize)].map((_, i) => (
                         <Skeleton
                             key={i}
                             baseColor="rgb(11 15 41)"
                             height={200}
                             className="rounded-lg w-full"
                         />
-
                     ))
                 ) : (
                     data?.results?.map((movie, idx) => (

@@ -18,7 +18,7 @@ const Layout = ({ children }) => {
         isError ? <SiteDown></SiteDown>
           :
           (
-            <div className="bg-main text-white relative">
+            <div className="bg-main text-white relative min-h-[95vh]">
               <Toaster position="top-right" theme="dark" closeButton toastOptions={{
                 classNames: {
                   toast: 'bg-subMain',

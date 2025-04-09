@@ -85,6 +85,7 @@ class MovieList(generics.ListAPIView):
         title = self.request.query_params.get('title')
         id = self.request.query_params.get('id')
         year = self.request.query_params.get('year')
+        releaseLocation = self.request.query_params.get('releaseLocation')
 
         if genre:
             queryset = queryset.filter(genre__icontains=genre)
@@ -94,6 +95,9 @@ class MovieList(generics.ListAPIView):
             queryset = queryset.filter(id=id)
         if year:
             queryset = queryset.filter(year=year)
+        if releaseLocation:
+            queryset = queryset.filter(releaseLocation=releaseLocation)
+
         return queryset
 
 
@@ -124,6 +128,10 @@ def create_user(request):
 def create_movie(request):
     data = request.data
     data["rating_star"] = data["rating"]["star"]
+    data["rating_count"] = data["rating"]["count"]
+    data["wins"] = data["award"]["wins"]
+    data["nominations"] = data["award"]["nominations"]
+    data["releaseLocation"] = data["releaseDetailed"]["releaseLocation"]["country"]
     date = data["releaseDetailed"]["date"]
     data["releaseDate"] = datetime.fromisoformat(
         date.replace("Z", "+00:00")).date()

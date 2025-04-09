@@ -26,7 +26,7 @@ const Results = ({ isResults, handleResultClick, isFetching }) => {
                                     key={idx}
                                     className={`results-row text-center transitions hover:bg-subMain hover:cursor-pointer ${!isFetching ? 'visible' : ''}`}
                                     title={movie.title}
-                                    onClick={() => handleResultClick(movie.title)}
+                                    onClick={() => handleResultClick(movie.id)}
                                 >
                                     <td className="w-12 p-1 bg-dry border border-border h-12 rounded overflow-hidden">
                                         <img
@@ -39,7 +39,7 @@ const Results = ({ isResults, handleResultClick, isFetching }) => {
                                         <div className="flex text-center justify-center gap-1 items-center h-full">{movie.title} ({movie.year})</div>
                                     </td>
                                     <td className='p-3'>
-                                        <div className="flex text-center justify-center gap-1 items-center h-full"><FaStar className='w-3 h-3 text-star'></FaStar>{movie.rating.star}</div>
+                                        <div className="flex text-center justify-center gap-1 items-center h-full"><FaStar className='w-3 h-3 text-star'></FaStar>{movie.rating_star}</div>
                                     </td>
                                 </tr>
                             ))}

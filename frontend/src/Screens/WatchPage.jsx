@@ -103,12 +103,12 @@ const WatchPage = () => {
                     {
                         movie &&
                         <Helmet>
-                            <meta name="description" content={`${movie.title} (${movie?.year}) ⭐️ ${movie.rating.star} | ${movie.genre.join(",")} ${movie.runtime} | ${movie.contentRating}`} />
+                            <meta name="description" content={`${movie.title} (${movie?.year}) ⭐️ ${movie.rating_star} | ${movie.genre.join(",")} ${movie.runtime} | ${movie.contentRating}`} />
 
                             <title>{`${movie?.title} (${movie?.year})`}</title>
                             <meta property="og:image" content={movie.poster} />
-                            <meta property="og:description" content={`${movie.title} (${movie?.year}) ⭐️ ${movie.rating.star}| ${movie.genre.join(",")} ${movie.runtime}| ${movie.contentRating}`} />
-                            <meta property="twitter:description" content={`${movie.title} (${movie?.year}) ⭐️ ${movie.rating.star}| ${movie.genre.join(",")} ${movie.runtime}| ${movie.contentRating}`} />
+                            <meta property="og:description" content={`${movie.title} (${movie?.year}) ⭐️ ${movie.rating_star}| ${movie.genre.join(",")} ${movie.runtime}| ${movie.contentRating}`} />
+                            <meta property="twitter:description" content={`${movie.title} (${movie?.year}) ⭐️ ${movie.rating_star}| ${movie.genre.join(",")} ${movie.runtime}| ${movie.contentRating}`} />
                             <meta property="twitter:image" content={movie.poster} />
                         </Helmet>
                     }

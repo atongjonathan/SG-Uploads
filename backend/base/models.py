@@ -26,14 +26,11 @@ class Movie(models.Model):
     runtime = models.CharField(
         max_length=20, blank=True, null=True)  # e.g., "2h 30m"
     runtimeSeconds = models.PositiveIntegerField(blank=True, null=True)
-    releaseDetailed = models.JSONField(blank=True, null=True)
     # If different from releaseDetailed
     releaseDate = models.DateField(blank=True, null=True)
 
-    # Ratings and Reviews
-    rating = models.JSONField(blank=True, null=True)
-
     rating_star = models.FloatField(blank=True, null=True)
+    rating_count = models.IntegerField(blank=True, null=True)
     # Could be JSON or plain text
     reviews = models.JSONField(blank=True, null=True)
 
@@ -67,6 +64,9 @@ class Movie(models.Model):
     # Genres and Awards
     genre = models.JSONField(blank=True, null=True)  # List of genres
     award = models.JSONField(blank=True, null=True)  # List of awards won
+    wins = models.IntegerField(blank=True, null=True)  # List of awards won
+    nominations = models.IntegerField(blank=True, null=True)  # List of awards won
+    releaseLocation = models.CharField(blank=True, null=True, max_length=150)
 
     stream = models.URLField(blank=True, null=True)
     # URLs or paths to additional images
