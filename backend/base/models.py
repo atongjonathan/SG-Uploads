@@ -30,6 +30,9 @@ class Movie(models.Model):
     # If different from releaseDetailed
     releaseDate = models.DateField(blank=True, null=True)
 
+    # Ratings and Reviews
+    rating = models.JSONField(blank=True, null=True)
+
     rating_star = models.FloatField(blank=True, null=True)
     rating_count = models.IntegerField(blank=True, null=True)
     # Could be JSON or plain text
