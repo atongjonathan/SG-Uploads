@@ -115,31 +115,8 @@ const TanstackTable = () => {
     ];
 
     return (
-        <div className="min-height-screen container flex flex-col mx-auto p-4 mt-3 gap-2">
-            <div className="w-full flex justify-between">
-                <div className="flex sm:gap-3 gap-2 items-center truncate">
-                    <h2 className="text-sm font-semibold truncate">Movies</h2>
-                </div>
-
-
-                <div className="px-2 flex justify-center gap-2 items-center">
-                    <p className='text-xs'>Page {pageIndex + 1}</p>
-                    <Button
-                        onClick={() => updateParam("page", pageIndex)}
-                        disabled={!canPreviousPage}
-                        className={`transition duration-100 ease-in text-sm rounded w-7 h-7 flex-colo text-white ${!canPreviousPage ? "bg-dry" : "bg-subMain active:bg-dry"}`}
-                    >
-                        <FaArrowLeft />
-                    </Button>
-                    <Button
-                        onClick={() => updateParam("page", pageIndex + 2)}
-                        disabled={!canNextPage}
-                        className={`transition duration-100 ease-in text-sm rounded w-7 h-7 flex-colo text-white ${!canNextPage ? "bg-dry" : "bg-subMain active:bg-dry"}`}
-                    >
-                        <FaArrowRight />
-                    </Button>
-                </div>
-            </div>
+        <div className="min-height-screen container flex flex-col mx-auto p-4 gap-2">
+           
             <div className={`col-span-3 relative lg:hidden xl:hidden md:inline-block mt-2`}>
                 <form
                     className="w-full text-sm bg-dryGray rounded flex-btn gap-4"
@@ -161,14 +138,38 @@ const TanstackTable = () => {
                         className="font-medium placeholder:text-border text-sm w-full bg-transparent border-none px-2 text-black"
                         onInput={(e) => {
                             let value = e.target.value
-                            updateParam("title", value ? value : "Any")
+                            updateParam("title", value ? value: "Any")
                         }}
                     />
                 </form>
 
             </div>
+            <div className="w-full flex justify-between bg-dry">
+                <div className="flex sm:gap-3 gap-2 items-center truncate">
+                    {/* <h2 className="text-sm font-semibold truncate">Movies</h2> */}
+                </div>
 
-            <div className="grid gap-3 pt-3 items-end">
+
+                <div className="px-2 flex justify-center gap-2 items-center">
+                    <p className='text-xs'>Page {pageIndex + 1}</p>
+                    <Button
+                        onClick={() => updateParam("page", pageIndex)}
+                        disabled={!canPreviousPage}
+                        className={`transition duration-100 ease-in text-sm rounded w-7 h-7 flex-colo text-white ${!canPreviousPage ? "bg-dry" : "bg-subMain active:bg-dry"}`}
+                    >
+                        <FaArrowLeft />
+                    </Button>
+                    <Button
+                        onClick={() => updateParam("page", pageIndex + 2)}
+                        disabled={!canNextPage}
+                        className={`transition duration-100 ease-in text-sm rounded w-7 h-7 flex-colo text-white ${!canNextPage ? "bg-dry" : "bg-subMain active:bg-dry"}`}
+                    >
+                        <FaArrowRight />
+                    </Button>
+                </div>
+            </div>
+
+            <div className="grid gap-3 items-end">
                 <div className='text-dryGray border-gray-800 grid grid-cols-2 lg:grid-cols-4 lg:gap-12 gap-2 rounded p-3 '>
                     {filters.map((filter, i) => (
                         <Field key={i} className="flex flex-col gap-2">
