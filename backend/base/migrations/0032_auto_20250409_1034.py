@@ -9,15 +9,16 @@ def extract_releaseLocation(apps, schema_editor):
     for movie in Movie.objects.all():
         releaseLocationString = movie.releaseLocation
         if releaseLocationString:
-            releaseLocation = ast.literal_eval(
-                releaseLocationString).get("country")
-            if releaseLocation:
-                try:
-                    movie.releaseLocation = releaseLocation
-                    movie.save(update_fields=["releaseLocation"])
-                except Exception as e:
-                    print(
-                        f"Failed to update releaseLocation for movie ID {movie.id}: {e}")
+            try:
+                releaseLocation = ast.literal_eval(
+                    releaseLocationString).get("country")
+                if releaseLocation:               
+                        movie.releaseLocation = releaseLocation
+                        movie.save(update_fields=["releaseLocation"])
+            except Exception as e:
+                print(
+                    f"Failed to update releaseLocation for movie ID {movie.id}: {e}")                        
+
 
 
 class Migration(migrations.Migration):
