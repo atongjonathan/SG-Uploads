@@ -15,7 +15,7 @@ const MovieProvider = ({ children }) => {
     const moviesQuery = useQuery({
         queryKey: ["moviesQuery"],
         queryFn: () => {
-            return axios.get(BACKEND_URL + '/movies').then((res) => res.data)
+            return axios.get(BACKEND_URL + '/movies?limit=500').then((res) => res.data)
         }
     })
 
