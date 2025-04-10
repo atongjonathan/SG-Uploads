@@ -7,6 +7,7 @@ import { MovieContext, useMovies } from "../context/MovieContext";
 import ScrollToTop from "react-scroll-to-top";
 import { BiArrowToTop } from "react-icons/bi";
 import SiteDown from '../Screens/Error/SiteDown'
+import Verify from "../Components/Modals/Verify";
 
 const Layout = ({ children }) => {
   const { isError } = useMovies()
@@ -25,7 +26,8 @@ const Layout = ({ children }) => {
                   title: 'text-white',
                   closeButton: 'bg-subMain text-white hover:text-subMain',
                 },
-              }} ></Toaster>
+              }} ></Toaster>              
+              <Verify/>
               <Navbar></Navbar>
               <div className="lg:mt-24 mt-16">
                 {children}

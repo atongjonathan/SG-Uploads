@@ -24,7 +24,10 @@ urlpatterns = [
     path('captions', views.captions, name='captions'),
     path('search', views.search_captions, name='search_captions'),
     path('itunes', views.search_itunes, name='search'),
-    path('change-password', views.change_password, name='password')
+    path('change-password', views.change_password, name='password'),
+    path('verify', views.send_verify_token),
+    path('verify_email/<uidb64>/<token>', views.verify_email),
+
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

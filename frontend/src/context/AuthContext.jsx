@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState, useRef, useCallback } from 'react';
+import React, { createContext, useEffect, useState, useRef, useCallback, useContext } from 'react';
 import { toast } from 'sonner';
 import { jwtDecode } from 'jwt-decode'; // Fixed import
 import axios from 'axios';
@@ -26,6 +26,7 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem('authTokens');
     setAuthTokens(null);
     setUser(null);
+    toast.info("Logged out")
     if (intervalRef.current) clearInterval(intervalRef.current); // Clear interval on logout
   }, []);
 
@@ -104,3 +105,15 @@ export const AuthProvider = ({ children }) => {
     </AuthContext.Provider>
   );
 };
+
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error(
+      "useAuth must be used within an AuthProvider. Make sure you are rendering AuthProvider at the top level of your application."
+    );
+  }
+  return context;
+}
+
+
