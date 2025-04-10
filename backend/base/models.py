@@ -69,7 +69,8 @@ class Movie(models.Model):
     genre = models.JSONField(blank=True, null=True)  # List of genres
     award = models.JSONField(blank=True, null=True)  # List of awards won
     wins = models.IntegerField(blank=True, null=True)  # List of awards won
-    nominations = models.IntegerField(blank=True, null=True)  # List of awards won
+    nominations = models.IntegerField(
+        blank=True, null=True)  # List of awards won
     releaseLocation = models.CharField(blank=True, null=True, max_length=150)
 
     stream = models.URLField(blank=True, null=True)
@@ -82,7 +83,6 @@ class Movie(models.Model):
         return f"{self.title} ({self.year})"
 
 
-
 class SGUser(AbstractUser):
     email = models.EmailField(unique=True)
     favourites = models.ManyToManyField(
@@ -90,6 +90,7 @@ class SGUser(AbstractUser):
     image = models.ImageField(null=True, blank=True, upload_to="images/")
     name = models.CharField(max_length=150, null=True, blank=True)
     telegram_id = models.IntegerField(null=True, blank=True)
+    is_verified = models.BooleanField(default=False)
 
     def __str__(self) -> str:
         return f"{self.username} User"

@@ -18,7 +18,12 @@ from rest_framework.parsers import MultiPartParser, FormParser
 import os
 from rest_framework import generics, filters
 from django.conf import settings
-
+from django.contrib.auth.tokens import default_token_generator
+from django.utils.encoding import force_bytes, force_str
+from django.utils.http import urlsafe_base64_decode
+from django.utils.http import urlsafe_base64_encode
+from django.contrib.auth.password_validation import validate_password
+from django.core.mail import EmailMultiAlternatives
 
 cc = Captions()
 
@@ -277,3 +282,42 @@ def captions(request):
     except Exception as e:
         # Return a string representation of the error
         return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+def send_emails(subject: str, body: str, recipients: list):
+    message = EmailMultiAlternatives(
+        to=recipients, from_email=settings.DEFAULT_FROM_EMAIL, subject=subject)
+    message.attach_alternative(body, "text/html")
+    try:
+        message.send(fail_silently=False)
+        return Response({"message": "Success"}, headers={'Content-Type': 'application/json'}, status=status.HTTP_200_OK)
+    except Exception as e:
+        return Response({"errors": str(e)}, headers={'Content-Type': 'application/json'}, status=status.HTTP_501_NOT_IMPLEMENTED)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def send_verify_token(request: HttpRequest):
+    token = default_token_generator.make_token(request.user)
+    uidb64 = urlsafe_base64_encode(force_bytes(request.user.email))
+    url = f'{settings.FRONTEND_URL.replace("host.docker.internal", "localhost")}/verify/{uidb64}/{token}/'
+    data = "Follow this link to verify your email: \n" + url
+    return send_emails("Verify your email address", data, [request.user.email])
+
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def verify_email(request: HttpRequest, uidb64, token):
+    user = request.user
+    try:
+        email = force_str(urlsafe_base64_decode(uidb64))
+        logging.info("Verifying" + user.email)
+        token_valid = default_token_generator.check_token(
+            user=user, token=token)
+        if email == request.user.email and token_valid:
+            user.is_verified = True
+            user.save()
+            return Response({"success": "Account verified"}, status=status.HTTP_200_OK, content_type="application/json")
+    except Exception as e:
+        return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST, content_type="application/json")
+    return Response({"error": "Invalid token"}, status=status.HTTP_400_BAD_REQUEST, content_type="application/json")

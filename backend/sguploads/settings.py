@@ -45,7 +45,6 @@ INSTALLED_APPS = [
 
     'base',
     'rest_framework',
-    'rest_framework_simplejwt.token_blacklist',
     'corsheaders',
     'import_export'
 ]
@@ -64,7 +63,6 @@ SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(days=90),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=90),
     "ROTATE_REFRESH_TOKENS": True,
-    "BLACKLIST_AFTER_ROTATION": True,
     "UPDATE_LAST_LOGIN": False,
     "ALGORITHM": "HS256",
     "VERIFYING_KEY": "",
@@ -246,3 +244,15 @@ ACCESS_TOKEN = os.environ.get('ACCESS_TOKEN')
 PHONE_NUMBER_ID = os.environ.get('PHONE_NUMBER_ID')
 RECIPIENTS = os.environ.get('RECIPIENTS')
 DEVELOPMENT = os.environ.get('DEVELOPMENT')
+
+
+# Email Settings
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = os.environ.get("EMAIL_HOST")
+EMAIL_PORT = 465
+EMAIL_USE_SSL = True,
+EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
+DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL")
+SERVER_EMAIL = os.environ.get("EMAIL_HOST_USER")
+FRONTEND_URL = os.environ.get("FRONTEND_URL")

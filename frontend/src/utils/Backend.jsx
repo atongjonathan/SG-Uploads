@@ -7,10 +7,13 @@ const IMDB_API = import.meta.env.VITE_IMDB_API
 const TMDB_API_KEY = import.meta.env.VITE_TMDB_API_KEY
 
 
-export async function getMovies(config={}) {
+export async function getMovies(config = {}) {
     return axios.get(BACKEND_URL + '/movies', config).then((res) => res.data)
 
 }
+
+const tokens = localStorage.getItem("authTokens")
+const authTokens = tokens ? JSON.parse(tokens) : null
 
 const sortVideos = (videos = []) => {
     return videos.sort((a, b) => {
@@ -226,3 +229,17 @@ export const updateReviews = async (accessToken, title, id) => {
 };
 
 
+export const verifyEmail = async (access) => {
+    return await axios.get(BACKEND_URL + "/verify", {
+        headers: {
+            Authorization: 'Bearer ' + access
+        }
+    })
+}
+export const verifyToken = async (uidb64, token, access) => {
+    return await axios.get(BACKEND_URL + `/verify_email/${uidb64}/${token}`, {
+        headers: {
+            Authorization: 'Bearer ' + access
+        }
+    })
+}
