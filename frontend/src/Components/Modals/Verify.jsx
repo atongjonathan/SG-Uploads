@@ -25,7 +25,7 @@ const Verify = () => {
     const [disabled, setDisabled] = useState(false);
     const [counter, setCounter] = useState(20);
 
-    const { pathname, search } = useLocation()
+    const { pathname } = useLocation()
 
     const [verify, setVerify] = useState(uidb64 && token && user);
 
@@ -68,7 +68,7 @@ const Verify = () => {
 
         setIsOpen(true)
 
-    }, [pathname, search]);
+    }, [pathname]);
 
     useEffect(() => {
         // console.log();

@@ -1,6 +1,6 @@
 import React, { useCallback, useContext, useState } from 'react'
 import { BsHouseAddFill } from 'react-icons/bs'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { NavLink, useNavigate, useSearchParams } from 'react-router-dom'
 import { Button } from '@headlessui/react'
 import AuthContext from '../../context/AuthContext';
 import { Dialog, DialogPanel, DialogTitle, DialogBackdrop } from '@headlessui/react'
@@ -12,6 +12,7 @@ import LoginModal from '../../Components/Modals/LoginModal';
 import { IoClose } from 'react-icons/io5'
 import Results from '../../Components/Home/Results';
 import { useQuery } from '@tanstack/react-query';
+import { getMovies } from '../../utils/Backend';
 
 const MobileFooter = () => {
     const Hover = 'transitions text-2xl flex-colo hover:bg-white hover:text-main text-white rounded-md px-4 py-3'
@@ -33,20 +34,40 @@ const MobileFooter = () => {
         setIsSignUpOpen(false);
     }, []);
 
+    const [query, setQuery] = useState("");
+    
+
+    const { data, isFetching } = useQuery({
+        queryKey: ["searchQuery", query],
+        queryFn: async () => {
+            const config = {
+                params: {
+                    title: query,
+                    limit: 3
+                }
+            }
+            return await getMovies(config).then((res) => res.results)
+        }
+    })
+
+    const [searchParams, setSearchParams] = useSearchParams();
+
     const handleSearch = (e) => {
-        const query = e.target.value.toLowerCase();
-        if (query == '') {
-            setResults(null)
-        }
-        else {
-            const filtered = movies.filter(movie =>
-                movie.title.toLowerCase().includes(query)
-            );
+        const value = e.target.value.toLowerCase();
+        setQuery(value);
+        // console.log(pathname);
 
-            setResults(filtered);
-        }
 
+        const params = new URLSearchParams(searchParams);
+        if (value) {
+            params.set("title", value);
+        } else {
+            params.delete("title");
+        }
+        params.set("page", "1"); // optional: reset page on search
+        setSearchParams(params);
     };
+
 
 
 
@@ -106,8 +127,9 @@ const MobileFooter = () => {
                                 className={"font-medium placeholder:text-text text-sm w-full h-12 bg-transparent border-none px-2 text-black bg-white mt-10" + { Hover }}
                                 onInput={handleSearch}
                             />
-                            {(isResults && showModal) && (
-                                <Results isResults={isResults} handleResultClick={handleResultClick}></Results>
+                            {(query && showModal) && (
+                                <Results isResults={data} handleResultClick={handleResultClick} isFetching={isFetching}></Results>
+
                             )}
                         </DialogPanel>
                     </div>

@@ -24,6 +24,8 @@ from django.utils.http import urlsafe_base64_decode
 from django.utils.http import urlsafe_base64_encode
 from django.contrib.auth.password_validation import validate_password
 from django.core.mail import EmailMultiAlternatives
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 
 cc = Captions()
 
@@ -76,6 +78,7 @@ def users_list(request):
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 
+@method_decorator(cache_page(60 * 5), name='dispatch')
 class MovieList(generics.ListAPIView):
     serializer_class = MovieSerializer
     queryset = Movie.objects.all()
