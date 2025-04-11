@@ -38,6 +38,7 @@ const Verify = () => {
         mutationFn: () => verifyToken(uidb64, token, authTokens.access),
         onSuccess: async () => {
             let user = await fetchUser(authTokens);
+            console.log(user);
             toast.error("Email has been verified")
             setIsOpen(false)
             navigate("/")
@@ -107,6 +108,8 @@ const Verify = () => {
 
 
     if (!user) return
+
+    console.log(user);
 
     return user && !user.is_verified && (
 

@@ -25,7 +25,8 @@ from django.utils.http import urlsafe_base64_encode
 from django.contrib.auth.password_validation import validate_password
 from django.core.mail import EmailMultiAlternatives
 from django.utils.decorators import method_decorator
-from django.views.decorators.cache import cache_page
+from django.views.decorators.cache import cache_page, never_cache
+from django.core.cache import caches
 
 cc = Captions()
 
@@ -78,7 +79,7 @@ def users_list(request):
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 
-@method_decorator(cache_page(60 * 5), name='dispatch')
+@method_decorator(cache_page(60), name='dispatch')
 class MovieList(generics.ListAPIView):
     serializer_class = MovieSerializer
     queryset = Movie.objects.all()
@@ -293,6 +294,7 @@ def send_emails(subject: str, body: str, recipients: list):
     message.attach_alternative(body, "text/html")
     try:
         message.send(fail_silently=False)
+        logging.info("Verification email sent to "+ ", ".join(recipients))
         return Response({"message": "Success"}, headers={'Content-Type': 'application/json'}, status=status.HTTP_200_OK)
     except Exception as e:
         return Response({"errors": str(e)}, headers={'Content-Type': 'application/json'}, status=status.HTTP_501_NOT_IMPLEMENTED)
@@ -300,6 +302,7 @@ def send_emails(subject: str, body: str, recipients: list):
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
+@never_cache
 def send_verify_token(request: HttpRequest):
     token = default_token_generator.make_token(request.user)
     uidb64 = urlsafe_base64_encode(force_bytes(request.user.email))
@@ -310,6 +313,7 @@ def send_verify_token(request: HttpRequest):
 
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
+@never_cache
 def verify_email(request: HttpRequest, uidb64, token):
     user = request.user
     try:
@@ -324,3 +328,10 @@ def verify_email(request: HttpRequest, uidb64, token):
     except Exception as e:
         return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST, content_type="application/json")
     return Response({"error": "Invalid token"}, status=status.HTTP_400_BAD_REQUEST, content_type="application/json")
+
+
+@api_view(["GET"])
+def clear_cache(request):
+    cache = caches['cache']
+    cache.clear()
+    return Response({"message": "Cache cleared"}, status=status.HTTP_200_OK)

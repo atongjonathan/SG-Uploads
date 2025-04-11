@@ -26,6 +26,7 @@ urlpatterns = [
     path('itunes', views.search_itunes, name='search'),
     path('change-password', views.change_password, name='password'),
     path('verify', views.send_verify_token),
+    path('clear_cache', views.clear_cache),
     path('verify_email/<uidb64>/<token>', views.verify_email),
 
 

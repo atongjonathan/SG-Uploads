@@ -27,7 +27,7 @@ const Layout = ({ children }) => {
                   closeButton: 'bg-subMain text-white hover:text-subMain',
                 },
               }} ></Toaster>              
-              {/* <Verify/> */}
+              <Verify/>
               <Navbar></Navbar>
               <div className="lg:mt-24 mt-16">
                 {children}
