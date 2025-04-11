@@ -119,6 +119,7 @@ def movies_list(request):
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
+@never_cache
 def user(request):
     serializer = SGUserSerializer(request.user, many=False)
     return Response(serializer.data, status=status.HTTP_200_OK)
