@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Layout from "../Layout/Layout";
 import Promos from "../Components/Home/Promos";
 import SgSlider from "../Components/Home/SgSlider";
 import { BsCollectionFill, BsBookmarkStarFill } from "react-icons/bs";
 import { PiFilmReelFill } from "react-icons/pi";
 import Banner from "../Components/Home/Banner";
+import { useLocation } from "react-router-dom";
 
 
 

@@ -9,7 +9,7 @@ import { IoClose } from 'react-icons/io5'
 import { loginUser } from '../../utils/Backend'
 
 
-const LoginModal = ({ isLoginOpen, setIsLoginOpen, openSignUp, closeLogin }) => {
+const LoginModal = ({ isLoginOpen, setIsLoginOpen, openSignUp, closeLogin, openForgot}) => {
 
     const [loading, setLoading] = useState(false)
     const [passwordError, setPasswordError] = useState(null)
@@ -57,6 +57,8 @@ const LoginModal = ({ isLoginOpen, setIsLoginOpen, openSignUp, closeLogin }) => 
         }
     }
 
+
+    
     return (
         <Dialog open={isLoginOpen} onClose={() => setIsLoginOpen(false)} className="relative z-50">
             <DialogBackdrop className="fixed inset-0 bg-main/50"></DialogBackdrop>
@@ -68,10 +70,11 @@ const LoginModal = ({ isLoginOpen, setIsLoginOpen, openSignUp, closeLogin }) => 
                     <Button onClick={() => setIsLoginOpen(false)} className='absolute top-5 right-5 text-text hover:text-subMain transitions'><IoClose className="h-5 w-5"></IoClose></Button>
                     <DialogTitle className="font-bold text-center">Welcome Back</DialogTitle>
                     <form action="" method='post' onSubmit={(e) => handleSubmit(e)}>
-                        <div className='container mx-auto flex-colo gap-2'>
+                        <div className='container flex flex-col items-end gap-2'>
 
-                            <Input label="Username" placeholder='example' type='text' bg name="username" error={usernameError}></Input>
+                            <Input label="Username" placeholder={'streamgrid'} type='text' bg name="username" error={usernameError}></Input>
                             <Input label="Password" placeholder='*******' type='password' name="password" bg error={passwordError}></Input>
+                            <Button as='a' title='Forgot password ?' onClick={openForgot} className="text-sm underline cursor-pointer">Forgot password ?</Button>
                             <Button type="submit" className='bg-subMain transitions hover:bg-main flex-rows gap-4 text-white py-2 rounded-lg w-full my-2'><FiLogIn></FiLogIn>Sign In
                                 {
                                     loading && <CgSpinner className='animate-spin'></CgSpinner>

@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { NavLink, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { FaSearch, FaHeart } from "react-icons/fa";
 import logo from "../../images/4x3.png";
@@ -11,7 +11,7 @@ import SignUpModal from '../../Components/Modals/SignUpModal'
 import Results from "../../Components/Home/Results";
 import { useQuery } from "@tanstack/react-query";
 import { getMovies } from "../../utils/Backend";
-
+import ForgotModal from "../../Components/Modals/ForgotModal"
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
@@ -33,6 +33,23 @@ const Navbar = () => {
 
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isSignUpOpen, setIsSignUpOpen] = useState(false);
+  const [isForgotModalOpen, setForgotModal] = useState(false);
+
+
+
+  useEffect(() => {
+
+    if (isForgotModalOpen) {
+      document.title = "Forgot Password";
+    } else if (isSignUpOpen) {
+      document.title = "Sign Up";
+    } else if (isLoginOpen) {
+      document.title = "Login";
+    } else {
+      document.title = "StreamGrid | Home";
+    }
+  }, [isLoginOpen, isSignUpOpen, isForgotModalOpen]);
+
 
   const closeLogin = useCallback(() => {
     setIsLoginOpen(false);
@@ -52,6 +69,13 @@ const Navbar = () => {
     setIsLoginOpen(true)
 
   })
+
+  const openForgot = useCallback(() => {
+    setIsLoginOpen(false)
+    setForgotModal(true)
+  })
+
+
 
 
   const [query, setQuery] = useState(null);
@@ -118,8 +142,14 @@ const Navbar = () => {
 
         <div className="col-span-3 lg:hidden flex-rows text-text text-sm gap-3 w-full">
 
-    
 
+          <NavLink
+            to="/movies"
+            className={`${pathname === ("/movies") && (!search) ? "bg-subMain" : "bg-dry"
+              } p-3 cursor-pointer rounded-2xl border border-gray-800`}
+          >
+            Explore
+          </NavLink>
           {/* Action Movies NavLink */}
           <NavLink
             to="/movies?genre=Action"
@@ -128,13 +158,7 @@ const Navbar = () => {
           >
             Action
           </NavLink>
-          <NavLink
-            to="/movies?genre=Thriller"
-            className={`${isActive("/movies?genre=Thriller") ? "bg-subMain" : "bg-dry"
-              } p-3 cursor-pointer rounded-2xl border border-gray-800`}
-          >
-            Thriller
-          </NavLink>
+
 
           {/* Horror Movies NavLink */}
           <NavLink
@@ -205,30 +229,36 @@ const Navbar = () => {
           <SgMenu></SgMenu>
 
           {user && (
-            <NavLink className={`${Hover} relative`} to="/favourites" title="Favourites">
-              <FaHeart className="w-5 h-5" />
-              <div className="w-4 h-4 flex-colo rounded-full text-xs bg-subMain text-white absolute -top-3 -right-3">
-                {user?.favourites?.length}
-              </div>
-            </NavLink>
-          )}
-          {user && (
-            <NavLink className={`${Hover} relative`} to="/profile" title="Profile">
-              <div className="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
-                <img src={userAvatar} alt={`${user?.username} avatar`} className="absolute w-10 h-10 rounded-full" />
-              </div>
-            </NavLink>
-          )}
-          {!user && (
             <>
+              <NavLink className={`${Hover} relative`} to="/favourites" title="Favourites">
+                <FaHeart className="w-5 h-5" />
+                <div className="w-4 h-4 flex-colo rounded-full text-xs bg-subMain text-white absolute -top-3 -right-3">
+                  {user?.favourites?.length}
+                </div>
+              </NavLink>
+              <NavLink className={`${Hover} relative`} to="/profile" title="Profile">
+                <div className="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
+                  <img src={userAvatar} alt={`${user?.username} avatar`} className="absolute w-10 h-10 rounded-full" />
+                </div>
+              </NavLink>
+            </>
+
+          )}
+
+
+
+          {
+            !user && <>
               <Button className={'bg-subMain border-b-subMain py-2 px-3 rounded-lg hover:bg-main transitions'} onClick={() => setIsLoginOpen(true)}>
                 Log In
               </Button>
-            </>
-          )}
-          <SignUpModal isSignUpOpen={isSignUpOpen} setIsSignUpOpen={setIsSignUpOpen} openLogin={openLogin} closeSignUp={closeSignUp} ></SignUpModal>
+              <ForgotModal setForgotModal={setForgotModal} isForgotModalOpen={isForgotModalOpen} openLogin={() => setIsLoginOpen(true)} />
+              <LoginModal isLoginOpen={isLoginOpen} setIsLoginOpen={setIsLoginOpen} openSignUp={openSignUp} closeLogin={closeLogin} openForgot={openForgot} ></LoginModal>
+              <SignUpModal isSignUpOpen={isSignUpOpen} setIsSignUpOpen={setIsSignUpOpen} openLogin={openLogin} closeSignUp={closeSignUp} ></SignUpModal>
 
-          <LoginModal isLoginOpen={isLoginOpen} setIsLoginOpen={setIsLoginOpen} openSignUp={openSignUp} closeLogin={closeLogin} ></LoginModal>
+            </>
+          }
+
         </div>
       </div>
     </div>

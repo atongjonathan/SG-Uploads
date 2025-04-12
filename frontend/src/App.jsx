@@ -19,29 +19,29 @@ import { SuperRoute } from './context/PrivateRoute'
 import ScrollToTop from './ScrollToTop';
 import 'react-loading-skeleton/dist/skeleton.css'
 import SingleMovie from './Screens/SingleMovie';
-import {Helmet} from "react-helmet";
+import { Helmet } from "react-helmet";
 
 
 const App = () => {
   Aos.init();
   return (
     <BrowserRouter>
-    <Helmet>
-    <meta name="description" content="Your free movie website search is over. With StreamGrid you can watch free movies online and TV shows without any account."/>
-    <meta name="theme-color" content="#080A1A"/>
-    <meta property="og:site_name" content="StreamGrid"/>
-    <meta property="og:title" content="StreamGrid"/>
-    <meta property="og:description" content="Your free movie website search is over. With StreamGrid you can watch free movies online and TV shows without any account." />
-    <meta property="og:url" content="https://streamgrid.stream/"/>
-    <meta property="og:type" content="video"/>
-    <meta property="twitter:image" content="logo.png"/>
-    <meta property="twitter:card" content="summary_large_image"/>
-    <meta property="twitter:title" content="StreamGrid"/>
-    <meta property="twitter:description" content="Your free movie website search is over. With StreamGrid you can watch free movies online and TV shows without any account."/>
-    <meta property="fb:app_id" content="1401813654536816"/>
-    <meta name="keywords" content="movie, download, stream, video phone, free, upload"/> 
-         </Helmet>
-    <ScrollToTop></ScrollToTop>
+      <Helmet>
+        <meta name="description" content="Your free movie website search is over. With StreamGrid you can watch free movies online and TV shows without any account." />
+        <meta name="theme-color" content="#080A1A" />
+        <meta property="og:site_name" content="StreamGrid" />
+        <meta property="og:title" content="StreamGrid" />
+        <meta property="og:description" content="Your free movie website search is over. With StreamGrid you can watch free movies online and TV shows without any account." />
+        <meta property="og:url" content="https://streamgrid.stream/" />
+        <meta property="og:type" content="video" />
+        <meta property="twitter:image" content="logo.png" />
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:title" content="StreamGrid" />
+        <meta property="twitter:description" content="Your free movie website search is over. With StreamGrid you can watch free movies online and TV shows without any account." />
+        <meta property="fb:app_id" content="1401813654536816" />
+        <meta name="keywords" content="movie, download, stream, video phone, free, upload" />
+      </Helmet>
+      <ScrollToTop></ScrollToTop>
       <Routes>
         {/* Protected routes for superusers */}
         <Route path='/movieslist' element={<PrivateRoute><SuperRoute><MoviesList /></SuperRoute></PrivateRoute>}></Route>
@@ -60,6 +60,7 @@ const App = () => {
         <Route path='/watch/:id' element={<WatchPage />}></Route>
         <Route path='/movie/:id' element={<SingleMovie />}></Route>
         <Route path='/verify/:uidb64/:token' element={<HomeScreen />}></Route>
+        <Route path='/reset/:userToken/:ruidb64/:rtoken' element={<HomeScreen />}></Route>
         <Route path='/403' element={<NotAllowed />}></Route>
 
         {/* Catch-all for not found */}

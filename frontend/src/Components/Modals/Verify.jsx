@@ -23,7 +23,7 @@ const Verify = () => {
     const { user, logoutUser, fetchUser, authTokens } = useAuth()
 
     const [disabled, setDisabled] = useState(false);
-    const [counter, setCounter] = useState(20);
+    const [counter, setCounter] = useState(30);
 
     const { pathname } = useLocation()
 
@@ -37,14 +37,13 @@ const Verify = () => {
         mutationKey: ["verifyTokens", uidb64, token],
         mutationFn: () => verifyToken(uidb64, token, authTokens.access),
         onSuccess: async () => {
-            let user = await fetchUser(authTokens);
-            console.log(user);
-            toast.error("Email has been verified")
+            await fetchUser(authTokens);
+            toast.success("Email has been verified")
             setIsOpen(false)
             navigate("/")
         },
         onError: (err) => {
-            console.log(err);
+            console.error(err);
             setIsOpen(true)
             toast.error("Email verification failed")
             setVerify(false)
@@ -98,18 +97,27 @@ const Verify = () => {
                     return prev - 1
                 })
             }, 1000)
-            setCounter(20)
+            setCounter(30)
         },
         onError: (err) => {
-            console.log(err);
+            console.error(err);
             toast.error("An error occured. Please try again later.")
         }
     })
 
 
-    if (!user) return
+    useEffect(() => {
+        if (isOpen) {
+            document.title = "Verify Email"
+        } else {
+            document.title = "StreamGrid"
+        }
 
-    console.log(user);
+
+    }, [isOpen]);
+
+
+
 
     return user && !user.is_verified && (
 
@@ -141,7 +149,7 @@ const Verify = () => {
                                 <p className='text-sm'>
                                     Your email <Link className='underline' to={"mailto:" + user.email}> {user.email}</Link> is not verified
                                 </p>
-                                <div className="flex gap-2  sm:flex-row justify-end items-center my-4 text-sm">
+                                <div className="flex justify-end items-center my-4">
                                     <Button type='submit' className="bg-main transitions hover:bg-subMain border border-subMain text-white py-2 px-3 rounded w-full sm:w-auto" onClick={() => {
                                         logoutUser()
                                         setIsOpen(false)

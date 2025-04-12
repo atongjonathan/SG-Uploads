@@ -1,5 +1,7 @@
 import json
 import logging
+from math import log
+from django.shortcuts import get_object_or_404
 import requests
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.decorators import api_view, permission_classes, parser_classes
@@ -9,7 +11,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAuthenticated
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
-from datetime import datetime
+from datetime import datetime, timedelta
 from ..captions import Captions
 from ..models import Movie, SGUser
 from .serializers import MovieSerializer, SGUserSerializer,  ChangePasswordSerializer, SubtitleSerializer
@@ -27,6 +29,7 @@ from django.core.mail import EmailMultiAlternatives
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page, never_cache
 from django.core.cache import caches
+from django.utils import timezone
 
 cc = Captions()
 
@@ -295,7 +298,7 @@ def send_emails(subject: str, body: str, recipients: list):
     message.attach_alternative(body, "text/html")
     try:
         message.send(fail_silently=False)
-        logging.info("Verification email sent to "+ ", ".join(recipients))
+        logging.info("Verification email sent to " + ", ".join(recipients))
         return Response({"message": "Success"}, headers={'Content-Type': 'application/json'}, status=status.HTTP_200_OK)
     except Exception as e:
         return Response({"errors": str(e)}, headers={'Content-Type': 'application/json'}, status=status.HTTP_501_NOT_IMPLEMENTED)
@@ -308,7 +311,7 @@ def send_verify_token(request: HttpRequest):
     token = default_token_generator.make_token(request.user)
     uidb64 = urlsafe_base64_encode(force_bytes(request.user.email))
     url = f'{settings.FRONTEND_URL.replace("host.docker.internal", "localhost")}/verify/{uidb64}/{token}/'
-    data = "Follow this link to verify your email: \n" + url
+    data = "Follow this link to verify your email: <br>" + url
     return send_emails("Verify your email address", data, [request.user.email])
 
 
@@ -336,3 +339,70 @@ def clear_cache(request):
     cache = caches['cache']
     cache.clear()
     return Response({"message": "Cache cleared"}, status=status.HTTP_200_OK)
+
+
+@api_view(['POST'])
+@never_cache
+def send_reset_token(request: HttpRequest):
+    data = request.data
+    user = get_object_or_404(SGUser, email=data.get("email"))
+    token = default_token_generator.make_token(user)
+    uidb64 = urlsafe_base64_encode(force_bytes(timezone.now()))
+    userToken = urlsafe_base64_encode(force_bytes(user.username))
+    url = f'{settings.FRONTEND_URL}/reset/{userToken}/{uidb64}/{token}/'
+    data = f"<br> We got a request to reset your StreamGrid password. Follow this link to reset it:<br>{url}<br>This link will expire in 5 minutes"
+    return send_emails("Reset your password", data, [user.email])
+
+
+@api_view(['GET'])
+@never_cache
+def verify_reset_password(request, user, uidb64, token):
+    username = force_str(urlsafe_base64_decode(user))
+    user_object = get_object_or_404(SGUser, username=username)
+    return validate(user_object, uidb64, token)
+
+
+def validate(user, uidb64, token):
+    timestamp = force_str(urlsafe_base64_decode(uidb64))
+    token_valid = default_token_generator.check_token(
+        user=user, token=token)
+    datetime1 = datetime.fromisoformat(timestamp)
+    datetime2 = timezone.now()
+
+    # Calculate the difference
+    time_diff = datetime2 - datetime1
+
+    valid_time = time_diff < timedelta(minutes=5)
+    # Check if the difference is more than 5 minutes
+    if valid_time and token_valid:
+        return Response({"success": "Account verified, proceed to chnage password"}, status=status.HTTP_200_OK, content_type="application/json")
+    error = ""
+    if not valid_time:
+        error = "This link has expired"
+    if not token_valid:
+        error = "This link is invalid or has already been used"
+    # if email == request.user.email and token_valid:
+    return Response({"error": error}, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(["POST"])
+@never_cache
+def reset_password(request: HttpRequest):
+    data = request.data
+    print(data)
+    uidb64 = data.get("ruidb64")
+    token = data.get("rtoken")
+    userToken = data.get("userToken")
+    username = force_str(urlsafe_base64_decode(userToken))
+    user_object = get_object_or_404(SGUser, username=username)
+    response = validate(user_object, uidb64, token)
+    if response.status_code == 200:
+        try:
+            new_password = data.get("new_password")
+            validate_password(new_password)
+            user_object.set_password(new_password)
+            user_object.save()
+            return Response({"success": "Password changed"}, status=status.HTTP_200_OK, content_type="application/json")
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST, content_type="application/json")
+    return response

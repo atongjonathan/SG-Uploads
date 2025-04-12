@@ -243,3 +243,17 @@ export const verifyToken = async (uidb64, token, access) => {
         }
     })
 }
+
+export const verifResetPassword = async (user, uidb64, token) => {
+    return await axios.get(BACKEND_URL + `/verify_reset_password/${user}/${uidb64}/${token}`)
+}
+
+export const sendResetEmail = async (email) => {
+    return await axios.post(BACKEND_URL + `/send_reset_token`, {
+        email
+    })
+}
+
+export const setPassword = async (data) => {
+    return await axios.post(BACKEND_URL + `/reset_password`, data)
+}
