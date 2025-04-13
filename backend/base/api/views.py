@@ -103,7 +103,7 @@ class MovieList(generics.ListAPIView):
         if genre:
             queryset = queryset.filter(genre__icontains=genre)
         if title:
-            queryset = queryset.filter(title__icontains=title)
+            queryset = queryset.filter(title=title)
         if id:
             queryset = queryset.filter(id=id)
         if year:
