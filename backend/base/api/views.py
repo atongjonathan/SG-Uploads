@@ -103,7 +103,7 @@ class MovieList(generics.ListAPIView):
         if genre:
             queryset = queryset.filter(genre__icontains=genre)
         if title:
-            queryset = queryset.filter(title=title)
+            queryset = queryset.filter(title__icontains=title)
         if id:
             queryset = queryset.filter(id=id)
         if year:
@@ -152,11 +152,15 @@ def create_movie(request):
     serializer = MovieSerializer(data=data)
     if serializer.is_valid():
         if settings.DEVELOPMENT != "True":
-            updated = cc.update_group(request.data)
-            if not updated.get("success"):
-                logging.info(json.dumps(updated, indent=4))
-        serializer.save()
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+            try:
+                updated = cc.update_group(request.data)
+                if not updated.get("success"):
+                    logging.info(json.dumps(updated, indent=4))
+            except Exception as e:
+                return Response(str(e), status=status.HTTP_400_BAD_REQUEST)
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -182,7 +186,6 @@ def update_user(request: HttpRequest):
 @permission_classes([IsAuthenticated])
 def edit_movie(request: HttpRequest, id):
     movie = Movie.objects.get(pk=id)
-    print(request.data)
     serializer = MovieSerializer(
         movie, data=request.data, partial=True)  # Use partial update
     if serializer.is_valid():
@@ -431,12 +434,11 @@ class TrendingList(generics.ListAPIView):
         except Exception:
             movies = []
 
-        imdb_links = [movie.get("imdb") for movie in movies if movie.get("imdb")]
+        imdb_links = [movie.get("imdb")
+                      for movie in movies if movie.get("imdb")]
 
         preserved_order = Case(
             *[When(link=link, then=pos) for pos, link in enumerate(imdb_links)]
         )
 
         return Movie.objects.filter(link__in=imdb_links).order_by(preserved_order)
-
-
