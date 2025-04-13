@@ -140,7 +140,7 @@ class Captions():
                 message = bot.send_document(GROUP_CHAT_ID, movie.get(
                     "poster"), caption=movie_text, reply_markup=keyboard, parse_mode='HTML')
             except Exception as e:
-                movie_text += f'\n\n<a href="{movie.get('poster', 'N/A')}">{movie.get('title', 'N/A')} image</a>'
+                movie_text += f'\n\n<a href="{movie.get("poster", "N/A")}">{movie.get("title", "N/A")} image</a>'
                 message = bot.send_message(GROUP_CHAT_ID, text=movie_text, reply_markup=keyboard, parse_mode='HTML')
 
         responses = []
