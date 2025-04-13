@@ -70,7 +70,7 @@ const Banner = () => {
             >
 
               {
-                movies?.slice(0, 6).map((movie, idx) => (
+                movies?.map((movie, idx) => (
                   <SwiperSlide key={idx} className="relative overflow-hidden">
                     <img
                       src={movie.poster}

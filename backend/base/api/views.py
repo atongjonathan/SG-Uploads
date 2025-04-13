@@ -30,6 +30,7 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page, never_cache
 from django.core.cache import caches
 from django.utils import timezone
+from django.db.models import Case, When
 
 cc = Captions()
 
@@ -432,6 +433,10 @@ class TrendingList(generics.ListAPIView):
 
         imdb_links = [movie.get("imdb") for movie in movies if movie.get("imdb")]
 
-        # Filter the database for movies with those links
-        return Movie.objects.filter(link__in=imdb_links)
+        preserved_order = Case(
+            *[When(link=link, then=pos) for pos, link in enumerate(imdb_links)]
+        )
+
+        return Movie.objects.filter(link__in=imdb_links).order_by(preserved_order)
+
 

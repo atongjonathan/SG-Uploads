@@ -5,7 +5,7 @@ import SgSlider from "../Components/Home/SgSlider";
 import { BsCollectionFill, BsBookmarkStarFill } from "react-icons/bs";
 import { PiFilmReelFill } from "react-icons/pi";
 import Banner from "../Components/Home/Banner";
-import { useLocation } from "react-router-dom";
+import { IoTime } from "react-icons/io5";
 
 
 
@@ -47,7 +47,7 @@ const HomeScreen = () => {
       <div className="min-h-screen mb-6 lg:px-10 px-6">
         <>
           <Banner />
-          <SgSlider params={sortedByDate} title='Trending' Icon={BsCollectionFill} />
+          <SgSlider params={sortedByDate} title='Recentyly Added' Icon={IoTime} />
           <SgSlider params={sortedByRatingStar} title='Top Rated' Icon={BsBookmarkStarFill} />
           <SgSlider params={actionMovies} title='Action' Icon={PiFilmReelFill} />
           <SgSlider params={animation} title='Animation' Icon={PiFilmReelFill} />
