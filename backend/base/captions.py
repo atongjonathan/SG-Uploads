@@ -136,8 +136,12 @@ class Captions():
                 "poster"), caption=movie_text, reply_markup=keyboard, parse_mode='HTML')
         except Exception as e:
             logging.info("%s has high res image sending as document...", movie["title"])
-            message = bot.send_document(GROUP_CHAT_ID, movie.get(
-                "poster"), caption=movie_text, reply_markup=keyboard, parse_mode='HTML')
+            try:
+                message = bot.send_document(GROUP_CHAT_ID, movie.get(
+                    "poster"), caption=movie_text, reply_markup=keyboard, parse_mode='HTML')
+            except Exception as e:
+                movie_text += f'\n\n<a href="{movie.get('poster', 'N/A')}">{movie.get('title', 'N/A')} image</a>'
+                message = bot.send_message(GROUP_CHAT_ID, text=movie_text, reply_markup=keyboard, parse_mode='HTML')
 
         responses = []
         RECIPIENTS = recipients.split(",")
