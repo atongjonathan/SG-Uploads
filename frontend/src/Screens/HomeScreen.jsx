@@ -19,6 +19,11 @@ const HomeScreen = () => {
     limit
 
   }
+  const RecentlyAdded = {
+    ordering: "-created",
+    limit
+
+  }
 
   const sortedByRatingStar = {
     ordering: "-rating_star",
@@ -47,7 +52,8 @@ const HomeScreen = () => {
       <div className="min-h-screen mb-6 lg:px-10 px-6">
         <>
           <Banner />
-          <SgSlider params={sortedByDate} title='Recentyly Added' Icon={IoTime} />
+          <SgSlider params={RecentlyAdded} title='Recently Added' Icon={IoTime} />
+          <SgSlider params={sortedByDate} title='Latest Release' Icon={BsCollectionFill} />
           <SgSlider params={sortedByRatingStar} title='Top Rated' Icon={BsBookmarkStarFill} />
           <SgSlider params={actionMovies} title='Action' Icon={PiFilmReelFill} />
           <SgSlider params={animation} title='Animation' Icon={PiFilmReelFill} />
