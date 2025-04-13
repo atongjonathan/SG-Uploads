@@ -38,7 +38,7 @@ const WatchPage = () => {
 
     const { isError, data, isSuccess, isFetching } = useQuery({
         queryKey: ["movieQuery", id],
-        queryFn: () => {
+        queryFn: async () => {
             let config = {}
             if (isIntegerString(id)) {
                 config = {

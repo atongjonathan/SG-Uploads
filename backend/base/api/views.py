@@ -389,7 +389,6 @@ def validate(user, uidb64, token):
 @never_cache
 def reset_password(request: HttpRequest):
     data = request.data
-    print(data)
     uidb64 = data.get("ruidb64")
     token = data.get("rtoken")
     userToken = data.get("userToken")
@@ -406,3 +405,33 @@ def reset_password(request: HttpRequest):
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST, content_type="application/json")
     return response
+
+
+def get_movie_by_link(link):
+    try:
+        return Movie.objects.get(link=link)
+    except Movie.DoesNotExist:
+        return None
+
+
+class TrendingList(generics.ListAPIView):
+    serializer_class = MovieSerializer
+
+    def get_queryset(self):
+        reqUrl = settings.IMDB_API + "/trending"
+        headersList = {
+            "Accept": "*/*",
+        }
+
+        try:
+            response = requests.get(reqUrl, headers=headersList)
+            data = response.json()
+            movies = data.get("movies", [])
+        except Exception:
+            movies = []
+
+        imdb_links = [movie.get("imdb") for movie in movies if movie.get("imdb")]
+
+        # Filter the database for movies with those links
+        return Movie.objects.filter(link__in=imdb_links)
+

@@ -274,3 +274,4 @@ EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
 DEFAULT_FROM_EMAIL = f'StreamGrid <{os.environ.get("DEFAULT_FROM_EMAIL")}>'
 SERVER_EMAIL = os.environ.get("EMAIL_HOST_USER")
 FRONTEND_URL = os.environ.get("FRONTEND_URL")
+IMDB_API = os.environ.get("IMDB_API")

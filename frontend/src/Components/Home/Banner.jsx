@@ -6,24 +6,14 @@ import { Link } from "react-router-dom";
 import SGFaHeart from '../SGFaHeart'
 import { BiPlay } from "react-icons/bi";
 import Skeleton from 'react-loading-skeleton'
-import { MovieContext } from "../../context/MovieContext";
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
-import { getMovies } from "../../utils/Backend";
+import { getTrending } from "../../utils/Backend";
 
 const Banner = () => {
 
   const { isFetching, data } = useQuery({
     queryKey: ["bannerQuery"],
-    queryFn: () => {
-      const config = {
-        params: {
-          ordering: "-releaseDate",
-          limit: 6
-        }
-      }
-      return getMovies(config)
-    }
+    queryFn: getTrending
   })
   let movies = data?.results
 

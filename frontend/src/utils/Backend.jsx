@@ -11,6 +11,10 @@ export async function getMovies(config = {}) {
     return axios.get(BACKEND_URL + '/movies', config).then((res) => res.data)
 
 }
+export async function getTrending() {
+    return await axios.get(BACKEND_URL + '/trending').then((res) => res.data)
+
+}
 
 const tokens = localStorage.getItem("authTokens")
 const authTokens = tokens ? JSON.parse(tokens) : null
