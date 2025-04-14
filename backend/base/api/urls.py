@@ -32,6 +32,7 @@ urlpatterns = [
     path('verify_reset_password/<user>/<uidb64>/<token>', views.verify_reset_password),
     path('reset_password', views.reset_password),
     path('trending', views.TrendingList.as_view()),
+    path('pesapal/iframe', views.iframe_src),
 
 
 

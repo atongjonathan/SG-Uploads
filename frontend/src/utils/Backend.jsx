@@ -16,6 +16,10 @@ export async function getTrending() {
 
 }
 
+export async function getIframeSrc(data) {
+    return await axios.post(BACKEND_URL + '/pesapal/iframe', data).then((res) => res.data)
+}
+
 const tokens = localStorage.getItem("authTokens")
 const authTokens = tokens ? JSON.parse(tokens) : null
 

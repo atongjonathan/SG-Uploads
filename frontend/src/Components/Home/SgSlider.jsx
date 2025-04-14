@@ -24,7 +24,7 @@ const SgSlider = ({ params, title, Icon }) => {
 
   const dummy = [1, 2, 3, 4, 5, 6, 7];
 
-  const { isFetching, data } = useQuery({
+  const { isFetching, data, isSuccess } = useQuery({
     queryKey: ["sliderQuery", params],
     queryFn: () => {
       return getMovies({
@@ -84,8 +84,12 @@ const SgSlider = ({ params, title, Icon }) => {
     <div className="lg:mt-8 mt-5">
       <div className="w-full flex justify-between">
         <div className="flex sm:gap-3 gap-2 items-center truncate">
-          <Icon className="sm:w-5 sm:h-6 w-4 h-4 text-subMain" />
-          <h2 className="text-sm font-semibold truncate">{title}</h2>
+          {
+            isFetching ? <Skeleton /> : isSuccess && <>
+              <Icon className="sm:w-5 sm:h-6 w-4 h-4 text-subMain" />
+              <h2 className="text-sm font-semibold truncate">{title}</h2></>
+          }
+
         </div>
 
         <div className="px-2 flex justify-center gap-2">
@@ -124,7 +128,7 @@ const SgSlider = ({ params, title, Icon }) => {
               slidesPerView: 3,
               spaceBetween: 10,
             },
-           
+
             768: {
               slidesPerView: 5,
               spaceBetween: 10,
@@ -133,7 +137,7 @@ const SgSlider = ({ params, title, Icon }) => {
               slidesPerView: 7,
               spaceBetween: 10,
             }
-        
+
 
           }}
         >
@@ -142,7 +146,7 @@ const SgSlider = ({ params, title, Icon }) => {
               className="cursor-pointer"
               key={idx}
               onClick={() => navigate(`/watch/${movie.id}`)}
-              
+
             >
               {isFetching ? (
                 <Skeleton
@@ -151,9 +155,9 @@ const SgSlider = ({ params, title, Icon }) => {
                   height={180}
                 />
               ) : (
-             
-                 <Movie movie={movie}/>
-                 
+
+                <Movie movie={movie} />
+
               )}
             </SwiperSlide>
           ))}

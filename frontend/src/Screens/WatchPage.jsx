@@ -20,6 +20,7 @@ import { IoMdCloudDownload } from "react-icons/io";
 import { Helmet } from "react-helmet";
 import { useQuery } from '@tanstack/react-query'
 import { getMovies } from '../utils/Backend'
+import DonateBtn from '../Components/DonateBtn'
 
 function isIntegerString(str) {
     return Number.isInteger(Number(str));
@@ -158,6 +159,7 @@ const WatchPage = () => {
                                     </div>
 
                                     <div className="col-span-2 flex justify-end items-center gap-2">
+                                        <DonateBtn/>
 
 
                                         <Button onClick={() => setisModalOpen(true)} className="w-10 h-10 flex-colo rounded-lg bg-white bg-opacity-20"><FaShareAlt /></Button>

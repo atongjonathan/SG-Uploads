@@ -275,3 +275,5 @@ DEFAULT_FROM_EMAIL = f'StreamGrid <{os.environ.get("DEFAULT_FROM_EMAIL")}>'
 SERVER_EMAIL = os.environ.get("EMAIL_HOST_USER")
 FRONTEND_URL = os.environ.get("FRONTEND_URL")
 IMDB_API = os.environ.get("IMDB_API")
+PESAPAL_CONSUMER_KEY = os.environ.get("PESAPAL_CONSUMER_KEY")
+PESAPAL_CONSUMER_SECRET = os.environ.get("PESAPAL_CONSUMER_SECRET")

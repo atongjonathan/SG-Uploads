@@ -18,7 +18,10 @@ class Movie(models.Model):
         validators=[MinValueValidator(1800), MaxValueValidator(2100)])
     productionStatus = models.CharField(max_length=100, blank=True, null=True)
 
-    created = models.DateField(blank=True, null=True, auto_now_add=True)
+    created_date = models.DateField(blank=True, null=True, auto_now_add=True)
+    created = models.DateTimeField(blank=True, null=True, auto_now_add=True)
+
+
 
     # Content Details
     contentRating = models.CharField(max_length=10, blank=True, null=True)
