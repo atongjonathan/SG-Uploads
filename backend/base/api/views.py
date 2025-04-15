@@ -441,8 +441,7 @@ class TrendingList(generics.ListAPIView):
         )
 
         return Movie.objects.filter(link__in=imdb_links).order_by(preserved_order)
-    
-import datetime
+
 from django.http import HttpResponse
 from django.shortcuts import render
 from rest_framework.response import Response
@@ -458,8 +457,8 @@ pesapal = PesapalV30Helper()
 def iframe_src(request):
     access_token = pesapal.get_access_token()
     data = request.data
-    data["id"] = str(datetime.datetime.now())
-    callback_url = "http://localhost/sample_api3/redirect.php"
+    data["id"] = str(datetime.now())
+    callback_url = data["callback_url"]
     IPN_respose = pesapal.get_notification_id(access_token, callback_url)
     data["notification_id"] = IPN_respose.get("ipn_id")
     response = pesapal.get_merchant_order_url(data, access_token)
@@ -473,5 +472,5 @@ def transaction_details(request, id):
 
 def redirect(request, OrderTrackingId, OrderMerchantReference):
     access_token = pesapal.get_access_token()
-    response = pesapal.get_transaction_status(OrderTrackingId, access_token)    
+    response = pesapal.get_transaction_status(OrderTrackingId, access_token)
     return HttpResponse(f"Payment Successfull: {OrderMerchantReference}\n"+"Reference:" + response.payment_status_description)
