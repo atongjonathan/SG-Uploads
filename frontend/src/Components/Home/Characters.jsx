@@ -23,7 +23,7 @@ const Characters = ({ tmdb_id }) => {
 
 
 
-    return data.length > 0 && (
+    return data?.length > 0 && (
         <div className="mt-5">
             <div className='w-full flex justify-between'>
                 <div className="flex sm:gap-8 gap-4 items-center truncate">

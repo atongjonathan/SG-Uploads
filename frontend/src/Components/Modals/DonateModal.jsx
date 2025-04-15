@@ -57,7 +57,6 @@ const DonateModal = ({ isModalOpen, setisModalOpen }) => {
         }
     })
 
-    console.log(OrderTrackingId);
     return (
         <Dialog open={isModalOpen} as="div" className="relative z-20 focus:outline-none" onClose={close}>
             <DialogBackdrop className="fixed inset-0 bg-main/50"></DialogBackdrop>

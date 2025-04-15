@@ -210,31 +210,27 @@ export async function getMongoToken() {
 }
 
 export const editMovie = (authHeader, data, id) => {
-    const refreshUrl = `${BACKEND_URL}/edit/${id}`;
-    const reqOptions = createRequestOptions(refreshUrl, "POST", data, authHeader);
-    try {
-        const response = axios.request(reqOptions);
-        return response;
-    } catch (error) {
-        console.log(error);
-        return error;
-    }
+    const reqOptions = createRequestOptions(`${BACKEND_URL}/edit/${id}`, "POST", data, authHeader);
+    return axios.request(reqOptions); // returns a Promise
 };
 
-export const updateReviews = async (accessToken, title, id) => {
-
-    try {
-        const response = await axios.get(`${IMDB_API}/reviews/${title}`)
-        if (response.status === 200) {
-            let reviewsData = response.data.reviews
-            const updateResponse = await editMovie(accessToken, { reviews: reviewsData }, id)
-            return updateResponse
-        }
-    } catch (error) {
-        console.log(error);
-        return error;
-    }
+export const updateReviews = (accessToken, title, id) => {
+    return axios.get(`${IMDB_API}/reviews/${title}`)
+        .then((response) => {
+            if (response.status === 200) {
+                return editMovie(accessToken, { reviews: response?.data.reviews }, id);
+            } else {
+                return Promise.resolve(response);
+            }
+        })
+        .catch((error) => {
+            console.error('Failed to update reviews:', error);
+            return Promise.reject(error);
+        });
 };
+
+
+
 
 
 export const verifyEmail = async (access) => {

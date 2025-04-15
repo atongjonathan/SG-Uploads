@@ -24,7 +24,7 @@ const TrailerSlider = ({ movie }) => {
 
   const [nextEl, setNextEl] = useState(null);
   const [prevEl, setPrevEl] = useState(null);
-  const [startDisabled, setStartDisabled] = useState(true);
+  const [startDisabled, setStartDisabled] = useState(false);
   const [endDisabled, setEndDisabled] = useState(false);
 
   const handleSliderChange = (atStart, atEnd) => {
@@ -84,6 +84,11 @@ const TrailerSlider = ({ movie }) => {
             onSlideChange={onSlideChange}
             onReachEnd={() => handleSliderChange(true, false)}
             onReachBeginning={() => handleSliderChange(false, true)}
+            onSwiper={(swiper) => {
+              const isBeginning = swiper.isBeginning;
+              const isEnd = swiper.isEnd;
+              handleSliderChange( isBeginning, isEnd); // Assuming first param = atEnd, second = atStart
+            }}
             modules={[Navigation, Autoplay]}
             breakpoints={{
               0: { slidesPerView: 1, spaceBetween: 10 },

@@ -1,63 +1,57 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import Titles from '../Titles'
 import { BsBookmarkStarFill } from 'react-icons/bs'
 import Rating from '../Star'
 import Puff from "react-loading-icons/dist/esm/components/puff";
-import axios from 'axios'
 import { Disclosure, DisclosureButton, DisclosurePanel, Button } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/solid';
 import AuthContext from '../../context/AuthContext';
 import { updateReviews } from '../../utils/Backend';
+import { useQuery } from '@tanstack/react-query';
 
 const MovieRates = ({ movie }) => {
 
-  const [reviews, setReviews] = useState(null)
   const [reviewItems, setReviewItems] = useState(6);
-  const { authTokens, user} = useContext(AuthContext)
+  const { authTokens, user } = useContext(AuthContext)
   const auth = authTokens?.access
 
-
-
-  async function getReviews() {
-    let splitted = movie?.link?.split("/").reverse()
-    if (splitted?.length > 0) {
-      const title = splitted[0]
-      if (title.startsWith("t")) {
-        const response = await updateReviews(auth, title, movie.id)
-        if (response.status === 200) {
-          let reviewsData = response.data
-          setReviews(reviewsData)
+  const { data, isFetching } = useQuery({
+    queryKey: ["updateReviews", movie?.title],
+    queryFn: async () => {
+      const splitted = movie?.link?.split("/").reverse();
+      if (splitted?.length > 0) {
+        const title = splitted[0];
+        if (title.startsWith("t")) {
+          return await updateReviews(auth, title, movie.id).then((res) => res.data.reviews);
         }
-        return
-
       }
-    }
-    setReviews([])
-  }
-
-  useEffect(() => {
-
-    if (movie?.reviews) {
-      setReviews(movie?.reviews)
-    }
-    else if (user) {
-      getReviews()
-    }
+      return null;
+    },
+    enabled: !!movie?.link,
+  });
 
 
-
-  }, [movie?.title])
+  const reviews = movie?.reviews ?? data
 
 
 
   return (
     <>
       {
+        
 
         reviews?.length > 0 ?
 
           (<div className='my-12'>
-            <Titles title="Reviews" Icon={BsBookmarkStarFill}></Titles>
+              <div className="flex sm:gap-3 gap-2 items-center truncate">
+          {
+            isFetching && !reviews ? <Skeleton /> :  <>
+              <BsBookmarkStarFill className="sm:w-5 sm:h-6 w-4 h-4 text-subMain" />
+              <h2 className="text-sm font-semibold truncate">Reviews</h2></>
+          }
+
+        </div>
+            {/* <Titles title="Reviews" Icon={BsBookmarkStarFill}></Titles> */}
             <div className="gap-6">
 
               <div className="grid grid-cols-2 bg-main gap-6 rounded-lg md:p-12 p-6 h-header">
@@ -104,7 +98,7 @@ const MovieRates = ({ movie }) => {
           </div>)
           :
 
-          !reviews && user && <div style={
+          isFetching && <div style={
             {
               alignItems: 'center'
             }
