@@ -22,11 +22,19 @@ const DonateModal = ({ isModalOpen, setisModalOpen }) => {
     const OrderMerchantReference = searchParams.getAll("OrderMerchantReference")
 
     const close = () => {
+        setisModalOpen(false)
         setSearchParams({})
         reset()
-        setisModalOpen(false)
     }
 
+
+    useEffect(() => {
+        if (OrderTrackingId.length > 0 && OrderMerchantReference.length > 0) {
+            setisModalOpen(true)
+        }
+
+
+    }, [OrderTrackingId.length > 0, OrderMerchantReference.length > 0]);
 
     const currentUrl = document.URL;
 
@@ -74,9 +82,9 @@ const DonateModal = ({ isModalOpen, setisModalOpen }) => {
 
                                     <Puff />
                                 </div> : (OrderTrackingId.length > 0 && OrderMerchantReference.length > 0) ? <div className='flex items-center justify-center'>
-                               
 
-                                    <img src={image} alt='Thank You gif'/>
+
+                                    <img src={image} alt='Thank You gif' />
                                 </div> :
                                     <>
                                         <DialogTitle as="h3" className="text-base/7 font-medium text-white">
