@@ -1,14 +1,8 @@
 import React, { useContext, useMemo, useState } from 'react';
 import Layout from '../Layout/Layout';
-import Filters from '../Components/Filters';
-import Movie from '../Components/Movie';
 import { useSearchParams } from 'react-router-dom';
 import { MovieContext } from '../context/MovieContext';
-import InfiniteScroll from "react-infinite-scroll-component";
 import Skeleton from 'react-loading-skeleton';
-import SiteDown from '../Screens/Error/SiteDown'
-import { FaHeart } from 'react-icons/fa';
-import loader from '../../images/loading_image.gif'
 import TanstackTable from '../Layout/TanstackTable';
 
 function toTitleCase(str) {

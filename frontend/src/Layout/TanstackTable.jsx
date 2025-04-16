@@ -183,7 +183,7 @@ const TanstackTable = () => {
                                         </span>
                                     </ListboxButton>
                                     <Transition as={Fragment} leave="transition ease-in duration-100" leaveFrom="opacity-100" leaveTo="opacity-0">
-                                        <ListboxOptions className='absolute z-10 mt-1 w-full bg-dry border border-gray-800 text-white rounded-md shadow-lg max-h-60 py-1 ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none text-sm'>
+                                        <ListboxOptions className='absolute z-20 mt-1 w-full bg-dry border border-gray-800 text-white rounded-md shadow-lg max-h-60 py-1 ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none text-sm'>
                                             {filter.items.map((item, idx) => (
                                                 <ListboxOption
                                                     key={idx}

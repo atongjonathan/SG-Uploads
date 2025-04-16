@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Titles from '../Titles'
 import { BsBookmarkStarFill } from 'react-icons/bs'
 import Rating from '../Star'
@@ -12,7 +12,7 @@ import { useQuery } from '@tanstack/react-query';
 const MovieRates = ({ movie }) => {
 
   const [reviewItems, setReviewItems] = useState(6);
-  const { authTokens, user } = useContext(AuthContext)
+  const { authTokens } = useContext(AuthContext)
   const auth = authTokens?.access
 
   const { data, isFetching } = useQuery({
@@ -34,23 +34,27 @@ const MovieRates = ({ movie }) => {
   const reviews = movie?.reviews ?? data
 
 
+  useEffect(() => {
+    setReviewItems(6)
+  }, [movie?.link]);
+
 
   return (
     <>
       {
-        
+
 
         reviews?.length > 0 ?
 
           (<div className='my-12'>
-              <div className="flex sm:gap-3 gap-2 items-center truncate">
-          {
-            isFetching && !reviews ? <Skeleton /> :  <>
-              <BsBookmarkStarFill className="sm:w-5 sm:h-6 w-4 h-4 text-subMain" />
-              <h2 className="text-sm font-semibold truncate">Reviews</h2></>
-          }
+            <div className="flex sm:gap-3 gap-2 items-center truncate">
+              {
+                isFetching && !reviews ? <Skeleton /> : <>
+                  <BsBookmarkStarFill className="sm:w-5 sm:h-6 w-4 h-4 text-subMain" />
+                  <h2 className="text-sm font-semibold truncate">Reviews</h2></>
+              }
 
-        </div>
+            </div>
             {/* <Titles title="Reviews" Icon={BsBookmarkStarFill}></Titles> */}
             <div className="gap-6">
 

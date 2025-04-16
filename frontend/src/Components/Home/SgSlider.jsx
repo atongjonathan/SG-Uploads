@@ -33,7 +33,7 @@ const SgSlider = ({ params, title, Icon }) => {
   const [nextEl, setNextEl] = useState(null);
   const [prevEl, setPrevEl] = useState(null);
   const [endDisabled, setEndDisabled] = useState(false);
-  const [startDisabled, setStartDisabled] = useState(true); // Initially at the start
+  const [startDisabled, setStartDisabled] = useState(false); // Initially at the start
   const navigate = useNavigate();
 
   let movies = []
@@ -112,7 +112,7 @@ const SgSlider = ({ params, title, Icon }) => {
       </div>
 
       <div className="mt-3">
-        <Swiper
+        <Swiper id={title}
           navigation={{ nextEl, prevEl }}
           slidesPerView={3}
           spaceBetween={5}
@@ -120,8 +120,13 @@ const SgSlider = ({ params, title, Icon }) => {
           className=""
           modules={[Navigation]}
           onSlideChange={onSlideChange} // Trigger this on every slide change
-          onReachEnd={() => handleSliderChange(false, true)} // End reached
-          onReachBeginning={() => handleSliderChange(true, false)} // Beginning reached
+          onReachEnd={handleSliderChange} // End reached
+          onReachBeginning={handleSliderChange} // Beginning reached
+          onSwiper={(swiper) => {
+            const isBeginning = swiper.isBeginning;
+            const isEnd = swiper.isEnd;
+            handleSliderChange( isBeginning, isEnd); // Assuming first param = atEnd, second = atStart
+          }}
           breakpoints={{
             0: {
               slidesPerView: 3,

@@ -55,7 +55,7 @@ const Banner = () => {
           <div className="relative w-full">
 
             <Swiper
-              className="w-full md:h-96 min-h-80 max-h-96 bg-dry"
+              className="w-full md:h-96 min-h-80  bg-dry"
               slidesPerView={1}
               loop
               direction="horizontal"
@@ -72,17 +72,22 @@ const Banner = () => {
               {
                 movies?.map((movie, idx) => (
                   <SwiperSlide key={idx} className="relative overflow-hidden">
+                      {/* Small Screen */}
                     <img
                       src={movie.poster}
                       alt={movie.title} title={movie.title}
-                      className="w-full md:hidden max-h-100 object-cover"
+                      // className="w-full md:hidden max-h-100 object-cover"
                     />
+
+
+                      {/* Large Screen */}
                     <div style={{
                       background: `url('${movie?.poster}'`
                     }} className={`w-full md:inline-block hidden h-full object-cover blur-lg relative`}>
 
                     </div>
-
+                    
+                  
 
                     <img style={{
                       height: '140%',
@@ -92,7 +97,7 @@ const Banner = () => {
                       alt={movie.title} title={movie.title}
                       className="absolute right-28 z-10 object-contain w-100 rotate-12 hidden md:inline-block "
                     />
-                    <div className="lg:w-7/12 absolute linear-bg xl:pl-32 sm:pl-32 pl-8 top-0 bottom-0 right-0 left-0 flex flex-col justify-center lg:gap-8 md:gap-5 gap-4 z-20 md:h-96 min-h-80 max-h-96">
+                    <div className="lg:w-7/12 absolute linear-bg xl:pl-32 sm:pl-32 pl-8 top-0 bottom-0 right-0 left-0 flex flex-col justify-center lg:gap-8 md:gap-5 gap-4 z-20 md:h-96 min-h-80 ">
                       <h1 className="xl:text-4xl truncate capitalize font-sans sm:text-2xl text-xl font-bold">{movie.title}</h1>
 
 
