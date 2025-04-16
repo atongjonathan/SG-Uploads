@@ -1,7 +1,7 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { NavLink, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { FaSearch, FaHeart } from "react-icons/fa";
-import logo from "../../images/4x3.png";
+import logo from "../../images/4x3_transparent.png";
 import { Button, Input } from "@headlessui/react";
 import AuthContext from "../../context/AuthContext";
 import { MovieContext } from "../../context/MovieContext";

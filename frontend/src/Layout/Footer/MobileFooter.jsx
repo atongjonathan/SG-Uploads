@@ -102,9 +102,9 @@ const MobileFooter = () => {
                         <BsHouseAddFill></BsHouseAddFill><p className='text-xs'>Home</p>
                     </NavLink>
 
-                    <Button type="button" onClick={() => setShowModal(true)} className="transitions text-2xl flex flex-col items-center hover:bg-white hover:text-main text-white rounded-md px-4 py-3">
+                    <NavLink to="/movies"  className="transitions text-2xl flex flex-col items-center hover:bg-white hover:text-main text-white rounded-md px-4 py-3">
                         <FaSearch /> <p className='text-xs'>Search</p>
-                    </Button>
+                    </NavLink>
 
                     <PopMenu user={user}></PopMenu>
 

@@ -1,19 +1,16 @@
-import React, { useContext, useEffect, useState } from "react";
-import { LazyLoadImage } from 'react-lazy-load-image-component';
+import React, { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
-import { Link, useNavigate } from "react-router-dom";
-import Rating from "../Star";
+import { useNavigate } from "react-router-dom";
 import { FaArrowRight, FaHeart } from "react-icons/fa";
 import { FaArrowLeft } from "react-icons/fa";
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
-import { MovieContext } from "../../context/MovieContext";
 import { Button } from "@headlessui/react";
-import loader from '../../../images/loading_image.gif'
 import { useQuery } from "@tanstack/react-query";
 import { getMovies } from "../../utils/Backend";
 import Movie from "../Movie";
+import { LazyLoadComponent } from 'react-lazy-load-image-component';
 
 
 const SgSlider = ({ params, title, Icon }) => {
@@ -77,10 +74,12 @@ const SgSlider = ({ params, title, Icon }) => {
     }
   };
 
-  const [loaded, setLoaded] = useState(false);
+  const visibleTitles = ["Recently Added"]
+
 
 
   return (
+    <LazyLoadComponent visibleByDefault={visibleTitles.includes(title)}>
     <div className="lg:mt-8 mt-5">
       <div className="w-full flex justify-between">
         <div className="flex sm:gap-3 gap-2 items-center truncate">
@@ -164,6 +163,7 @@ const SgSlider = ({ params, title, Icon }) => {
         </Swiper>
       </div>
     </div>
+    </LazyLoadComponent>
   )
 
 };
