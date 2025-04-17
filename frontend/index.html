@@ -4,37 +4,68 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#080A1A">
-  <meta property="og:site_name" content="StreamGrid">
-  <meta property="og:title" content="StreamGrid">
-  <meta property="og:type" content="video">
-  <link rel="apple-touch-icon"
-    href="https://raw.githubusercontent.com/atongjonathan/SG-Uploads/refs/heads/main/frontend/src/images/4x3.png">
-  <meta property="og:image"
-    content="https://raw.githubusercontent.com/atongjonathan/SG-Uploads/refs/heads/main/frontend/src/images/4x3.png">
-  <meta property="og:description"
-    content="Your free movie website search is over. With StreamGrid you can watch free movies online and TV shows without any account." />
-  <meta property="og:url" content="https://streamgrid.stream/">
-  <link rel="manifest" href="/manifest.json">
-  <meta property="twitter:image"
-    content="https://raw.githubusercontent.com/atongjonathan/SG-Uploads/refs/heads/main/frontend/src/images/4x3.png">
-  <meta property="twitter:card" content="summary_large_image">
-  <meta property="twitter:title" content="StreamGrid">
-  <title>StreamGrid | Watch Movies for Free</title>
-  <link rel="shortcut icon"
-    href="https://raw.githubusercontent.com/atongjonathan/SG-Uploads/refs/heads/main/frontend/src/images/4x3.png"
-    type="image/jpg">
-  <link rel="icon" href="android/android-launchericon-72x72.png" sizes="72x72">
-  <link rel="icon" href="android/android-launchericon-96x96.png" sizes="96x96">
-  <link rel="icon" href="android/android-launchericon-144x144.png" sizes="144x144">
-  <link rel="icon" href="android/android-launchericon-152x152.png" sizes="152x152">
-  <link rel="icon" href="android/android-launchericon-192x192.png" sizes="192x192">
-  <link rel="icon" href="android/android-launchericon-384x384.png" sizes="384x384">
-  <link rel="icon" href="android/android-launchericon-512x512.png" sizes="512x512">
-  <link rel="canonical" href="https://streamgrid.stream/">
-  <meta property="fb:app_id" content="1401813654536816">
-  <meta name="keywords" content="streamgrid, stream, movie, video phone, free">
+  
+  <!-- Basic SEO -->
+  <title>StreamGrid | Watch Free Movies & TV Shows Online in HD</title>
+  <meta name="description" content="Watch HD movies and TV shows online for free with StreamGrid. No account needed. Stream the latest content across all your devices." />
+  <meta name="keywords" content="free movies, watch movies online, HD streaming, free TV shows, StreamGrid, online movies, no account streaming, best movie sites" />
+  <link rel="canonical" href="https://streamgrid.stream/" />
+  <meta name="robots" content="index, follow">
 
+  <!-- Open Graph (Facebook, LinkedIn, etc.) -->
+  <meta property="og:site_name" content="StreamGrid">
+  <meta property="og:title" content="StreamGrid | Watch Free Movies & TV Shows Online in HD">
+  <meta property="og:description" content="Your search for free movie websites is over. StreamGrid lets you watch movies and TV shows in HD for free without an account.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://streamgrid.stream/">
+  <meta property="og:image" content="https://raw.githubusercontent.com/atongjonathan/SG-Uploads/refs/heads/main/frontend/src/images/4x3.png">
+
+  <!-- Twitter Cards -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="StreamGrid | Free Movie Streaming">
+  <meta name="twitter:description" content="Stream free HD movies and TV shows without creating an account. Discover the latest releases now.">
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/atongjonathan/SG-Uploads/refs/heads/main/frontend/src/images/4x3.png">
+
+  <!-- PWA & Icons -->
+  <meta name="theme-color" content="#080A1A">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/atongjonathan/SG-Uploads/refs/heads/main/frontend/src/images/4x3.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="shortcut icon" href="https://raw.githubusercontent.com/atongjonathan/SG-Uploads/refs/heads/main/frontend/src/images/4x3.png" type="image/png">
+  <link rel="icon" sizes="72x72" href="android/android-launchericon-72x72.png">
+  <link rel="icon" sizes="96x96" href="android/android-launchericon-96x96.png">
+  <link rel="icon" sizes="144x144" href="android/android-launchericon-144x144.png">
+  <link rel="icon" sizes="152x152" href="android/android-launchericon-152x152.png">
+  <link rel="icon" sizes="192x192" href="android/android-launchericon-192x192.png">
+  <link rel="icon" sizes="384x384" href="android/android-launchericon-384x384.png">
+  <link rel="icon" sizes="512x512" href="android/android-launchericon-512x512.png">
+  <link rel="search" type="application/opensearchdescription+xml" title="StreamGrid" href="/opensearch.xml" />
+
+
+  <!-- Facebook App ID (if using FB SDK) -->
+  <meta property="fb:app_id" content="1401813654536816">
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "VideoStreamingService",
+    "name": "StreamGrid",
+    "url": "https://streamgrid.stream",
+    "logo": "https://raw.githubusercontent.com/atongjonathan/SG-Uploads/refs/heads/main/frontend/src/images/4x3.png",
+    "sameAs": [
+    "https://www.facebook.com/profile.php?id=61574966069918",
+      "https://t.me/dont_be_soy2",
+      "https://whatsapp.com/channel/0029Vb6Ftzq0lwgxrMab7W3d"
+    ],
+    "description": "StreamGrid is your go-to free streaming platform for HD movies and TV shows. Watch online instantly without signing up.",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://streamgrid.stream/movies?title={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
 </head>
 
 <body>

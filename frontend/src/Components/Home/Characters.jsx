@@ -1,6 +1,6 @@
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Navigation } from "swiper/modules";
+import { Autoplay, EffectFade, Navigation } from "swiper/modules";
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import { useQuery } from "@tanstack/react-query";
@@ -27,7 +27,7 @@ const Characters = ({ tmdb_id }) => {
         <div className="mt-5">
             <div className='w-full flex justify-between'>
                 <div className="flex sm:gap-8 gap-4 items-center truncate">
-                    <h2 className="text-sm font-semibold truncate">Cast
+                    <h2 className="text-sm font-semibold truncate">Cast ({data?.length})
                     </h2>
                 </div>
 
@@ -42,7 +42,6 @@ const Characters = ({ tmdb_id }) => {
                         <Swiper
                             slidesPerView={3}
                             spaceBetween={40}
-                            autoPlay={true}
                             speed={500}
                             breakpoints={
                                 {

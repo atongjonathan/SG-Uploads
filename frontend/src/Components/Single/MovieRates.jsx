@@ -27,7 +27,7 @@ const MovieRates = ({ movie }) => {
       }
       return null;
     },
-    enabled: !!movie?.link,
+    enabled: !!(movie?.link && auth),
   });
 
 
@@ -47,20 +47,13 @@ const MovieRates = ({ movie }) => {
         reviews?.length > 0 ?
 
           (<div className='my-12'>
-            <div className="flex sm:gap-3 gap-2 items-center truncate">
-              {
-                isFetching && !reviews ? <Skeleton /> : <>
-                  <BsBookmarkStarFill className="sm:w-5 sm:h-6 w-4 h-4 text-subMain" />
-                  <h2 className="text-sm font-semibold truncate">Reviews</h2></>
-              }
+         
+            <Titles title="Reviews" Icon={BsBookmarkStarFill}></Titles>
+            <div className="gap-6 h-56 overflow-y-scroll">
 
-            </div>
-            {/* <Titles title="Reviews" Icon={BsBookmarkStarFill}></Titles> */}
-            <div className="gap-6">
-
-              <div className="grid grid-cols-2 bg-main gap-6 rounded-lg md:p-12 p-6 h-header">
+              <div className="grid grid-cols-2 bg-main gap-6 rounded-lg md:p-12 p-6">
                 {
-                  reviews?.sort((a, b) => b.stars - a.stars).slice(0, reviewItems).map((review, idx) => review.heading && (
+                  reviews?.sort((a, b) => b.stars - a.stars).map((review, idx) => review.heading && (
                     (
                       <div key={idx} className="lg:col-span-1 col-span-2 flex flex-col gap-1 bg-dry p-4 border border-gray-800 rounded-lg align-middle text-center h-fit">
                         <div className="flex flex-col">
@@ -92,13 +85,13 @@ const MovieRates = ({ movie }) => {
                 }
               </div>
             </div>
-            {
+            {/* {
               reviewItems < reviews.length && <div className='px-10 flex justify-center w-full'>
                 <Button onClick={() => {
                   setReviewItems((items) => items + 6)
                 }} className=" flex justify-center flex-col bg-main gap-6  h-header p-3 cursor-pointer rounded-2xl border border-gray-800 hover:bg-subMain transitions">More Reviews</Button>
               </div>
-            }
+            } */}
           </div>)
           :
 

@@ -2,9 +2,9 @@ import React from 'react'
 
 const Titles = ({title, Icon}) => {
   return (
-    <div className='w-full flex sm:gap-8 gap-4 items-center'>
-        <Icon className="sm:w-6 sm:h-6 w-4 h-4 text-subMain"></Icon>
-        <h2 className="sm:text-xl font-semibold text-sm">{title}</h2>
+    <div className='flex sm:gap-3 gap-2 items-center truncate mb-3'>
+        <Icon className="sm:w-5 sm:h-6 w-4 h-4 text-subMain"></Icon>
+        <h2 className="font-semibold text-sm">{title}</h2>
     </div>
   )
 }

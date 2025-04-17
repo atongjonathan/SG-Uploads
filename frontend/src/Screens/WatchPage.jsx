@@ -61,6 +61,7 @@ const WatchPage = () => {
         },
         enabled: Boolean(id)
     })
+
     const movie = data?.results.length > 0 ? data?.results[0] : null
 
     const split = movie?.link?.split("/") || [];
@@ -92,6 +93,8 @@ const WatchPage = () => {
     }
 
 
+
+    if (isSuccess && !movie) return <NotFound />
 
     return (
         <>
@@ -159,7 +162,7 @@ const WatchPage = () => {
                                     </div>
 
                                     <div className="col-span-2 flex justify-end items-center gap-2">
-                                        <DonateBtn/>
+                                        <DonateBtn />
 
 
                                         <Button onClick={() => setisModalOpen(true)} className="w-10 h-10 flex-colo rounded-lg bg-white bg-opacity-20"><FaShareAlt /></Button>
@@ -213,9 +216,7 @@ const WatchPage = () => {
 
 
             }
-            {
-                (isSuccess && data?.results.length == 0) && <NotFound />
-            }
+
         </>
 
     )
