@@ -14,10 +14,6 @@ import { LazyLoadComponent } from 'react-lazy-load-image-component';
 
 
 const SgSlider = ({ params, title, Icon }) => {
-  useEffect(() => {
-    handleSliderChange(true, false); // Initial setup, assuming we're not at the start
-  }, []);
-
 
   const dummy = [1, 2, 3, 4, 5, 6, 7];
 
@@ -93,7 +89,7 @@ const SgSlider = ({ params, title, Icon }) => {
 
         <div className="px-2 flex justify-center gap-2">
           <Button
-            className={`transition duration-100 ease-in text-sm rounded w-7 h-7 flex-colo text-white ${startDisabled ? "bg-dry" : "bg-subMain active:bg-dry"
+            className={`transition duration-100 ease-in text-sm rounded-lg w-7 h-7 flex-colo text-white ${startDisabled ? "bg-dry" : "bg-subMain active:bg-dry"
               }`}
             ref={(node) => setPrevEl(node)}
             disabled={startDisabled}
@@ -101,7 +97,7 @@ const SgSlider = ({ params, title, Icon }) => {
             <FaArrowLeft />
           </Button>
           <Button
-            className={`transition duration-100 ease-in text-sm rounded w-7 h-7 flex-colo text-white ${endDisabled ? "bg-dry" : "bg-subMain active:bg-dry"
+            className={`transition duration-100 ease-in text-sm rounded-lg w-7 h-7 flex-colo text-white ${endDisabled ? "bg-dry" : "bg-subMain active:bg-dry"
               }`}
             ref={(node) => setNextEl(node)}
             disabled={endDisabled}

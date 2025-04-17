@@ -76,7 +76,7 @@ const Banner = () => {
                     <img
                       src={movie.poster}
                       alt={movie.title} title={movie.title}
-                      // className="w-full md:hidden max-h-100 object-cover"
+                      className="w-full md:hidden max-h-100 object-cover"
                     />
 
 
