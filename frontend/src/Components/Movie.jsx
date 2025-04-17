@@ -11,13 +11,13 @@ const Movie = ({ movie, scrollPosition }) => {
   return (
     <>
       <div className="p-1 hover:scale-95 transitions relative rounded overflow-hidden aspect-[216/319]">
-        {
+        {/* {
           loaded && <span className="bg-main p-[.1rem] px-1 gap-1 rounded-md flex items-center absolute z-10 top-0 right-0 m-2 text-xs lg:text-sm">
 
             <FaStar className="lucide lucide-star text-star" />
             {movie.rating_star === 0 ? 'New' : movie.rating_star}
           </span>
-        }
+        } */}
 
         <Link to={`/watch/${movie.id}`} className="w-full">
           {!loaded && (
