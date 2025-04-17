@@ -24,9 +24,9 @@ const Banner = () => {
       {
         isFetching ?
           <div className="relative w-full">
-            <div className="relative h-72 py-10 overflow-hidden bg-dry z-10">
+            <div className="relative h-96  py-10 overflow-hidden bg-dry z-10 ">
 
-              <div className="lg:w-7/12 absolute linear-bg xl:pl-32 sm:pl-32 px-3 top-0 bottom-0 right-0 left-0 flex flex-col lg:pt-2 pt-10  lg:gap-7 md:gap-5 gap-4 z-20 md:h-96 min-h-80 max-h-96 ">
+              <div className="lg:w-7/12 absolute linear-bg xl:pl-32 sm:pl-32 px-3 top-0 bottom-0 right-0 left-0 flex flex-col lg:pt-2 pt-10  lg:gap-7 md:gap-5 gap-4 z-20 md:h-96 min-h-80 max-h-96 justify-center">
                 <Skeleton baseColor="rgb(22 28 63)" height={30} containerClassName="animate-pulse"></Skeleton>
 
 
