@@ -8,9 +8,9 @@ import { Button, Dialog, DialogPanel, DialogTitle, DialogBackdrop } from '@headl
 import { IoClose } from 'react-icons/io5';
 import { useDevToolsStatus } from '../../utils/useDevToolsStatus';
 import { toast } from 'sonner';
-import { SeekBackward10Icon, SeekForward10Icon } from '@vidstack/react/icons';
+import { SeekBackward10Icon, SeekForward10Icon, DownloadIcon } from '@vidstack/react/icons';
 import { useAuth } from '../../context/AuthContext';
-
+import { Tooltip } from '@vidstack/react';
 
 function MyPlyrVideo({ movie }) {
     const [time, setTime] = useState(null);
@@ -75,6 +75,18 @@ function MyPlyrVideo({ movie }) {
             mediaInstance.currentTime = initialTime;
         }
     }, [initialTime]);
+    const DownloadButton = () => (<>
+        {
+            user ? <Button onClick={() => {
+                const link = document.createElement('a');
+                link.href = movie?.stream.replace("video", "dl");
+                link.click();
+            }} className="vds-button">
+                <DownloadIcon />
+            </Button> : <Button onClick={() => toast.info("Only logged in users can download", { closeButton: true })} className="vds-button">
+                <DownloadIcon />
+            </Button>
+        }</>)
 
     return !isDevToolsOpen && (
         <div>
@@ -120,10 +132,12 @@ function MyPlyrVideo({ movie }) {
                         beforeFullscreenButton: <BackwardButton />,
                         afterFullscreenButton: <ForwardButton />,
                         afterPlayButton: null,
-                        beforePlayButton: null
+                        beforePlayButton: null,
+
                     },
-                    beforePlayButton: <BackwardButton />,
+                    beforePlayButton:<BackwardButton/>,
                     afterPlayButton: <ForwardButton />,
+                    downloadButton: <DownloadButton />
                 }}>
 
 
@@ -161,12 +175,22 @@ function MyPlyrVideo({ movie }) {
 export default MyPlyrVideo;
 
 const ForwardButton = () => <SeekButton className="vds-button" seconds={10}>
-    <SeekForward10Icon className="vds-icon" />,
+    <SeekForward10Icon className="vds-icon" />
 </SeekButton>
 
 const BackwardButton = () => <SeekButton className="vds-button z-100" seconds={-10}>
     <SeekBackward10Icon className="vds-icon" />
 </SeekButton>
+
+const ButtonToolTip = ({ button }) => <Tooltip.Root>
+    <Tooltip.Trigger asChild>{button}</Tooltip.Trigger>
+    <Tooltip.Content className="vds-tooltip-content" placement="top start">
+        <h1>Tool Tip</h1>
+        {/* Content */}
+    </Tooltip.Content>
+</Tooltip.Root>
+
+
 
 
 export function TrailerVideo({ trailer }) {
