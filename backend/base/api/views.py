@@ -18,7 +18,7 @@ from .serializers import MovieSerializer, SGUserSerializer,  ChangePasswordSeria
 from rest_framework import status
 from rest_framework.parsers import MultiPartParser, FormParser
 import os
-from rest_framework import generics, filters
+from rest_framework import generics, filters, viewsets
 from django.conf import settings
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.encoding import force_bytes, force_str
@@ -75,12 +75,15 @@ def search_itunes(request):
     return Response(response.json(), status=status.HTTP_200_OK)
 
 
-@api_view(['GET'])
-@permission_classes([IsAuthenticated])
-def users_list(request):
-    users = SGUser.objects.all()
-    serializer = SGUserSerializer(users, many=True)
-    return Response(serializer.data, status=status.HTTP_200_OK)
+class UserViewSet(generics.ListAPIView):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = SGUser.objects.all().order_by('-date_joined')
+    serializer_class = SGUserSerializer
+    permission_classes = [IsAuthenticated]
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+
 
 
 @method_decorator(cache_page(60), name='dispatch')
@@ -88,7 +91,6 @@ class MovieList(generics.ListAPIView):
     serializer_class = MovieSerializer
     queryset = Movie.objects.all()
     search_fields = ['title', 'id']
-    filter_backends = [filters.OrderingFilter]
     ordering_fields = '__all__'
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
 
