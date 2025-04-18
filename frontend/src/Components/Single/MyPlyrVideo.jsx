@@ -9,6 +9,7 @@ import { IoClose } from 'react-icons/io5';
 import { useDevToolsStatus } from '../../utils/useDevToolsStatus';
 import { toast } from 'sonner';
 import { SeekBackward10Icon, SeekForward10Icon } from '@vidstack/react/icons';
+import { useAuth } from '../../context/AuthContext';
 
 
 function MyPlyrVideo({ movie }) {
@@ -18,6 +19,7 @@ function MyPlyrVideo({ movie }) {
     const movieKey = `${movie.title} (${movie.year})`;
     const [open, setOpen] = useState(false)
     const isDevToolsOpen = useDevToolsStatus()
+    const { user } = useAuth()
 
 
     function handleResponse(response) {
@@ -108,15 +110,22 @@ function MyPlyrVideo({ movie }) {
                     )}
                     <Poster className="vds-poster" />
                 </MediaProvider>
-                <DefaultVideoLayout icons={defaultLayoutIcons} slots={{
-                    beforePlayButton : <SeekButton className="vds-button" seconds={-10}>
-                        <SeekBackward10Icon className="vds-icon" />
-                    </SeekButton>,
-                    afterPlayButton:<SeekButton className="vds-button" seconds={10}>
-                    <SeekForward10Icon className="vds-icon" />
-                </SeekButton>
+                <DefaultVideoLayout icons={defaultLayoutIcons} download={user ?
+                    {
+                        url: movie.stream.replace("video", "dl"),
+                        filename: "Streamgrid"
+                    } : undefined
+                } slots={{
+                    smallLayout: {
+                        beforeFullscreenButton: <BackwardButton />,
+                        afterFullscreenButton: <ForwardButton />,
+                        afterPlayButton: null,
+                        beforePlayButton: null
+                    },
+                    beforePlayButton: <BackwardButton />,
+                    afterPlayButton: <ForwardButton />,
                 }}>
-                    
+
 
 
                 </DefaultVideoLayout>
@@ -145,11 +154,19 @@ function MyPlyrVideo({ movie }) {
                 </div>
             </Dialog>
 
-        </div>
+        </div >
     );
 }
 
 export default MyPlyrVideo;
+
+const ForwardButton = () => <SeekButton className="vds-button" seconds={10}>
+    <SeekForward10Icon className="vds-icon" />,
+</SeekButton>
+
+const BackwardButton = () => <SeekButton className="vds-button z-100" seconds={-10}>
+    <SeekBackward10Icon className="vds-icon" />
+</SeekButton>
 
 
 export function TrailerVideo({ trailer }) {

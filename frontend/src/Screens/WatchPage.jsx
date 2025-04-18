@@ -168,13 +168,7 @@ const WatchPage = () => {
                                         <Button onClick={() => setisModalOpen(true)} className="w-10 h-10 flex-colo rounded-lg bg-white bg-opacity-20"><FaShareAlt /></Button>
 
 
-                                        {
-                                            user ? <Link to={movie?.stream.replace("video", "dl")} className="bg-subMain flex-rows gap-2 hover:text-main transitions text-white rounded px-3 font-medium py-3 text-sm">
-                                                <IoMdCloudDownload></IoMdCloudDownload>
-                                            </Link> : <Button onClick={() => toast.info("Only logged in users can download", { closeButton: true })} className="bg-subMain flex-rows gap-2 hover:text-main transitions text-white rounded px-3 font-medium py-3 text-sm">
-                                                <IoMdCloudDownload></IoMdCloudDownload>
-                                            </Button>
-                                        }
+                                       
                                         {
                                             user?.is_superuser && (
                                                 <Button onClick={() => {
