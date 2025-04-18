@@ -1,6 +1,6 @@
 import '@vidstack/react/player/styles/default/theme.css';
 import '@vidstack/react/player/styles/default/layouts/video.css';
-import { MediaPlayer, MediaProvider, Poster, Track } from '@vidstack/react';
+import { MediaPlayer, MediaProvider, Poster, Track, SeekButton } from '@vidstack/react';
 import { defaultLayoutIcons, DefaultVideoLayout } from '@vidstack/react/player/layouts/default';
 import { useEffect, useRef, useState } from 'react';
 import YouTube from '@u-wave/react-youtube';
@@ -8,6 +8,8 @@ import { Button, Dialog, DialogPanel, DialogTitle, DialogBackdrop } from '@headl
 import { IoClose } from 'react-icons/io5';
 import { useDevToolsStatus } from '../../utils/useDevToolsStatus';
 import { toast } from 'sonner';
+import { SeekBackward10Icon, SeekForward10Icon } from '@vidstack/react/icons';
+
 
 function MyPlyrVideo({ movie }) {
     const [time, setTime] = useState(null);
@@ -106,7 +108,18 @@ function MyPlyrVideo({ movie }) {
                     )}
                     <Poster className="vds-poster" />
                 </MediaProvider>
-                <DefaultVideoLayout icons={defaultLayoutIcons} />
+                <DefaultVideoLayout icons={defaultLayoutIcons} slots={{
+                    beforePlayButton : <SeekButton className="vds-button" seconds={-10}>
+                        <SeekBackward10Icon className="vds-icon" />
+                    </SeekButton>,
+                    afterPlayButton:<SeekButton className="vds-button" seconds={10}>
+                    <SeekForward10Icon className="vds-icon" />
+                </SeekButton>
+                }}>
+                    
+
+
+                </DefaultVideoLayout>
             </MediaPlayer>
             <Dialog open={open} as="div" className="relative z-20 focus:outline-none" onClose={close}>
                 <DialogBackdrop className="fixed inset-0 bg-main/50"></DialogBackdrop>
