@@ -87,11 +87,17 @@ function MyPlyrVideo({ movie }) {
                 <DownloadIcon />
             </Button>
         }</>)
+          
 
     return !isDevToolsOpen && (
         <div>
             <MediaPlayer
                 title={movie.title}
+                googleCast={{
+                    autoJoinPolicy: 'origin_scoped',
+                    language: 'en-US',
+                    receiverApplicationId: '6A95402B',
+                  }}
                 src={{ src: movie.stream, type: "video/mp4" }}
                 viewType="video"
                 logLevel="info"
@@ -100,6 +106,7 @@ function MyPlyrVideo({ movie }) {
                 aspectRatio="16x9"
                 ref={ref}
                 poster={movie?.poster}
+                
                 artist="StreamGrid"
                 onTimeUpdate={() => {
                     // Update playback time on every time update event
