@@ -3,12 +3,51 @@ from rest_framework import serializers
 from ..models import Movie, SGUser
 from django.contrib.auth.password_validation import validate_password
 
+
+class MinMovieSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Movie
+        fields = ["poster", "title", "id"]
+
+
 class SGUserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, required=False)
-    favourites = serializers.PrimaryKeyRelatedField(
+    favourites = MinMovieSerializer(many=True, required=False, read_only=True,)
+    plan = MinMovieSerializer(many=True, required=False, read_only=True,)
+    dropped = MinMovieSerializer(many=True, required=False, read_only=True,)
+    finished = MinMovieSerializer(many=True, required=False, read_only=True,)
+    hold = MinMovieSerializer(many=True, required=False, read_only=True,)
+
+        # WRITE IDs
+    favourite_ids = serializers.PrimaryKeyRelatedField(
         many=True,
         queryset=Movie.objects.all(),
-        required=False
+        write_only=True,
+        source='favourites',required=False
+    )
+    plan_ids = serializers.PrimaryKeyRelatedField(
+        many=True,
+        queryset=Movie.objects.all(),
+        write_only=True,
+        source='plan',required=False
+    )
+    dropped_ids = serializers.PrimaryKeyRelatedField(
+        many=True,
+        queryset=Movie.objects.all(),
+        write_only=True,
+        source='dropped',required=False
+    )
+    finished_ids = serializers.PrimaryKeyRelatedField(
+        many=True,
+        queryset=Movie.objects.all(),
+        write_only=True,
+        source='finished',required=False
+    )
+    hold_ids = serializers.PrimaryKeyRelatedField(
+        many=True,
+        queryset=Movie.objects.all(),
+        write_only=True,
+        source='hold',required=False
     )
 
     class Meta:
@@ -17,11 +56,12 @@ class SGUserSerializer(serializers.ModelSerializer):
         exlude_fields = ['password']
 
     def create(self, validated_data):
-        password = validated_data.pop('password')  # Remove password before creating user
+        # Remove password before creating user
+        password = validated_data.pop('password')
         user = SGUser.objects.create_user(
             username=validated_data['username'],
             email=validated_data.get('email'),
-            password=password        )
+            password=password)
         return user
 
 
@@ -32,15 +72,17 @@ class ChangePasswordSerializer(serializers.Serializer):
     def validate(self, attrs):
         user = self.context['request'].user
         old_password = attrs.get('old_password')
-        
+
         if not user.check_password(old_password):
-            raise serializers.ValidationError({"old_password": "Old password is incorrect."})
-        
+            raise serializers.ValidationError(
+                {"old_password": "Old password is incorrect."})
+
         new_password = attrs.get('new_password')
         validate_password(new_password)
-        
+
         return attrs
-    
+
+
 class MovieSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -54,8 +96,6 @@ class MovieSerializer(serializers.ModelSerializer):
         )
         return movie
 
-
-from rest_framework import serializers
 
 class SubtitleSerializer(serializers.Serializer):
     id = serializers.IntegerField()
@@ -77,7 +117,7 @@ class SubtitleSerializer(serializers.Serializer):
     release = serializers.CharField(max_length=255)
     comments = serializers.CharField(max_length=255, required=False)
     legacy_subtitle_id = serializers.CharField(max_length=255, required=False)
-    
+
     uploader_id = serializers.IntegerField()
     uploader_name = serializers.CharField(max_length=255)
     uploader_rank = serializers.CharField(max_length=255)
@@ -103,7 +143,7 @@ class SubtitleSerializer(serializers.Serializer):
             child=serializers.CharField(max_length=255)
         ), required=False
     )
-    
+
     file_id = serializers.CharField(max_length=255, required=False)
     file_name = serializers.CharField(max_length=255, required=False)
 
@@ -111,7 +151,7 @@ class SubtitleSerializer(serializers.Serializer):
     uploader = serializers.DictField(
         child=serializers.CharField(max_length=255), required=False
     )
-    
+
     # Nested serializer for feature details (optional)
     feature_details = serializers.DictField(
         child=serializers.CharField(max_length=255), required=False

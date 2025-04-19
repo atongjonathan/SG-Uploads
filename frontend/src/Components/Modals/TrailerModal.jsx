@@ -1,7 +1,7 @@
 import { Dialog, DialogPanel, DialogBackdrop } from '@headlessui/react'
 import { useState } from 'react'
-import { TrailerVideo } from '../Single/MyPlyrVideo'
 import { MdOutlinePlayCircleFilled, MdOutlinePauseCircleFilled } from "react-icons/md";
+import YouTube from '@u-wave/react-youtube';
 
 export default function TrailerModal({ movie, trailer }) {
     let [isOpen, setIsOpen] = useState(false)
@@ -55,11 +55,22 @@ export default function TrailerModal({ movie, trailer }) {
                             transition
                             className="w-screen max-w-prose rounded-xl bg-main/5 p-6 backdrop-blur-3xl duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0"
                         >
-                            <TrailerVideo trailer={trailer}></TrailerVideo>
+                            <TrailerVideo trailer={trailer}/>
                         </DialogPanel>
                     </div>
                 </div>
             </Dialog>
         </>
+    )
+}
+
+export function TrailerVideo({ trailer }) {
+
+    return trailer && (
+
+        <YouTube
+            video={trailer.key}
+            autoplay
+        />
     )
 }

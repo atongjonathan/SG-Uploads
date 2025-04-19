@@ -19,13 +19,11 @@ import MovieInfo from '../Components/Single/MovieInfo'
 import { IoMdCloudDownload } from "react-icons/io";
 import { Helmet } from "react-helmet";
 import { useQuery } from '@tanstack/react-query'
-import { getMovies } from '../utils/Backend'
+import { getMovie } from '../utils/Backend'
 import DonateBtn from '../Components/DonateBtn'
 import SGFaHeart from '../Components/SGFaHeart'
 
-function isIntegerString(str) {
-    return Number.isInteger(Number(str));
-}
+
 
 const WatchPage = () => {
     let { id } = useParams()
@@ -38,33 +36,16 @@ const WatchPage = () => {
 
 
 
-    const { isError, data, isSuccess, isFetching } = useQuery({
+    const { error, data, isSuccess, isFetching } = useQuery({
         queryKey: ["movieQuery", id],
         queryFn: async () => {
-            let config = {}
-            if (isIntegerString(id)) {
-                config = {
-                    params: {
-                        id
-                    }
-                }
-            }
-
-            else {
-                config = {
-                    params: {
-                        title: id,
-                    }
-                }
-            }
-
-            return getMovies(config)
+            return getMovie(id)
         },
         enabled: Boolean(id)
     })
 
-    const movie = data?.results.length > 0 ? data?.results[0] : null
 
+    const movie = data
     const split = movie?.link?.split("/") || [];
     const tmdb_id = split[split.length - 1];
     const open = useCallback(function open() {
@@ -87,24 +68,19 @@ const WatchPage = () => {
 
 
 
-    const params = {
-        genre: movie?.genre[0],
-        ordering: "-rating_star",
-        limit: 10
-    }
 
     function clearLocalStorageByValue(valueToMatch) {
         for (let i = 0; i < localStorage.length; i++) {
-            let key = localStorage.key(i); 
-            let value = localStorage.getItem(key); 
+            let key = localStorage.key(i);
+            let value = localStorage.getItem(key);
 
             if (value === valueToMatch) {
-                localStorage.removeItem(key); 
+                localStorage.removeItem(key);
             }
         }
     }
 
-    clearLocalStorageByValue('{"time":"0"}'); 
+    clearLocalStorageByValue('{"time":"0"}');
 
 
     if (isSuccess && !movie) return <NotFound />
@@ -116,7 +92,7 @@ const WatchPage = () => {
                     {
                         movie &&
                         <Helmet>
-                            <meta name="description" content={`${movie.title} (${movie?.year}) ⭐️ ${movie.rating_star} | ${movie.genre.join(",")} ${movie.runtime} | ${movie.contentRating}`} />
+                            <meta name="description" content={`${movie.title} (${movie?.year}) ⭐️ ${movie.rating_star} | ${movie.genre?.join(",")} ${movie.runtime} | ${movie.contentRating}`} />
 
                             <title>{`${movie?.title} (${movie?.year})`}</title>
                             <meta property="og:image" content={movie.poster} />
@@ -176,7 +152,7 @@ const WatchPage = () => {
                                         <DonateBtn />
 
 
-                                        <Button onClick={() => setisModalOpen(true)} className="w-10 h-10 flex-colo rounded-lg bg-white bg-opacity-20"><FaShareAlt /></Button>
+                                        <Button onClick={() => setisModalOpen(true)} className="w-10 h-10 flex-colo rounded-lg bg-subMain"><FaShareAlt /></Button>
 
 
 
@@ -212,7 +188,13 @@ const WatchPage = () => {
                         <MovieRates movie={movie}></MovieRates>
 
                         <div className="my-14">
-                            <SgSlider params={params} title="Recommended" Icon={BsCollectionFill}></SgSlider>
+                            {
+                                movie && <SgSlider params={{
+                                    genre: movie?.genre[0],
+                                    ordering: "-rating_star",
+                                    limit: 10
+                                }} title="Recommended" Icon={BsCollectionFill}></SgSlider>
+                            }
 
                         </div>
                     </div>

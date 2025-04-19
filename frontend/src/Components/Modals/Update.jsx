@@ -14,7 +14,7 @@ const Update = ({ isUpdateOpen, updateClose }) => {
     const [loading, setLoading] = useState(false)
 
 
-    const { authTokens } = useContext(AuthContext)
+    const { authTokens, fetchUser } = useContext(AuthContext)
 
 
     const [image, setFileResponse] = useState(null)
@@ -48,7 +48,7 @@ const Update = ({ isUpdateOpen, updateClose }) => {
             const response = await updateProfile(authTokens.access, formObject);
             if (response.data) {
                 toast.success("Profile Updated", toastOptions)
-                window.location.assign("/")
+                fetchUser(authTokens)
             }
             else {
 

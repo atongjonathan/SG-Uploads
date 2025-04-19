@@ -1,10 +1,7 @@
-import React, { useState, useEffect, useContext, useCallback } from 'react';
-import { FaHeart } from 'react-icons/fa';
+import React from 'react';
 import { toast } from 'sonner';
 import { useAuth } from '../context/AuthContext';
 import { Button, Checkbox, Popover, PopoverButton, PopoverPanel } from '@headlessui/react'
-import { CiCirclePlus, CiBookmark } from "react-icons/ci";
-import { FaPlus } from "react-icons/fa6";
 import { GoPlus, GoCheck } from "react-icons/go";
 import { MdOutlineRadioButtonUnchecked, MdOutlineRadioButtonChecked, MdOutlineBookmark, MdOutlineRemoveRedEye, MdOutlineStopCircle } from "react-icons/md";
 import { IoMdClose } from "react-icons/io";
@@ -23,7 +20,7 @@ const SGFaHeart = ({ movie }) => {
       Icon: MdOutlineBookmark,
       label: "Plan to Watch",
       name: "plan",
-      enabled: user?.plan?.includes(id)
+      enabled: !(user?.plan?.findIndex((movie) => movie.id === id) === -1)
     },
     // {
     //   Icon: MdOutlineRemoveRedEye,
@@ -35,21 +32,21 @@ const SGFaHeart = ({ movie }) => {
       Icon: MdOutlineStopCircle,
       name: "hold",
       label: "On Hold",
-      enabled: user?.hold?.includes(id)
+      enabled: !(user?.hold?.findIndex((movie) => movie.id === id) === -1)
 
     },
     {
       Icon: IoMdClose,
       name: "dropped",
       label: "Dropped",
-      enabled: user?.dropped?.includes(id)
+      enabled: !(user?.dropped?.findIndex((movie) => movie.id === id) === -1)
 
     },
     {
       Icon: RiCheckDoubleFill,
       name: "finished",
       label: "Finished",
-      enabled: user?.finished?.includes(id)
+      enabled: !(user?.finished?.findIndex((movie) => movie.id === id) === -1)
 
     }
   ]
@@ -86,11 +83,12 @@ export default SGFaHeart;
 const ActionItem = ({ Icon, label, name, id, enabled }) => {
   const { authTokens, user, fetchUser } = useAuth();
 
-  const { mutate, error, data, isPending } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationKey: ["updateMe"],
     mutationFn: (data) => {
       delete data.image
-      return updateUser(authTokens.access, { ...user, ...data }).then(() => fetchUser(authTokens))
+      const { plan, hold, finished, dropped, favourites, ...trimmed_user } = user
+      return updateUser(authTokens.access, { ...trimmed_user, ...data }).then(() => fetchUser(authTokens))
     }
   })
 
@@ -99,7 +97,7 @@ const ActionItem = ({ Icon, label, name, id, enabled }) => {
 
     <Button className="rounded-lg py-2 px-3 transition hover:bg-main/80 flex text-white text-sm items-between justify-between w-44" onClick={() => {
       if (user) {
-        let curentItems = user[name]
+        let curentItems = user[name].map((item) => item.id)
         if (curentItems.includes(id)) {
           curentItems = curentItems.filter((item) => item !== id)
         }
@@ -107,7 +105,7 @@ const ActionItem = ({ Icon, label, name, id, enabled }) => {
           curentItems.push(id)
         }
         mutate({
-          [name]: curentItems
+          [name + "_ids"]: curentItems
         })
       }
       else {

@@ -5,10 +5,17 @@ const MONGO_USERNAME = import.meta.env.VITE_MONGO_USERNAME;
 const MONGO_PASSWORD = import.meta.env.VITE_MONGO_PASSWORD;
 const IMDB_API = import.meta.env.VITE_IMDB_API
 const TMDB_API_KEY = import.meta.env.VITE_TMDB_API_KEY
-
+function isIntegerString(str) {
+    return Number.isInteger(Number(str));
+}
 
 export async function getMovies(config = {}) {
     return axios.get(BACKEND_URL + '/movies', config).then((res) => res.data)
+
+}
+export async function getMovie(str) {
+    let api_url = isIntegerString(str)? '/movies/'+ str : '/movies/title'+ str
+    return axios.get(BACKEND_URL + api_url).then((res) => res.data)
 
 }
 export async function getTrending() {

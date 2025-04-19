@@ -54,6 +54,7 @@ const Banner = () => {
             <Swiper
               className="w-full md:h-96 min-h-80  bg-dry"
               slidesPerView={1}
+              resistanceRatio={0.5}   // Lower resistance makes it more responsive
               loop
               direction="horizontal"
               speed={1000}
@@ -61,8 +62,8 @@ const Banner = () => {
               keyboard
               modules={[Autoplay, EffectFade]}
               autoplay={{
-                delay: 5000,
-                disableOnInteraction: false,
+                delay: 10000,
+                disableOnInteraction: true,
               }}
             >
 

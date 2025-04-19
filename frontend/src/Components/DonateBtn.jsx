@@ -15,7 +15,7 @@ const DonateBtn = () => {
 
       <Button onClick={() => {
         setisModalOpen(true)
-      }} className='bg-[#2e5ea0] hover:bg-[#f0bc39] flex-rows gap-2 hover:text-main transitions text-white font-medium py-3 animate-pulse w-10 h-10 flex-colo rounded-lg '>
+      }} className='bg-subMain hover:bg-[#f0bc39] flex-rows gap-2 hover:text-main transitions text-white font-medium py-3 animate-pulse w-10 h-10 flex-colo rounded-lg '>
         <BiSolidDonateHeart className='w-4 h-4  text-white ' />
       </Button>
     </>

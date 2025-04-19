@@ -82,6 +82,7 @@ const Navbar = () => {
 
   const { data, isFetching } = useQuery({
     queryKey: ["searchQuery", query],
+    enabled: !!query,
     queryFn: async () => {
       const config = {
         params: {
