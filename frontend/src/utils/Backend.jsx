@@ -263,8 +263,9 @@ export const setPassword = async (data) => {
 }
 
 export const updateUser = async (accessToken, data) => {
+    delete data.image
     return await axios.put(`${BACKEND_URL}/users/me/`, data, {
-        headers: {            
+        headers: {
             Authorization: 'Bearer ' + accessToken,
         }
     })
