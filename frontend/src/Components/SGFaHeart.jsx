@@ -17,7 +17,7 @@ import { ImSpinner8 } from "react-icons/im";
 const SGFaHeart = ({ movie }) => {
 
   const { user } = useAuth()
-  const { id } = movie
+  const id = movie?.id
   const actions = [
     {
       Icon: MdOutlineBookmark,
@@ -54,7 +54,7 @@ const SGFaHeart = ({ movie }) => {
     }
   ]
 
-  return (
+  return movie && (
     <Popover className="aspect-square">
       <PopoverButton className="p-1 aspect-square rounded-full bg-subMain flex items-center justify-center text-sm" >
         {
@@ -70,7 +70,7 @@ const SGFaHeart = ({ movie }) => {
         <div className="p-1">
           {
             actions.map((action, idx) => (
-              <ActionItem key={idx} {...action} id={movie.id} />
+              <ActionItem key={idx} {...action} id={movie?.id} />
             ))
           }
 
@@ -89,6 +89,7 @@ const ActionItem = ({ Icon, label, name, id, enabled }) => {
   const { mutate, error, data, isPending } = useMutation({
     mutationKey: ["updateMe"],
     mutationFn: (data) => {
+      delete data.image
       return updateUser(authTokens.access, { ...user, ...data }).then(() => fetchUser(authTokens))
     }
   })
