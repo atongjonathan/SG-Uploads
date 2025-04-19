@@ -16,7 +16,7 @@ const WatchList = () => {
                 user.plan.length > 0 ?
                     user.plan.map((movie) => (
                         <div 
-                        className="min-w-[150px] sm:min-w-[180px] md:min-w-[200px] p-2 rounded-xl overflow-hidden hover:bg-white/5 transition-all cursor-pointer"
+                        className="min-w-[150px] sm:min-w-[180px] md:min-w-[200px] w-[150px] p-2 rounded-xl overflow-hidden hover:bg-white/5 transition-all cursor-pointer"
                         >
                             <Movie movie={movie} />
                         </div>

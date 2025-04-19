@@ -52,7 +52,7 @@ const MoviesPage = () => {
       movies = movies.filter(m => Math.ceil(m.rating.star / 2).toString() === params.rates);
     }
     if (params.year && !params.year.includes("Sort")) {
-      movies = movies.filter(m => m.year.toString() === params.year);
+      movies = movies.filter(m => m.year?.toString() === params.year);
     }
     if (params.times && !params.times.includes("Sort")) {
       const maxTime = parseFloat(params.times.replace('< ', ''));

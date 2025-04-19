@@ -5,6 +5,7 @@ import { NavLink } from 'react-router-dom';
 import { MdOutlineContactMail, MdOutlineInfo } from 'react-icons/md';
 import { FaFilm, FaHeart, FaListAlt } from 'react-icons/fa'
 import { FiSettings } from 'react-icons/fi';
+import { IoTime } from 'react-icons/io5';
 
 
 const PopMenu = ({ user }) => {
@@ -17,12 +18,12 @@ const PopMenu = ({ user }) => {
     );
 
     const adminLinks = [
-        {
-            name: 'Movies',
-            link: '/movieslist',
-            icon: FaListAlt,
+        // {
+        //     name: 'Movies',
+        //     link: '/movieslist',
+        //     icon: FaListAlt,
 
-        },
+        // },
         {
             name: 'Add',
             link: '/addmovie',

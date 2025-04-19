@@ -6,7 +6,6 @@ const History = () => {
     const progressData = JSON.parse(localStorage.getItem(VIDEO_PROGRESS_KEY) || '{}');
     const ids = Object.keys(progressData)
     const values = Object.values(progressData)
-    console.log(progressData);
     return (
         <div class="flex flex-col xl:px-2 gap-5">
             <div class="flex w-full justify-between items-center gap-2 px-1 xl:px-2">

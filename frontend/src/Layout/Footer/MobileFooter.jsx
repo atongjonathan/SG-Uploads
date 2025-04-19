@@ -9,7 +9,7 @@ import { FaSearch } from 'react-icons/fa';
 import { MovieContext } from '../../context/MovieContext';
 import SignUpModal from '../../Components/Modals/SignUpModal';
 import LoginModal from '../../Components/Modals/LoginModal';
-import { IoClose } from 'react-icons/io5'
+import { IoClose, IoTime } from 'react-icons/io5'
 import Results from '../../Components/Home/Results';
 import { useQuery } from '@tanstack/react-query';
 import { getMovies } from '../../utils/Backend';
@@ -108,7 +108,9 @@ const MobileFooter = () => {
                     </NavLink>
 
                     <PopMenu user={user}></PopMenu>
-
+                    <NavLink to="/profile"  className="transitions text-2xl flex flex-col items-center hover:bg-white hover:text-main text-white rounded-md px-4 py-3">
+                        <IoTime /> <p className='text-xs'>History</p>
+                    </NavLink>
 
 
 
