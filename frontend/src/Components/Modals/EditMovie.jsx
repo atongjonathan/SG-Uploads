@@ -5,6 +5,7 @@ import AuthContext from '../../context/AuthContext'
 import { toast } from 'sonner'
 import { IoClose } from 'react-icons/io5'
 import { editMovie } from '../../utils/Backend'
+import { Link } from 'react-router-dom'
 
 export default function EditMovie({ close, isOpen, movie }) {
 
@@ -74,8 +75,8 @@ export default function EditMovie({ close, isOpen, movie }) {
                         >
                             <Button onClick={close} className='absolute top-5 right-5 text-text hover:text-subMain transitions'><IoClose className="h-5 w-5"></IoClose></Button>
 
-                            <DialogTitle as="h3" className="text-base/7 font-medium text-white">
-                                Edit "{currentMovie?.title}"
+                            <DialogTitle as="h3" className="text-base/7 font-medium text-white underline">
+                            <Link target='_blank' to={movie?.link}>Edit "{currentMovie?.title}"</Link>
                             </DialogTitle>
                             <form className='flex flex-col gap-2 w-full' method='post' onSubmit={(e) => handleSubmit(e)}>
                                 <Input label='Poster' name='poster' type='text' placeholder='Poster' required={false}></Input>

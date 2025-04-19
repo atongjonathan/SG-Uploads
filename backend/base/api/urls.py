@@ -18,6 +18,7 @@ urlpatterns = [
     path('create-movie', views.create_movie, name="create_movie"),
     path('update-user', views.update_user, name="update_user"),
     path('user', views.user, name="user"),
+    path('users/me/', views.CurrentUserView.as_view()),
     path('like/<id>', views.like_movie, name='like_movie'),
     path('unlike/<id>', views.unlike_movie, name='unlike_movie'),
     path('edit/<id>', views.edit_movie, name='edit'),

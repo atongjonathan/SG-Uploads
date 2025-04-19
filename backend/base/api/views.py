@@ -1,3 +1,7 @@
+from django.http import HttpResponse
+from rest_framework.decorators import api_view
+from ..pesapal import PesapalV30Helper
+from django.shortcuts import render
 import json
 import logging
 from math import log
@@ -18,7 +22,7 @@ from .serializers import MovieSerializer, SGUserSerializer,  ChangePasswordSeria
 from rest_framework import status
 from rest_framework.parsers import MultiPartParser, FormParser
 import os
-from rest_framework import generics, filters, viewsets
+from rest_framework import generics, filters
 from django.conf import settings
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.encoding import force_bytes, force_str
@@ -31,6 +35,8 @@ from django.views.decorators.cache import cache_page, never_cache
 from django.core.cache import caches
 from django.utils import timezone
 from django.db.models import Case, When
+from random import shuffle
+
 
 cc = Captions()
 
@@ -85,7 +91,6 @@ class UserViewSet(generics.ListAPIView):
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
 
 
-
 @method_decorator(cache_page(60), name='dispatch')
 class MovieList(generics.ListAPIView):
     serializer_class = MovieSerializer
@@ -95,26 +100,44 @@ class MovieList(generics.ListAPIView):
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
 
     def get_queryset(self):
-        queryset = Movie.objects.all()
+        base_queryset = Movie.objects.all()
+        should_shuffle = self.request.query_params.get('shuffle')
+
+        if should_shuffle:
+            # Shuffle all IDs first
+            all_ids = list(base_queryset.values_list('id', flat=True))
+            shuffle(all_ids)
+            preserved_order = Case(*[When(id=pk, then=pos) for pos, pk in enumerate(all_ids)])
+            base_queryset = Movie.objects.filter(id__in=all_ids).order_by(preserved_order)
+
+        # Now apply filters *after* shuffling
         genre = self.request.query_params.get('genre')
         title = self.request.query_params.get('title')
-        id = self.request.query_params.get('id')
+        movie_id = self.request.query_params.get('id')
         year = self.request.query_params.get('year')
-        releaseLocation = self.request.query_params.get('releaseLocation')
+        release_location = self.request.query_params.get('releaseLocation')
 
         if genre:
-            queryset = queryset.filter(genre__icontains=genre)
+            base_queryset = base_queryset.filter(genre__icontains=genre)
         if title:
-            queryset = queryset.filter(title__icontains=title)
-        if id:
-            queryset = queryset.filter(id=id)
+            base_queryset = base_queryset.filter(title__icontains=title)
+        if movie_id:
+            base_queryset = base_queryset.filter(id=movie_id)
         if year:
-            queryset = queryset.filter(year=year)
-        if releaseLocation:
-            queryset = queryset.filter(releaseLocation=releaseLocation)
+            base_queryset = base_queryset.filter(year=year)
+        if release_location:
+            base_queryset = base_queryset.filter(releaseLocation=release_location)
 
-        return queryset
+        return base_queryset
 
+
+class CurrentUserView(generics.RetrieveUpdateAPIView):
+    queryset = SGUser.objects.all()
+    serializer_class = SGUserSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        return self.request.user
 
 @api_view(['GET'])
 def movies_list(request):
@@ -444,12 +467,6 @@ class TrendingList(generics.ListAPIView):
 
         return Movie.objects.filter(link__in=imdb_links).order_by(preserved_order)
 
-from django.http import HttpResponse
-from django.shortcuts import render
-from rest_framework.response import Response
-from ..pesapal import PesapalV30Helper
-from rest_framework.decorators import api_view
-
 
 pesapal = PesapalV30Helper()
 # Create your views here.
@@ -466,11 +483,13 @@ def iframe_src(request):
     response = pesapal.get_merchant_order_url(data, access_token)
     return Response(response)
 
+
 @api_view(["GET"])
 def transaction_details(request, id):
     access_token = pesapal.get_access_token()
     response = pesapal.get_transaction_status(id, access_token)
     return Response(response)
+
 
 def redirect(request, OrderTrackingId, OrderMerchantReference):
     access_token = pesapal.get_access_token()

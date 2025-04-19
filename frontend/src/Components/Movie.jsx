@@ -32,7 +32,7 @@ const Movie = ({ movie, scrollPosition }) => {
             src={movie.poster}
             alt={movie.title}
             title={movie.title}
-            effect="blur"
+            effect="opacity"
             className={`w-full object-cover rounded-lg transition-opacity duration-300 ${loaded ? 'opacity-100' : 'opacity-0'}`}
           />
 

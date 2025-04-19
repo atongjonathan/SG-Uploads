@@ -4,7 +4,7 @@ from ..models import Movie, SGUser
 from django.contrib.auth.password_validation import validate_password
 
 class SGUserSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=True, required=True)
+    password = serializers.CharField(write_only=True, required=False)
     favourites = serializers.PrimaryKeyRelatedField(
         many=True,
         queryset=Movie.objects.all(),
@@ -13,8 +13,8 @@ class SGUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = SGUser
-        fields = ['username', 'email', 'password', 'favourites', 'is_superuser',
-                  'date_joined', 'image', 'name', 'is_verified', 'telegram_id']
+        fields = '__all__'
+        exlude_fields = ['password']
 
     def create(self, validated_data):
         password = validated_data.pop('password')  # Remove password before creating user

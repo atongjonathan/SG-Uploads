@@ -261,3 +261,12 @@ export const sendResetEmail = async (email) => {
 export const setPassword = async (data) => {
     return await axios.post(BACKEND_URL + `/reset_password`, data)
 }
+
+export const updateUser = async (accessToken, data) => {
+    return await axios.put(`${BACKEND_URL}/users/me/`, data, {
+        headers: {            
+            Authorization: 'Bearer ' + accessToken,
+        }
+    })
+
+};

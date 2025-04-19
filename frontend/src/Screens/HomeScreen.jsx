@@ -13,6 +13,7 @@ const HomeScreen = () => {
   document.title = `StreamGrid | Home`;
 
   let limit = 10
+  const shuffle = true
 
   const sortedByDate = {
     ordering: "-releaseDate",
@@ -32,17 +33,20 @@ const HomeScreen = () => {
 
   const actionMovies = {
     genre: "Action",
-    limit
+    limit,
+    shuffle
 
   }
   const animation = {
     genre: "Animation",
-    limit
+    limit,
+    shuffle
 
   }
   const horror = {
     genre: "Horror",
-    limit
+    limit,
+    shuffle
 
   }
 

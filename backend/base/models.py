@@ -21,8 +21,6 @@ class Movie(models.Model):
     created_date = models.DateField(blank=True, null=True, auto_now_add=True)
     created = models.DateTimeField(blank=True, null=True, auto_now_add=True)
 
-
-
     # Content Details
     contentRating = models.CharField(max_length=10, blank=True, null=True)
     contentType = models.CharField(max_length=50, blank=True, null=True)
@@ -90,6 +88,14 @@ class SGUser(AbstractUser):
     email = models.EmailField(unique=True)
     favourites = models.ManyToManyField(
         Movie, related_name='favourites', blank=True)
+    plan = models.ManyToManyField(
+        Movie, related_name='plan', blank=True)
+    hold = models.ManyToManyField(
+        Movie, related_name='hold', blank=True)
+    dropped = models.ManyToManyField(
+        Movie, related_name='dropped', blank=True)
+    finished = models.ManyToManyField(
+        Movie, related_name='finished', blank=True)
     image = models.ImageField(null=True, blank=True, upload_to="images/")
     name = models.CharField(max_length=150, null=True, blank=True)
     telegram_id = models.IntegerField(null=True, blank=True)

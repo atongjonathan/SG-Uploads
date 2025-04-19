@@ -1,91 +1,126 @@
 import React, { useState, useEffect, useContext, useCallback } from 'react';
 import { FaHeart } from 'react-icons/fa';
 import { toast } from 'sonner';
-import AuthContext from '../context/AuthContext';
-import { Button } from '@headlessui/react';
+import { useAuth } from '../context/AuthContext';
+import { Button, Checkbox, Popover, PopoverButton, PopoverPanel } from '@headlessui/react'
+import { CiCirclePlus, CiBookmark } from "react-icons/ci";
+import { FaPlus } from "react-icons/fa6";
+import { GoPlus, GoCheck } from "react-icons/go";
+import { MdOutlineRadioButtonUnchecked, MdOutlineRadioButtonChecked, MdOutlineBookmark, MdOutlineRemoveRedEye, MdOutlineStopCircle } from "react-icons/md";
+import { IoMdClose } from "react-icons/io";
+import { RiCheckDoubleFill } from "react-icons/ri";
+import { useMutation } from '@tanstack/react-query';
+import { updateUser } from '../utils/Backend';
+import { ImSpinner8 } from "react-icons/im";
 
 
 const SGFaHeart = ({ movie }) => {
-  const { authTokens, user } = useContext(AuthContext);
 
-  const [isFavourite, setIsFavourite] = useState(false);
-  const [isLoading, setIsLoading] = useState(false); // State for managing button loading
+  const { user } = useAuth()
+  const { id } = movie
+  const actions = [
+    {
+      Icon: MdOutlineBookmark,
+      label: "Plan to Watch",
+      name: "plan",
+      enabled: user?.plan?.includes(id)
+    },
+    // {
+    //   Icon: MdOutlineRemoveRedEye,
+    //   label: "Watching",
+    //   name: "watching",
 
-  // Effect to sync state with the backend
-  useEffect(() => {
-    if (user && movie) {
-      setIsFavourite(user.favourites?.includes(movie.id));
+    // },
+    {
+      Icon: MdOutlineStopCircle,
+      name: "hold",
+      label: "On Hold",
+      enabled: user?.hold?.includes(id)
+
+    },
+    {
+      Icon: IoMdClose,
+      name: "dropped",
+      label: "Dropped",
+      enabled: user?.dropped?.includes(id)
+
+    },
+    {
+      Icon: RiCheckDoubleFill,
+      name: "finished",
+      label: "Finished",
+      enabled: user?.finished?.includes(id)
+
     }
-  }, [user, movie]);
-
-  const handleResponse = useCallback((response, successMessage, isFav) => {
-    if (response.data) {
-      toast.success(successMessage, {
-        classNames: {
-          toast: 'bg-subMain',
-          title: 'text-white',
-          closeButton: 'bg-subMain text-white hover:text-subMain',
-        },
-        closeButton: true,
-      });
-      setIsFavourite(isFav);
-    } else {
-      toast.error('Action failed. Please try again.', {
-        classNames: {
-          toast: 'bg-red-500',
-          title: 'text-white',
-          closeButton: 'bg-red-500 text-white hover:text-subMain',
-        },
-        closeButton: true,
-      });
-    }
-    setIsLoading(false);
-  }, []);
-
-  const like = useCallback(async () => {
-    setIsLoading(true);
-    const response = await like(authTokens?.access, movie?.id);
-    handleResponse(response, `Added '${movie?.title}' to favourites`, true);
-  }, [authTokens, movie, handleResponse]);
-
-  const unlike = useCallback(async () => {
-    setIsLoading(true);
-    const response = await unlike(authTokens?.access, movie?.id);
-    handleResponse(response, `Removed '${movie?.title}' from favourites`, false);
-  }, [authTokens, movie, handleResponse]);
+  ]
 
   return (
-    <>
-      {!user ? (
-        <Button
-          onClick={() =>
-            toast.info('Login to be able to save favourites', {
-              classNames: {
-                toast: 'bg-subMain',
-                title: 'text-white',
-                closeButton: 'bg-subMain text-white hover:text-subMain',
-              },
-              closeButton: true,
-            })
+    <Popover className="aspect-square">
+      <PopoverButton className="p-1 aspect-square rounded-full bg-subMain flex items-center justify-center text-sm" >
+        {
+          actions.findIndex((action) => action.enabled) === -1 ? <GoPlus className='w-7 h-7 transitions p-1' /> : <GoCheck className='w-7 h-7 transitions p-1' />
+        }
+
+      </PopoverButton>
+      <PopoverPanel
+        transition
+        anchor="bottom"
+        className="divide-y border-white divide-white/5 rounded-xl bg-main/70 text-sm/6 transition duration-200 ease-in-out [--anchor-gap:var(--spacing-5)] data-[closed]:-translate-y-1 data-[closed]:opacity-0 z-30"
+      >
+        <div className="p-1">
+          {
+            actions.map((action, idx) => (
+              <ActionItem key={idx} {...action} id={movie.id} />
+            ))
           }
-          className="bg-white hover:text-subMain transitions text-white px-4 py-3 rounded text-sm bg-opacity-30"
-        >
-          <FaHeart />
-        </Button>
-      ) : (
-        <Button
-          onClick={isFavourite ? unlike : like}
-          title={isFavourite ? 'Remove from Favourites' : 'Add to Favourites'}
-          disabled={isLoading} // Disable button during loading
-          className={`bg-white transitions px-4 py-3 rounded text-sm bg-opacity-30 ${
-            isFavourite ? 'text-subMain hover:text-white' : 'text-white hover:text-subMain'
-          }`}
-        >
-          <FaHeart />
-        </Button>
-      )}
-    </>
+
+        </div>
+      </PopoverPanel>
+
+    </Popover>
   );
 };
 
 export default SGFaHeart;
+
+const ActionItem = ({ Icon, label, name, id, enabled }) => {
+  const { authTokens, user, fetchUser } = useAuth();
+
+  const { mutate, error, data, isPending } = useMutation({
+    mutationKey: ["updateMe"],
+    mutationFn: (data) => {
+      return updateUser(authTokens.access, { ...user, ...data }).then(() => fetchUser(authTokens))
+    }
+  })
+
+
+  return (
+
+    <Button className="rounded-lg py-2 px-3 transition hover:bg-main/80 flex text-white text-sm items-between justify-between w-44" onClick={() => {
+      if (user) {
+        let curentItems = user[name]
+        if (curentItems.includes(id)) {
+          curentItems = curentItems.filter((item) => item !== id)
+        }
+        else {
+          curentItems.push(id)
+        }
+        mutate({
+          [name]: curentItems
+        })
+      }
+      else {
+        toast.info("You need to Login to use this feature")
+      }
+    }}>
+      <div className="flex justify-between gap-2 items-center">
+        <Icon className="text-white" />
+        <p className='text-sm'>{label}</p>
+      </div>
+      {
+        isPending ? <ImSpinner8 className='animate-spin' /> : enabled ? <MdOutlineRadioButtonChecked /> : <MdOutlineRadioButtonUnchecked />
+      }
+
+    </Button>
+  )
+}

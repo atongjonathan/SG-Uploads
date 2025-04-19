@@ -12,6 +12,7 @@ def change_backend_domain(apps, schema_editor):
                 movie.stream = stream_link.replace("sguploads.atongjona.com", "backend.streamgrid.stream")
                 movie.save(update_fields=["stream"])
             except Exception as e:
+                # Optional: log or print for debugging
                 print(
                     f"Failed to update stream for movie ID {movie.id}: {e}")
 
@@ -23,4 +24,4 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.RunPython(change_backend_domain)
-    ]git
+    ]

@@ -21,6 +21,7 @@ import { Helmet } from "react-helmet";
 import { useQuery } from '@tanstack/react-query'
 import { getMovies } from '../utils/Backend'
 import DonateBtn from '../Components/DonateBtn'
+import SGFaHeart from '../Components/SGFaHeart'
 
 function isIntegerString(str) {
     return Number.isInteger(Number(str));
@@ -92,6 +93,18 @@ const WatchPage = () => {
         limit: 10
     }
 
+    function clearLocalStorageByValue(valueToMatch) {
+        for (let i = 0; i < localStorage.length; i++) {
+            let key = localStorage.key(i); 
+            let value = localStorage.getItem(key); 
+
+            if (value === valueToMatch) {
+                localStorage.removeItem(key); 
+            }
+        }
+    }
+
+    clearLocalStorageByValue('{"time":"0"}'); 
 
 
     if (isSuccess && !movie) return <NotFound />
@@ -114,20 +127,17 @@ const WatchPage = () => {
                     }
                     <div className="container mx-auto bg-dry px-4 py-2 mb-2">
                         {
-                            movie && <EditMovie close={close} isOpen={isOpen} movie={movie}></EditMovie>
+                            movie && <>
+                                <EditMovie close={close} isOpen={isOpen} movie={movie} />
+                                <ShareMovieModal movie={movie} isModalOpen={isModalOpen} setisModalOpen={setModal} />
+                                <div className="p-4 flex gap-2 ml-3 text-center">
+
+                                    <h2 className="md:text-lg text-sm font-semibold">{movie.title} ({movie.year})</h2>
+
+                                </div>
+                            </>
                         }
 
-
-                        {
-                            movie && <ShareMovieModal movie={movie} isModalOpen={isModalOpen} setisModalOpen={setModal}></ShareMovieModal>
-                        }
-                        {
-                            movie && <div className="p-4 flex gap-2 ml-3 text-center">
-
-                                <h2 className="md:text-lg text-sm font-semibold">{movie.title} ({movie.year})</h2>
-
-                            </div>
-                        }
 
                         <div className="grid grid-cols-4 gap-2">
                             <div className="col-span-4 lg:col-span-3">
@@ -162,13 +172,14 @@ const WatchPage = () => {
                                     </div>
 
                                     <div className="col-span-2 flex justify-end items-center gap-2">
+                                        <SGFaHeart movie={movie} />
                                         <DonateBtn />
 
 
                                         <Button onClick={() => setisModalOpen(true)} className="w-10 h-10 flex-colo rounded-lg bg-white bg-opacity-20"><FaShareAlt /></Button>
 
 
-                                       
+
                                         {
                                             user?.is_superuser && (
                                                 <Button onClick={() => {
