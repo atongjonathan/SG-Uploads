@@ -109,7 +109,7 @@ const WatchPage = () => {
                                 <div className="p-4 flex gap-2 ml-3 text-center justify-between">
 
                                     <h2 className="md:text-lg text-sm font-semibold">{movie.title} ({movie.year})</h2>
-                                    <Link to={"/contact-us/#details"} class="ring-1 ring-gray-500 lg:ring-gray-400 hover:bg-white/5 px-3 rounded-full py-1 text-xs 2xl:text-sm text-white xl:font-medium my-auto transitions">Not Working ?</Link>
+                                    <Link to={"/contact-us/#details"} class="ring-1 ring-gray-500 lg:ring-gray-400 hover:bg-white/5 px-3 rounded-full py-1 text-xs 2xl:text-sm text-white xl:font-medium my-auto transitions">Issue ?</Link>
 
                                 </div>
 
@@ -171,16 +171,15 @@ const WatchPage = () => {
 
                                 </div>
 
-                                {
-                                    tmdb_id && <Characters tmdb_id={tmdb_id} />
-                                }
+                                <Characters tmdb_id={tmdb_id} />
+
 
                                 <TrailerSlider movie={movie} />
 
 
                             </div>
 
-                            <MovieInfo movie={movie}></MovieInfo>
+                            <MovieInfo movie={movie}/>
 
                         </div>
 

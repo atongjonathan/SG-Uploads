@@ -1,14 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/solid'
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { FaStar } from 'react-icons/fa';
+import Skeleton from 'react-loading-skeleton';
 
 const MovieInfo = ({ movie }) => {
+    const [loaded, setLoaded] = useState(false);
 
-    if (!movie) return
 
-    const date = new Date(movie.releaseDate)
+    const date = new Date(movie?.releaseDate)
 
     const dateStr = `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`
 
@@ -21,7 +22,7 @@ const MovieInfo = ({ movie }) => {
 
                         {
                             movie ?
-                                <LazyLoadImage effect="blur" src={movie.poster} alt={movie.title} title={movie.title} className="object-cover lg:h-64 mx-auto" />
+                                <LazyLoadImage effect="blur" src={movie.poster} alt={movie.title} title={movie.title} className={`object-cover lg:h-64 mx-auto  transition-opacity duration-300 ${loaded ? 'opacity-100' : 'opacity-0'}`} />
                                 : <Skeleton baseColor="rgb(22 28 63)" height={220} width={150} containerClassName="animate-pulse"></Skeleton>
                         }
 
