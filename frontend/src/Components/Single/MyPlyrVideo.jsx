@@ -23,7 +23,12 @@ import { useDevToolsStatus } from '../../utils/useDevToolsStatus';
 import { useAuth } from '../../context/AuthContext';
 
 const VIDEO_PROGRESS_KEY = 'video-progress';
-
+export const secondsToHHMMSS = (seconds) => {
+    const h = String(Math.floor(seconds / 3600)).padStart(2, '0');
+    const m = String(Math.floor((seconds % 3600) / 60)).padStart(2, '0');
+    const s = String(Math.floor(seconds % 60)).padStart(2, '0');
+    return `${h}:${m}:${s}`;
+};
 export default function MyPlyrVideo({ movie }) {
     const ref = useRef();
     const { user } = useAuth();
@@ -93,12 +98,7 @@ export default function MyPlyrVideo({ movie }) {
         setShowResumePrompt(false);
     };
 
-    const secondsToHHMMSS = (seconds) => {
-        const h = String(Math.floor(seconds / 3600)).padStart(2, '0');
-        const m = String(Math.floor((seconds % 3600) / 60)).padStart(2, '0');
-        const s = String(Math.floor(seconds % 60)).padStart(2, '0');
-        return `${h}:${m}:${s}`;
-    };
+
 
     if (isDevToolsOpen) return null;
 
@@ -156,14 +156,14 @@ export default function MyPlyrVideo({ movie }) {
                             <Button onClick={() => handleResume(false)} className="absolute top-3 right-5 text-white hover:text-subMain transitions">
                                 <IoClose className="h-5 w-5" />
                             </Button>
-                            <DialogTitle as="h3" className="text-lg font-medium">
+                            <DialogTitle as="h3" className="text-sm font-medium mt-4">
                                 Continue watching at {secondsToHHMMSS(initialTime)}?
                             </DialogTitle>
                             <div className="flex gap-3 mt-5 justify-end">
-                                <Button onClick={() => handleResume(false)} className="px-4 py-2 border border-subMain rounded hover:bg-subMain">
+                                <Button onClick={() => handleResume(false)} className="px-4 py-2 border border-subMain rounded hover:bg-subMain transitions">
                                     No
                                 </Button>
-                                <Button onClick={() => handleResume(true)} className="px-4 py-2 bg-subMain border border-main rounded hover:bg-main">
+                                <Button onClick={() => handleResume(true)} className="px-4 py-2 bg-subMain border border-main rounded hover:bg-main transitions">
                                     Yes
                                 </Button>
                             </div>

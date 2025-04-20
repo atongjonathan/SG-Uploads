@@ -35,7 +35,7 @@ const MobileFooter = () => {
     }, []);
 
     const [query, setQuery] = useState("");
-    
+
 
     const { data, isFetching } = useQuery({
         queryKey: ["searchQuery", query],
@@ -103,14 +103,17 @@ const MobileFooter = () => {
                         <BsHouseAddFill></BsHouseAddFill><p className='text-xs'>Home</p>
                     </NavLink>
 
-                    <NavLink to="/movies"  className="transitions text-2xl flex flex-col items-center hover:bg-white hover:text-main text-white rounded-md px-4 py-3">
+                    <NavLink to="/movies" className="transitions text-2xl flex flex-col items-center hover:bg-white hover:text-main text-white rounded-md px-4 py-3">
                         <FaSearch /> <p className='text-xs'>Search</p>
                     </NavLink>
 
                     <PopMenu user={user}></PopMenu>
-                    <NavLink to="/profile"  className="transitions text-2xl flex flex-col items-center hover:bg-white hover:text-main text-white rounded-md px-4 py-3">
-                        <IoTime /> <p className='text-xs'>History</p>
-                    </NavLink>
+                    {
+                        user && <NavLink to="/profile" className="transitions text-2xl flex flex-col items-center hover:bg-white hover:text-main text-white rounded-md px-4 py-3">
+                            <IoTime /> <p className='text-xs'>History</p>
+                        </NavLink>
+                    }
+
 
 
 

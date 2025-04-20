@@ -55,25 +55,20 @@ const PopMenu = ({ user }) => {
                 transition
                 anchor="top start"
                 className={`flex justify-center gap-2 bg-dry/80 z-50 transition duration-100 ease-out [--anchor-gap:var(--spacing-1)] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0`}            >
-                {
-                    !user &&
-                    <MenuItem>
-                        <NavLink title="About Us" className={Hover} to="/about-us">
-                            <MdOutlineInfo className='w-7 h-7'></MdOutlineInfo ><p className='text-sm'>About</p>
 
-                        </NavLink>
-                    </MenuItem>
+                <MenuItem>
+                    <NavLink title="About Us" className={Hover} to="/about-us">
+                        <MdOutlineInfo className='w-7 h-7'></MdOutlineInfo ><p className='text-sm'>About</p>
 
-                }
-                {
-                    !user &&
-                    <MenuItem>
-                        <NavLink title="About Us" className={Hover} to="/contact-us">
-                            <MdOutlineContactMail className='w-7 h-7'></MdOutlineContactMail><p className='text-sm'>Contact</p>
-                        </NavLink>
-                    </MenuItem>
+                    </NavLink>
+                </MenuItem>
+                <MenuItem>
+                    <NavLink title="About Us" className={Hover} to="/contact-us">
+                        <MdOutlineContactMail className='w-7 h-7'></MdOutlineContactMail><p className='text-sm'>Contact</p>
+                    </NavLink>
+                </MenuItem>
 
-                }
+
 
                 {
                     user?.is_superuser && adminLinks.map((link, idx) => (
