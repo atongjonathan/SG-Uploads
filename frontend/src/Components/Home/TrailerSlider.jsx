@@ -37,10 +37,10 @@ const TrailerSlider = ({ movie }) => {
   };
 
   return (
-    <div className="mt-5">
+    <div>
       {
         data?.length > 0 &&
-        <div className="w-full flex justify-between items-center">
+        <div className="w-full flex justify-between items-center mt-5">
           <h2 className="text-sm font-semibold truncate">
             More Videos
             <span> {(`(${data?.length})`)}</span>

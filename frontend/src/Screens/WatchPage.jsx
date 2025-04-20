@@ -127,7 +127,7 @@ const WatchPage = () => {
                                         } </>
 
                                 }
-                                <div className="grid grid-cols-4 place-content-center justify-between gap-2 my-4">
+                                <div className="grid grid-cols-4 place-content-center justify-between gap-2 my-2">
 
                                     <div className="col-span-2 p-2 flex gap-2">
 

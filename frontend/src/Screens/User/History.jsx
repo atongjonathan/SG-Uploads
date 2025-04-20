@@ -1,24 +1,40 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import { secondsToHHMMSS } from '../../Components/Single/MyPlyrVideo';
+import { BsThreeDotsVertical } from "react-icons/bs";
+import { Button, Popover, PopoverButton, PopoverPanel } from '@headlessui/react'
 
 const History = () => {
     const VIDEO_PROGRESS_KEY = 'video-progress';
-    const progressData = JSON.parse(localStorage.getItem(VIDEO_PROGRESS_KEY) || '{}');
+    const [progressData, setProgressData] = useState(JSON.parse(localStorage.getItem(VIDEO_PROGRESS_KEY) || '{}'));
+    
     const ids = Object.keys(progressData)
     const values = Object.values(progressData)
+
+    useEffect(() => {
+        const handleChange = () => {
+            setProgressData(JSON.parse(localStorage.getItem(VIDEO_PROGRESS_KEY) || '{}'))
+        };
+
+        window.addEventListener('local-storage-updated', handleChange);
+
+        return () => {
+            window.removeEventListener('local-storage-updated', handleChange);
+        };
+    }, []);
+
     return (
         <div class="flex flex-col xl:px-2 gap-5">
             <div class="flex w-full justify-between items-center gap-2 px-1 xl:px-2">
                 <span class="text-lg xl:text-xl 2xl:text-2xl font-semibold">History</span>
-                {/* <a class="ring-1 ring-gray-500 lg:ring-gray-400 hover:bg-white/5 px-3 rounded-full py-1 text-xs 2xl:text-sm text-gray-400 xl:font-medium" href="/history">view all</a> */}
+                {/* <a class="ring-1 ring-gray-500 lg:ring-gray-400 hover:bg-dry px-3 rounded-full py-1 text-xs 2xl:text-sm text-gray-400 xl:font-medium" href="/history">view all</a> */}
             </div>
             {
                 ids.length > 0 ? <div class="flex w-full overflow-y-hidden overflow-x-auto">
                     {
                         values.map((movie, idx) => (
-                            <div class="flex gap-2 w-[45%] sm:w-1/3 hover:bg-white/5 smoothie relative bubbly overflow-hidden rounded-xl md:w-1/4 2xl:w-1/5 flex-col shrink-0 p-2">
-                                <Link to={`/watch/${ids[idx]}`} class="aspect-video w-full relative bg-white/10 shrink-0 xl:bg-white/5 rounded-lg lg:rounded-xl overflow-hidden" href="/watch/anime/176496?ep=0">
+                            <div class="flex gap-2 w-[45%] sm:w-1/3 hover:bg-dry smoothie relative bubbly overflow-hidden rounded-xl md:w-1/4 2xl:w-1/5 flex-col shrink-0 p-2">
+                                <Link to={`/watch/${ids[idx]}`} class="aspect-video w-full relative bg-white/10 shrink-0 xl:bg-dry rounded-lg lg:rounded-xl overflow-hidden">
                                     <span class=" lazy-load-image-background opacity"
                                     // style="color: transparent; display: inline-block; height: 100%; width: 100%;"
                                     >
@@ -30,16 +46,16 @@ const History = () => {
                                         }} />
                                     </div>
 
-                                    {movie.duration && <span class="absolute bottom-[.35rem] right-1 sm:right-2 z-20 text-xs bg-black/75 sm:font-medium px-1 py-[.1rem] rounded overflow-hidden">{secondsToHHMMSS(movie.duration) }</span>}
+                                    {movie.duration && <span class="absolute bottom-[.35rem] right-1 sm:right-2 z-20 text-xs bg-black/75 sm:font-medium px-1 py-[.1rem] rounded overflow-hidden">{secondsToHHMMSS(movie.duration)}</span>}
                                 </Link>
                                 <div class="flex-grow gap-1 w-full flex pl-1 overflow-hidden">
-                                    <a class="flex flex-col flex-grow text-xs gap-1 sm:text-sm lg:text-base !leading-tight" href="/watch/anime/176496?ep=0">
+                                    <a class="flex flex-col flex-grow text-xs gap-1 sm:text-sm lg:text-base !leading-tight">
                                         <div class="w-full text-[.8rem] sm:text-sm lg:text-base sm:font-medium !tracking-wide !line-clamp-2 !shrink-0 !leading-tight">{movie.title}</div>
                                     </a>
-                                    {/* <div class="shrink-0 mb-auto hidden sm:flex">
-                                        <button type="button" id="radix-:r1p:" aria-haspopup="menu" aria-expanded="false" data-state="closed">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-ellipsis rotate-90"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg></button>
-                                    </div> */}
+                                    <div class="mb-auto sm:flex">
+                                        <HistoryActions title={movie.title} id={ids[idx]} />
+
+                                    </div>
                                 </div>
                             </div>
                         ))
@@ -55,3 +71,29 @@ const History = () => {
 }
 
 export default History
+import { FaTrashAlt } from 'react-icons/fa';
+import WebShare from '../../Components/WebShare';
+
+
+const HistoryActions = (params) => {
+    const VIDEO_PROGRESS_KEY = 'video-progress';
+    let progressData = JSON.parse(localStorage.getItem(VIDEO_PROGRESS_KEY) || '{}');
+
+    return (
+        <Popover className="relative">
+            <PopoverButton className={"p-1 m-2"}><BsThreeDotsVertical className='w-5 h-5' /></PopoverButton>
+            <PopoverPanel anchor="bottom" className="divide-y border-white divide-dry rounded-xl bg-dry text-sm/6 transition duration-200 ease-in-out [--anchor-gap:var(--spacing-5)] data-[closed]:-translate-y-1 data-[closed]:opacity-0 z-30 w-28 flex flex-col items-center">
+                <WebShare {...params} />
+                <Button onClick={() => {
+                    delete progressData[params.id]
+                    localStorage.setItem(VIDEO_PROGRESS_KEY, JSON.stringify(progressData))
+                    window.dispatchEvent(new Event('local-storage-updated'));
+                }} className="relative select-none outline-none transition-colors focus:bg-dry data-[disabled]:pointer-events-none data-[disabled]:opacity-50 px-3 w-full py-2 gap-2 flex items-center rounded-lg hover:bg-dry cursor-pointer mb-[.1rem] text-red-500 hover:!bg-red-600/10">
+                    <FaTrashAlt />
+                    Delete
+                </Button>
+
+            </PopoverPanel>
+        </Popover>
+    )
+}

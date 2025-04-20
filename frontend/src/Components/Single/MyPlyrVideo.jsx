@@ -75,7 +75,8 @@ export default function MyPlyrVideo({ movie }) {
                 percentage,
                 poster,
                 title,
-                duration
+                duration,
+                dateModified:now
             };
 
             localStorage.setItem(VIDEO_PROGRESS_KEY, JSON.stringify(progressData));

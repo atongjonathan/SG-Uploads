@@ -25,7 +25,7 @@ const Characters = ({ tmdb_id }) => {
 
 
     return (
-        <div className="mt-5">
+        <div>
             <div className='w-full flex justify-between'>
                 {
                     data?.length > 0 && <div className="flex sm:gap-8 gap-4 items-center truncate">
@@ -39,7 +39,7 @@ const Characters = ({ tmdb_id }) => {
             </div>
             {
                 (!tmdb_id || isFetching) ? <Skeleton baseColor="rgb(22 28 63)" containerClassName="animate-pulse" className='my-3 animate-pulse' height={120}></Skeleton>
-                    :
+                    : data?.length > 0  &&
                     <div className="mt-5">
                         <Swiper
                             slidesPerView={3}
