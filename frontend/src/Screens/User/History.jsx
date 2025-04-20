@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import { secondsToHHMMSS } from '../../Components/Single/MyPlyrVideo';
 import { BsThreeDotsVertical } from "react-icons/bs";
-import { Button, Popover, PopoverButton, PopoverPanel } from '@headlessui/react'
+import { Button, Popover, PopoverButton, PopoverPanel, useClose } from '@headlessui/react'
 
 const History = () => {
     const VIDEO_PROGRESS_KEY = 'video-progress';
     const [progressData, setProgressData] = useState(JSON.parse(localStorage.getItem(VIDEO_PROGRESS_KEY) || '{}'));
-    
+
     const ids = Object.keys(progressData)
     const values = Object.values(progressData)
 
@@ -74,24 +74,37 @@ export default History
 import { FaTrashAlt } from 'react-icons/fa';
 import WebShare from '../../Components/WebShare';
 
-
-const HistoryActions = (params) => {
+const DeleteButton = ({ id }) => {
     const VIDEO_PROGRESS_KEY = 'video-progress';
     let progressData = JSON.parse(localStorage.getItem(VIDEO_PROGRESS_KEY) || '{}');
+    const close = useClose()
+    const handleDelete = () => {
+        delete progressData[id];
+        localStorage.setItem(VIDEO_PROGRESS_KEY, JSON.stringify(progressData));
+        window.dispatchEvent(new Event('local-storage-updated'));
+        close(); // close the popover
+
+    };
+    return (
+        <Button onClick={handleDelete} className="relative select-none outline-none transition-colors focus:bg-dry data-[disabled]:pointer-events-none data-[disabled]:opacity-50 px-3 w-full py-2 gap-2 flex items-center rounded-lg hover:bg-dry cursor-pointer mb-[.1rem] text-red-500 hover:!bg-red-600/10">
+            <FaTrashAlt />
+            Delete
+        </Button>
+    )
+}
+
+const HistoryActions = (params) => {
+
+
+
 
     return (
         <Popover className="relative">
             <PopoverButton className={"p-1 m-2"}><BsThreeDotsVertical className='w-5 h-5' /></PopoverButton>
             <PopoverPanel anchor="bottom" className="divide-y border-white divide-dry rounded-xl bg-dry text-sm/6 transition duration-200 ease-in-out [--anchor-gap:var(--spacing-5)] data-[closed]:-translate-y-1 data-[closed]:opacity-0 z-30 w-28 flex flex-col items-center">
                 <WebShare {...params} />
-                <Button onClick={() => {
-                    delete progressData[params.id]
-                    localStorage.setItem(VIDEO_PROGRESS_KEY, JSON.stringify(progressData))
-                    window.dispatchEvent(new Event('local-storage-updated'));
-                }} className="relative select-none outline-none transition-colors focus:bg-dry data-[disabled]:pointer-events-none data-[disabled]:opacity-50 px-3 w-full py-2 gap-2 flex items-center rounded-lg hover:bg-dry cursor-pointer mb-[.1rem] text-red-500 hover:!bg-red-600/10">
-                    <FaTrashAlt />
-                    Delete
-                </Button>
+                <DeleteButton id={params.id} />
+
 
             </PopoverPanel>
         </Popover>
