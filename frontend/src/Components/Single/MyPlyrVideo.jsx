@@ -69,7 +69,8 @@ export default function MyPlyrVideo({ movie }) {
                 time: currentTime,
                 percentage,
                 poster,
-                title
+                title,
+                duration
             };
 
             localStorage.setItem(VIDEO_PROGRESS_KEY, JSON.stringify(progressData));
@@ -135,8 +136,8 @@ export default function MyPlyrVideo({ movie }) {
                         filename: movie.title
                     } : undefined}
                     slots={{
-                        beforePlayButton: <BackwardButton />,
-                        afterPlayButton: <ForwardButton />,
+                        beforePlayButton: null,
+                        afterPlayButton: null,
                         smallLayout: {
                             beforeFullscreenButton: <BackwardButton />,
                             afterFullscreenButton: <ForwardButton />,
