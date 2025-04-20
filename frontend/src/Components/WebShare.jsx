@@ -4,12 +4,11 @@ import { toast } from 'sonner';
 import { FaShare } from 'react-icons/fa';
 
 const WebShare = ({ title, id }) => {
-    const [result, setResult] = useState('');
 
     const shareData = {
         title,
-        text: `Watch '${title}'`,
-        url: 'https://streamgrid.stream/' + id,
+        text: `Watch '${title}' at StreamGrid`,
+        url: 'https://streamgrid.stream/watch/' + id,
     };
 
     const handleShare = async () => {
