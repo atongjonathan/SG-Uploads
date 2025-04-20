@@ -13,40 +13,35 @@ import { ImSpinner8 } from "react-icons/im";
 
 const SGFaHeart = ({ movie }) => {
 
-  const { user } = useAuth()
+  let { user } = useAuth()
+
   const id = movie?.id
   const actions = [
     {
       Icon: MdOutlineBookmark,
       label: "Plan to Watch",
       name: "plan",
-      enabled: !(user?.plan?.findIndex((movie) => movie.id === id) === -1)
+      enabled: user ? !(user?.plan?.findIndex((movie) => movie.id === id) === -1) : false
     },
-    // {
-    //   Icon: MdOutlineRemoveRedEye,
-    //   label: "Watching",
-    //   name: "watching",
-
-    // },
     {
       Icon: MdOutlineStopCircle,
       name: "hold",
       label: "On Hold",
-      enabled: !(user?.hold?.findIndex((movie) => movie.id === id) === -1)
+      enabled: user ? !(user?.hold?.findIndex((movie) => movie.id === id) === -1) : false
 
     },
     {
       Icon: IoMdClose,
       name: "dropped",
       label: "Dropped",
-      enabled: !(user?.dropped?.findIndex((movie) => movie.id === id) === -1)
+      enabled: user ? !(user?.dropped?.findIndex((movie) => movie.id === id) === -1) : false
 
     },
     {
       Icon: RiCheckDoubleFill,
       name: "finished",
       label: "Finished",
-      enabled: !(user?.finished?.findIndex((movie) => movie.id === id) === -1)
+      enabled: user ? !(user?.finished?.findIndex((movie) => movie.id === id) === -1) : false
 
     }
   ]

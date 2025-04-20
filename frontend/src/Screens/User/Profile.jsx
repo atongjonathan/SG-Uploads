@@ -8,11 +8,13 @@ import AuthContext from '../../context/AuthContext';
 import Password from '../../Components/Modals/Password';
 import History from './History';
 import WatchList from './WatchList';
+import { useNavigate } from 'react-router-dom';
 
 
 
 const Profile = () => {
   const { logoutUser } = useContext(AuthContext)
+  const navigate = useNavigate()
 
 
 
@@ -46,7 +48,7 @@ const Profile = () => {
 
             <div data-aos="fade-up" data-aos-duration="1000" data-aos-delay="10" data-aos-offset="100" className="rounded border border-gray-800 p-6 flex flex-col gap-7">
               <History />
-              <WatchList/>
+              <WatchList />
               <div className="w-full items-start py-3 flex flex-col bg-dry mt-2">
                 <Button onClick={passwordOpen} className="font-medium w-full transitions py-3 px-6 hover:bg-main/50 p-3 sm:w-auto flex items-center gap-4 rounded-lg ">
                   <FaKey></FaKey>
@@ -61,7 +63,10 @@ const Profile = () => {
                 <Update isUpdateOpen={isUpdateOpen} updateClose={updateClose}></Update>
 
 
-                <Button onClick={logoutUser} className="font-medium w-full transitions py-3 px-6 hover:bg-main/50 p-3 sm:w-auto flex items-center gap-4 rounded-lg text-red-500 ">
+                <Button onClick={() => {
+                  navigate("/")
+                  logoutUser()
+                }} className="font-medium w-full transitions py-3 px-6 hover:bg-main/50 p-3 sm:w-auto flex items-center gap-4 rounded-lg text-red-500 ">
                   <MdOutlineLogout></MdOutlineLogout>
                   Log out
                 </Button>

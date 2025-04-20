@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import {
     Listbox,
     Transition,
@@ -16,6 +16,7 @@ import { useSearchParams } from 'react-router-dom';
 import Movie from '../Components/Movie';
 import { FaAngleDown, FaArrowLeft, FaArrowRight, FaCheck, FaSearch } from 'react-icons/fa';
 import Skeleton from 'react-loading-skeleton';
+import { FiFilter } from "react-icons/fi";
 
 const TanstackTable = () => {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -114,9 +115,12 @@ const TanstackTable = () => {
         },
     ];
 
+    const [display, setDisplay] = useState(false);
+
+
     return (
-        <div className="min-height-screen container flex flex-col mx-auto p-4 gap-2">
-           
+        <div data-aos="fade-up" data-aos-duration="1000" data-aos-delay="10" data-aos-offset="100" className="min-height-screen container flex flex-col mx-auto p-4 gap-2">
+
             <div className={`col-span-3 relative lg:hidden xl:hidden md:inline-block`}>
                 <form
                     className="w-full text-sm bg-dryGray rounded flex-btn gap-2"
@@ -138,7 +142,7 @@ const TanstackTable = () => {
                         className="font-medium placeholder:text-border text-sm w-full bg-transparent border-none px-2 text-black"
                         onInput={(e) => {
                             let value = e.target.value
-                            updateParam("title", value ? value: "Any")
+                            updateParam("title", value ? value : "Any")
                         }}
                     />
                 </form>
@@ -146,11 +150,12 @@ const TanstackTable = () => {
             </div>
             <div className="w-full flex justify-between bg-dry">
                 <div className="flex sm:gap-3 gap-2 items-center truncate">
-                    {/* <h2 className="text-sm font-semibold truncate">Movies</h2> */}
+                    <h2 className="ml-3 text-sm font-semibold truncate">Movies</h2>
                 </div>
 
 
                 <div className="px-2 flex justify-center gap-2 items-center">
+                    <Button onClick={() => setDisplay((prev) => !prev)}><FiFilter className='text-lg w-4 h-4' /></Button>
                     <p className='text-xs'>Page {pageIndex + 1}</p>
                     <Button
                         onClick={() => updateParam("page", pageIndex)}
@@ -169,7 +174,9 @@ const TanstackTable = () => {
                 </div>
             </div>
 
-            <div className="grid gap-3 items-end">
+            <div className={`grid gap-3 items-end w-full origin-left transition-all duration-300 ease-linear 
+    ${display ? 'opacity-100 max-h-[500px] visible pt-4' : 'opacity-0 max-h-0 invisible'} 
+    overflow-hidden`}>
                 <div className='text-dryGray border-gray-800 grid grid-cols-2 lg:grid-cols-4 lg:gap-12 gap-2 rounded p-3 '>
                     {filters.map((filter, i) => (
                         <Field key={i} className="flex flex-col gap-2">
