@@ -29,12 +29,7 @@ export default function SgMenu() {
 
 
     const adminLinks = [
-        {
-            name: 'Movies',
-            link: '/movieslist',
-            icon: FaListAlt,
 
-        },
         {
             name: 'Add',
             link: '/addmovie',
@@ -80,13 +75,13 @@ export default function SgMenu() {
 
 
                     {
-                        !user && common.map((link, idx) => (
+                         common.map((link, idx) => (
                             <MenuItem key={idx} onClick={() => setActive(link.name)}>
                                 <NavLink onClick={() => setActive(link.name)}
                                     to={link.link}
                                     className="group flex w-full items-center gap-2 rounded-lg py-1.5 px-3 data-[focus]:bg-white/10"
                                 >
-                                    <link.icon className="text-lg size-4 fill-white/30" />
+                                    <link.icon className="text-lg size-4" />
                                     {link.name}
                                 </NavLink>
                             </MenuItem>

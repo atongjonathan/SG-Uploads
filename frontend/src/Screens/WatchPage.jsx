@@ -106,11 +106,13 @@ const WatchPage = () => {
                             movie && <>
                                 <EditMovie close={close} isOpen={isOpen} movie={movie} />
                                 <ShareMovieModal movie={movie} isModalOpen={isModalOpen} setisModalOpen={setModal} />
-                                <div className="p-4 flex gap-2 ml-3 text-center">
+                                <div className="p-4 flex gap-2 ml-3 text-center justify-between">
 
                                     <h2 className="md:text-lg text-sm font-semibold">{movie.title} ({movie.year})</h2>
+                                    <Link to={"/contact-us/#details"} class="ring-1 ring-gray-500 lg:ring-gray-400 hover:bg-white/5 px-3 rounded-full py-1 text-xs 2xl:text-sm text-white xl:font-medium my-auto transitions">Not Working ?</Link>
 
                                 </div>
+
                             </>
                         }
 

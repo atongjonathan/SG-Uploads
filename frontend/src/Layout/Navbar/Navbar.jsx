@@ -227,7 +227,7 @@ const Navbar = () => {
           <NavLink title="Movies" className={`bg-subMain border-b-subMain py-2 px-3 rounded-lg hover:bg-main hover:border-b-subMain transitions`} to="/movies">
             Explore
           </NavLink>
-          <SgMenu></SgMenu>
+          <SgMenu/>
 
           {user && (
             <>
