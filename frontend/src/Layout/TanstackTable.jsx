@@ -150,12 +150,12 @@ const TanstackTable = () => {
             </div>
             <div className="w-full flex justify-between bg-dry">
                 <div className="flex sm:gap-3 gap-2 items-center truncate">
-                    <h2 className="ml-3 text-sm font-semibold truncate">Movies</h2>
+                    <h2 className="ml-3 text-sm font-semibold truncate">Explore Movies</h2>
                 </div>
 
 
                 <div className="px-2 flex justify-center gap-2 items-center">
-                    <Button onClick={() => setDisplay((prev) => !prev)}><FiFilter className='text-lg w-4 h-4' /></Button>
+                    <Button className={display?"text-subMain": "text-white" +"transitions"} onClick={() => setDisplay((prev) => !prev)}><FiFilter className='text-lg w-4 h-4' /></Button>
                     <p className='text-xs'>Page {pageIndex + 1}</p>
                     <Button
                         onClick={() => updateParam("page", pageIndex)}
@@ -175,8 +175,7 @@ const TanstackTable = () => {
             </div>
 
             <div className={`grid gap-3 items-end w-full origin-left transition-all duration-300 ease-linear 
-    ${display ? 'opacity-100 max-h-[500px] visible pt-4' : 'opacity-0 max-h-0 invisible'} 
-    overflow-hidden`}>
+    ${display ? 'opacity-100 max-h-[500px] visible' : 'opacity-0 max-h-0 invisible'}`}>
                 <div className='text-dryGray border-gray-800 grid grid-cols-2 lg:grid-cols-4 lg:gap-12 gap-2 rounded p-3 '>
                     {filters.map((filter, i) => (
                         <Field key={i} className="flex flex-col gap-2">

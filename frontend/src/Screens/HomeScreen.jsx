@@ -58,10 +58,10 @@ const HomeScreen = () => {
           <Banner />
           <SgSlider params={RecentlyAdded} title='Recently Added' Icon={IoTime} />
           <SgSlider params={sortedByDate} title='Latest Release' Icon={BsCollectionFill} />
-          <SgSlider params={sortedByRatingStar} title='Top Rated' Icon={BsBookmarkStarFill} />
           <SgSlider params={actionMovies} title='Action' Icon={PiFilmReelFill} />
           <SgSlider params={animation} title='Animation' Icon={PiFilmReelFill} />
           <SgSlider params={horror} title='Horror' Icon={PiFilmReelFill} />
+          <SgSlider params={sortedByRatingStar} title='Top Rated' Icon={BsBookmarkStarFill} />
           <Promos />
         </>
       </div>
