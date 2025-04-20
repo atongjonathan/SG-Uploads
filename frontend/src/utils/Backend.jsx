@@ -14,7 +14,7 @@ export async function getMovies(config = {}) {
 
 }
 export async function getMovie(str) {
-    let api_url = isIntegerString(str)? '/movies/'+ str : '/movies/title'+ str
+    let api_url = isIntegerString(str)? '/movies/'+ str : '/movies/title/'+ str
     return axios.get(BACKEND_URL + api_url).then((res) => res.data)
 
 }
