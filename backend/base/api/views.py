@@ -202,14 +202,14 @@ def create_movie(request):
     serializer = MovieSerializer(data=data)
     if serializer.is_valid():
         if settings.DEVELOPMENT != "True":
-            try:
-                serializer.save()
+            try:                
                 updated = cc.update_group(request.data)
                 if not updated.get("success"):
                     logging.info(json.dumps(updated, indent=4))
             except Exception as e:
-                return Response(str(e), status=status.HTTP_400_BAD_REQUEST)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+                return Response(str(e), status=status.HTTP_417_EXPECTATION_FAILED)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 

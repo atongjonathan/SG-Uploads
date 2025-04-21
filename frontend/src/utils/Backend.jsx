@@ -14,7 +14,7 @@ export async function getMovies(config = {}) {
 
 }
 export async function getMovie(str) {
-    let api_url = isIntegerString(str)? '/movies/'+ str : '/movies/title/'+ str
+    let api_url = isIntegerString(str) ? '/movies/' + str : '/movies/title/' + str
     return axios.get(BACKEND_URL + api_url).then((res) => res.data)
 
 }
@@ -160,40 +160,24 @@ export const refreshAccessToken = async (authTokens) => {
 };
 
 
-export const addMovie = (authHeader, data) => {
+export const addMovie = async (authHeader, data) => {
     const refreshUrl = `${BACKEND_URL}/create-movie`;
     const reqOptions = createRequestOptions(refreshUrl, "POST", data, authHeader);
-    try {
-        const response = axios.request(reqOptions);
-        return response;
-    } catch (error) {
-        console.log(error);
-        return error;
-    }
+    return await axios.request(reqOptions);
 };
 
-export const sendCaptions = (authHeader, data) => {
+export const sendCaptions = async (authHeader, data) => {
     const refreshUrl = `${BACKEND_URL}/captions`;
     const reqOptions = createRequestOptions(refreshUrl, "POST", data, authHeader);
-    try {
-        const response = axios.request(reqOptions);
-        return response;
-    } catch (error) {
-        console.log(error);
-        return error;
-    }
+    return await axios.request(reqOptions);
+
 };
 
 export const searchCaptions = (authHeader, data) => {
     const refreshUrl = `${BACKEND_URL}/search`;
     const reqOptions = createRequestOptions(refreshUrl, "POST", data, authHeader);
-    try {
-        const response = axios.request(reqOptions);
-        return response;
-    } catch (error) {
-        console.log(error);
-        return error;
-    }
+    return axios.request(reqOptions).then((res) => res.data.sort((a, b) => b.download_count - a.download_count));
+
 };
 
 export async function getMongoToken() {

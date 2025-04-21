@@ -1,26 +1,19 @@
 import { Combobox, ComboboxButton, ComboboxInput, ComboboxOption, ComboboxOptions } from '@headlessui/react'
 import clsx from 'clsx'
 import { useState } from 'react'
-import { FaAngleDown, } from 'react-icons/fa'
+import { FaAngleDown } from 'react-icons/fa'
 
 
 
-export default function SgCombo({ searchMovie, movies, findMovie }) {
+export default function SgCombo({ searchMovie, searchMovieQuery, findMovie }) {
     const [query, setQuery] = useState('')
     const [selected, setSelected] = useState('')
+    const movies = searchMovieQuery.data
 
-
-
-    const filteredmovies =
-        query === ''
-            ? movies
-            : movies?.filter((movie) => {
-                return movie.title.toLowerCase().includes(query.toLowerCase())
-            })
 
     return (
         <form className="relative w-full text-sm bg-dryGray rounded flex-btn gap-4">
-            <Combobox value={selected} onChange={(value) => value != '' && findMovie(value)} onClose={() => setQuery('')}>
+            <Combobox value={selected} onChange={(value) => findMovie(value)} onClose={() => setQuery('')}>
                 <ComboboxInput
                     className={clsx(
                         'rounded-lg  py-1.5 pr-8 pl-3 font-medium placeholder:text-border text-sm w-full h-12 bg-transparent border-none px-2 text-black',
@@ -41,18 +34,30 @@ export default function SgCombo({ searchMovie, movies, findMovie }) {
                         'transition duration-100 ease-in data-[leave]:data-[closed]:opacity-0 data-[closed]:cursor-pointer'
                     )}
                 >
-                    {filteredmovies.map((movie) => (
+
+                    {searchMovieQuery.isFetching ? <ComboboxOption
+                        className="w-full group flex items-center justify-center gap-2 rounded-lg py-1.5 px-3 select-none data-[focus]:bg-white/10 cursor-pointer animate-pulse"
+                    >
+                        <div className="text-sm/6 text-white">Loading ...</div>
+                    </ComboboxOption> : searchMovieQuery.data?.length === 0 ?
                         <ComboboxOption
-                            key={movie.id}
-                            value={movie.imdb}
-                            className="w-full group flex gap-2 rounded-lg py-1.5 px-3 select-none data-[focus]:bg-white/10 cursor-pointer"
+                            className="w-full group flex items-center justify-center gap-2 rounded-lg py-1.5 px-3 select-none data-[focus]:bg-white/10 cursor-pointer"
                         >
-                            <div className="w-12 p-1 bg-dry border border-border h-12 rounded overflow-hidden">
-                                <img src={movie.image} alt={movie.title} title={movie.title} className='h-full w-full object-cover' />
-                            </div>
-                            <div className="text-sm/6 text-white">{`${movie.title} (${movie.year})`}</div>
-                        </ComboboxOption>
-                    ))}
+                            <div className="text-sm/6 text-white">No movie found</div>
+                        </ComboboxOption> :
+
+                        searchMovieQuery.data?.map((movie) => (
+                            <ComboboxOption
+                                key={movie.id}
+                                value={movie.imdb}
+                                className="w-full group flex gap-2 rounded-lg py-1.5 px-3 select-none data-[focus]:bg-white/10 cursor-pointer"
+                            >
+                                <div className="w-12 p-1 bg-dry border border-border h-12 rounded overflow-hidden">
+                                    <img src={movie.image} alt={movie.title} title={movie.title} className='h-full w-full object-cover' />
+                                </div>
+                                <div className="text-sm/6 text-white">{`${movie.title} (${movie.year})`}</div>
+                            </ComboboxOption>
+                        ))}
                 </ComboboxOptions>
             </Combobox>
         </form>
