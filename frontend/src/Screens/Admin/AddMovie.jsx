@@ -100,7 +100,7 @@ const AddMovie = () => {
     })
 
     useEffect(() => {
-        if (findMovieQuery.data) setMovie(findMovieQuery.data)
+        if (findMovieQuery.data) setMovie({link, ...findMovieQuery.data})
         if (subsQuery.data) setSubs(subsQuery.data)
         if (searchMovieQuery.error) toast.error(searchMovieQuery.error.message)
         if (subsQuery.error) toast.info(subsQuery.error.status === 400 ? "No Subs found" : subsQuery.error.message)
