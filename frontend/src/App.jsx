@@ -20,6 +20,7 @@ import ScrollToTop from './ScrollToTop';
 import 'react-loading-skeleton/dist/skeleton.css'
 import SingleMovie from './Screens/SingleMovie';
 import { Helmet } from "react-helmet";
+import DonateBtn from './Components/DonateBtn';
 
 
 const App = () => {
@@ -62,6 +63,8 @@ const App = () => {
         <Route path='/verify/:uidb64/:token' element={<HomeScreen />}></Route>
         <Route path='/reset/:userToken/:ruidb64/:rtoken' element={<HomeScreen />}></Route>
         <Route path='/403' element={<NotAllowed />}></Route>
+        <Route path="/donate" element={<HomeScreen><DonateBtn open /></HomeScreen>}></Route>
+
 
         {/* Catch-all for not found */}
         <Route path='*' element={<NotFound />}></Route>

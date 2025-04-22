@@ -9,7 +9,7 @@ import { IoTime } from "react-icons/io5";
 
 
 
-const HomeScreen = () => {
+const HomeScreen = ({ children }) => {
   document.title = `StreamGrid | Home`;
 
   let limit = 10
@@ -55,6 +55,7 @@ const HomeScreen = () => {
     <Layout>
       <div className="min-h-screen mb-6 lg:px-10 px-6">
         <>
+          {children}
           <Banner />
           <SgSlider params={RecentlyAdded} title='Recently Added' Icon={IoTime} />
           <SgSlider params={sortedByDate} title='Latest Release' Icon={BsCollectionFill} />
