@@ -6,7 +6,8 @@ import {
     Poster,
     Track,
     SeekButton,
-    useMediaStore
+    useMediaStore,
+    useMediaRemote
 } from '@vidstack/react';
 
 import {
@@ -21,6 +22,9 @@ import { SeekBackward10Icon, SeekForward10Icon, DownloadIcon } from '@vidstack/r
 import { toast } from 'sonner';
 import { useDevToolsStatus } from '../../utils/useDevToolsStatus';
 import { useAuth } from '../../context/AuthContext';
+import { PIPButton, Menu } from '@vidstack/react';
+import { PictureInPictureExitIcon, PictureInPictureIcon, QuestionMarkIcon, SettingsIcon } from '@vidstack/react/icons';
+import { IoReload } from "react-icons/io5";
 
 const VIDEO_PROGRESS_KEY = 'video-progress';
 export const secondsToHHMMSS = (seconds) => {
@@ -38,9 +42,13 @@ export default function MyPlyrVideo({ movie }) {
     const [lastSaved, setLastSaved] = useState(0);
     const { duration } = useMediaStore(ref);
     const { poster, title } = movie
+    let smarter = "https://my-worker.atongjonathan2.workers.dev/download.aspx?file=JFscwhYCIN%2BnVIEqgS1oGjv9EzBBS46ZWOATDkuxBmEePxfh3ZasXgK06NthQmaF&expiry=yep4DgztdIlmq7LntvbHEA%3D%3D&mac=d41f2e9abe4ca7f16cabe47fd5586f1b7e2f2fc368fcc2333f3d5ba3b59f3b90"
+    const [src, setSrc] = useState(movie.stream);
+
+    const menuref = useRef(null);
 
     const movieId = movie.id?.toString();
-
+    const remote = useMediaRemote()
     // Load saved progress on mount
     useEffect(() => {
         const progressData = JSON.parse(localStorage.getItem(VIDEO_PROGRESS_KEY) || '{}');
@@ -76,7 +84,7 @@ export default function MyPlyrVideo({ movie }) {
                 poster,
                 title,
                 duration,
-                dateModified:now
+                dateModified: now
             };
 
             localStorage.setItem(VIDEO_PROGRESS_KEY, JSON.stringify(progressData));
@@ -108,7 +116,7 @@ export default function MyPlyrVideo({ movie }) {
             <MediaPlayer
                 ref={ref}
                 title={movie.title}
-                src={{ src: movie.stream, type: "video/mp4" }}
+                src={{ src, type: "video/mp4" }}
                 poster={movie.poster}
                 aspectRatio="16x9"
                 playsInline
@@ -139,11 +147,40 @@ export default function MyPlyrVideo({ movie }) {
                     slots={{
                         beforePlayButton: null,
                         afterPlayButton: null,
+                        beforeGoogleCastButton: <Menu.Root ref={menuref} className="vds-menu">
+                            <Menu.Button className="vds-menu-button vds-button" aria-label="Settings">
+                                <QuestionMarkIcon className="vds-icon" />
+                            </Menu.Button>
+                            <Menu.Items className="vds-menu-items" placement="top" offset={0}>
+                                <Button onClick={(e) => {
+                                    setSrc(movie.stream.replace("video", "dl"))
+                                    setTimeout(() => {
+                                        const progressData = JSON.parse(localStorage.getItem(VIDEO_PROGRESS_KEY) || '{}');
+                                        setSrc((prev) => {
+                                            console.log(prev);
+                                            return movie.stream
+                                        })
+                                        setInitialTime((prev) => {
+                                            console.log(prev);
+                                            return progressData[movie.id].time
+                                        })
+                                        menuref.current.close()
+                                    }, 10);
+
+
+                                }} >Loading too much? Click to refresh</Button>
+                            </Menu.Items>
+                        </Menu.Root>,
                         smallLayout: {
                             beforeFullscreenButton: <BackwardButton />,
                             afterFullscreenButton: <ForwardButton />,
+                            afterGoogleCastButton: <PIPButton className="vds-button">
+                                <PictureInPictureIcon className="pip-enter-icon vds-icon" />
+                                <PictureInPictureExitIcon className="pip-exit-icon vds-icon" />
+                            </PIPButton>
                         },
                         downloadButton: <DownloadButton user={user} stream={movie.stream} title={movie.title} />
+
                     }}
                 />
             </MediaPlayer>
