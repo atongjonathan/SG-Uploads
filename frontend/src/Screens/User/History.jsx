@@ -6,10 +6,18 @@ import { Button, Popover, PopoverButton, PopoverPanel, useClose } from '@headles
 
 const History = () => {
     const VIDEO_PROGRESS_KEY = 'video-progress';
-    const [progressData, setProgressData] = useState(JSON.parse(localStorage.getItem(VIDEO_PROGRESS_KEY) || '{}'));
+    let initialData = JSON.parse(localStorage.getItem(VIDEO_PROGRESS_KEY) || '{}')
+    const reversed = Object.fromEntries(
+        Object.entries(initialData).reverse()
+      );
+      
+    const [progressData, setProgressData] = useState(reversed);
 
-    const ids = Object.keys(progressData)
-    const values = Object.values(progressData)
+    let ids = Object.keys(progressData)
+    let values = Object.values(progressData)
+   
+
+
 
     useEffect(() => {
         const handleChange = () => {

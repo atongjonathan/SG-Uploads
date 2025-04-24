@@ -162,7 +162,7 @@ export default function MyPlyrVideo({ movie }) {
                                         })
                                         setInitialTime((prev) => {
                                             console.log(prev);
-                                            return progressData[movie.id].time
+                                            return progressData[movie.id]?.time ?? 0
                                         })
                                         menuref.current.close()
                                     }, 10);
