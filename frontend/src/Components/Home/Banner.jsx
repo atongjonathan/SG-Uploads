@@ -70,7 +70,7 @@ const Banner = () => {
               {
                 movies?.map((movie, idx) => (
                   <SwiperSlide key={idx} className="relative overflow-hidden">
-                 <BannerItem movie={movie}/>
+                    <BannerItem movie={movie} />
                   </SwiperSlide>
                 ))}
             </Swiper>
