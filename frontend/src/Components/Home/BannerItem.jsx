@@ -42,20 +42,18 @@ const BannerItem = ({ movie }) => {
                     alt={movie.title}
                     title={movie.title}
                     delayTime={3000}
-                    className={`w-full md:hidden max-h-100 object-cover transition-opacity duration-300 ${swiperSlide.isActive ? 'opacity-100' : 'opacity-0'}`}
+                    className={`w-full md:hidden max-h-100 object-cover transition-opacity duration-1000 ${swiperSlide.isActive ? 'opacity-100' : 'opacity-0'}`}
                 />
             </div>
 
             {/* Large Screen */}
-            {isActive && (
                 <div
                     style={{
                         backgroundImage: `url('${movie?.poster}')`,
-                        animation: 'pulse 7s cubic-bezier(0.4, 0, 0.6, 1) infinite'
+                        animation: 'pulse 5s cubic-bezier(0.4, 0, 0.6, 1) infinite'
                     }}
-                    className="w-full hidden md:block h-full bg-cover bg-center blur-lg relative"
+                    className={`w-full hidden md:block h-full bg-cover bg-center blur-lg relative transition-opacity duration-1000  ${swiperSlide.isActive ? 'opacity-100' : 'opacity-0'}`}
                 />
-            )}
 
             {/* Movie Poster */}
             <LazyLoadImage
@@ -67,7 +65,7 @@ const BannerItem = ({ movie }) => {
                 alt={movie.title}
                 title={movie.title}
                 delayTime={3000}
-                className="absolute right-28 z-10 object-contain w-100 rotate-12 hidden md:inline-block"
+                className={`absolute right-28 z-10 object-contain w-100 rotate-12 hidden md:inline-block transition-opacity duration-1000  ${swiperSlide.isActive ? 'opacity-100' : 'opacity-0'}`}
             />
 
             {/* Metadata Phases */}
