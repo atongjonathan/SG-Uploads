@@ -13,7 +13,7 @@ import Movie from "../Movie";
 import { LazyLoadComponent } from 'react-lazy-load-image-component';
 
 
-const SgSlider = ({ params, title, Icon }) => {
+const SgSlider = ({ params, title, Icon, scrollPosition }) => {
 
   const dummy = [1, 2, 3, 4, 5, 6, 7];
 
@@ -70,100 +70,100 @@ const SgSlider = ({ params, title, Icon }) => {
     }
   };
 
-  const visibleTitles = ["Recently Added"]
+  const visibleTitles = ["Recently Added", "Latest Release"]
 
 
 
   return (
-    <LazyLoadComponent visibleByDefault={visibleTitles.includes(title)}>
-    <div className="lg:mt-8 mt-5">
-      <div className="w-full flex justify-between">
-        <div className="flex sm:gap-3 gap-2 items-center truncate">
-          {
-            isFetching ? <Skeleton /> : isSuccess && <>
-              <Icon className="sm:w-5 sm:h-6 w-4 h-4 text-subMain" />
-              <h2 className="text-sm font-semibold truncate">{title}</h2></>
-          }
-
-        </div>
-
-        <div className="px-2 flex justify-center gap-2">
-          <Button
-            className={`transition duration-100 ease-in text-sm rounded-lg w-7 h-7 flex-colo text-white ${startDisabled ? "bg-dry" : "bg-subMain active:bg-dry"
-              }`}
-            ref={(node) => setPrevEl(node)}
-            disabled={startDisabled}
-          >
-            <FaArrowLeft />
-          </Button>
-          <Button
-            className={`transition duration-100 ease-in text-sm rounded-lg w-7 h-7 flex-colo text-white ${endDisabled ? "bg-dry" : "bg-subMain active:bg-dry"
-              }`}
-            ref={(node) => setNextEl(node)}
-            disabled={endDisabled}
-          >
-            <FaArrowRight />
-          </Button>
-        </div>
-      </div>
-
-      <div className="mt-3">
-        <Swiper id={title}
-          navigation={{ nextEl, prevEl }}
-          slidesPerView={3}
-          spaceBetween={5}
-          speed={500}
-          className=""
-          modules={[Navigation]}
-          onSlideChange={onSlideChange} // Trigger this on every slide change
-          onReachEnd={handleSliderChange} // End reached
-          onReachBeginning={handleSliderChange} // Beginning reached
-          onSwiper={(swiper) => {
-            const isBeginning = swiper.isBeginning;
-            const isEnd = swiper.isEnd;
-            handleSliderChange( isBeginning, isEnd); // Assuming first param = atEnd, second = atStart
-          }}
-          breakpoints={{
-            0: {
-              slidesPerView: 3,
-              spaceBetween: 10,
-            },
-
-            768: {
-              slidesPerView: 5,
-              spaceBetween: 10,
-            },
-            992: {
-              slidesPerView: 7,
-              spaceBetween: 10,
+    <LazyLoadComponent scrollPosition={scrollPosition} visibleByDefault={visibleTitles.includes(title)}>
+      <div className="lg:mt-8 mt-5">
+        <div className="w-full flex justify-between">
+          <div className="flex sm:gap-3 gap-2 items-center truncate">
+            {
+              isFetching ? <Skeleton /> : isSuccess && <>
+                <Icon className="sm:w-5 sm:h-6 w-4 h-4 text-subMain" />
+                <h2 className="text-sm font-semibold truncate">{title}</h2></>
             }
 
+          </div>
 
-          }}
-        >
-          {movies.map((movie, idx) => (
-            <SwiperSlide
-              className="cursor-pointer"
-              key={idx}
-              onClick={() => navigate(`/watch/${movie.id}`)}
-
+          <div className="px-2 flex justify-center gap-2">
+            <Button
+              className={`transition duration-100 ease-in text-sm rounded-lg w-7 h-7 flex-colo text-white ${startDisabled ? "bg-dry" : "bg-subMain active:bg-dry"
+                }`}
+              ref={(node) => setPrevEl(node)}
+              disabled={startDisabled}
             >
-              {isFetching ? (
-                <Skeleton
-                  baseColor="rgb(11 15 41)"
-                  containerClassName="animate-pulse"
-                  height={180}
-                />
-              ) : (
+              <FaArrowLeft />
+            </Button>
+            <Button
+              className={`transition duration-100 ease-in text-sm rounded-lg w-7 h-7 flex-colo text-white ${endDisabled ? "bg-dry" : "bg-subMain active:bg-dry"
+                }`}
+              ref={(node) => setNextEl(node)}
+              disabled={endDisabled}
+            >
+              <FaArrowRight />
+            </Button>
+          </div>
+        </div>
 
-                <Movie movie={movie} />
+        <div className="mt-3">
+          <Swiper id={title}
+            navigation={{ nextEl, prevEl }}
+            slidesPerView={3}
+            spaceBetween={5}
+            speed={500}
+            className=""
+            modules={[Navigation]}
+            onSlideChange={onSlideChange} // Trigger this on every slide change
+            onReachEnd={handleSliderChange} // End reached
+            onReachBeginning={handleSliderChange} // Beginning reached
+            onSwiper={(swiper) => {
+              const isBeginning = swiper.isBeginning;
+              const isEnd = swiper.isEnd;
+              handleSliderChange(isBeginning, isEnd); // Assuming first param = atEnd, second = atStart
+            }}
+            breakpoints={{
+              0: {
+                slidesPerView: 3,
+                spaceBetween: 10,
+              },
 
-              )}
-            </SwiperSlide>
-          ))}
-        </Swiper>
+              768: {
+                slidesPerView: 5,
+                spaceBetween: 10,
+              },
+              992: {
+                slidesPerView: 7,
+                spaceBetween: 10,
+              }
+
+
+            }}
+          >
+            {movies.map((movie, idx) => (
+              <SwiperSlide
+                className="cursor-pointer"
+                key={idx}
+                onClick={() => navigate(`/watch/${movie.id}`)}
+
+              >
+                {isFetching ? (
+                  <Skeleton
+                    baseColor="rgb(11 15 41)"
+                    containerClassName="animate-pulse"
+                    height={180}
+                  />
+                ) : (
+
+                  <Movie movie={movie} />
+
+                )}
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
       </div>
-    </div>
     </LazyLoadComponent>
   )
 

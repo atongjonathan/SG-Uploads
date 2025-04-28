@@ -5,7 +5,7 @@ import { FaStar } from "react-icons/fa";
 import Skeleton from "react-loading-skeleton";
 
 
-const Movie = ({ movie, scrollPosition }) => {
+const Movie = ({ movie }) => {
   const [loaded, setLoaded] = useState(false);
 
   return (

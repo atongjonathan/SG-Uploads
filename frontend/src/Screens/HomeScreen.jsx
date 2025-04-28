@@ -6,10 +6,10 @@ import { BsCollectionFill, BsBookmarkStarFill } from "react-icons/bs";
 import { PiFilmReelFill } from "react-icons/pi";
 import Banner from "../Components/Home/Banner";
 import { IoTime } from "react-icons/io5";
+import { LazyLoadImage, trackWindowScroll }from 'react-lazy-load-image-component';
 
 
-
-const HomeScreen = ({ children }) => {
+const HomeScreen = ({ children, scrollPosition }) => {
   document.title = `StreamGrid | Home`;
 
   let limit = 10
@@ -71,4 +71,5 @@ const HomeScreen = ({ children }) => {
   );
 };
 
-export default HomeScreen;
+export default trackWindowScroll(HomeScreen);
+

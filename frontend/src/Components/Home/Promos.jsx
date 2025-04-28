@@ -1,5 +1,4 @@
 import React from "react";
-import { FiUser } from "react-icons/fi";
 import mobile from  '../../images/mobile.png'
 
 const Promos = () => {
@@ -21,10 +20,6 @@ const Promos = () => {
             720p
             </div>
             
-            <div className="flex flex-row items-center gap-4 bg-black text-subMain px-6 py-3 rounded font-bold">
-              <FiUser></FiUser>
-              2K
-            </div>
             
           </div>
         </div>

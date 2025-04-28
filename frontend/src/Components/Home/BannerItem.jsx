@@ -3,13 +3,14 @@ import { Link } from "react-router-dom";
 import SGFaHeart from '../SGFaHeart'
 import { BiPlay } from "react-icons/bi";
 import FlexMovieItems from "../FlexMovieItems";
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 
 const BannerItem = ({movie}) => {
     return (
         <>
             {/* Small Screen */}
-            <img
+            <LazyLoadImage effect='blur'
                 src={movie.poster}
                 alt={movie.title} title={movie.title}
                 className="w-full md:hidden max-h-100 object-cover"
