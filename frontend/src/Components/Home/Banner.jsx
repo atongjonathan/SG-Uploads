@@ -52,7 +52,7 @@ const Banner = () => {
           <div className="relative w-full">
 
             <Swiper
-              className="w-full md:h-96 min-h-80  bg-dry"
+              className="w-full h-96  bg-dry"
               slidesPerView={1}
               resistanceRatio={0.5}   // Lower resistance makes it more responsive
               loop
