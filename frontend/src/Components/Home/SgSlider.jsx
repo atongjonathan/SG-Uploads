@@ -151,8 +151,7 @@ const SgSlider = ({ params, title, Icon, scrollPosition }) => {
                 {isFetching ? (
                   <Skeleton
                     baseColor="rgb(11 15 41)"
-                    containerClassName="animate-pulse"
-                    height={180}
+                    className="rounded-lg w-full aspect-[216/319]"
                   />
                 ) : (
 

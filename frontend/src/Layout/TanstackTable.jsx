@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import {
     Listbox,
     Transition,
@@ -115,7 +115,7 @@ const TanstackTable = () => {
         },
     ];
 
-    const [display, setDisplay] = useState(false);
+    const [display, setDisplay] = useState(true);
 
 
     return (
@@ -155,7 +155,7 @@ const TanstackTable = () => {
 
 
                 <div className="px-2 flex justify-center gap-2 items-center">
-                    <Button className={display?"text-subMain": "text-white" +"transitions"} onClick={() => setDisplay((prev) => !prev)}><FiFilter className='text-lg w-4 h-4' /></Button>
+                    <Button className={`transition duration-100 ease-in text-sm rounded w-7 h-7 flex-colo text-white ${display ? "bg-subMain" : "bg-dry"}`} onClick={() => setDisplay((prev) => !prev)}><FiFilter className='text-lg w-4 h-4' /></Button>
                     <p className='text-xs'>Page {pageIndex + 1}</p>
                     <Button
                         onClick={() => updateParam("page", pageIndex)}

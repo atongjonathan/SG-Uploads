@@ -23,8 +23,7 @@ const Movie = ({ movie }) => {
           {!loaded && (
             <Skeleton
               baseColor="rgb(11 15 41)"
-              containerClassName="absolute top-0 left-0 w-full h-full animate-pulse rounded-lg "
-              height={200}
+              className="rounded-lg w-full aspect-[216/319]"
             />
           )}
           <LazyLoadImage
@@ -33,7 +32,7 @@ const Movie = ({ movie }) => {
             alt={movie.title}
             title={movie.title}
             effect="opacity"
-            className={`w-full object-cover rounded-lg transition-opacity duration-300 ${loaded ? 'opacity-100' : 'opacity-0'}`}
+            className={`w-full object-cover transition-opacity duration-300 aspect-[216/319] h-64 rounded-lg ${loaded ? 'opacity-100' : 'opacity-0'}`}
           />
 
         </Link>
