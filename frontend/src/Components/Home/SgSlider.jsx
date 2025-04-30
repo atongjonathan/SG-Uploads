@@ -122,9 +122,7 @@ const SgSlider = ({ params, title, Icon, scrollPosition, excludeID }) => {
             onReachEnd={handleSliderChange} // End reached
             onReachBeginning={handleSliderChange} // Beginning reached
             onSwiper={(swiper) => {
-              const isBeginning = swiper.isBeginning;
-              const isEnd = swiper.isEnd;
-              handleSliderChange(isBeginning, isEnd); // Assuming first param = atEnd, second = atStart
+              handleSliderChange(swiper.isBeginning, swiper.isEnd);
             }}
             breakpoints={{
               0: {
