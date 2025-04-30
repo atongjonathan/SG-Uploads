@@ -96,7 +96,7 @@ const MovieInfo = ({ movie, movieIsFetching }) => {
                             <DisclosurePanel>
                                 {
                                     movie && !movieIsFetching ? <p>{movie.actors.join(", ")}  </p>
-                                        : <Skeleton baseColor="rgb(22 28 63)" containerClassName="animate-pulse"></Skeleton>
+                                        : <Skeleton baseColor="rgb(22 28 63)" containerClassName=""></Skeleton>
                                 }
                             </DisclosurePanel>
                         </Disclosure>
@@ -141,7 +141,7 @@ const MovieInfo = ({ movie, movieIsFetching }) => {
 
                                         {movie?.plot}
                                     </span>
-                                        : <Skeleton baseColor="rgb(22 28 63)" height={30} containerClassName="animate-pulse"></Skeleton>
+                                        : <Skeleton baseColor="rgb(22 28 63)" height={30} containerClassName=""></Skeleton>
                                 }
 
                                 {

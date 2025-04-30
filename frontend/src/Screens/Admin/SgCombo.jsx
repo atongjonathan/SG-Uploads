@@ -36,7 +36,7 @@ export default function SgCombo({ searchMovie, searchMovieQuery, findMovie }) {
                 >
 
                     {searchMovieQuery.isFetching ? <ComboboxOption
-                        className="w-full group flex items-center justify-center gap-2 rounded-lg py-1.5 px-3 select-none data-[focus]:bg-white/10 cursor-pointer animate-pulse"
+                        className="w-full group flex items-center justify-center gap-2 rounded-lg py-1.5 px-3 select-none data-[focus]:bg-white/10 cursor-pointer "
                     >
                         <div className="text-sm/6 text-white">Loading ...</div>
                     </ComboboxOption> : searchMovieQuery.data?.length === 0 ?

@@ -123,7 +123,7 @@ const Characters = ({ tmdb_id, movieIsFetching }) => {
                                                 {
                                                     cast.profile_path ? <LazyLoadImage width="100%" height="100%" src={`https://image.tmdb.org/t/p/original/${cast.profile_path}`} className="size-full object-cover object-center !select-none shrink-0" placeholder={<Skeleton
                                                         baseColor="rgb(11 15 41)"
-                                                        containerClassName="animate-pulse"
+                                                        containerClassName=""
                                                         height={270}
                                                     />} /> :
                                                         <div className="size-full object-cover object-center !select-none shrink-0" />

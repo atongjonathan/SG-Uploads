@@ -25,7 +25,7 @@ const SingleMovie = () => {
       {
         movie ? <MovieInfo movie={movie}></MovieInfo>
           :
-          <Skeleton baseColor="rgb(22 28 63)" className='animate-pulse' height={300} containerClassName="animate-pulse"></Skeleton>
+          <Skeleton baseColor="rgb(22 28 63)" className='' height={300} containerClassName=""></Skeleton>
 
 
       }

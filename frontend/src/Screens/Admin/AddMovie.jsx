@@ -215,7 +215,7 @@ const AddMovie = () => {
 
                                 {findMovieQuery.isLoading ?
                                     <div className="col-span-3">
-                                        <Skeleton baseColor="rgb(22 28 63)" height={30} containerClassName="animate-pulse"></Skeleton>
+                                        <Skeleton baseColor="rgb(22 28 63)" height={30} containerClassName=""></Skeleton>
                                     </div> :
                                     movie && (
                                         <div className={`text-3xl py-3 flex justify-start flex-wrap`}>
@@ -263,7 +263,7 @@ const AddMovie = () => {
                                 }
                                 {
                                     subsQuery.isLoading && <div className="col-span-3">
-                                        <Skeleton baseColor="rgb(22 28 63)" height={30} containerClassName="animate-pulse"></Skeleton>
+                                        <Skeleton baseColor="rgb(22 28 63)" height={30} containerClassName=""></Skeleton>
                                     </div>
                                 }
 

@@ -8,7 +8,6 @@ import AuthContext from '../context/AuthContext'
 import { Button } from '@headlessui/react'
 import { FaShareAlt, FaEdit } from 'react-icons/fa'
 import ShareMovieModal from '../Components/Modals/ShareMovieModal'
-import { toast } from 'sonner'
 import SgSlider from '../Components/Home/SgSlider'
 import Skeleton from 'react-loading-skeleton'
 import EditMovie from '../Components/Modals/EditMovie'
@@ -120,7 +119,7 @@ const WatchPage = () => {
                         <div className="grid grid-cols-4 gap-2">
                             <div className="col-span-4 lg:col-span-3">
                                 {
-                                    isFetching ? <Skeleton baseColor="rgb(22 28 63)" containerClassName="animate-pulse" className='animate-pulse' height={260}></Skeleton>
+                                    isFetching ? <Skeleton baseColor="rgb(22 28 63)" containerClassName="" className='' height={260}></Skeleton>
                                         : <> {
 
                                             movie && <MyPlyrVideo movie={movie}></MyPlyrVideo>
@@ -135,7 +134,7 @@ const WatchPage = () => {
                                             isFetching ?
 
 
-                                                <Skeleton baseColor="rgb(22 28 63)" height={30} width={100} containerClassName="animate-pulse"></Skeleton>
+                                                <Skeleton baseColor="rgb(22 28 63)" height={30} width={100} containerClassName=""></Skeleton>
 
                                                 : <>
                                                     {
@@ -193,7 +192,8 @@ const WatchPage = () => {
                                 movie && <SgSlider params={{
                                     genre: movie?.genre[0],
                                     ordering: "-rating_star",
-                                    limit: 10
+                                    limit: 10,
+                                    shuffle:true
                                 }} title="Recommended" Icon={BsCollectionFill} excludeID={movie.id}></SgSlider>
                             }
 

@@ -11,7 +11,7 @@ const Results = ({ isResults, handleResultClick, isFetching }) => {
             <table className="w-full table-auto border border-border divide-y divide-border">
                 <tbody className="bg-main divide-y divide-gray-800">
                     {isFetching ? <tr className='p-3 bg-dry border border-border h-12 rounded overflow-hidden flex items-center justify-between text-sm'>
-                        <td><Skeleton className='animate-pulse' baseColor='rgb(36 39 63)' /></td>
+                        <td><Skeleton className='' baseColor='rgb(36 39 63)' /></td>
 
                     </tr> :
                         isResults?.length === 0 ? (

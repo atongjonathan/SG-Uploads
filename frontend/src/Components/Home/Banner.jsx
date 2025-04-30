@@ -24,23 +24,23 @@ const Banner = () => {
             <div className="relative h-96  py-10 overflow-hidden bg-dry z-10 ">
 
               <div className="lg:w-7/12 absolute linear-bg xl:pl-32 sm:pl-32 px-3 top-0 bottom-0 right-0 left-0 flex flex-col lg:pt-2 pt-10  lg:gap-7 md:gap-5 gap-4 z-20 md:h-96 min-h-80 max-h-96 justify-center">
-                <Skeleton baseColor="rgb(22 28 63)" height={30} containerClassName="animate-pulse"></Skeleton>
+                <Skeleton baseColor="rgb(22 28 63)" height={30} ></Skeleton>
 
 
                 <div className="flex gap-5 items-center text-dryGray">
-                  <Skeleton baseColor="rgb(22 28 63)" height={30} width={300} containerClassName="animate-pulse"></Skeleton>
+                  <Skeleton baseColor="rgb(22 28 63)" height={30} width={300} ></Skeleton>
 
 
                 </div>
-                <Skeleton baseColor="rgb(22 28 63)" height={70} containerClassName="animate-pulse"></Skeleton>
+                <Skeleton baseColor="rgb(22 28 63)" height={70} ></Skeleton>
 
 
                 <div className="flex gap-5 items-center">
-                  <Skeleton baseColor="rgb(22 28 63)" height={35} width={100} containerClassName="animate-pulse"></Skeleton>
+                  <Skeleton baseColor="rgb(22 28 63)" height={35} width={100} ></Skeleton>
 
 
 
-                  <Skeleton baseColor="rgb(22 28 63)" height={35} width={50} containerClassName="animate-pulse"></Skeleton>
+                  <Skeleton baseColor="rgb(22 28 63)" height={35} width={50} ></Skeleton>
 
 
 
