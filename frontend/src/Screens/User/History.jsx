@@ -38,7 +38,7 @@ const History = () => {
                 {/* <a className="ring-1 ring-gray-500 lg:ring-gray-400 hover:bg-dry px-3 rounded-full py-1 text-xs 2xl:text-sm text-gray-400 xl:font-medium" href="/history">view all</a> */}
             </div>
             {
-                ids.length > 0 ? <div className="flex w-full overflow-y-hidden overflow-x-auto">
+                ids.length > 0 ? <div className="flex w-full overflow-y-hidden overflow-x-auto no-scrollbar">
                     {
                         values.map((movie, idx) => (
                             <div className="flex gap-2 w-[45%] sm:w-1/3 hover:bg-dry smoothie relative bubbly overflow-hidden rounded-xl md:w-1/4 2xl:w-1/5 flex-col shrink-0 p-2">

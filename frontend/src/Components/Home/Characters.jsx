@@ -117,7 +117,7 @@ const Characters = ({ tmdb_id, movieIsFetching }) => {
                             <div className="flex flex-col gap-2">
 
                                 <div className="flex flex-wrap gap-3">
-                                    <div title={`${cast.character} - ${cast.original_name}`} className="w-full flex gap-1 h-20 rounded-xl overflow-hidden bg-white/10 hover:bg-white/5 smoothie shrink-0">
+                                    <div title={`${cast.character} - ${cast.original_name}`} className="w-full flex gap-1 h-20 rounded-xl overflow-hidden bg-dry/10 hover:bg-white/5 smoothie shrink-0">
                                         <div className="h-full flex rounded-xl overflow-hidden shrink-0">
                                             <span className=" lazy-load-image-background opacity lazy-load-image-loaded" >
                                                 {
