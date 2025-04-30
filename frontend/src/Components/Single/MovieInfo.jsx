@@ -5,13 +5,15 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { FaStar } from 'react-icons/fa';
 import Skeleton from 'react-loading-skeleton';
 
-const MovieInfo = ({ movie }) => {
-    const [loaded, setLoaded] = useState(false);
+const MovieInfo = ({ movie, movieIsFetching }) => {
+
 
 
     const date = new Date(movie?.releaseDate)
 
-    const dateStr = `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`
+    const dateStr = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
+
+
 
     return (
         <div className="col-span-4 lg:col-span-1">
@@ -20,21 +22,39 @@ const MovieInfo = ({ movie }) => {
 
                     <div className="border border-border p-1 transitions relative rounded overflow-hidden lg:col-span-2 h-fit">
 
-                        {
-                            movie ?
-                                <LazyLoadImage effect="blur" src={movie.poster} alt={movie.title} title={movie.title} className={`object-cover lg:h-64 mx-auto  transition-opacity duration-300 ${loaded ? 'opacity-100' : 'opacity-0'}`} />
-                                : <Skeleton baseColor="rgb(22 28 63)" height={220} width={150} containerClassName="animate-pulse"></Skeleton>
-                        }
+                        <LazyLoadImage
+                            effect="blur"
+                            src={movie?.poster}
+                            alt={movie?.title}
+                            title={movie?.title}
+                            placeholder={<span>
+                                <Skeleton
+                                    baseColor="rgb(22 28 63)"
+                                    height={256}
+                                    width={180}
+                                />
+                            </span>}
+                            className={`object-cover lg:h-64 mx-auto transition-opacity duration-300`}
+                        />
 
-                        {
-                            movie ? <div className="absolute flex justify-center gap-2 bottom-0 right-0 left-0 bg-main bg-opacity-60 text-white px-4 py-3">
 
-                                <h6 className="font-semibold truncate flex flex-col gap-1">{movie?.title}
-                                    <div className="flex text-center justify-center gap-1 items-center"><FaStar className='w-3 h-3 text-star'></FaStar>{movie.rating_star}</div>
+
+                        <div className="absolute flex justify-center gap-2 bottom-0 right-0 left-0 bg-main bg-opacity-60 text-white px-4 py-3">
+                            {movie && !movieIsFetching ? (
+                                <h6 className="font-semibold truncate flex flex-col gap-1">
+                                    {movie?.title}
+                                    <div className="flex text-center justify-center gap-1 items-center">
+                                        <FaStar className="w-3 h-3 text-star" />
+                                        {movie?.rating_star}
+                                    </div>
                                 </h6>
-                            </div>
-                                : <Skeleton baseColor="rgb(22 28 63)" height={30} containerClassName="animate-pulse"></Skeleton>
-                        }
+                            ) : (
+                                <div className="w-full">
+                                    <Skeleton baseColor="rgb(22 28 63)" height={20} width="80%" />
+                                </div>
+                            )}
+                        </div>
+
 
                     </div>
                 </div>
@@ -53,10 +73,12 @@ const MovieInfo = ({ movie }) => {
                             </DisclosureButton>
 
                             <DisclosurePanel className="bg-white/10 hover:bg-white/10 p-2">
-                                {
-                                    movie ? <p>{movie?.plot}</p>
-                                        : <Skeleton baseColor="rgb(22 28 63)" height={30} containerClassName="animate-pulse"></Skeleton>
-                                }
+                                {movie && !movieIsFetching ? (
+                                    <p>{movie?.plot}</p>
+                                ) : (
+                                    <Skeleton baseColor="rgb(22 28 63)" height={18} count={2} width="90%" />
+                                )}
+
 
                             </DisclosurePanel>
                         </Disclosure>
@@ -73,7 +95,7 @@ const MovieInfo = ({ movie }) => {
 
                             <DisclosurePanel>
                                 {
-                                    movie ? <p>{movie.actors.join(", ")}  </p>
+                                    movie && !movieIsFetching ? <p>{movie.actors.join(", ")}  </p>
                                         : <Skeleton baseColor="rgb(22 28 63)" containerClassName="animate-pulse"></Skeleton>
                                 }
                             </DisclosurePanel>
@@ -81,21 +103,23 @@ const MovieInfo = ({ movie }) => {
                     </div>
                     <div className="flex gap-2 flex-col tracking-wider font-light">
                         <span className="font-medium text-gray-200 !shrink-0 tracking-wider">Language(s)</span>
-
-                        {
-                            movie ? <span>
+                        {movie && !movieIsFetching ? (
+                            <span>
                                 {movie?.spokenLanguages?.map((l) => l.language).join(", ")}</span>
-                                : <Skeleton baseColor="rgb(22 28 63)" containerClassName="animate-pulse"></Skeleton>
-                        }
+                        ) : (
+                            <Skeleton baseColor="rgb(22 28 63)" height={18} count={2} width="90%" />
+                        )}
+
 
                     </div>
                     <div className="flex flex-col gap-1 tracking-wider font-light">
                         <span className="font-medium text-gray-200 !shrink-0 tracking-wider">Aired</span>
                         {
-                            movie ? <span>{dateStr}</span>
+                            movie && !movieIsFetching ? <span>{dateStr}</span>
+                                : <Skeleton baseColor="rgb(22 28 63)" height={16} width={80} />
 
-                                : <Skeleton baseColor="rgb(22 28 63)" containerClassName="animate-pulse"></Skeleton>
                         }
+
                     </div>
 
 
@@ -113,7 +137,7 @@ const MovieInfo = ({ movie }) => {
                         <div className='bg-white/10 hover:bg-white/10'>
                             <DisclosureButton className={`groupl items-center justify-between text-sm/6 w-[100%] text-white ${open ? 'cursor-default' : 'truncate'} `}>
                                 {
-                                    movie ? <span className="text-sm/6 w-full font-medium text-white group-data-[hover]:text-white/80 flex p-2">
+                                    movie && !movieIsFetching ? <span className="text-sm/6 w-full font-medium text-white group-data-[hover]:text-white/80 flex p-2">
 
                                         {movie?.plot}
                                     </span>

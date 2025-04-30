@@ -171,15 +171,15 @@ const WatchPage = () => {
 
                                 </div>
 
-                                <Characters tmdb_id={tmdb_id} />
+                                <Characters movieIsFetching={isFetching} tmdb_id={tmdb_id} />
 
 
-                                <TrailerSlider movie={movie} />
+                                <TrailerSlider movieIsFetching={isFetching} movie={movie} />
 
 
                             </div>
 
-                            <MovieInfo movie={movie}/>
+                            <MovieInfo movieIsFetching={isFetching} movie={movie}/>
 
                         </div>
 
@@ -194,7 +194,7 @@ const WatchPage = () => {
                                     genre: movie?.genre[0],
                                     ordering: "-rating_star",
                                     limit: 10
-                                }} title="Recommended" Icon={BsCollectionFill}></SgSlider>
+                                }} title="Recommended" Icon={BsCollectionFill} excludeID={movie.id}></SgSlider>
                             }
 
                         </div>

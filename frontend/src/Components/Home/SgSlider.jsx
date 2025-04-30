@@ -13,7 +13,7 @@ import Movie from "../Movie";
 import { LazyLoadComponent } from 'react-lazy-load-image-component';
 
 
-const SgSlider = ({ params, title, Icon, scrollPosition }) => {
+const SgSlider = ({ params, title, Icon, scrollPosition, excludeID }) => {
 
   const dummy = [1, 2, 3, 4, 5, 6, 7];
 
@@ -39,6 +39,9 @@ const SgSlider = ({ params, title, Icon, scrollPosition }) => {
   }
   else if (data) {
     movies = data?.results
+    if (excludeID) {
+      movies = movies.filter((movie)=>movie.id !== excludeID)
+    }
   }
 
 

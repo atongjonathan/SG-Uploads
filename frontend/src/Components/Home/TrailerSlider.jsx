@@ -12,7 +12,7 @@ import { getTrailers } from "../../utils/Backend";
 // Helper to sort trailers with "Trailer" type first
 
 
-const TrailerSlider = ({ movie }) => {
+const TrailerSlider = ({ movie, movieIsFetching }) => {
   const split = movie?.link?.split("/") || [];
   const tmdb_id = split[split.length - 1];
 
@@ -68,12 +68,30 @@ const TrailerSlider = ({ movie }) => {
         </div>
       }
 
-      {isFetching ? (
-        <Skeleton
-          baseColor="rgb(22 28 63)"
-          containerClassName="animate-pulse my-3"
-          height={120}
-        />
+      {isFetching || movieIsFetching ? (
+        <div className="mt-5">
+          <Swiper
+            slidesPerView={3}
+            spaceBetween={30}
+            breakpoints={{
+              0: { slidesPerView: 1, spaceBetween: 10 },
+              768: { slidesPerView: 2, spaceBetween: 20 },
+              1024: { slidesPerView: 3, spaceBetween: 30 },
+              1280: { slidesPerView: 4, spaceBetween: 30 },
+            }}
+          >
+            {Array.from({ length: 4 }).map((_, idx) => (
+              <SwiperSlide key={idx} className="cursor-pointer h-fit">
+                <div className="w-full aspect-video rounded-lg overflow-hidden bg-white/10">
+                  <Skeleton
+                    baseColor="rgb(22 28 63)"
+                    className="w-full h-full"
+                  />
+                </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
       ) : (
         <div className="mt-5">
           <Swiper
@@ -87,7 +105,7 @@ const TrailerSlider = ({ movie }) => {
             onSwiper={(swiper) => {
               const isBeginning = swiper.isBeginning;
               const isEnd = swiper.isEnd;
-              handleSliderChange( isBeginning, isEnd); // Assuming first param = atEnd, second = atStart
+              handleSliderChange(isBeginning, isEnd); // Assuming first param = atEnd, second = atStart
             }}
             modules={[Navigation, Autoplay]}
             breakpoints={{
