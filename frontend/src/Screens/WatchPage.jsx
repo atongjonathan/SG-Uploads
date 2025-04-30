@@ -35,13 +35,15 @@ const WatchPage = () => {
 
 
 
-    const { error, data, isSuccess, isFetching } = useQuery({
+    const { data, error, isFetching } = useQuery({
         queryKey: ["movieQuery", id],
         queryFn: async () => {
             return getMovie(id)
         },
-        enabled: Boolean(id)
+        enabled: Boolean(id),
+        retry: false
     })
+
 
 
     const movie = data
@@ -82,7 +84,8 @@ const WatchPage = () => {
     clearLocalStorageByValue('{"time":"0"}');
 
 
-    if (isSuccess && !movie) return <NotFound />
+
+    if (error?.status === 404) return <NotFound />
 
     return (
         <>
@@ -108,7 +111,7 @@ const WatchPage = () => {
                                 <div className="p-4 flex gap-2 ml-3 text-center justify-between">
 
                                     <h2 className="md:text-lg text-sm font-semibold">{movie.title} ({movie.year})</h2>
-                                    <Link to={"/contact-us/#details"} class="ring-1 ring-gray-500 lg:ring-gray-400 hover:bg-white/5 px-3 rounded-full py-1 text-xs 2xl:text-sm text-white xl:font-medium my-auto transitions">Issue ?</Link>
+                                    <Link to={"/contact-us/#details"} className="ring-1 ring-gray-500 lg:ring-gray-400 hover:bg-white/5 px-3 rounded-full py-1 text-xs 2xl:text-sm text-white xl:font-medium my-auto transitions">Issue ?</Link>
 
                                 </div>
 
@@ -178,7 +181,7 @@ const WatchPage = () => {
 
                             </div>
 
-                            <MovieInfo movieIsFetching={isFetching} movie={movie}/>
+                            <MovieInfo movieIsFetching={isFetching} movie={movie} />
 
                         </div>
 
@@ -193,7 +196,7 @@ const WatchPage = () => {
                                     genre: movie?.genre[0],
                                     ordering: "-rating_star",
                                     limit: 10,
-                                    shuffle:true
+                                    shuffle: true
                                 }} title="Recommended" Icon={BsCollectionFill} excludeID={movie.id}></SgSlider>
                             }
 
