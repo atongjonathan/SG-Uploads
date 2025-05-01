@@ -40,7 +40,7 @@ const SgSlider = ({ params, title, Icon, scrollPosition, excludeID }) => {
   else if (data) {
     movies = data?.results
     if (excludeID) {
-      movies = movies.filter((movie)=>movie.id !== excludeID)
+      movies = movies.filter((movie) => movie.id !== excludeID)
     }
   }
 
@@ -90,24 +90,27 @@ const SgSlider = ({ params, title, Icon, scrollPosition, excludeID }) => {
 
           </div>
 
-          <div className="px-2 flex justify-center gap-2">
-            <Button
-              className={`transition duration-100 ease-in text-sm rounded-lg w-7 h-7 flex-colo text-white ${startDisabled ? "bg-dry" : "bg-subMain active:bg-dry"
-                }`}
-              ref={(node) => setPrevEl(node)}
-              disabled={startDisabled}
-            >
-              <FaArrowLeft />
-            </Button>
-            <Button
-              className={`transition duration-100 ease-in text-sm rounded-lg w-7 h-7 flex-colo text-white ${endDisabled ? "bg-dry" : "bg-subMain active:bg-dry"
-                }`}
-              ref={(node) => setNextEl(node)}
-              disabled={endDisabled}
-            >
-              <FaArrowRight />
-            </Button>
-          </div>
+          {
+            isSuccess && <div className="px-2 flex justify-center gap-2">
+              <Button
+                className={`transition duration-100 ease-in text-sm rounded-lg w-7 h-7 flex-colo text-white ${startDisabled ? "bg-dry" : "bg-subMain active:bg-dry"
+                  }`}
+                ref={(node) => setPrevEl(node)}
+                disabled={startDisabled}
+              >
+                <FaArrowLeft />
+              </Button>
+              <Button
+                className={`transition duration-100 ease-in text-sm rounded-lg w-7 h-7 flex-colo text-white ${endDisabled ? "bg-dry" : "bg-subMain active:bg-dry"
+                  }`}
+                ref={(node) => setNextEl(node)}
+                disabled={endDisabled}
+              >
+                <FaArrowRight />
+              </Button>
+            </div>
+          }
+
         </div>
 
         <div className="mt-3">
@@ -122,7 +125,8 @@ const SgSlider = ({ params, title, Icon, scrollPosition, excludeID }) => {
             onReachEnd={handleSliderChange} // End reached
             onReachBeginning={handleSliderChange} // Beginning reached
             onSwiper={(swiper) => {
-              handleSliderChange(swiper.isBeginning, swiper.isEnd);
+              if (isSuccess)
+                handleSliderChange(swiper.isBeginning, swiper.isEnd);
             }}
             breakpoints={{
               0: {
