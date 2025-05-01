@@ -7,7 +7,7 @@ from django.contrib.auth.password_validation import validate_password
 class MinMovieSerializer(serializers.ModelSerializer):
     class Meta:
         model = Movie
-        fields = ["poster", "title", "id"]
+        fields = ["poster", "title", "id", "year", "rating_star"]
 
 
 class SGUserSerializer(serializers.ModelSerializer):
