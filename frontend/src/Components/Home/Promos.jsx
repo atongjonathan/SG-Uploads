@@ -1,5 +1,6 @@
 import React from "react";
-import mobile from  '../../images/mobile.png'
+import pc_img from "../../../public/screenshots/screenshot.png"
+
 
 const Promos = () => {
   return (
@@ -24,7 +25,7 @@ const Promos = () => {
           </div>
         </div>
         <div>
-          <img src={mobile} alt="Mobile app" className="w-full object-contain" />
+          <img src={pc_img} alt="Mobile app" className="w-full object-contain" />
         </div>
       </div>
     </div>
