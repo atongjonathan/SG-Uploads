@@ -117,42 +117,38 @@ MIDDLEWARE = [
     # "django.middleware.cache.FetchFromCacheMiddleware",
 ]
 
-CACHE_MIDDLEWARE_ALIAS = "cache"
-CACHE_MIDDLEWARE_SECONDS = 300
-CACHE_MIDDLEWARE_KEY_PREFIX = "sguploads"
+# CACHE_MIDDLEWARE_ALIAS = "cache"
+# CACHE_MIDDLEWARE_SECONDS = 300
+# CACHE_MIDDLEWARE_KEY_PREFIX = "sguploads"
+
 
 LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'verbose': {
-            'format': '{levelname} {asctime} {module} {message}',
-            'style': '{',
-        },
-        'simple': {
-            'format': '{levelname} {message}',
-            'style': '{',
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "simple": {
+            "format": "StreamGrid | {asctime} | {levelname} | {module} | {lineno} | {message}",
+            "style": "{",
         },
     },
-    'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
-            'formatter': 'verbose',
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "formatter": "simple"
+        },
+        "file": {
+            "level": "INFO",
+            "class": "logging.FileHandler",
+            "filename": "StreamGrid.log",
+            "formatter": "simple",
         },
     },
-    'loggers': {
-        'django': {
-            'handlers': ['console'],
-            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
-        },
-        # Add your application's logger
-        'base': {
-            'handlers': ['console'],
-            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
-            'propagate': True,
-        },
-    },
+    "root": {
+        "handlers": ["console", "file"],
+        "level": "INFO",
+    }
 }
+
 ROOT_URLCONF = 'sguploads.urls'
 
 TEMPLATES = [
