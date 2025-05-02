@@ -16,7 +16,6 @@ import { LazyLoadComponent } from 'react-lazy-load-image-component';
 const SgSlider = ({ params, title, Icon, scrollPosition, excludeID }) => {
 
   const dummy = [1, 2, 3, 4, 5, 6, 7];
-  const [enabled, setEnabled] = useState(true);
 
 
   const { isFetching, data, isSuccess } = useQuery({
@@ -27,7 +26,6 @@ const SgSlider = ({ params, title, Icon, scrollPosition, excludeID }) => {
       })
     },
     staleTime: Infinity,
-    enabled
   })
   const [nextEl, setNextEl] = useState(null);
   const [prevEl, setPrevEl] = useState(null);
@@ -82,7 +80,7 @@ const SgSlider = ({ params, title, Icon, scrollPosition, excludeID }) => {
 
 
   return (
-    <LazyLoadComponent onLoad={() => setEnabled(true)} scrollPosition={scrollPosition} visibleByDefault={visibleTitles.includes(title)}>
+    <LazyLoadComponent >
       <div className="lg:mt-8 mt-5">
         <div className="w-full flex justify-between">
           <div className="flex sm:gap-3 gap-2 items-center truncate">
