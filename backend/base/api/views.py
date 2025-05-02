@@ -91,7 +91,7 @@ class UserViewSet(generics.ListAPIView):
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
 
 
-@method_decorator(cache_page(60), name='dispatch')
+# @method_decorator(cache_page(60), name='dispatch')
 class MinMovieList(generics.ListAPIView):
     serializer_class = MinMovieSerializer
     queryset = Movie.objects.all()
@@ -145,7 +145,7 @@ class MultipleFieldLookupMixin:
         obj = get_object_or_404(queryset, **filter)  # Lookup the object
         self.check_object_permissions(self.request, obj)
         return obj
-@method_decorator(cache_page(60), name='dispatch')
+# @method_decorator(cache_page(60), name='dispatch')
 class MovieList(MultipleFieldLookupMixin, generics.RetrieveAPIView):
     serializer_class = MovieSerializer
     queryset = Movie.objects.all()
