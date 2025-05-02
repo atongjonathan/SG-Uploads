@@ -49,6 +49,18 @@ const HomeScreen = ({ children, scrollPosition }) => {
     shuffle
 
   }
+  const documentary = {
+    genre: "Documentary",
+    limit,
+    shuffle
+
+  }
+  const romance = {
+    genre: "Romance",
+    limit,
+    shuffle
+
+  }
 
 
   return (
@@ -60,8 +72,10 @@ const HomeScreen = ({ children, scrollPosition }) => {
           <SgSlider params={RecentlyAdded} title='Recently Added' Icon={IoTime} />
           <SgSlider params={sortedByDate} title='Latest Release' Icon={BsCollectionFill} />
           <SgSlider params={actionMovies} title='Action' Icon={PiFilmReelFill} />
-          <SgSlider params={animation} title='Animation' Icon={PiFilmReelFill} />
+          <SgSlider params={romance} title='Romance' Icon={PiFilmReelFill} />
           <SgSlider params={horror} title='Horror' Icon={PiFilmReelFill} />
+          <SgSlider params={animation} title='Animation' Icon={PiFilmReelFill} />
+          <SgSlider params={documentary} title='Documentary' Icon={PiFilmReelFill} />
           <SgSlider params={sortedByRatingStar} title='Top Rated' Icon={BsBookmarkStarFill} />
           <Promos />
         </>
