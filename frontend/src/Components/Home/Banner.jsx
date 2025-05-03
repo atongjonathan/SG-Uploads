@@ -5,6 +5,7 @@ import Skeleton from 'react-loading-skeleton'
 import { useQuery } from "@tanstack/react-query";
 import { getTrending } from "../../utils/Backend";
 import BannerItem from "./BannerItem";
+import Notifier from "../Notifier";
 
 const Banner = () => {
 
@@ -74,9 +75,10 @@ const Banner = () => {
                   </SwiperSlide>
                 ))}
             </Swiper>
-
+            <Notifier movies={movies}/>
           </div>
       }
+        
     </>
 
 
