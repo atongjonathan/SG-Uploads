@@ -10,3 +10,5 @@ pillow
 pyTelegramBotAPI
 opensubtitlescom
 python-dotenv
+pywebpush
+cryptography

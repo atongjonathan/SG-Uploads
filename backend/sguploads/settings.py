@@ -46,7 +46,8 @@ INSTALLED_APPS = [
     'base',
     'rest_framework',
     'corsheaders',
-    'import_export'
+    'import_export',
+    'webpush',
 ]
 
 REST_FRAMEWORK = {
@@ -276,3 +277,12 @@ FRONTEND_URL = os.environ.get("FRONTEND_URL")
 IMDB_API = os.environ.get("IMDB_API")
 PESAPAL_CONSUMER_KEY = os.environ.get("PESAPAL_CONSUMER_KEY")
 PESAPAL_CONSUMER_SECRET = os.environ.get("PESAPAL_CONSUMER_SECRET")
+VAPID_PUBLIC_KEY = os.environ.get("VAPID_PUBLIC_KEY")
+VAPID_PRIVATE_KEY = os.environ.get("VAPID_PRIVATE_KEY")
+
+
+WEBPUSH_SETTINGS = {
+    "VAPID_PUBLIC_KEY": VAPID_PUBLIC_KEY,
+    "VAPID_PRIVATE_KEY":VAPID_PRIVATE_KEY,
+    "VAPID_ADMIN_EMAIL": EMAIL_HOST_USER
+}

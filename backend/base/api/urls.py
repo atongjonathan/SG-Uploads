@@ -36,6 +36,7 @@ urlpatterns = [
     path('reset_password', views.reset_password),
     path('trending', views.TrendingList.as_view()),
     path('pesapal/iframe', views.iframe_src),
+    path('webpush/save_information/', views.save_subscription),
 
 
 

@@ -1,8 +1,8 @@
 import React from 'react'
 import { useNotification } from './NotificationContext';
-import { UnsupportedNotificationMessage } from './UnsupportedNotificationMessage';
-import NotificationSubscriptionStatus from './NotificationSubscriptionStatus';
-import { NotificationSubscriptionForm } from './NotificationSubscriptionForm';
+import { UnsupportedNotificationMessage } from './UnsupportedNotificationMessage.jsx';
+import NotificationSubscriptionStatus from './NotificationSubscriptionStatus.jsx';
+import { NotificationSubscriptionForm } from './NotificationSubscriptionForm.jsx';
 
 const PushNotification = () => {
     const {isSupported, isSubscribed} = useNotification();

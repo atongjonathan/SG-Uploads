@@ -8,7 +8,7 @@ export const NotificationSubscriptionForm = () => {
     const [title, setTitle] = useState("");
 
     const sendNotification = async () => {
-        await fetch("http://localhost:3000/api/web-push/send", {
+        await fetch(import.meta.env.VITE_NOTIFICATION_API_ARL, {
             method: "POST",
             body: JSON.stringify({title, message, subscription}),
             headers: {

@@ -36,9 +36,56 @@ from django.core.cache import caches
 from django.utils import timezone
 from django.db.models import Case, When
 from random import shuffle
+from webpush import send_user_notification
+import json
+from django.http import JsonResponse
+from webpush.models import PushInformation, SubscriptionInfo
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
+
+payload = {
+    "head": "🎬 New Movie Alert!",
+    "body": "Check out the latest release on StreamGrid.",
+    "icon": "/static/icons/movie.png",
+    "url": "https://yourdomain.com/movies/latest"
+}
+
+    
 
 
 cc = Captions()
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def save_subscription(request):
+    try:
+        endpoint = request.data.get('endpoint')
+        keys = request.data.get('keys', {})
+        auth = keys.get('auth')
+        p256dh = keys.get('p256dh')
+
+        subscription_info, _ = SubscriptionInfo.objects.update_or_create(
+            endpoint=endpoint,
+            defaults={
+                'browser': request.META.get('HTTP_USER_AGENT', 'Unknown'),
+                'user_agent': request.META.get('HTTP_USER_AGENT', ''),
+                'auth': auth,
+                'p256dh': p256dh,
+            }
+        )
+
+        PushInformation.objects.update_or_create(
+            user=request.user,
+            defaults={'subscription': subscription_info}
+        )
+        send_user_notification(user=request.user, payload=payload)
+
+        return JsonResponse({'status': 'Subscription saved'})
+
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=400)
+
 
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -107,8 +154,10 @@ class MinMovieList(generics.ListAPIView):
             # Shuffle all IDs first
             all_ids = list(base_queryset.values_list('id', flat=True))
             shuffle(all_ids)
-            preserved_order = Case(*[When(id=pk, then=pos) for pos, pk in enumerate(all_ids)])
-            base_queryset = Movie.objects.filter(id__in=all_ids).order_by(preserved_order)
+            preserved_order = Case(*[When(id=pk, then=pos)
+                                   for pos, pk in enumerate(all_ids)])
+            base_queryset = Movie.objects.filter(
+                id__in=all_ids).order_by(preserved_order)
 
         # Now apply filters *after* shuffling
         genre = self.request.query_params.get('genre')
@@ -126,26 +175,31 @@ class MinMovieList(generics.ListAPIView):
         if year:
             base_queryset = base_queryset.filter(year=year)
         if release_location:
-            base_queryset = base_queryset.filter(releaseLocation=release_location)
+            base_queryset = base_queryset.filter(
+                releaseLocation=release_location)
 
         return base_queryset
-    
+
+
 class MultipleFieldLookupMixin:
     """
     Apply this mixin to any view or viewset to get multiple field filtering
     based on a `lookup_fields` attribute, instead of the default single field filtering.
     """
+
     def get_object(self):
         queryset = self.get_queryset()             # Get the base queryset
         queryset = self.filter_queryset(queryset)  # Apply any filter backends
         filter = {}
         for field in self.lookup_fields:
-            if self.kwargs.get(field): # Ignore empty fields.
+            if self.kwargs.get(field):  # Ignore empty fields.
                 filter[field] = self.kwargs[field]
         obj = get_object_or_404(queryset, **filter)  # Lookup the object
         self.check_object_permissions(self.request, obj)
         return obj
 # @method_decorator(cache_page(60), name='dispatch')
+
+
 class MovieList(MultipleFieldLookupMixin, generics.RetrieveAPIView):
     serializer_class = MovieSerializer
     queryset = Movie.objects.all()
@@ -155,7 +209,6 @@ class MovieList(MultipleFieldLookupMixin, generics.RetrieveAPIView):
     lookup_fields = ["id", 'title']
 
 
-
 class CurrentUserView(generics.RetrieveUpdateAPIView):
     queryset = SGUser.objects.all()
     serializer_class = SGUserSerializer
@@ -163,6 +216,7 @@ class CurrentUserView(generics.RetrieveUpdateAPIView):
 
     def get_object(self):
         return self.request.user
+
 
 @api_view(['GET'])
 def movies_list(request):
@@ -202,7 +256,7 @@ def create_movie(request):
     serializer = MovieSerializer(data=data)
     if serializer.is_valid():
         if settings.DEVELOPMENT != "True":
-            try:                
+            try:
                 updated = cc.update_group(request.data)
                 if not updated.get("success"):
                     logging.info(json.dumps(updated, indent=4))
