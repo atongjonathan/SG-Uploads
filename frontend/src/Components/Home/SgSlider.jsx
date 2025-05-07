@@ -80,7 +80,7 @@ const SgSlider = ({ params, title, Icon, scrollPosition, excludeID }) => {
 
 
   return (
-    <LazyLoadComponent >
+    <LazyLoadComponent visibleByDefault={visibleTitles.includes(title)} >
       <div className="lg:mt-8 mt-5">
         <div className="w-full flex justify-between">
           <div className="flex sm:gap-3 gap-2 items-center truncate">
