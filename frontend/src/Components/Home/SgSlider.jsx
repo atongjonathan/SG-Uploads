@@ -13,7 +13,7 @@ import Movie from "../Movie";
 import { LazyLoadComponent } from 'react-lazy-load-image-component';
 
 
-const SgSlider = ({ params, title, Icon, scrollPosition, excludeID }) => {
+const SgSlider = ({ params, title, Icon, excludeID }) => {
 
   const dummy = [1, 2, 3, 4, 5, 6, 7];
 
@@ -30,7 +30,7 @@ const SgSlider = ({ params, title, Icon, scrollPosition, excludeID }) => {
   const [nextEl, setNextEl] = useState(null);
   const [prevEl, setPrevEl] = useState(null);
   const [endDisabled, setEndDisabled] = useState(false);
-  const [startDisabled, setStartDisabled] = useState(false); // Initially at the start
+  const [startDisabled, setStartDisabled] = useState(true);
   const navigate = useNavigate();
 
 
