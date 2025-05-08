@@ -46,12 +46,13 @@ const SGFaHeart = ({ movie }) => {
     }
   ]
 
+  const ActionIcon = actions.find((action) => action.enabled)?.Icon;
+
   return movie && (
     <Popover className="aspect-square">
       <PopoverButton className="p-1 aspect-square rounded-full bg-subMain flex items-center justify-center text-sm" >
         {
-          actions.findIndex((action) => action.enabled) === -1 ? <GoPlus className='w-7 h-7 transitions p-1' /> : <GoCheck className='w-7 h-7 transitions p-1' />
-        }
+          actions.findIndex((action) => action.enabled) === -1 ? <GoPlus className='w-7 h-7 transitions p-1' /> : ActionIcon && <ActionIcon className="w-7 h-7 transitions p-1" />}
 
       </PopoverButton>
       <PopoverPanel
@@ -91,22 +92,29 @@ const ActionItem = ({ Icon, label, name, id, enabled }) => {
   return (
 
     <Button className="rounded-lg py-2 px-3 transition hover:bg-main/80 flex text-white text-sm items-between justify-between w-44" onClick={() => {
-      if (user) {
-        let curentItems = user[name].map((item) => item.id)
-        if (curentItems.includes(id)) {
-          curentItems = curentItems.filter((item) => item !== id)
-        }
-        else {
-          curentItems.push(id)
-        }
-        mutate({
-          [name + "_ids"]: curentItems
-        })
+      if (!user) {
+        toast.info("You need to Login to use this feature");
+        return;
       }
-      else {
-        toast.info("You need to Login to use this feature")
+    
+      // Initialize an update object
+      const update = {};
+    
+      // Remove this movie from all action lists
+      ["plan", "hold", "dropped", "finished"].forEach((key) => {
+        update[`${key}_ids`] = user[key]
+          .filter((item) => item.id !== id)
+          .map((item) => item.id);
+      });
+    
+      // If not already enabled, add to selected list
+      if (!enabled) {
+        update[`${name}_ids`].push(id);
       }
-    }}>
+    
+      mutate(update);
+    }}
+    >
       <div className="flex justify-between gap-2 items-center">
         <Icon className="text-white" />
         <p className='text-sm'>{label}</p>
