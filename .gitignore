@@ -27,5 +27,6 @@ dist-ssr
 venv
 __pycache__
 backend/media/*
+backend/cache/*
 .env
 db.sqlite3

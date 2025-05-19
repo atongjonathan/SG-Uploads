@@ -113,14 +113,14 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
-    # "django.middleware.cache.UpdateCacheMiddleware",
-    # "django.middleware.common.CommonMiddleware",
-    # "django.middleware.cache.FetchFromCacheMiddleware",
+    "django.middleware.cache.UpdateCacheMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.cache.FetchFromCacheMiddleware",
 ]
 
-# CACHE_MIDDLEWARE_ALIAS = "cache"
-# CACHE_MIDDLEWARE_SECONDS = 300
-# CACHE_MIDDLEWARE_KEY_PREFIX = "sguploads"
+CACHE_MIDDLEWARE_ALIAS = "cache"
+CACHE_MIDDLEWARE_SECONDS = 300
+CACHE_MIDDLEWARE_KEY_PREFIX = "sguploads"
 
 
 LOGGING = {
@@ -181,16 +181,19 @@ DATABASES = {
     }
 }
 
-# CACHES = {
-#     "default": {
-#         "BACKEND": "django.core.cache.backends.db.DatabaseCache",
-#         "LOCATION": "cache",
-#     },
-#     "cache": {
-#         "BACKEND": "django.core.cache.backends.db.DatabaseCache",
-#         "LOCATION": "cache",
-#     },
-# }
+
+
+CACHES = {
+    'cache': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': os.path.join(BASE_DIR, "cache"),
+    },
+
+    'default': {
+    'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+    'LOCATION': os.path.join(BASE_DIR, "cache"),
+}
+}
 
 
 # Password validation
