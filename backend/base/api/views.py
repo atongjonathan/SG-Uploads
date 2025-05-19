@@ -50,7 +50,7 @@ payload = {
     "url": "https://yourdomain.com/movies/latest"
 }
 
-    
+
 
 
 cc = Captions()
@@ -138,13 +138,17 @@ class UserViewSet(generics.ListAPIView):
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
 
 
-# @method_decorator(cache_page(60), name='dispatch')
 class MinMovieList(generics.ListAPIView):
     serializer_class = MinMovieSerializer
     queryset = Movie.objects.all()
     search_fields = ['title', 'id']
     ordering_fields = '__all__'
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+
+    @method_decorator(cache_page(60*5))
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
 
     def get_queryset(self):
         base_queryset = Movie.objects.all()
@@ -523,6 +527,11 @@ def get_movie_by_link(link):
 
 class TrendingList(generics.ListAPIView):
     serializer_class = MovieSerializer
+
+    @method_decorator(cache_page(60*5))
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
 
     def get_queryset(self):
         reqUrl = settings.IMDB_API + "/trending"
