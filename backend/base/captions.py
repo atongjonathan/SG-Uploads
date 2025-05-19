@@ -134,7 +134,7 @@ class Captions():
                 message = bot.send_message(settings.GROUP_CHAT_ID, text=movie_text, reply_markup=keyboard, parse_mode='HTML')
 
         responses = []
-        RECIPIENTS = settings.recipients.split(",")
+        RECIPIENTS = settings.RECIPIENTS.split(",")
         headers = {
             "Content-type": "application/json",
             "Authorization": f"Bearer {settings.ACCESS_TOKEN}",
