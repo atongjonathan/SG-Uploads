@@ -75,7 +75,7 @@ const Banner = () => {
                   </SwiperSlide>
                 ))}
             </Swiper>
-            <Notifier movies={movies}/>
+            {/* <Notifier movies={movies}/> */}
           </div>
       }
         
