@@ -7,21 +7,11 @@ from datetime import datetime
 from telebot.types import InlineKeyboardButton, InlineKeyboardMarkup
 import logging
 import json
+from django.conf import settings
 
-bot = TeleBot(os.environ.get("TELEGRAM_BOT_TOKEN"))
-caption_bot = TeleBot(os.environ.get("TELEGRAM_BOT_TOKEN"))
+bot = TeleBot(settings.TELEGRAM_BOT_TOKEN)
+caption_bot = TeleBot(settings.CAPTION_BOT_TOKEN)
 
-API_KEY = 'cfFSE7qyg28tIEDztRg6j3oqxLvnS0oK'
-USER = 'atongjona'
-PASSWORD = 'selisrare'
-GROUP_CHAT_ID = -1001803549934
-TELEGRAM_BOT_TOKEN = '6726476385:AAFScoISqcE_XFk_E8ucvMCqeKRqkQPlhH0'
-bot = TeleBot(TELEGRAM_BOT_TOKEN)
-caption_bot = TeleBot('6453092959:AAH65NtLGOXgR3F6Ak30FXCN1tguOnxQpZA')
-
-PHONE_NUMBER_ID = "379940855196731"
-ACCESS_TOKEN = "EAAOaHvjwayUBO1ygAsZAwOzWEL6i7NsJeXxInyFZC0f145YZAgir8eqALUSU5t7EMUhVkN3hn216UlnV9WLUQj6hOaZBoLe2d5KZAWvGFoK49RYeYYth8Xus0ZCLjL0A1ZBmGq4kHwv3ZALl4P0o8V5PS2CdJYFLDetaOCBjuqeLgmc9cpbzyo0966F7eO5la4gFTxhoNcZArhFl3vFne"
-recipients = "254708683896,254794208654"
 
 
 def download_video(url, filename):
@@ -42,7 +32,7 @@ def download_video(url, filename):
 class Captions():
 
     def __init__(self) -> None:
-        self.subtitles = OpenSubtitles("sguploads v1.0.0", API_KEY)
+        self.subtitles = OpenSubtitles("sguploads v1.0.0", settings.API_KEY)
 
     def download(self, first_subtitle):
         try:
@@ -61,7 +51,7 @@ class Captions():
     def search(self, imdb_id):
         try:
 
-            self.subtitles.login(USER, PASSWORD)
+            self.subtitles.login(settings.USER, settings.PASSWORD)
 
             # Search for subtitles
             response = self.subtitles.search(
@@ -132,22 +122,22 @@ class Captions():
         trailer_url = getTrailer(movie.get("title"))
         # Sending the movie details as a photo with the caption and keyboard
         try:
-            message = bot.send_photo(GROUP_CHAT_ID, movie.get(
+            message = bot.send_photo(settings.GROUP_CHAT_ID, movie.get(
                 "poster"), caption=movie_text, reply_markup=keyboard, parse_mode='HTML')
         except Exception as e:
             logging.info("%s has high res image sending as document...", movie["title"])
             try:
-                message = bot.send_document(GROUP_CHAT_ID, movie.get(
+                message = bot.send_document(settings.GROUP_CHAT_ID, movie.get(
                     "poster"), caption=movie_text, reply_markup=keyboard, parse_mode='HTML')
             except Exception as e:
                 movie_text += f'\n\n<a href="{movie.get("poster", "N/A")}">{movie.get("title", "N/A")} image</a>'
-                message = bot.send_message(GROUP_CHAT_ID, text=movie_text, reply_markup=keyboard, parse_mode='HTML')
+                message = bot.send_message(settings.GROUP_CHAT_ID, text=movie_text, reply_markup=keyboard, parse_mode='HTML')
 
         responses = []
-        RECIPIENTS = recipients.split(",")
+        RECIPIENTS = settings.recipients.split(",")
         headers = {
             "Content-type": "application/json",
-            "Authorization": f"Bearer {ACCESS_TOKEN}",
+            "Authorization": f"Bearer {settings.ACCESS_TOKEN}",
         }
         url = f"https://streamgrid.stream/watch/{quote(movie.get('title'))}"
         movie_text = f"""
@@ -181,7 +171,7 @@ class Captions():
                 }
             }
             response = requests.post(
-                f"https://graph.facebook.com/v20.0/{PHONE_NUMBER_ID}/messages", json=message_body, headers=headers)
+                f"https://graph.facebook.com/v20.0/{settings.PHONE_NUMBER_ID}/messages", json=message_body, headers=headers)
             if response.status_code != 200:
                 logging.error(
                     f"Sending whatsapp image status is {response.status_code}, \mResponse:{json.dumps(response.json(), indent=4)}")
@@ -197,7 +187,7 @@ class Captions():
             response.raise_for_status()
             with open(filename, 'rb') as file:
                 bot.send_video(
-                    GROUP_CHAT_ID, file, reply_to_message_id=message.id, supports_streaming=True)
+                    settings.GROUP_CHAT_ID, file, reply_to_message_id=message.id, supports_streaming=True)
             os.remove(filename)
         return {"success": message.id, "wa_statuused": str(responses)}
 
@@ -227,10 +217,10 @@ def send_trailer(recipient, text, url):
         }
         headers = {
             "Content-type": "application/json",
-            "Authorization": f"Bearer {ACCESS_TOKEN}",
+            "Authorization": f"Bearer {settings.ACCESS_TOKEN}",
         }
         response = requests.post(
-            f"https://graph.facebook.com/v20.0/{PHONE_NUMBER_ID}/messages", json=message_body, headers=headers)
+            f"https://graph.facebook.com/v20.0/{settings.PHONE_NUMBER_ID}/messages", json=message_body, headers=headers)
         if response.status_code != 200:
             logging.error(
                 f"Whatsapp trailer status is {response.status_code}, \mResponse:{json.dumps(response.json(), indent=4)}")

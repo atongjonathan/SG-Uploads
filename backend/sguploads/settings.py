@@ -254,35 +254,54 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 load_dotenv(os.path.join(BASE_DIR, ".env"))
 
-API_KEY = os.environ.get('API_KEY')
-API_USERNAME = os.environ.get('API_USERNAME')
-PASSWORD = os.environ.get('PASSWORD')
-BOT_TOKEN = os.environ.get('BOT_TOKEN')
-ACCESS_TOKEN = os.environ.get('ACCESS_TOKEN')
-PHONE_NUMBER_ID = os.environ.get('PHONE_NUMBER_ID')
-RECIPIENTS = os.environ.get('RECIPIENTS')
-DEVELOPMENT = os.environ.get('DEVELOPMENT')
+
+# Telegram settings
+TELEGRAM_BOT_TOKEN = os.environ.get('TELEGRAM_BOT_TOKEN')
+CAPTION_BOT_TOKEN = os.environ.get('CAPTION_BOT_TOKEN')
+GROUP_CHAT_ID = os.environ.get('GROUP_CHAT_ID')
 
 
 # Email Settings
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = os.environ.get("EMAIL_HOST")
-EMAIL_PORT = 465
-EMAIL_USE_SSL = True,
-EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
-EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
-DEFAULT_FROM_EMAIL = f'StreamGrid <{os.environ.get("DEFAULT_FROM_EMAIL")}>'
-SERVER_EMAIL = os.environ.get("EMAIL_HOST_USER")
+EMAIL_HOST = os.environ.get("EMAIL_HOST", "")
+EMAIL_PORT = os.environ.get("EMAIL_PORT", 465)
+EMAIL_USE_SSL = os.environ.get("EMAIL_USE_SSL", True) ,
+EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER","")
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD", "")
+DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL", EMAIL_HOST_USER)
+SERVER_EMAIL = os.environ.get("SERVER_EMAIL", EMAIL_HOST_USER)
+
+
+# Open Subtitles settings
+API_KEY = os.environ.get('API_KEY')
+USER = os.environ.get('USER')
+PASSWORD = os.environ.get('PASSWORD')
+
+
+
+# Whatsapp Cloud Api settings
+ACCESS_TOKEN = os.environ.get('ACCESS_TOKEN')
+PHONE_NUMBER_ID = os.environ.get('PHONE_NUMBER_ID')
+RECIPIENTS = os.environ.get('RECIPIENTS')
+
+
+
+# Custom settings
+DEVELOPMENT = os.environ.get('DEVELOPMENT', False)
 FRONTEND_URL = os.environ.get("FRONTEND_URL")
 IMDB_API = os.environ.get("IMDB_API")
+
+
+# Pesapal settings
 PESAPAL_CONSUMER_KEY = os.environ.get("PESAPAL_CONSUMER_KEY")
 PESAPAL_CONSUMER_SECRET = os.environ.get("PESAPAL_CONSUMER_SECRET")
+
+
+# Webpush settings
 VAPID_PUBLIC_KEY = os.environ.get("VAPID_PUBLIC_KEY")
 VAPID_PRIVATE_KEY = os.environ.get("VAPID_PRIVATE_KEY")
-
-
 WEBPUSH_SETTINGS = {
     "VAPID_PUBLIC_KEY": VAPID_PUBLIC_KEY,
-    "VAPID_PRIVATE_KEY":VAPID_PRIVATE_KEY,
+    "VAPID_PRIVATE_KEY": VAPID_PRIVATE_KEY,
     "VAPID_ADMIN_EMAIL": EMAIL_HOST_USER
 }
