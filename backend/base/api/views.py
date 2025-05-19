@@ -1,10 +1,10 @@
 from django.http import HttpResponse
 from rest_framework.decorators import api_view
 from ..pesapal import PesapalV30Helper
-from django.shortcuts import render
 import json
 import logging
-from math import log
+from django.contrib.auth.models import update_last_login
+from django.contrib.auth import authenticate
 from django.shortcuts import get_object_or_404
 import requests
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
@@ -40,8 +40,8 @@ from webpush import send_user_notification
 import json
 from django.http import JsonResponse
 from webpush.models import PushInformation, SubscriptionInfo
-from django.contrib.auth.decorators import login_required
-from django.views.decorators.csrf import csrf_exempt
+from rest_framework.request import Request
+
 
 payload = {
     "head": "🎬 New Movie Alert!",
@@ -49,8 +49,6 @@ payload = {
     "icon": "/static/icons/movie.png",
     "url": "https://yourdomain.com/movies/latest"
 }
-
-    
 
 
 cc = Captions()
@@ -87,7 +85,6 @@ def save_subscription(request):
         return JsonResponse({'error': str(e)}, status=400)
 
 
-
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls, user):
@@ -102,6 +99,16 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 
 class MyTokenObtainView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
+
+    def post(self, request:Request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+
+        if serializer.is_valid():
+            username = request.data.get("username")
+            password = request.data.get("password")
+            user = authenticate(username=username, password=password)
+            update_last_login(user=user, sender=SGUser)
+        return super().post(request, *args, **kwargs)
 
 
 @api_view(['GET'])
