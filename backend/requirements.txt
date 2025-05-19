@@ -12,3 +12,4 @@ opensubtitlescom
 python-dotenv
 pywebpush
 cryptography
+django-webpush
