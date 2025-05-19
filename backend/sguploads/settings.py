@@ -252,7 +252,7 @@ CSRF_TRUSTED_ORIGINS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-load_dotenv()
+load_dotenv(os.path.join(BASE_DIR, ".env"))
 
 API_KEY = os.environ.get('API_KEY')
 API_USERNAME = os.environ.get('API_USERNAME')
