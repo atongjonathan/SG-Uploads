@@ -4,18 +4,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
+
   <!-- Basic SEO -->
   <title>StreamGrid | Watch Free Movies & TV Shows Online in HD</title>
-  <meta name="description" content="Watch HD movies and TV shows online for free with StreamGrid. No account needed. Stream the latest content across all your devices." />
-  <meta name="keywords" content="free movies, watch movies online, HD streaming, free TV shows, StreamGrid, online movies, no account streaming, best movie sites" />
+  <meta name="description"
+    content="Watch HD movies and TV shows online for free with StreamGrid. No account needed. Stream the latest content across all your devices." />
+  <meta name="keywords"
+    content="free movies, watch movies online, HD streaming, free TV shows, StreamGrid, online movies, no account streaming, best movie sites" />
   <link rel="canonical" href="https://streamgrid.stream/" />
   <meta name="robots" content="index, follow">
 
   <!-- Open Graph (Facebook, LinkedIn, etc.) -->
   <meta property="og:site_name" content="StreamGrid">
   <meta property="og:title" content="StreamGrid | Watch Free Movies & TV Shows Online in HD">
-  <meta property="og:description" content="Your search for free movie websites is over. StreamGrid lets you watch movies and TV shows in HD for free without an account.">
+  <meta property="og:description"
+    content="Your search for free movie websites is over. StreamGrid lets you watch movies and TV shows in HD for free without an account.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://streamgrid.stream/">
   <meta property="og:image" content="https://backend.streamgrid.stream/dl/6813a0d06383262db951590a">
@@ -23,7 +26,8 @@
   <!-- Twitter Cards -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="StreamGrid | Free Movie Streaming">
-  <meta name="twitter:description" content="Stream free HD movies and TV shows without creating an account. Discover the latest releases now.">
+  <meta name="twitter:description"
+    content="Stream free HD movies and TV shows without creating an account. Discover the latest releases now.">
   <meta name="twitter:image" content="https://backend.streamgrid.stream/dl/6813a0d06383262db951590a">
 
   <!-- PWA & Icons -->
@@ -71,6 +75,47 @@
 <body>
   <div id="root"></div>
   <script type="module" src="/src/main.jsx"></script>
+  <script>
+    // Define debug early
+    function debug(message, element, append) {
+      var target = document.querySelector('#' + (element || 'log'));
+      if (!target) return;
+      target.textContent = message + ((append) ? ('\n' + target.textContent) : '');
+    }
+
+    window.addEventListener('DOMContentLoaded', function () {
+      if ('serviceWorker' in navigator) {
+        if (navigator.serviceWorker.controller) {
+          debug(
+            navigator.serviceWorker.controller.scriptURL + ' (onload)', 'controller'
+          );
+          debug('An active service worker controller was found, no need to register');
+        } else {
+          navigator.serviceWorker.register('offline-sw.js', {
+            scope: './'
+          }).then(function (reg) {
+            debug(reg.scope, 'register');
+            debug('Service worker change, registered the service worker');
+          });
+        }
+
+        document.getElementById('clearAndReRegister')?.addEventListener('click', function () {
+          navigator.serviceWorker.getRegistration().then(function (registration) {
+            registration.unregister();
+            window.location.reload();
+          });
+        });
+      } else {
+        debug('Service workers are not supported in this browser.', 'log');
+      }
+
+      var refreshLink = document.querySelector('#refresh');
+      if (refreshLink) {
+        refreshLink.search = Date.now();
+      }
+    });
+  </script>
+
 </body>
 
 </html>
