@@ -113,9 +113,9 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
-    "django.middleware.cache.UpdateCacheMiddleware",
     "django.middleware.common.CommonMiddleware",
-    "django.middleware.cache.FetchFromCacheMiddleware",
+    # "django.middleware.cache.UpdateCacheMiddleware",
+    # "django.middleware.cache.FetchFromCacheMiddleware",
 ]
 
 CACHE_MIDDLEWARE_ALIAS = "cache"
@@ -182,7 +182,6 @@ DATABASES = {
 }
 
 
-
 CACHES = {
     'cache': {
         'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
@@ -190,9 +189,9 @@ CACHES = {
     },
 
     'default': {
-    'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-    'LOCATION': os.path.join(BASE_DIR, "cache"),
-}
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': os.path.join(BASE_DIR, "cache"),
+    }
 }
 
 
@@ -268,8 +267,8 @@ GROUP_CHAT_ID = os.environ.get('GROUP_CHAT_ID')
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = os.environ.get("EMAIL_HOST", "")
 EMAIL_PORT = os.environ.get("EMAIL_PORT", 465)
-EMAIL_USE_SSL = os.environ.get("EMAIL_USE_SSL", True) ,
-EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER","")
+EMAIL_USE_SSL = os.environ.get("EMAIL_USE_SSL", True),
+EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER", "")
 EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD", "")
 DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL", EMAIL_HOST_USER)
 SERVER_EMAIL = os.environ.get("SERVER_EMAIL", EMAIL_HOST_USER)
@@ -281,12 +280,10 @@ USER = os.environ.get('USER')
 PASSWORD = os.environ.get('PASSWORD')
 
 
-
 # Whatsapp Cloud Api settings
 ACCESS_TOKEN = os.environ.get('ACCESS_TOKEN')
 PHONE_NUMBER_ID = os.environ.get('PHONE_NUMBER_ID')
 RECIPIENTS = os.environ.get('RECIPIENTS')
-
 
 
 # Custom settings

@@ -17,8 +17,8 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from datetime import datetime, timedelta
 from ..captions import Captions
-from ..models import Movie, SGUser
-from .serializers import MinMovieSerializer, MovieSerializer, SGUserSerializer,  ChangePasswordSerializer, SubtitleSerializer
+from ..models import HistoryItem, Movie, SGUser
+from .serializers import MinMovieSerializer, MovieSerializer, SGUserSerializer,  ChangePasswordSerializer, SubtitleSerializer, HistorySerializer
 from rest_framework import status
 from rest_framework.parsers import MultiPartParser, FormParser
 import os
@@ -99,7 +99,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 class MyTokenObtainView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
 
-    def post(self, request:Request, *args, **kwargs):
+    def post(self, request: Request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
 
         if serializer.is_valid():
@@ -155,7 +155,6 @@ class MinMovieList(generics.ListAPIView):
     def dispatch(self, *args, **kwargs):
         return super().dispatch(*args, **kwargs)
 
-
     def get_queryset(self):
         base_queryset = Movie.objects.all()
         should_shuffle = self.request.query_params.get('shuffle')
@@ -207,7 +206,6 @@ class MultipleFieldLookupMixin:
         obj = get_object_or_404(queryset, **filter)  # Lookup the object
         self.check_object_permissions(self.request, obj)
         return obj
-# @method_decorator(cache_page(60), name='dispatch')
 
 
 class MovieList(MultipleFieldLookupMixin, generics.RetrieveAPIView):
@@ -538,7 +536,6 @@ class TrendingList(generics.ListAPIView):
     def dispatch(self, *args, **kwargs):
         return super().dispatch(*args, **kwargs)
 
-
     def get_queryset(self):
         reqUrl = settings.IMDB_API + "/trending"
         headersList = {
@@ -589,3 +586,23 @@ def redirect(request, OrderTrackingId, OrderMerchantReference):
     access_token = pesapal.get_access_token()
     response = pesapal.get_transaction_status(OrderTrackingId, access_token)
     return HttpResponse(f"Payment Successfull: {OrderMerchantReference}\n"+"Reference:" + response.payment_status_description)
+
+
+class HistoryView(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = HistorySerializer
+    queryset = HistoryItem.objects.all()
+
+    def get_object(self):
+        queryset = self.get_queryset()
+        pk = self.kwargs.get("pk")
+        return get_object_or_404(queryset, user=self.request.user, id=pk)
+    
+
+class HistoryCreateView(generics.CreateAPIView):
+    serializer_class = HistorySerializer
+    permission_classes = [IsAuthenticated]
+    queryset = HistoryItem.objects.all()
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)

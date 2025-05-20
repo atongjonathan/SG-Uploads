@@ -103,3 +103,9 @@ class SGUser(AbstractUser):
 
     def __str__(self) -> str:
         return f"{self.username} User"
+
+class HistoryItem(models.Model):
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
+    user = models.ForeignKey(SGUser, on_delete=models.CASCADE)
+    last_modified = models.DateTimeField()
+    current_at = models.FloatField(default=0)

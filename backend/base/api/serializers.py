@@ -1,6 +1,6 @@
 from asyncio import constants
 from rest_framework import serializers
-from ..models import Movie, SGUser
+from ..models import Movie, SGUser, HistoryItem
 from django.contrib.auth.password_validation import validate_password
 
 
@@ -18,36 +18,36 @@ class SGUserSerializer(serializers.ModelSerializer):
     finished = MinMovieSerializer(many=True, required=False, read_only=True,)
     hold = MinMovieSerializer(many=True, required=False, read_only=True,)
 
-        # WRITE IDs
+    # WRITE IDs
     favourite_ids = serializers.PrimaryKeyRelatedField(
         many=True,
         queryset=Movie.objects.all(),
         write_only=True,
-        source='favourites',required=False
+        source='favourites', required=False
     )
     plan_ids = serializers.PrimaryKeyRelatedField(
         many=True,
         queryset=Movie.objects.all(),
         write_only=True,
-        source='plan',required=False
+        source='plan', required=False
     )
     dropped_ids = serializers.PrimaryKeyRelatedField(
         many=True,
         queryset=Movie.objects.all(),
         write_only=True,
-        source='dropped',required=False
+        source='dropped', required=False
     )
     finished_ids = serializers.PrimaryKeyRelatedField(
         many=True,
         queryset=Movie.objects.all(),
         write_only=True,
-        source='finished',required=False
+        source='finished', required=False
     )
     hold_ids = serializers.PrimaryKeyRelatedField(
         many=True,
         queryset=Movie.objects.all(),
         write_only=True,
-        source='hold',required=False
+        source='hold', required=False
     )
 
     class Meta:
@@ -156,3 +156,17 @@ class SubtitleSerializer(serializers.Serializer):
     feature_details = serializers.DictField(
         child=serializers.CharField(max_length=255), required=False
     )
+
+
+class HistorySerializer(serializers.ModelSerializer):
+    user = SGUserSerializer(read_only=True)
+    movie = MinMovieSerializer(read_only=True)
+    current_at = serializers.FloatField()
+    last_modified = serializers.DateTimeField()
+    movie_id = serializers.PrimaryKeyRelatedField(
+        queryset=Movie.objects.all(), write_only=True, source='movie'
+    )
+
+    class Meta:
+        model = HistoryItem
+        fields = "__all__"
