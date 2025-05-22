@@ -41,6 +41,7 @@ import json
 from django.http import JsonResponse
 from webpush.models import PushInformation, SubscriptionInfo
 from rest_framework.request import Request
+from django.db.models import Count
 
 
 payload = {
@@ -142,6 +143,13 @@ class UserViewSet(generics.ListAPIView):
     serializer_class = SGUserSerializer
     permission_classes = [IsAuthenticated]
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+
+    def get_queryset(self):
+        base_queryset = super().get_queryset()
+        sort_by_downloads = self.request.query_params.get('downloads')
+        if sort_by_downloads:
+            return base_queryset.annotate(downloaded_count=Count("downloaded")).order_by('-downloaded_count')
+        return base_queryset
 
 
 class MinMovieList(generics.ListAPIView):
@@ -597,7 +605,7 @@ class HistoryView(generics.RetrieveUpdateDestroyAPIView):
         queryset = self.get_queryset()
         pk = self.kwargs.get("pk")
         return get_object_or_404(queryset, user=self.request.user, id=pk)
-    
+
 
 class HistoryCreateView(generics.CreateAPIView):
     serializer_class = HistorySerializer
