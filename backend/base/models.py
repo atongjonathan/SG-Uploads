@@ -96,6 +96,8 @@ class SGUser(AbstractUser):
         Movie, related_name='dropped', blank=True)
     finished = models.ManyToManyField(
         Movie, related_name='finished', blank=True)
+    downloaded = models.ManyToManyField(
+        Movie, related_name='downloaded', blank=True)
     image = models.ImageField(null=True, blank=True, upload_to="images/")
     name = models.CharField(max_length=150, null=True, blank=True)
     telegram_id = models.IntegerField(null=True, blank=True)

@@ -24,7 +24,8 @@ import { useDevToolsStatus } from '../../utils/useDevToolsStatus';
 import { useAuth } from '../../context/AuthContext';
 import { PIPButton, Menu } from '@vidstack/react';
 import { PictureInPictureExitIcon, PictureInPictureIcon, QuestionMarkIcon, SettingsIcon } from '@vidstack/react/icons';
-import { IoReload } from "react-icons/io5";
+import { useMutation } from '@tanstack/react-query';
+import { updateUser } from '../../utils/Backend';
 
 const VIDEO_PROGRESS_KEY = 'video-progress';
 export const secondsToHHMMSS = (seconds) => {
@@ -157,11 +158,9 @@ export default function MyPlyrVideo({ movie }) {
                                     setTimeout(() => {
                                         const progressData = JSON.parse(localStorage.getItem(VIDEO_PROGRESS_KEY) || '{}');
                                         setSrc((prev) => {
-                                            console.log(prev);
                                             return movie.stream
                                         })
                                         setInitialTime((prev) => {
-                                            console.log(prev);
                                             return progressData[movie.id]?.time ?? 0
                                         })
                                         menuref.current.close()
@@ -179,7 +178,7 @@ export default function MyPlyrVideo({ movie }) {
                                 <PictureInPictureExitIcon className="pip-exit-icon vds-icon" />
                             </PIPButton>
                         },
-                        downloadButton: <DownloadButton user={user} stream={movie.stream} title={movie.title} />
+                        downloadButton: <DownloadButton user={user} stream={movie.stream} title={movie.title} id={movie.id} />
 
                     }}
                 />
@@ -226,20 +225,36 @@ const BackwardButton = () => (
     </SeekButton>
 );
 
-const DownloadButton = ({ user, stream, title }) => (
-    <Button
-        onClick={() => {
-            if (user) {
-                const link = document.createElement('a');
-                link.href = stream.replace("video", "dl");
-                link.download = `StreamGrid - ${title}`;
-                link.click();
-            } else {
-                toast.info("Only logged in users can download", { closeButton: true });
-            }
-        }}
-        className="vds-button"
-    >
-        <DownloadIcon />
-    </Button>
-);
+const DownloadButton = ({ user, stream, title, id }) => {
+    const { authTokens, fetchUser } = useAuth()
+    const { mutate, error } = useMutation({
+        mutationKey: ["updateMe"],
+        mutationFn: () => {
+            let { downloaded } = user
+            const update = {}
+            downloaded = downloaded.filter((item) => item.id !== id).map((item) => item.id)
+            downloaded.push(id)
+            update.downloaded_ids = downloaded
+            return updateUser(authTokens.access, { ...user, ...update }).then(() => fetchUser(authTokens))
+        }
+    })
+
+    return (
+        <Button
+            onClick={() => {
+                if (user) {
+                    mutate()
+                    const link = document.createElement('a');
+                    link.href = stream.replace("video", "dl");
+                    link.download = `StreamGrid - ${title}`;
+                    link.click();
+                } else {
+                    toast.info("Only logged in users can download", { closeButton: true });
+                }
+            }}
+            className="vds-button"
+        >
+            <DownloadIcon />
+        </Button>
+    );
+}

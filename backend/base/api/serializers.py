@@ -16,6 +16,7 @@ class SGUserSerializer(serializers.ModelSerializer):
     plan = MinMovieSerializer(many=True, required=False, read_only=True,)
     dropped = MinMovieSerializer(many=True, required=False, read_only=True,)
     finished = MinMovieSerializer(many=True, required=False, read_only=True,)
+    downloaded = MinMovieSerializer(many=True, required=False, read_only=True,)
     hold = MinMovieSerializer(many=True, required=False, read_only=True,)
 
     # WRITE IDs
@@ -48,6 +49,12 @@ class SGUserSerializer(serializers.ModelSerializer):
         queryset=Movie.objects.all(),
         write_only=True,
         source='hold', required=False
+    )
+    downloaded_ids = serializers.PrimaryKeyRelatedField(
+        many=True,
+        queryset=Movie.objects.all(),
+        write_only=True,
+        source='downloaded', required=False
     )
 
     class Meta:
