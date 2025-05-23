@@ -116,10 +116,10 @@ const WatchPage = () => {
                             movie && <>
                                 <EditMovie close={close} isOpen={isOpen} movie={movie} setMovie={setMovie} />
                                 <ShareMovieModal movie={movie} isModalOpen={isModalOpen} setisModalOpen={setModal} />
-                                <div className="p-4 flex gap-2 ml-3 text-center justify-between">
+                                <div className="p-4 flex gap-2 ml-3 justify-between">
 
                                     <h2 className="md:text-lg text-sm font-semibold">{movie.title} ({movie.year})</h2>
-                                    <Link to={"/contact-us/#details"} className="ring-1 ring-gray-500 lg:ring-gray-400 hover:bg-white/5 px-3 rounded-full py-1 text-xs 2xl:text-sm text-white xl:font-medium my-auto transitions">Issue ?</Link>
+                                    <Link to={"/contact-us/#details"} className="ring-1 ring-gray-500 lg:ring-gray-400 hover:bg-white/5 px-3 rounded-full py-1 text-xs 2xl:text-sm text-white xl:font-medium my-auto transitions truncate">Report a Problem ?</Link>
 
                                 </div>
 

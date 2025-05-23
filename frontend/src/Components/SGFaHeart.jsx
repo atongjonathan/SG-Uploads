@@ -22,7 +22,7 @@ const PowerButton2 = ({ actions }) => {
       {
         actions.findIndex((action) => action.enabled) === -1 ? <GoPlus className='w-4 h-4 transitions' /> : ActionIcon && <ActionIcon className="w-4 h-4 transitions" />}
       {
-        activeItem?.label ?? 'Add to list'
+        activeItem?.label ?? 'Add'
       }
     </PopoverButton>
   )

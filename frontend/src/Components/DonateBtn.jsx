@@ -17,7 +17,7 @@ const DonateBtn = ({ open }) => {
           setisModalOpen(true)
         }} className={`relative select-none outline-none transitions data-[disabled]:pointer-events-none data-[disabled]:opacity-50 text-sm  px-2 py-1 gap-2 flex items-center rounded-lg hover:bg-white/20 cursor-pointer mb-[.1rem] text-white ${isModalOpen? 'bg-white/30':"bg-white/10"}`}>          
           <BiSolidDonateHeart className='w-4 h-4  text-white ' />
-          Donate
+          Support
         </Button>
       }
 
