@@ -6,7 +6,7 @@ import MovieRates from '../Components/Single/MovieRates'
 import { BsCollectionFill } from 'react-icons/bs'
 import AuthContext from '../context/AuthContext'
 import { Button } from '@headlessui/react'
-import { FaShareAlt, FaEdit } from 'react-icons/fa'
+import { FaShareAlt, FaEdit, FaShare } from 'react-icons/fa'
 import ShareMovieModal from '../Components/Modals/ShareMovieModal'
 import SgSlider from '../Components/Home/SgSlider'
 import Skeleton from 'react-loading-skeleton'
@@ -21,6 +21,7 @@ import { useQuery } from '@tanstack/react-query'
 import { getMovie } from '../utils/Backend'
 import DonateBtn from '../Components/DonateBtn'
 import SGFaHeart from '../Components/SGFaHeart'
+import WebShare, { handleShare } from '../Components/WebShare'
 
 
 
@@ -113,7 +114,7 @@ const WatchPage = () => {
                     <div className="container mx-auto bg-dry px-4 py-2 mb-2">
                         {
                             movie && <>
-                                <EditMovie close={close} isOpen={isOpen} movie={movie} setMovie={setMovie}/>
+                                <EditMovie close={close} isOpen={isOpen} movie={movie} setMovie={setMovie} />
                                 <ShareMovieModal movie={movie} isModalOpen={isModalOpen} setisModalOpen={setModal} />
                                 <div className="p-4 flex gap-2 ml-3 text-center justify-between">
 
@@ -138,54 +139,51 @@ const WatchPage = () => {
                                 }
                                 <div className="grid grid-cols-4 place-content-center justify-between gap-2 my-2">
 
-                                    <div className="col-span-2 p-2 flex gap-2">
-
+                                    <div className="hidden md:flex col-span-2 p-2 gap-2">
                                         {
                                             isFetching ?
-
-
                                                 <Skeleton baseColor="rgb(22 28 63)" height={30} width={100} containerClassName=""></Skeleton>
-
                                                 : <>
                                                     {
                                                         movie && movie.genre.slice(0, 2).map((item, idx) => (
-                                                            <Button key={idx} className=" p-1 bg-white/10 hover:bg-white/10 active:bg-white/10 smoothie bubbly rounded text-sm lg:text-lg"> {item}</Button>
+                                                            <Button key={idx} className=" p-1 bg-white/10 hover:bg-white/10 active:bg-white/10 rounded text-sm "> {item}</Button>
                                                         ))
                                                     }
                                                 </>
                                         }
-
-
                                     </div>
 
-                                    <div className="col-span-2 flex justify-end items-center gap-2">
-                                        <SGFaHeart movie={movie} />
-                                        <DonateBtn />
-
-
-                                        <Button onClick={() => setisModalOpen(true)} className="w-10 h-10 flex-colo rounded-lg bg-subMain"><FaShareAlt /></Button>
-
-
-
+                                    <div className="md:col-span-2 col-span-4 overflow-x-auto">
                                         {
-                                            user?.is_superuser && (
-                                                <Button onClick={() => {
-                                                    open()
-                                                }} className='bg-subMain flex-rows gap-2 hover:text-main transitions text-white rounded px-3 font-medium py-3 text-sm'>
-                                                    <FaEdit className='text-green-500'></FaEdit>
-                                                </Button>
+                                            movie && (
+                                                <div className="flex justify-end items-center gap-2 w-max min-w-full">
+                                                    <SGFaHeart movie={movie} />
+                                                    <DonateBtn />
+                                                    {/* <WebShare title={movie.title} id={movie.id}/> */}
+                                                    <Button onClick={() => setisModalOpen(true)} className={`relative select-none outline-none transitions data-[disabled]:pointer-events-none data-[disabled]:opacity-50 text-sm  px-2 py-1 gap-2 flex items-center rounded-lg hover:bg-white/20 cursor-pointer mb-[.1rem] text-white ${isModalOpen ? 'bg-white/30' : "bg-white/10"}`}>
+                                                        <FaShare />
+                                                        Share
+                                                    </Button>
+                                                    {
+                                                        user?.is_superuser && (
+                                                            <Button onClick={() => {
+                                                                open()
+                                                            }} className={`relative select-none outline-none transitions data-[disabled]:pointer-events-none data-[disabled]:opacity-50 text-sm  px-2 py-1 gap-2 flex items-center rounded-lg hover:bg-white/20 cursor-pointer mb-[.1rem] text-white ${isModalOpen ? 'bg-white/30' : "bg-white/10"}`}>
+                                                                <FaEdit className='text-green-500'></FaEdit>
+                                                                Edit
+                                                            </Button>
+                                                        )
+                                                    }
+                                                </div>
                                             )
                                         }
                                     </div>
 
                                 </div>
 
+
                                 <Characters movieIsFetching={isFetching} tmdb_id={tmdb_id} />
-
-
                                 <TrailerSlider movieIsFetching={isFetching} movie={movie} />
-
-
                             </div>
 
                             <MovieInfo movieIsFetching={isFetching} movie={movie} />
@@ -211,7 +209,6 @@ const WatchPage = () => {
                     </div>
 
                 </Layout>
-
 
             }
 

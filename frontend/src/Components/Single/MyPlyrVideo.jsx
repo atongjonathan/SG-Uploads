@@ -83,8 +83,8 @@ export default function MyPlyrVideo({ movie }) {
 
 
     useEffect(() => {
-        const isFinished = user.finished.some((item) => item.id === movie.id);
-        const isOnHold = user.hold.some((item) => item.id === movie.id);
+        const isFinished = user?.finished.some((item) => item.id === movie.id);
+        const isOnHold = user?.hold.some((item) => item.id === movie.id);
       
         const shouldBeFinished = currentTime > movie.runtimeSeconds - 300;
         const shouldBeOnHold = paused && !shouldBeFinished;
