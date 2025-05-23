@@ -1,5 +1,4 @@
 from django.http import HttpResponse
-from rest_framework.decorators import api_view
 from ..pesapal import PesapalV30Helper
 import json
 import logging
@@ -11,8 +10,6 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.decorators import api_view, permission_classes, parser_classes
 from django.http import HttpRequest
 from rest_framework.response import Response
-from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated, IsAuthenticated
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from datetime import datetime, timedelta
@@ -141,7 +138,7 @@ class UserViewSet(generics.ListAPIView):
     """
     queryset = SGUser.objects.all().order_by('-date_joined')
     serializer_class = SGUserSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsAdminUser]
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
 
     def get_queryset(self):
