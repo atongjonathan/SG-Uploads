@@ -41,7 +41,7 @@ export default function MyPlyrVideo({ movie }) {
     const [initialTime, setInitialTime] = useState(0);
     const [showResumePrompt, setShowResumePrompt] = useState(false);
     const [lastSaved, setLastSaved] = useState(0);
-    const { duration, currentTime } = useMediaStore(ref);
+    const { duration, currentTime, paused } = useMediaStore(ref);
     const { poster, title } = movie
     let smarter = "https://my-worker.atongjonathan2.workers.dev/download.aspx?file=JFscwhYCIN%2BnVIEqgS1oGjv9EzBBS46ZWOATDkuxBmEePxfh3ZasXgK06NthQmaF&expiry=yep4DgztdIlmq7LntvbHEA%3D%3D&mac=d41f2e9abe4ca7f16cabe47fd5586f1b7e2f2fc368fcc2333f3d5ba3b59f3b90"
     const [src, setSrc] = useState(movie.stream);
@@ -56,42 +56,59 @@ export default function MyPlyrVideo({ movie }) {
         setSrc(movie.stream)
     }, [movie.stream]);
 
-    const { mutate } = useMutation({
+    const { mutate, error } = useMutation({
         mutationKey: ["updateMe", movie.id],
-        mutationFn: (markFinished) => {
-          const update = {};
-      
-          // Remove movie from all status arrays
-          ["plan", "hold", "dropped", "finished"].forEach((key) => {
-            update[`${key}_ids`] = user[key]
-              .filter((item) => item.id !== movie.id)
-              .map((item) => item.id);
-          });
-      
-          // Conditionally add to finished
-          if (markFinished) {
-            update.finished_ids.push(movie.id);
-          }
-      
-          return updateUser(authTokens.access, { ...user, ...update }).then(() =>
-            fetchUser(authTokens)
-          );
-        },
-      });
-      
-      useEffect(() => {
-        const isFinished = user.finished.some((item) => item.id === movie.id);
-        const shouldBeFinished = currentTime > movie?.runtimeSeconds - 300;
-      
-        // Avoid unnecessary mutation
-        if (shouldBeFinished && !isFinished) {
-          mutate(true); // Mark as finished
-        } else if (!shouldBeFinished && isFinished) {
-          mutate(false); // Remove from finished
-        }
-      }, [currentTime]);
+        mutationFn: ({ markFinished, markHold }) => {
+            const update = {};
 
+            // Start clean: remove from all lists
+            ["plan", "hold", "dropped", "finished"].forEach((key) => {
+                update[`${key}_ids`] = user[key]
+                    .filter((item) => item.id !== movie.id)
+                    .map((item) => item.id);
+            });
+
+            // Add to appropriate list
+            if (markFinished) {
+                update.finished_ids.push(movie.id);
+            } else if (markHold) {
+                update.hold_ids.push(movie.id);
+            }
+
+            return updateUser(authTokens.access, { ...user, ...update }).then(() =>
+                fetchUser(authTokens)
+            );
+        },
+    });
+
+
+    useEffect(() => {
+        const isFinished = user.finished.some((item) => item.id === movie.id);
+        const isOnHold = user.hold.some((item) => item.id === movie.id);
       
+        const shouldBeFinished = currentTime > movie.runtimeSeconds - 300;
+        const shouldBeOnHold = paused && !shouldBeFinished;
+      
+        // Case 1: Should be finished
+        if (shouldBeFinished && !isFinished) {
+          mutate({ markFinished: true, markHold: false });
+        }
+      
+        // Case 2: Should be on hold (but not finished)
+        else if (shouldBeOnHold && !isOnHold) {
+          mutate({ markFinished: false, markHold: true });
+        }
+      
+        // Case 3: Should be removed from both
+        else if (!shouldBeFinished && !paused && (isFinished || isOnHold)) {
+          mutate({ markFinished: false, markHold: false });
+        }
+      
+        // ✅ Otherwise, skip mutation
+      }, [currentTime, paused]);
+      
+
+
     useEffect(() => {
         const progressData = JSON.parse(localStorage.getItem(VIDEO_PROGRESS_KEY) || '{}');
         const savedTime = parseFloat(progressData[movieId]?.time);
