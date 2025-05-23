@@ -69,7 +69,6 @@ const AddMovie = () => {
         enabled: !!link,
         queryFn: () => {
             let split = link?.split("/")
-            console.log(link);
             const imdb_id = split[split.length - 1]
             return searchCaptions(auth, { imdb_id })
         },

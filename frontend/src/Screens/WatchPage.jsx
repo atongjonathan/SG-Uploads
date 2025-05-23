@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import Layout from '../Layout/Layout'
 import { Link, useParams } from 'react-router-dom'
 import MyPlyrVideo from '../Components/Single/MyPlyrVideo'
@@ -31,6 +31,9 @@ const WatchPage = () => {
     const [isModalOpen, setisModalOpen] = useState(false)
 
 
+    const [movie, setMovie] = useState(null);
+
+
     let [isOpen, setIsOpen] = useState(false)
 
 
@@ -45,8 +48,12 @@ const WatchPage = () => {
     })
 
 
+    useEffect(() => {
+        setMovie(data)
 
-    const movie = data
+    }, [data]);
+
+
     const split = movie?.link?.split("/") || [];
     const tmdb_id = split[split.length - 1];
     const open = useCallback(function open() {
@@ -106,7 +113,7 @@ const WatchPage = () => {
                     <div className="container mx-auto bg-dry px-4 py-2 mb-2">
                         {
                             movie && <>
-                                <EditMovie close={close} isOpen={isOpen} movie={movie} />
+                                <EditMovie close={close} isOpen={isOpen} movie={movie} setMovie={setMovie}/>
                                 <ShareMovieModal movie={movie} isModalOpen={isModalOpen} setisModalOpen={setModal} />
                                 <div className="p-4 flex gap-2 ml-3 text-center justify-between">
 

@@ -4,14 +4,18 @@ import { Input } from '../UserInputs'
 import AuthContext from '../../context/AuthContext'
 import { toast } from 'sonner'
 import { IoClose } from 'react-icons/io5'
-import { editMovie } from '../../utils/Backend'
+import { editMovie, searchCaptions, sendCaptions } from '../../utils/Backend'
 import { Link } from 'react-router-dom'
+import SgDropdown from '../../Screens/Admin/SgDropdown'
+import { useQuery } from '@tanstack/react-query'
 
-export default function EditMovie({ close, isOpen, movie }) {
+export default function EditMovie({ close, isOpen, movie, setMovie }) {
 
     const [currentMovie, setCurrentMovie] = useState(null)
     const { authTokens } = useContext(AuthContext)
     const auth = authTokens?.access
+    const [caption, setCaption] = useState(null);
+
 
     useEffect(() => {
         setCurrentMovie(movie)
@@ -46,19 +50,39 @@ export default function EditMovie({ close, isOpen, movie }) {
 
         const response = await editMovie(auth, formObject, currentMovie.id)
         if (response.status == 200) {
+            setMovie({ ...movie, ...formObject })
             toast.success(movie.title + ' updated successfully')
         }
         else {
             toast.error(movie.title + ' addition failed')
 
         }
-
-
-
-
-
-
     }
+
+    const subsQuery = useQuery({
+        queryKey: ["subsQuery", movie.link],
+        enabled: !!movie.link,
+        queryFn: () => {
+            let split = movie.link?.split("/")
+            const imdb_id = split[split.length - 1]
+            return searchCaptions(auth, { imdb_id })
+        },
+        retry: false
+    })
+
+
+    const sendSubsQuery = useQuery({
+        queryKey: ["sendSubsQuery", caption],
+        queryFn: () => sendCaptions(auth, caption),
+        enabled: !!caption
+    })
+
+
+    useEffect(() => {
+        if (sendSubsQuery.isSuccess) toast.success(`Captions sent to you in Telegram`)
+
+    }, [sendSubsQuery.isSuccess]);
+
 
     return (
         <>
@@ -76,12 +100,16 @@ export default function EditMovie({ close, isOpen, movie }) {
                             <Button onClick={close} className='absolute top-5 right-5 text-text hover:text-subMain transitions'><IoClose className="h-5 w-5"></IoClose></Button>
 
                             <DialogTitle as="h3" className="text-base/7 font-medium text-white underline">
-                            <Link target='_blank' to={movie?.link}>Edit "{currentMovie?.title}"</Link>
+                                <Link target='_blank' to={movie?.link}>Edit "{currentMovie?.title}"</Link>
                             </DialogTitle>
                             <form className='flex flex-col gap-2 w-full' method='post' onSubmit={(e) => handleSubmit(e)}>
                                 <Input label='Poster' name='poster' type='text' placeholder='Poster' required={false}></Input>
-                                <Input label='Stream link' name='stream' type='text' placeholder='Stream Link' initialValue={movie?.stream}  required={false}></Input>
-                                <Input label='Caption' name='captions' type='text' placeholder='English Caption link'  required={false}></Input>
+                                <Input label='Stream link' name='stream' type='text' placeholder='Stream Link' initialValue={movie?.stream} required={false}></Input>
+                                {
+                                    subsQuery.data && <SgDropdown subs={subsQuery.data} sendSubs={setCaption} />
+                                }
+
+                                <Input label='Caption' name='captions' type='text' placeholder='English Caption link' required={false}></Input>
                                 <div className="flex gap-2 flex-wrap flex-col-reverse sm:flex-row justify-between items-center my-4">
                                     <Button type='submit' className="bg-main font-medium transitions hover:bg-subMain border border-subMain text-white py-3 px-6 rounded w-full sm:w-auto">Save</Button>
                                 </div>

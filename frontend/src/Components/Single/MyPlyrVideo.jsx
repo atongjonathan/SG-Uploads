@@ -51,6 +51,11 @@ export default function MyPlyrVideo({ movie }) {
     const movieId = movie.id?.toString();
     const remote = useMediaRemote()
     // Load saved progress on mount
+
+    useEffect(() => {
+        setSrc(movie.stream)
+    }, [movie.stream]);
+
     useEffect(() => {
         const progressData = JSON.parse(localStorage.getItem(VIDEO_PROGRESS_KEY) || '{}');
         const savedTime = parseFloat(progressData[movieId]?.time);
