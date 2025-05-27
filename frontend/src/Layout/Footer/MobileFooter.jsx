@@ -103,9 +103,9 @@ const MobileFooter = () => {
                         <BsHouseAddFill></BsHouseAddFill><p className='text-xs'>Home</p>
                     </NavLink>
 
-                    <NavLink to="/movies" className="transitions text-2xl flex flex-col items-center hover:bg-white hover:text-main text-white rounded-md px-4 py-3">
+                    <Button onClick={() => setShowModal(true)} className="transitions text-2xl flex flex-col items-center hover:bg-white hover:text-main text-white rounded-md px-4 py-3">
                         <FaSearch /> <p className='text-xs'>Search</p>
-                    </NavLink>
+                    </Button>
 
                     <PopMenu user={user}></PopMenu>
                     {
@@ -124,7 +124,7 @@ const MobileFooter = () => {
                     <DialogBackdrop className="fixed inset-0 bg-main/50"></DialogBackdrop>
 
                     <div className="fixed inset-0 flex w-full items-start justify-center p-4">
-                        <DialogPanel className="relative max-w-lg space-y-4 border bg-dry p-6 lg:p-10 text-text rounded-lg w-full">
+                        <DialogPanel className="relative max-w-lg space-y-4 border-gray-800 bg-dry p-6 lg:p-10 text-text rounded-lg w-full">
                             <DialogTitle className="font-bold">Find a Movie</DialogTitle>
                             <Button onClick={() => setShowModal(false)} className='absolute top-0 right-3 text-text hover:text-subMain transitions'><IoClose className="h-5 w-5"></IoClose></Button>
                             <input
