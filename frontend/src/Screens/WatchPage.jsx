@@ -146,7 +146,7 @@ const WatchPage = () => {
                                                 : <>
                                                     {
                                                         movie && (
-                                                            <p className={`p-2  bg-white/10 font-semibold border-b-white rounded-full text-sm ${movie.contentRating === "N/A" ? "invisible" : "visible"}`}> {movie.contentRating}</p>
+                                                            <p className={`p-2 w-max   bg-white/10 font-semibold border-b-white rounded-full text-sm ${movie.contentRating === "N/A" ? "invisible" : "visible"}`}> {movie.contentRating}</p>
                                                         )
                                                     }
                                                 </>
@@ -156,8 +156,8 @@ const WatchPage = () => {
                                     <div className="md:col-span-2 col-span-4 overflow-x-auto flex items-center justify-center">
                                         {
                                             movie && (
-                                                <div className='flex md:justify-end justify-between w-max min-w-full'>
-                                                    <p className={`md:hidden p-2 font-semibold bg-white/10  rounded-full text-sm ${movie.contentRating === "N/A" ? "invisible" : "visible"}`}> {movie.contentRating}</p>
+                                                <div className='flex md:justify-end justify-between w-max min-w-full gap-2'>
+                                                    <p className={`md:hidden w-max whitespace-nowrap  p-2 font-semibold bg-white/10  rounded-full text-sm ${movie.contentRating === "N/A" ? "invisible" : "visible"}`}> {movie.contentRating}</p>
                                                     <div className="flex justify-end items-center gap-2 ">
                                                         <SGFaHeart movie={movie} />
                                                         <DonateBtn />
