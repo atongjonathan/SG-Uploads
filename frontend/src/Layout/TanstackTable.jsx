@@ -28,6 +28,7 @@ const TanstackTable = () => {
     const selectedSort = searchParams.get("sort") || "Highest Rated";
     const country = searchParams.get("country") || "Any";
     const title = searchParams.get("title") || "Any";
+    const search = searchParams.get("search") || "Any";
 
     const startYear = 2000;
     const endYear = new Date().getFullYear();
@@ -61,6 +62,7 @@ const TanstackTable = () => {
             releaseLocation: country !== "Any" ? country : null,
             ordering,
             title: title !== "Any" ? title : null,
+            search: search !== "Any" ? search : null,
         },
     };
 
@@ -127,7 +129,7 @@ const TanstackTable = () => {
                     onSubmit={(e) => {
                         e.preventDefault();
                         e.stopPropagation();
-                        navigate("/movies?title=" + title)
+                        navigate("/movies?search=" + search)
                         // no need to navigate manually — already handled via searchParams
                     }}
                 >
@@ -142,8 +144,8 @@ const TanstackTable = () => {
                         className="font-medium placeholder:text-border text-sm w-full bg-transparent border-none px-2 text-black"
                         onInput={(e) => {
                             let value = e.target.value
-                            updateParam("title", value ? value : "Any")
-                        }}
+                            updateParam("search", value ? value : "Any")
+                        }} value={search}
                     />
                 </form>
 

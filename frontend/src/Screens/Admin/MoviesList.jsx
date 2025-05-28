@@ -47,7 +47,7 @@ const MoviesList = () => {
                 </button>
                 <input
                   type="text"
-                  placeholder="Search Movie Name from here"
+                  placeholder="Search movie title or concept ..."
                   className="font-medium placeholder:text-border text-sm w-full h-12 bg-transparent border-none px-2 text-black"
                   onInput={handleSearch}
                 />

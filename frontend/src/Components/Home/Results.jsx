@@ -21,7 +21,7 @@ const Results = ({ isResults, handleResultClick, isFetching }) => {
                                 </td>
                             </tr>
                         ) :
-                            isResults?.slice(0, 3).map((movie, idx) => (
+                            isResults?.slice(0, 6).map((movie, idx) => (
                                 <tr
                                     key={idx}
                                     className={`results-row text-center transitions hover:bg-subMain hover:cursor-pointer ${!isFetching ? 'visible' : ''}`}

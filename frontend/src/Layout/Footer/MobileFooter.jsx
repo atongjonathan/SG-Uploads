@@ -43,8 +43,8 @@ const MobileFooter = () => {
         queryFn: async () => {
             const config = {
                 params: {
-                    title: query,
-                    limit: 3
+                    search: query,
+                    limit: 6
                 }
             }
             return await getMovies(config).then((res) => res.results)
@@ -61,9 +61,9 @@ const MobileFooter = () => {
 
         const params = new URLSearchParams(searchParams);
         if (value) {
-            params.set("title", value);
+            params.set("search", value);
         } else {
-            params.delete("title");
+            params.delete("search");
         }
         params.set("page", "1"); // optional: reset page on search
         setSearchParams(params);
@@ -124,15 +124,21 @@ const MobileFooter = () => {
                     <DialogBackdrop className="fixed inset-0 bg-main/50"></DialogBackdrop>
 
                     <div className="fixed inset-0 flex w-full items-start justify-center p-4">
-                        <DialogPanel className="relative max-w-lg space-y-4 border-gray-800 bg-dry p-6 lg:p-10 text-text rounded-lg w-full">
+                        <DialogPanel className="relative max-w-lg space-y-4 border border-gray-800 bg-dry p-6 lg:p-10 text-text rounded-lg w-full">
                             <DialogTitle className="font-bold">Find a Movie</DialogTitle>
                             <Button onClick={() => setShowModal(false)} className='absolute top-0 right-3 text-text hover:text-subMain transitions'><IoClose className="h-5 w-5"></IoClose></Button>
-                            <input
-                                type="text"
-                                placeholder="Search Movie Name from here"
-                                className={"font-medium placeholder:text-text text-sm w-full h-12 bg-transparent border-none px-2 text-black bg-white mt-10" + { Hover }}
-                                onInput={handleSearch}
-                            />
+                            <div className="flex">
+                                <input
+                                    type="text"
+                                    placeholder="Search movie title or concept ..."
+                                    className={"font-medium text-sm placeholder:text-xs w-full h-9 bg-transparent border-none px-2 text-black bg-white mt-5" + { Hover }}
+                                    onInput={handleSearch}
+                                />
+                                <button type="button" className="bg-subMain w-12 flex-colo h-9 rounded text-white" onClick={() => navigate("/movies?search=" + query)}>
+                                    <FaSearch />
+                                </button>
+                            </div>
+
                             {(query && showModal) && (
                                 <Results isResults={data} handleResultClick={handleResultClick} isFetching={isFetching}></Results>
 

@@ -86,8 +86,8 @@ const Navbar = () => {
     queryFn: async () => {
       const config = {
         params: {
-          title: query,
-          limit: 3
+          search: query,
+          limit: 6
         }
       }
       return await getMovies(config).then((res) => res.results)
@@ -104,9 +104,9 @@ const Navbar = () => {
 
     const params = new URLSearchParams(searchParams);
     if (value) {
-      params.set("title", value);
+      params.set("search", value);
     } else {
-      params.delete("title");
+      params.delete("search");
     }
     params.set("page", "1"); // optional: reset page on search
     setSearchParams(params);
@@ -196,18 +196,18 @@ const Navbar = () => {
             onSubmit={(e) => {
               e.preventDefault();
               e.stopPropagation();
-              navigate("/movies?title=" + query)
+              navigate("/movies?search=" + query)
               // no need to navigate manually — already handled via searchParams
             }}
           >
-            <button type="button" className="bg-subMain w-12 flex-colo h-10 rounded text-white">
+            <button type="button" className="bg-subMain w-12 flex-colo h-10 rounded text-white" onClick={() => navigate("/movies?search=" + query)}>
               <FaSearch />
             </button>
 
             <Input
               type="text"
               value={query || ''}
-              placeholder="Search Movie Name from here"
+              placeholder="Search movie title or concept ..."
               className="font-medium placeholder:text-border text-sm w-full bg-transparent border-none px-2 text-black"
               onInput={handleSearch}
             />

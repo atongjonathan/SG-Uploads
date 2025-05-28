@@ -152,7 +152,7 @@ class UserViewSet(generics.ListAPIView):
 class MinMovieList(generics.ListAPIView):
     serializer_class = MinMovieSerializer
     queryset = Movie.objects.all()
-    search_fields = ['title', 'id']
+    search_fields = ['title', 'plot']
     ordering_fields = '__all__'
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
 
@@ -182,8 +182,6 @@ class MinMovieList(generics.ListAPIView):
 
         if genre:
             base_queryset = base_queryset.filter(genre__icontains=genre)
-        if title:
-            base_queryset = base_queryset.filter(title__icontains=title)
         if movie_id:
             base_queryset = base_queryset.filter(id=movie_id)
         if year:
