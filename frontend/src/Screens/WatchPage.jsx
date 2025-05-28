@@ -145,36 +145,40 @@ const WatchPage = () => {
                                                 <Skeleton baseColor="rgb(22 28 63)" height={30} width={100} containerClassName=""></Skeleton>
                                                 : <>
                                                     {
-                                                        movie && movie.genre.slice(0, 2).map((item, idx) => (
-                                                            <Button key={idx} className=" p-1 bg-white/10 hover:bg-white/10 active:bg-white/10 rounded text-sm "> {item}</Button>
-                                                        ))
+                                                        movie && (
+                                                            <p className={`p-2  bg-white/10 font-semibold border-b-white rounded-full text-sm ${movie.contentRating === "N/A" ? "invisible" : "visible"}`}> {movie.contentRating}</p>
+                                                        )
                                                     }
                                                 </>
                                         }
                                     </div>
 
-                                    <div className="md:col-span-2 col-span-4 overflow-x-auto">
+                                    <div className="md:col-span-2 col-span-4 overflow-x-auto flex items-center justify-center">
                                         {
                                             movie && (
-                                                <div className="flex justify-end items-center gap-2 w-max min-w-full">
-                                                    <SGFaHeart movie={movie} />
-                                                    <DonateBtn />
-                                                    {/* <WebShare title={movie.title} id={movie.id}/> */}
-                                                    <Button onClick={() => setisModalOpen(true)} className={`relative select-none outline-none transitions data-[disabled]:pointer-events-none data-[disabled]:opacity-50 text-sm  px-2 py-1 gap-2 flex items-center rounded-lg hover:bg-white/20 cursor-pointer mb-[.1rem] text-white ${isModalOpen ? 'bg-white/30' : "bg-white/10"}`}>
-                                                        <FaShare />
-                                                        Share
-                                                    </Button>
-                                                    {
-                                                        user?.is_superuser && (
-                                                            <Button onClick={() => {
-                                                                open()
-                                                            }} className={`relative select-none outline-none transitions data-[disabled]:pointer-events-none data-[disabled]:opacity-50 text-sm  px-2 py-1 gap-2 flex items-center rounded-lg hover:bg-white/20 cursor-pointer mb-[.1rem] text-white ${isModalOpen ? 'bg-white/30' : "bg-white/10"}`}>
-                                                                <FaEdit className='text-green-500'></FaEdit>
-                                                                Edit
-                                                            </Button>
-                                                        )
-                                                    }
+                                                <div className='flex md:justify-end justify-between w-max min-w-full'>
+                                                    <p className={`md:hidden p-2 font-semibold bg-white/10  rounded-full text-sm ${movie.contentRating === "N/A" ? "invisible" : "visible"}`}> {movie.contentRating}</p>
+                                                    <div className="flex justify-end items-center gap-2 ">
+                                                        <SGFaHeart movie={movie} />
+                                                        <DonateBtn />
+                                                        {/* <WebShare title={movie.title} id={movie.id}/> */}
+                                                        <Button onClick={() => setisModalOpen(true)} className={`relative select-none outline-none transitions data-[disabled]:pointer-events-none data-[disabled]:opacity-50 text-sm  px-2 py-1 gap-2 flex items-center rounded-lg hover:bg-white/20 cursor-pointer mb-[.1rem] text-white ${isModalOpen ? 'bg-white/30' : "bg-white/10"}`}>
+                                                            <FaShare />
+                                                            Share
+                                                        </Button>
+                                                        {
+                                                            user?.is_superuser && (
+                                                                <Button onClick={() => {
+                                                                    open()
+                                                                }} className={`relative select-none outline-none transitions data-[disabled]:pointer-events-none data-[disabled]:opacity-50 text-sm  px-2 py-1 gap-2 flex items-center rounded-lg hover:bg-white/20 cursor-pointer mb-[.1rem] text-white ${isModalOpen ? 'bg-white/30' : "bg-white/10"}`}>
+                                                                    <FaEdit className='text-green-500'></FaEdit>
+                                                                    Edit
+                                                                </Button>
+                                                            )
+                                                        }
+                                                    </div>
                                                 </div>
+
                                             )
                                         }
                                     </div>
