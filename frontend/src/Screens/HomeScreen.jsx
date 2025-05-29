@@ -26,9 +26,10 @@ const HomeScreen = ({ children, scrollPosition }) => {
 
   }
 
-  const sortedByRatingStar = {
-    ordering: "-rating_star",
-    limit
+  const comedy = {
+    genre: "Comedy",
+    limit,
+    shuffle
   }
 
   const actionMovies = {
@@ -76,7 +77,7 @@ const HomeScreen = ({ children, scrollPosition }) => {
           <SgSlider params={horror} title='Horror' Icon={PiFilmReelFill} />
           <SgSlider params={animation} title='Animation' Icon={PiFilmReelFill} />
           <SgSlider params={documentary} title='Documentary' Icon={PiFilmReelFill} />
-          <SgSlider params={sortedByRatingStar} title='Top Rated' Icon={BsBookmarkStarFill} />
+          <SgSlider params={comedy} title='Comedy' Icon={BsBookmarkStarFill} />
           <Promos />
         </>
       </div>
