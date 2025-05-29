@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+import logging
 from pathlib import Path
 from datetime import timedelta
 import os
@@ -248,6 +249,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 CORS_ALLOWED_ORIGINS =  os.environ.get("CORS_ALLOWED_ORIGINS","").split(",")
 CSRF_TRUSTED_ORIGINS = os.environ.get("CSRF_TRUSTED_ORIGINS","").split(",")
 
+logging.debug(CSRF_TRUSTED_ORIGINS)
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 load_dotenv(os.path.join(BASE_DIR, ".env"))
