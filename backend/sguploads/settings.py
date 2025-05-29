@@ -182,10 +182,6 @@ DATABASES = {
         'PASSWORD': os.environ.get("PG_PASSWORD", ""),
         'HOST': os.environ.get("PG_HOST", ""),
         'OPTIONS': {'sslmode': 'require'},
-    },
-    'local': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
@@ -249,16 +245,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
-CORS_ALLOWED_ORIGINS = [
-    "https://movies.atongjona.com",
-    "http://localhost:5173",
-    "https://streamgrid.stream"
-]
-CSRF_TRUSTED_ORIGINS = [
-    "https://movies.atongjona.com",
-    "http://localhost:5173",
-    "https://streamgrid.stream"
-]
+CORS_ALLOWED_ORIGINS =  os.environ.get("CORS_ALLOWED_ORIGINS").split(",")
+CSRF_TRUSTED_ORIGINS = os.environ.get("CSRF_TRUSTED_ORIGINS").split(",")
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
