@@ -13,3 +13,4 @@ python-dotenv
 pywebpush
 cryptography
 django-webpush
+psycopg2-binary
