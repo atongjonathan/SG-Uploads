@@ -176,6 +176,14 @@ WSGI_APPLICATION = 'sguploads.wsgi.application'
 
 DATABASES = {
     'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get("PG_NAME", ""),
+        'USER': os.environ.get("PG_USER", ""),
+        'PASSWORD': os.environ.get("PG_PASSWORD", ""),
+        'HOST': os.environ.get("PG_HOST", ""),
+        'OPTIONS': {'sslmode': 'require'},
+    },
+    'local': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
