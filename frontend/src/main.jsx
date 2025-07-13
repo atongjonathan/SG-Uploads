@@ -28,17 +28,21 @@ const queryClient = new QueryClient({
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <ErrorBoundary>
-      <QueryClientProvider client={queryClient}>
-        <AuthProvider >
-          <MovieProvider>
-            <NotificationProvider>
-              <App />
-            </NotificationProvider>
-          </MovieProvider>
-        </AuthProvider>
-      </QueryClientProvider>
-    </ErrorBoundary>
+    <div className="bg-main text-white relative h-[100vh] flex items-center justify-center p-5">
+      <div className="max-w-xl text-center">
+        <h2 className="font-semibold text-lg mb-2">This site is no longer active</h2>
+        <p className="text-sm mb-4">
+          After careful consideration, we’ve made the difficult decision to sunset this project. This choice was not made lightly.
+        </p>
+        <p className="text-sm mb-4">
+          If you have questions, thoughts, or would like to discuss ways to continue the work, please don’t hesitate to reach out.
+        </p>
+        <p className="text-sm mb-4">
+          Contact us at <a className="underline" href="mailto:sunsetting@streamgrid.stream">sunsetting@streamgrid.stream</a>
+        </p>
+        <p className="">Thank you!</p>
+      </div>
+    </div>
 
   </StrictMode>
 );
