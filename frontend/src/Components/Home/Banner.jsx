@@ -13,7 +13,22 @@ const Banner = () => {
     queryKey: ["bannerQuery"],
     queryFn: getTrending
   })
-  let movies = data?.results
+  const params = {
+    ordering: "-created",
+    limit: 5
+  }
+
+   const recentlyAddedQuery= useQuery({
+       queryKey: ["sliderQuery", params],
+       queryFn: () => {
+         return getMovies({
+           params
+         })
+       },
+       staleTime: Infinity,
+     })
+
+  let movies = data?.results.length > 0 ? data.results : recentlyAddedQuery.data?.results
 
 
 
