@@ -4,7 +4,6 @@ djangorestframework-simplejwt
 django-cors-headers
 whitenoise
 django-import-export
-python-dotenv
 requests
 pillow
 pyTelegramBotAPI
@@ -13,4 +12,5 @@ python-dotenv
 pywebpush
 cryptography
 django-webpush
+gunicorn
 psycopg2-binary
