@@ -177,15 +177,10 @@ WSGI_APPLICATION = 'sguploads.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get("PG_NAME", ""),
-        'USER': os.environ.get("PG_USER", ""),
-        'PASSWORD': os.environ.get("PG_PASSWORD", ""),
-        'HOST': os.environ.get("PG_HOST", ""),
-        'OPTIONS': {'sslmode': 'require'},
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 CACHES = {
     'cache': {
@@ -302,4 +297,16 @@ WEBPUSH_SETTINGS = {
     "VAPID_PUBLIC_KEY": VAPID_PUBLIC_KEY,
     "VAPID_PRIVATE_KEY": VAPID_PRIVATE_KEY,
     "VAPID_ADMIN_EMAIL": EMAIL_HOST_USER
+
 }
+CORS_ALLOWED_ORIGINS = [
+    "https://movies.atongjona.com",
+    "https://sguploads.atongjona.com"  
+]
+CSRF_TRUSTED_ORIGINS = [
+    "https://movies.atongjona.com",
+    "https://sguploads.atongjona.com"    
+]
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r"^https://[\w-]+\.csb\.app$",
+]
