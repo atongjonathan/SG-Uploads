@@ -1,0 +1,50 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    container_name: sguploads
+
+    restart: unless-stopped
+
+    command: gunicorn --bind 0.0.0.0:8000 sguploads.wsgi:application
+
+    env_file:
+      - .env
+
+    volumes:
+      # Mount the entire Django project
+      - .:/app
+
+      # User-uploaded files
+      - ./media:/app/media
+
+      # Collected static files
+      - ./staticfiles:/app/staticfiles
+
+    expose:
+      - "8000"
+
+    labels:
+      - "traefik.enable=true"
+
+      # Router
+      - "traefik.http.routers.sguploads.rule=Host(`sguploads.atongjona.com`)"
+      - "traefik.http.routers.sguploads.entrypoints=https"
+      - "traefik.http.routers.sguploads.tls=true"
+      - "traefik.http.routers.sguploads.tls.certresolver=le"
+
+      # Django/Gunicorn service
+      - "traefik.http.services.sguploads.loadbalancer.server.port=8000"
+
+      # Tell Traefik which Docker network to use
+      - "traefik.docker.network=traefik"
+
+    networks:
+      - traefik-public
+
+networks:
+  traefik-public:
+    external: true
+
