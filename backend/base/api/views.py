@@ -559,8 +559,15 @@ class TrendingList(generics.ListAPIView):
             *[When(link=link, then=pos) for pos, link in enumerate(imdb_links)]
         )
 
-        return Movie.objects.filter(link__in=imdb_links).order_by(preserved_order)
+        trending_movies = Movie.objects.filter(
+            link__in=imdb_links
+        ).order_by(preserved_order)
 
+        # Trending API returned movies, but none are in our DB
+        if not trending_movies.exists():
+            return Movie.objects.all().order_by("-created")[:10]
+
+        return trending_movies
 
 pesapal = PesapalV30Helper()
 # Create your views here.
